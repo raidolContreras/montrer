@@ -42,7 +42,7 @@
 								<a href="my-devices.html">My Devices</a>
 							</li> 
 							<li class="list-group-item">
-								<a href="recent.html">Recent</a>
+								<a href="recent.html">Recent</a> 
 							</li> 
 							<li class="list-group-item">
 								<a href="important.html">Important</a>
