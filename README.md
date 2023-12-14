@@ -1,2 +1,2 @@
-# Budgets Montrer
+# FinFlair
 Aplication to budgets in Montrer
