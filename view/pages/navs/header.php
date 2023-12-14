@@ -11,7 +11,7 @@
 						</div>
 
 						<div class="main-logo">
-							<a href="index.html">
+							<a href="#">
 								<img src="assets/img/logo.png" width="70px" class="m-0" alt="main-logo">
 							</a>
 						</div>
@@ -25,7 +25,7 @@
 							</a>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>

@@ -284,49 +284,4 @@
 		$("#txtEditor").Editor();    
 	});
 
-	// Dark Mode All
-	const darkModeSwitch = document.querySelector('#DarkModeSW')
-	darkModeSwitch.addEventListener('change', () => {
-		document.querySelector('body').classList.toggle('darkmode-body')
-		localStorage.setItem('joxi-darkmode-body', JSON.stringify(!darkmode))
-	})
-	let darkmode = JSON.parse(localStorage.getItem('joxi-darkmode-body'))
-	if (darkmode === null) {
-		darkmode = window.matchMedia("(prefers-color-scheme: dark)").matches 
-	}
-	if (darkmode) {
-		document.querySelector('body').classList.add('darkmode-body')
-		document.querySelector('#DarkModeSW').checked = 'checked'
-	}
-
-	// Dark Mode Only Header
-	const darkModeSw2itch = document.querySelector('#DarkModeSW2')
-	darkModeSw2itch.addEventListener('change', () => {
-		document.querySelector('.header-area').classList.toggle('darkmode-header')
-		localStorage.setItem('joxi-darkmode-header', JSON.stringify(!darkmode2))
-	})
-	let darkmode2 = JSON.parse(localStorage.getItem('joxi-darkmode-header'))
-	if (darkmode2 === null) {
-		darkmode2 = window.matchMedia("(prefers-color-scheme: dark)").matches 
-	}
-	if (darkmode2) {
-		document.querySelector('.header-area').classList.add('darkmode-header')
-		document.querySelector('#DarkModeSW2').checked = 'checked'
-	}
-
-	// Dark Mode Only Sidebar menu
-	const darkModeSw3itch = document.querySelector('#DarkModeSW3')
-	darkModeSw3itch.addEventListener('change', () => {
-		document.querySelector('.sidebar-menu, .side-menu-area').classList.toggle('darkmode-sidebar-menu')
-		localStorage.setItem('joxi-darkmode-sidebar-menu', JSON.stringify(!darkmode3))
-	})
-	let darkmode3 = JSON.parse(localStorage.getItem('joxi-darkmode-sidebar-menu'))
-	if (darkmode3 === null) {
-		darkmode3 = window.matchMedia("(prefers-color-scheme: dark)").matches 
-	}
-	if (darkmode3) {
-		document.querySelector('.sidebar-menu, .side-menu-area').classList.add('darkmode-sidebar-menu')
-		document.querySelector('#DarkModeSW3').checked = 'checked'
-	}
-
 })(jQuery);
