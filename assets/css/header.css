@@ -41,6 +41,7 @@ Header Content Content Style
   display: block;
   margin: 6px 0;
   transition: all 0.5s ease-in-out;
+  filter: brightness(100);
 }
 .header-area .responsive-burger-menu.active span.top-bar {
   transform: rotate(45deg);
@@ -112,7 +113,7 @@ Header Content Content Style
   background-color: #ffffff !important;
   box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
   border-radius: 30px;
-  padding: 30px 20px;
+  padding: 20px 20px;
   margin-top: 12px;
   margin-bottom: 30px;
 }

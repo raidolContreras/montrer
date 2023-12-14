@@ -45,7 +45,11 @@
 <?php
 	include "pages/navs/header.php";
 	include "pages/navs/sidenav.php";
-	include "pages/inicio.php";
+	if (!isset($_GET['pagina'])) {
+		include "pages/inicio.php";
+	} else{
+		include "pages/".$_GET['pagina'].".php";
+	}
 ?>
 
 <!-- Jquery Min JS -->
