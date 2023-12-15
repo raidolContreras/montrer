@@ -8,7 +8,7 @@
 		</li>
 
 		<li class="list-group-item main-grid">
-			<a href="#" class="icon">
+			<a href="register" class="icon">
 				<img src="assets/img/svg/calendar.svg" alt="calendar">
 			</a>
 		</li>
