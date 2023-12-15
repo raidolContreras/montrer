@@ -12,7 +12,7 @@ $(document).ready(function () {
 		// Realiza la solicitud Ajax
 		$.ajax({
 			type: "POST",
-			url: "controller/ajax/ajax.form.php", // Archivo PHP que procesará los datos
+			url: "controller/ajax/ajax.form.php",
 			data: {
 				firstname: firstname,
 				lastname: lastname,
@@ -20,12 +20,18 @@ $(document).ready(function () {
 				level: level
 			},
 			success: function (response) {
-			    // Muestra la respuesta en el elemento con id "resultado"
-			    if (response !== 'Error') {
+			    if (response !== 'Error' && response !== 'Error: Email duplicado') {
 			        Swal.fire({
 			            icon: 'success',
 			            title: 'Good Job!',
 			            text: 'Usuario '+response+' creado exitosamente',
+			            showConfirmButton: true,
+			        });
+			    } else if (response === 'Error: Email duplicado') {
+			        Swal.fire({
+			            icon: 'error',
+			            title: 'Error!',
+			            text: response,
 			            showConfirmButton: true,
 			        });
 			    } else {
