@@ -137,11 +137,11 @@ class FormsModels {
 						<img src="http://127.0.0.1/montrer/assets/img/logo.png" alt="Logo" class="logo">
 					</div>
 					<div class="content">
-						<p class="greeting">Hola '.$firstname.' '.$lastname.', Has sido registrado en nuestro sitio web <strong>FinFlair</strong>.</p>
-						<p class="message">Esperamos que disfrutes de nuestros servicios. Para acceder a tu cuenta, necesitas una contraseña temporal que te hemos generado. Esta es tu contraseña temporal:</p>
+						<p class="greeting">Hola '.$firstname.' '.$lastname.', Has sido registrado en nuestro sitio web FinFlair.</p>
+						<p class="message">Para acceder a tu cuenta, necesitas una contraseña temporal que te hemos generado. Esta es tu contraseña temporal:</p>
 						<p class="password">'.$password.'</p>
-						<p class="message">Te recomendamos que cambies esta contraseña lo antes posible por una de tu elección. Para hacerlo, puedes seguir este enlace:</p>
-						<p><a href="https://tests.contreras-flota.click/FinFlair/" class="link">Cambiar contraseña</a></p>
+						<p class="message">Te recomendamos que iniciar sesión con esta contraseña lo antes posible. Para hacerlo, puedes seguir este enlace:</p>
+						<p><a href="https://tests.contreras-flota.click/FinFlair/" class="link">Ingresar a la plataforma</a></p>
 						<p class="message">Si tienes alguna duda o problema, no dudes en contactarnos. Estamos para ayudarte.</p>
 					</div>
 					<div class="footer">
