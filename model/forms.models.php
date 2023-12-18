@@ -28,7 +28,7 @@ class FormsModels {
 			
 			if ($stmt->execute()) {
 				$userId = $pdo->lastInsertId();
-				$temporalPassword = FormsModels::mdlSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname']);
+				$temporalPassword = FormsModels::mdlSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
 				if($temporalPassword == 'ok'){
 					return $data['email'];
 				} else {
@@ -70,10 +70,10 @@ class FormsModels {
 
 	}
 	
-	static public function mdlSendPassword($userId, $password, $firstname, $lastname){
+	static public function mdlSendPassword($userId, $password, $firstname, $lastname, $email){
 		
 			// enviar un correo electrónico al usuario creado
-			$to = $createUser; // la dirección de correo electrónico del usuario
+			$to = $email; // la dirección de correo electrónico del usuario
 			$subject = "Bienvenido a nuestro sitio web"; // el asunto del correo electrónico
 			// el cuerpo del correo electrónico en HTML
 			$message = '
