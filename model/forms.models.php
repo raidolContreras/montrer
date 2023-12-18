@@ -29,7 +29,8 @@ class FormsModels {
 			if ($stmt->execute()) {
 				$userId = $pdo->lastInsertId();
 				$temporalPassword = FormsModels::mdlSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
-				if($temporalPassword == 'ok'){
+				$settings = FormsModels::mdlSettingsUser($userId, $data['level'], 0);
+				if($temporalPassword == 'ok' && $settings == 'ok'){
 					return $data['email'];
 				} else {
 					return 'Error';
@@ -61,6 +62,24 @@ class FormsModels {
 		
 		$stmt->bindParam(':temporal_password', $cryptPassword, PDO::PARAM_STR);
 		$stmt->bindParam(':User_idUser', $userId, PDO::PARAM_INT);
+		
+		if ($stmt->execute()){
+			return 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+		}
+
+	}
+	
+	static public function mdlSettingsUser($userId, $level, $root){
+
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_settings(idUser, level, root) VALUES (:idUser, :level, :root)";
+		$stmt = $pdo->prepare($sql);
+		
+		$stmt->bindParam(':idUser', $userId, PDO::PARAM_INT);
+		$stmt->bindParam(':level', $level, PDO::PARAM_INT);
+		$stmt->bindParam(':root', $root, PDO::PARAM_INT);
 		
 		if ($stmt->execute()){
 			return 'ok';
