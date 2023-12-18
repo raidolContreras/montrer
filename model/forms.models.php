@@ -134,7 +134,7 @@ class FormsModels {
 			<body>
 				<div class="container">
 					<div class="header">
-						<img src="http://127.0.0.1/montrer/assets/img/logo.png" alt="Logo" class="logo">
+						<img src="https://tests.contreras-flota.click/FinFlair/assets/img/logo.png" alt="Logo" class="logo">
 					</div>
 					<div class="content">
 						<p class="greeting">Hola '.$firstname.' '.$lastname.', Has sido registrado en nuestro sitio web FinFlair.</p>
