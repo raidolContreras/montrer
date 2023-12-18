@@ -76,7 +76,7 @@ class FormsModels {
 		$pdo = Conexion::conectar();
 		$sql = "INSERT INTO montrer_settings(idUser, level, root) VALUES (:idUser, :level, :root)";
 		$stmt = $pdo->prepare($sql);
-		
+
 		$stmt->bindParam(':idUser', $userId, PDO::PARAM_INT);
 		$stmt->bindParam(':level', $level, PDO::PARAM_INT);
 		$stmt->bindParam(':root', $root, PDO::PARAM_INT);
