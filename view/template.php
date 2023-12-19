@@ -36,7 +36,7 @@
 		<title><?php echo $title; ?></title>
 	</head>
 
-	<body class="body-bg-f8faff darkmode-body">
+	<body class="body-bg-f8faff">
 		<!-- Start Preloader Area -->
 		<div class="preloader">
 			<img src="assets/img/logo.png" width="150px" alt="main-logo">
@@ -46,15 +46,15 @@
 		<!-- End Preloader Area -->
 		<?php
 			if (!isset($_GET['pagina'])) {
-			include "pages/navs/header.php";
-			include "pages/navs/sidenav.php";
+				include "pages/navs/header.php";
+				include "pages/navs/sidenav.php";
 				include "pages/inicio.php";
 			} else{
 				if($_GET['pagina']== 'register'){
 					include "pages/register/".$_GET['pagina'].".php";
 				}else {
-			include "pages/navs/header.php";
-			include "pages/navs/sidenav.php";
+					include "pages/navs/header.php";
+					include "pages/navs/sidenav.php";
 					include "pages/".$_GET['pagina'].".php";
 				}
 			}

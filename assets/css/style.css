@@ -2034,11 +2034,12 @@ AccountStyle
 }
 .account-header img {
   margin-bottom: 30px;
+  
+ width: 120px;
 }
 .account-header h3 {
   margin-bottom: 30px;
   padding-top: 30px;
-  border-top: 1px solid #EBF1FF;
   font-size: 20px;
 }
 
@@ -5307,7 +5308,7 @@ Sweet Style
   margin-right: 0;
 }
 
-.swal2-popup ..swal2-popup .swal2-title {
+.swal2-popup .swal2-popup .swal2-title {
   font-size: 25px;
 }
 
