@@ -11,6 +11,8 @@
 		include "view/pages/register/$pagina.php";
 	} elseif ($pagina == 'inicio') {
 		include "view/pages/$pagina.php";
+	}  elseif ($pagina == 'login') {
+		include "view/pages/login/$pagina.php";
 	} else {
 		include "view/pages/404.php";
 	}

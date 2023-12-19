@@ -12,6 +12,13 @@ require_once "../../model/forms.models.php";
 
 		}
 
+		static function LoginUser($data){
+
+			$loginUser = FormsController::ctrLoginUser($data);
+			return $loginUser;
+
+		}
+
 		//--------------------------------------//
 
 	}
@@ -29,5 +36,17 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['ema
 
 	$createUser = AjaxForm::CreateUser($data);
 	echo $createUser;
+
+}
+
+if (isset($_POST['email']) && isset($_POST['password'])) {
+
+	$data = array(
+		'email' => $_POST['email'],
+		'password' => $_POST['password']
+	);
+
+	$loginUser = AjaxForm::LoginUser($data);
+	echo $loginUser;
 
 }

@@ -199,4 +199,14 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+
+	static public function mdlSelectUser($email){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_users WHERE email = :email";
+		$stmt = $pdo->prepare($sql);
+		
+		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetch();
+	}
 }
