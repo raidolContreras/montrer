@@ -27,7 +27,10 @@
 		<link rel="stylesheet" href="assets/css/style.css">
 		<link rel="stylesheet" href="assets/css/dark-mode.css">
 		<link rel="stylesheet" href="assets/css/responsive.css">
-		
+
+		<!-- Datatable -->
+		<link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet">
+
 		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		<!-- Favicon -->
 		<link rel="icon" type="image/png" href="assets/img/svg/favicon.svg">
@@ -44,21 +47,11 @@
 		<!-- Start All Section Area -->
 		<div class="all-section-area">
 		<!-- End Preloader Area -->
+
 		<?php
-			if (!isset($_GET['pagina'])) {
-				include "pages/navs/header.php";
-				include "pages/navs/sidenav.php";
-				include "pages/inicio.php";
-			} else{
-				if($_GET['pagina']== 'register'){
-					include "pages/register/".$_GET['pagina'].".php";
-				}else {
-					include "pages/navs/header.php";
-					include "pages/navs/sidenav.php";
-					include "pages/".$_GET['pagina'].".php";
-				}
-			}
+			include "config/whiteList.php";
 		?>
+
 		<div id="response"></div>
 
 		<!-- Jquery Min JS -->
@@ -74,5 +67,9 @@
 		<script src="assets/js/contact-form-script.js"></script>
 		<script src="assets/js/ajaxchimp.min.js"></script>
 		<script src="assets/js/custom.js"></script>
+
+		<!-- Datatable Script -->
+		<script src="assets/vendor/DataTables/datatables.min.js"></script>
+
 	</body>
 </html>
