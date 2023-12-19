@@ -168,8 +168,8 @@ class FormsModels {
 					</div>
 				</div>
 			</body>
-			</html>
-			';
+			</html>';
+
 			// el encabezado De y el tipo de contenido
 			$headers = "From: noreply@finflair.com\r\n";
 			$headers .= "Content-type: text/html\r\n";
