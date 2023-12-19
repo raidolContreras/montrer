@@ -183,4 +183,20 @@ class FormsModels {
 			return $temporalPassword;
 
 	}
+	
+	static public function mdlGetUsers(){
+		$pdo = Conexion::conectar();
+    $sql = "SELECT * FROM montrer_users";
+    $stmt = $pdo->prepare($sql);
+    
+    if ($stmt->execute()){
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        print_r($pdo->errorInfo());
+    }
+    
+    // Asegúrate de cerrar la conexión en el bloque finally
+    $stmt->closeCursor();
+    $stmt = null;
+	}
 }
