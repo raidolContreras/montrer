@@ -5,51 +5,98 @@ session_start();
 ?>
 <!-- Start Header Area -->
 <div class="header-area">
-    <div class="container-fluid">
-        <div class="header-content-wrapper">
-            <div class="header-content d-flex justify-content-between align-items-center">
-                <div class="header-left-content d-flex">
-                    <div class="responsive-burger-menu d-block d-lg-none">
-                        <span class="top-bar"></span>
-                        <span class="middle-bar"></span>
-                        <span class="bottom-bar"></span>
-                    </div>
+		<div class="container-fluid">
+				<div class="header-content-wrapper">
+						<div class="header-content d-flex justify-content-between align-items-center">
+								<div class="header-left-content d-flex">
+										<div class="responsive-burger-menu d-block d-lg-none">
+												<span class="top-bar"></span>
+												<span class="middle-bar"></span>
+												<span class="bottom-bar"></span>
+										</div>
 
-                    <div class="main-logo">
-                        <a href="inicio">
-                            <img src="assets/img/logo.png" width="70px" class="m-0" alt="main-logo">
-                        </a>
-                    </div>
+										<div class="main-logo">
+												<a href="inicio">
+														<img src="assets/img/logo.png" width="70px" class="m-0" alt="main-logo">
+												</a>
+										</div>
 
-                </div>
-                <?php if (isset($_SESSION['sesion']) && $_SESSION['sesion'] == 'ok'): ?>
-                    <a href="#" id='logout'>Cerrar sesión</a>
-                <?php else: ?>
-                    <a href="login">Iniciar sesión</a>
-                <?php endif ?>
+								</div>
+								<?php if (isset($_SESSION['sesion']) && $_SESSION['sesion'] == 'ok'): ?>
+									<div class="header-right-option dropdown profile-nav-item pt-0 pb-0">
+																		<a class="dropdown-item dropdown-toggle avatar d-flex align-items-center show" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+																				<div class="d-none d-lg-block d-md-block">
+																						<h3><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
+																						<span>Super Admin</span>
+																				</div>
+																		</a>
+				
+																		<div class="dropdown-menu show" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 50px);">
+																				<div class="dropdown-header d-flex flex-column align-items-center">
+																						<div class="info text-center">
+																								<span class="name">John Smilga</span>
+																								<p class="mb-3 email">
+																										<a href="mailto:johnsmilga@hello.com">johnsmilga@hello.com</a>
+																								</p>
+																						</div>
+																				</div>
+				
+																				<div class="dropdown-wrap">
+																						<ul class="profile-nav p-0 pt-3">
+																								<li class="nav-item">
+																										<a href="profile.html" class="nav-link">
+																												<i class="ri-user-line"></i> 
+																												<span>Perfil</span>
+																										</a>
+																								</li>
+				
+																								<li class="nav-item">
+																										<a href="inbox.html" class="nav-link">
+																												<i class="ri-mail-send-line"></i> 
+																												<span>Mis mensajes</span>
+																										</a>
+																								</li> 
+																						</ul>
+																				</div>
+				
+																				<div class="dropdown-footer">
+																						<ul class="profile-nav">
+																								<li class="nav-item">
+																										<a href="log-in.html" class="nav-link">
+																												<i class="ri-login-circle-line"></i> 
+																												<span>Cerrar sesión</span>
+																										</a>
+																								</li>
+																						</ul>
+																				</div>
+																		</div>
+																</div>
+								<?php else: ?>
+										<a href="login">Iniciar sesión</a>
+								<?php endif ?>
 
-            </div>
-        </div>
-    </div>
+						</div>
+				</div>
+		</div>
 </div>
 <!-- End Header Area -->
 <script>
-  $(document).ready(function () {
-    $("#logout").click(function (e) {
-      e.preventDefault();
+	$(document).ready(function () {
+		$("#logout").click(function (e) {
+			e.preventDefault();
 
-      // Realiza la solicitud Ajax para cerrar la sesión
-      $.ajax({
-        type: "POST",
-        url: "controller/ajax/logout.php", // Cambia esto con la ruta correcta a tu script de logout
-        success: function (response) {
-          // Redirige a la página de inicio después de cerrar sesión
-          window.location.href = 'inicio';
-        },
-        error: function (error) {
-          console.log("Error en la solicitud Ajax:", error);
-        }
-      });
-    });
-  });
+			// Realiza la solicitud Ajax para cerrar la sesión
+			$.ajax({
+				type: "POST",
+				url: "controller/ajax/logout.php", // Cambia esto con la ruta correcta a tu script de logout
+				success: function (response) {
+					// Redirige a la página de inicio después de cerrar sesión
+					window.location.href = 'inicio';
+				},
+				error: function (error) {
+					console.log("Error en la solicitud Ajax:", error);
+				}
+			});
+		});
+	});
 </script>
