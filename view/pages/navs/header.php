@@ -18,7 +18,7 @@
                     </div>
 
                 </div>
-                <?php if (isset($_SESSION['validarIngreso']) && $_SESSION['validarIngreso'] == 'ok'): ?>
+                <?php if (isset($_SESSION['sesion']) && $_SESSION['sesion'] == 'ok'): ?>
                     <a href="logout">Cerrar sesión</a>
                 <?php else: ?>
                     <a href="login">Iniciar sesión</a>

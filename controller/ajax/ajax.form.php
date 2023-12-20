@@ -15,7 +15,17 @@ require_once "../../model/forms.models.php";
 		static function LoginUser($data){
 
 			$loginUser = FormsController::ctrLoginUser($data);
-			return $loginUser;
+			if(isset($loginUser['sesion']) && $loginUser['sesion'] == 'ok'){
+				$_SESSION['sesion'] = $loginUser['sesion']; 
+				$_SESSION['idUser'] = $loginUser['idUser'];
+				$_SESSION['firstname'] = $loginUser['firstname']; 
+				$_SESSION['lastname'] = $loginUser['lastname'];
+				$_SESSION['email'] = $loginUser['email']; 
+				$_SESSION['changedPass'] = $loginUser['changedPass'];
+				return $_SESSION['sesion'];
+			} else {
+				return $loginUser;
+			}
 
 		}
 
