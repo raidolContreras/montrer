@@ -26,17 +26,17 @@ session_start();
 									<div class="header-right-option dropdown profile-nav-item pt-0 pb-0">
 																		<a class="dropdown-item dropdown-toggle avatar d-flex align-items-center show" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="true">
 																				<div class="d-none d-lg-block d-md-block">
-																						<h3><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
-																						<span>Super Admin</span>
+																						<h3 class="profile-name"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
+																						<span class="profile-level">Super Admin</span>
 																				</div>
 																		</a>
 				
-																		<div class="dropdown-menu show" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 50px);">
+																		<div class="dropdown-menu" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 50px);">
 																				<div class="dropdown-header d-flex flex-column align-items-center">
 																						<div class="info text-center">
-																								<span class="name">John Smilga</span>
+																								<span class="profile-name-drop"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></span>
 																								<p class="mb-3 email">
-																										<a href="mailto:johnsmilga@hello.com">johnsmilga@hello.com</a>
+																										<a href="mailto:<?php echo $_SESSION['email'] ?>"><?php echo $_SESSION['email'] ?></a>
 																								</p>
 																						</div>
 																				</div>
@@ -62,7 +62,7 @@ session_start();
 																				<div class="dropdown-footer">
 																						<ul class="profile-nav">
 																								<li class="nav-item">
-																										<a href="log-in.html" class="nav-link">
+																										<a href="" class="nav-link" id="logout">
 																												<i class="ri-login-circle-line"></i> 
 																												<span>Cerrar sesión</span>
 																										</a>
