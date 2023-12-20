@@ -35,16 +35,11 @@ class FormsController {
 		}
 
 		if($value == "ok"){
-			session_start();
-			$_SESSION['Sesion'] = 'ok';
-			$_SESSION['idUser'] = $selectUser['idUsers'];
-			$_SESSION['firstname'] = $selectUser['firstname'];
-			$_SESSION['lastname'] = $selectUser['lastname'];
-			$_SESSION['email'] = $selectUser['email'];
-			$_SESSION['changedPass'] = $changedPass;
+			$selectUser['changedPass'] = $changedPass;
+			$selectUser['sesion'] = $value;
 		}
 		
-		return $value;
+		return $selectUser;
 	}
 	
 }

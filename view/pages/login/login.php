@@ -1,3 +1,6 @@
+<?php 
+	session_start();
+?>
 <!-- Start Account Area -->
 <div class="account-area">
 	<div class="d-table">
