@@ -35,20 +35,16 @@ class FormsController {
 		}
 
 		if($value == "ok"){
-			$data = array(
-				'sesion' => 'ok',
-				'idUser' => $selectUser['idUsers'],
-				'firstname' => $selectUser['firstname'],
-				'lastname' => $selectUser['lastname'],
-				'email' => $selectUser['email'],
-				'changedPass' => $changedPass,
-			);
-			
-			return $data;
-		} else {
-			return $value;
+			session_start();
+			$_SESSION['Sesion'] = 'ok';
+			$_SESSION['idUser'] = $selectUser['idUsers'];
+			$_SESSION['firstname'] = $selectUser['firstname'];
+			$_SESSION['lastname'] = $selectUser['lastname'];
+			$_SESSION['email'] = $selectUser['email'];
+			$_SESSION['changedPass'] = $changedPass;
 		}
 		
+		return $value;
 	}
 	
 }

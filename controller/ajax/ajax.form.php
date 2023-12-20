@@ -47,17 +47,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	);
 
 	$loginUser = AjaxForm::LoginUser($data);
-	
-	if(isset($loginUser['sesion']) && $loginUser['sesion'] == 'ok'){
-		$_SESSION['sesion'] = $loginUser['sesion']; 
-		$_SESSION['idUser'] = $loginUser['idUser'];
-		$_SESSION['firstname'] = $loginUser['firstname']; 
-		$_SESSION['lastname'] = $loginUser['lastname'];
-		$_SESSION['email'] = $loginUser['email']; 
-		$_SESSION['changedPass'] = $loginUser['changedPass'];
-		echo $_SESSION['sesion'];
-	} else {
-		echo $loginUser;
-	}
+	echo $loginUser;
 
 }
