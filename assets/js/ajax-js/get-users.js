@@ -9,8 +9,8 @@ $(document).ready(function () {
             { 
                 data: null,
                 render: function(data, type, row) {
-                    // Combina los campos de nombre y apellido en una sola columna
-                    return data.firstname + ' ' + data.lastname;
+                    // Combina los campos de nombre y apellido en una sola columna y agrega un botón
+                    return '<a href="">' + data.firstname + ' ' + data.lastname + '</a>';
                 }
             },
             { data: 'email' },
