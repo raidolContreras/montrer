@@ -18,11 +18,7 @@ session_start();
 			return $loginUser;
 		}
 
-		//--------------------------------------//
-
 	}
-
-	//--------------------------------------//
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
 
