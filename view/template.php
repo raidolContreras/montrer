@@ -1,3 +1,11 @@
+
+<?php
+header('Content-Type: text/html; charset=utf-8');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
+?>
+
 <!doctype html>
 <html lang="zxx">
 	<head>
@@ -5,7 +13,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<!-- Link Of CSS --> 
+		<!-- Link Of CSS -->
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
 		<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -55,7 +63,7 @@
 		<div id="response"></div>
 
 		<!-- Jquery Min JS -->
-		<script src="assets/js/jquery.min.js"></script> 
+		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/bootstrap.bundle.min.js"></script>
 		<script src="assets/js/owl.carousel.min.js"></script>
 		<script src="assets/js/metismenu.min.js"></script>

@@ -28,11 +28,15 @@ $(document).ready(function () {
 				  }
 				});
 
-			    if (response !== 'Error') {
+			    if (response === 'ok') {
 					Toast.fire({
 					  icon: "success",
 					  title: 'Inicio de sesión exitoso'
 					});
+					// Redirigir a la página de inicio
+					setTimeout(function () {
+						window.location.href = 'inicio';
+					}, 3000);
 			    }else {
 					Toast.fire({
 			          icon: 'error',

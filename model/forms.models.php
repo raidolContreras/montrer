@@ -178,9 +178,7 @@ class FormsModels {
 
 			$cryptPassword = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
-			$temporalPassword = FormsModels::mdlRegisterPassword($userId, $cryptPassword);
-
-			return $temporalPassword;
+			return FormsModels::mdlRegisterPassword($userId, $cryptPassword);
 
 	}
 	
@@ -208,5 +206,39 @@ class FormsModels {
 		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt->fetch();
+		// Asegúrate de cerrar la conexión en el bloque finally
+		$stmt->closeCursor();
+		$stmt = null;
 	}
+
+	static public function mdlFirstLoginUser($idUsers){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_temporal_password WHERE User_idUser = :User_idUser";
+		$stmt = $pdo->prepare($sql);
+		
+		$stmt->bindParam(':User_idUser', $idUsers, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch();
+		// Asegúrate de cerrar la conexión en el bloque finally
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlUpdateLog($idUsers){
+
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_users SET lastConection = NOW() WHERE idUsers = :idUsers";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		// Asegúrate de cerrar la conexión en el bloque finally
+		$stmt->closeCursor();
+		$stmt = null;
+		
+	}
+	
 }
