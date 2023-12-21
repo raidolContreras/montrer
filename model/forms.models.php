@@ -240,5 +240,38 @@ class FormsModels {
 		$stmt = null;
 		
 	}
+
+	static public function mdlDelTemporalPassword($data){
+		
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_temporal_password WHERE User_idUser = :idUser AND temporal_password = :temporal_password";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
+		$stmt->bindParam(':temporal_password', $data['actualPassword'], PDO::PARAM_STR);
+		if($stmt->execute()){
+			return true;
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		// Asegúrate de cerrar la conexión en el bloque finally
+		$stmt->closeCursor();
+		$stmt = null;
+
+	}
+
+	static public function mdlUpdatePassword($data){
+	   $pdo = Conexion::conectar();
+	   $sql = "UPDATE montrer_users SET password = :newPassword WHERE idUsers = :idUsers";
+	   $stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':newPassword', $data['newPassword'], PDO::PARAM_STR);
+		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_INT);
+	   if($stmt->execute()){
+		return true;
+	   } else {
+		print_r($pdo->errorInfo());
+	   }
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }

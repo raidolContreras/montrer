@@ -3,7 +3,10 @@
 session_start();
 	if (!isset($_SESSION['sesion']) && $_GET["pagina"] != 'Login') {
 		header('Location: login');
-    exit();
+    	exit();
+	} elseif ($_SESSION['changedPass'] == 1 && $_GET["pagina"] != 'change_pass'){
+		header('Location: change_pass');
+    	exit();
 	}
 
 ?>

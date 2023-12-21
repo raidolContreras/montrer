@@ -26,12 +26,14 @@ class FormsController {
 			} else {
 				$changedPass = 0;
 				$value = "Error";
+				$selectUser = "Error: correo no existente";
 			}
 		} elseif (!empty($selectUser) && $selectUser['password'] == $cryptPassword) {
 			FormsModels::mdlUpdateLog($selectUser['idUsers']);
 			$value = "ok";
 		} else {
-			$value = "Error: correo no existente";
+			$value = "error";
+			$selectUser = "Error: correo no existente";
 		}
 
 		if($value == "ok"){
@@ -40,6 +42,22 @@ class FormsController {
 		}
 		
 		return $selectUser;
+	}
+
+	static public function ctrChangePassword($data){
+
+		$searchPassword = FormsModels::mdlDelTemporalPassword($data);
+		if ($searchPassword){
+			$updatePassword = FormsModels::mdlUpdatePassword($data);
+			if ($updatePassword) {
+				return "ok";
+			} else {
+				return "Error: Inexistente";
+			}
+		} else {
+			return "Error: Password";
+		}
+	   
 	}
 	
 }
