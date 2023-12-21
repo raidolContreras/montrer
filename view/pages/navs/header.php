@@ -1,6 +1,10 @@
 <?php
 
 session_start();
+	if (!isset($_SESSION['sesion']) && $_GET["pagina"] != 'Login') {
+		header('Location: login');
+    exit();
+	}
 
 ?>
 <!-- Start Header Area -->
@@ -24,53 +28,53 @@ session_start();
 								</div>
 								<?php if (isset($_SESSION['sesion']) && $_SESSION['sesion'] == 'ok'): ?>
 									<div class="header-right-option dropdown profile-nav-item pt-0 pb-0">
-																		<a class="dropdown-item dropdown-toggle avatar d-flex align-items-center show" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-																				<div class="d-none d-lg-block d-md-block">
-																						<h3 class="profile-name"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
-																						<span class="profile-level">Super Admin</span>
-																				</div>
+										<a class="dropdown-item dropdown-toggle avatar d-flex align-items-center show" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+												<div class="d-none d-lg-block d-md-block">
+														<h3 class="profile-name"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
+														<span class="profile-level">Super Admin</span>
+												</div>
+										</a>
+
+										<div class="dropdown-menu" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 50px);">
+												<div class="dropdown-header d-flex flex-column align-items-center">
+														<div class="info text-center">
+																<span class="profile-name-drop"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></span>
+																<p class="mb-3 email">
+																		<a href="mailto:<?php echo $_SESSION['email'] ?>"><?php echo $_SESSION['email'] ?></a>
+																</p>
+														</div>
+												</div>
+
+												<div class="dropdown-wrap">
+														<ul class="profile-nav p-0 pt-3">
+																<li class="nav-item">
+																		<a href="profile.html" class="nav-link">
+																				<i class="ri-user-line"></i> 
+																				<span>Perfil</span>
 																		</a>
-				
-																		<div class="dropdown-menu" data-popper-placement="bottom-start" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 50px);">
-																				<div class="dropdown-header d-flex flex-column align-items-center">
-																						<div class="info text-center">
-																								<span class="profile-name-drop"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></span>
-																								<p class="mb-3 email">
-																										<a href="mailto:<?php echo $_SESSION['email'] ?>"><?php echo $_SESSION['email'] ?></a>
-																								</p>
-																						</div>
-																				</div>
-				
-																				<div class="dropdown-wrap">
-																						<ul class="profile-nav p-0 pt-3">
-																								<li class="nav-item">
-																										<a href="profile.html" class="nav-link">
-																												<i class="ri-user-line"></i> 
-																												<span>Perfil</span>
-																										</a>
-																								</li>
-				
-																								<li class="nav-item">
-																										<a href="inbox.html" class="nav-link">
-																												<i class="ri-mail-send-line"></i> 
-																												<span>Mis mensajes</span>
-																										</a>
-																								</li> 
-																						</ul>
-																				</div>
-				
-																				<div class="dropdown-footer">
-																						<ul class="profile-nav">
-																								<li class="nav-item">
-																										<a href="" class="nav-link" id="logout">
-																												<i class="ri-login-circle-line"></i> 
-																												<span>Cerrar sesión</span>
-																										</a>
-																								</li>
-																						</ul>
-																				</div>
-																		</div>
-																</div>
+																</li>
+
+																<li class="nav-item">
+																		<a href="inbox.html" class="nav-link">
+																				<i class="ri-mail-send-line"></i> 
+																				<span>Mis mensajes</span>
+																		</a>
+																</li> 
+														</ul>
+												</div>
+
+												<div class="dropdown-footer">
+														<ul class="profile-nav">
+																<li class="nav-item">
+																		<a href="" class="nav-link" id="logout">
+																				<i class="ri-login-circle-line"></i> 
+																				<span>Cerrar sesión</span>
+																		</a>
+																</li>
+														</ul>
+												</div>
+										</div>
+								</div>
 								<?php else: ?>
 										<a href="login">Iniciar sesión</a>
 								<?php endif ?>
