@@ -30,10 +30,11 @@ class FormsController {
 			}
 		} elseif (!empty($selectUser) && $selectUser['password'] == $cryptPassword) {
 			FormsModels::mdlUpdateLog($selectUser['idUsers']);
+			$changedPass = 0;
 			$value = "ok";
 		} else {
 			$value = "error";
-			$selectUser = "Error: correo no existente";
+			$selectUser = "Error: datos incorrectos";
 		}
 
 		if($value == "ok"){
