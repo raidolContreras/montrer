@@ -1,9 +1,11 @@
+<!-- Start Main Content Area -->
+<main class="main-content-wrap">
 <!-- Start Account Area -->
-<div class="account-area">
+<div>
 	<div class="d-table">
 		<div class="d-table-cell">
 			<div class="container">
-				<div class="account-content">
+				<div class="account-content single-features">
 					<div class="account-header">
 						<a href="inicio">
 							<img src="assets/img/logo.png" alt="main-logo">
@@ -39,6 +41,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+</main>
+<!-- End Main Content Area -->
 </div>
 <!-- End Account Area -->
 <script src="assets/js/ajax-js/add-users.js"></script>
