@@ -27,7 +27,7 @@
             $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
-            <a href="area" class="icon">
+            <a href="registerArea" class="icon">
                 <img src="assets/img/svg/area.svg" alt="calendar">
             </a>
         </li>
