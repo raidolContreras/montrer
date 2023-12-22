@@ -1,5 +1,9 @@
 <?php 
 	session_start();
+	if (isset($_SESSION['sesion'])){
+		header('Location: inicio');
+    	exit();
+	}
 ?>
 <!-- Start Account Area -->
 <div class="account-area">

@@ -1,7 +1,7 @@
 <?php
 
 	$pagina = $_GET['pagina'] ?? 'inicio';
-	$navs = ['inicio', 'registers', 'register', 'change_pass'];
+	$navs = ['inicio', 'registers', 'register', 'change_pass', 'area'];
 
 	if (in_array($pagina, $navs)) {
 		include "view/pages/navs/header.php";

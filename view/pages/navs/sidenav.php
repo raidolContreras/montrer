@@ -2,20 +2,33 @@
 <nav class="sidebar-menu">
     <ul class="list-group flex-column d-inline-block first-menu" data-simplebar>
         <?php 
-        	$active = (!isset($_GET['pagina']) || $_GET['pagina'] == 'inicio') ? 'active' : '';
+            // Verifica si 'pagina' no está seteado o es igual a 'inicio'
+            $activeInicio = (!isset($_GET['pagina']) || $_GET['pagina'] == 'inicio') ? 'active' : '';
         ?>
-        <li class="list-group-item main-grid <?php echo $active; ?>">
+        <li class="list-group-item main-grid <?php echo $activeInicio; ?>">
             <a href="inicio" class="icon">
                 <img src="assets/img/svg/element.svg" alt="element">
             </a>
         </li>
 
         <?php 
-        	$active = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registers' || $_GET['pagina'] == 'register')) ? 'active' : '';
+            // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
+            $activeRegisters = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registers' || $_GET['pagina'] == 'register')) ? 'active' : '';
         ?>
-        <li class="list-group-item main-grid <?php echo $active; ?>">
+        <li class="list-group-item main-grid <?php echo $activeRegisters; ?>">
             <a href="registers" class="icon">
                 <img src="assets/img/svg/profile-2user.svg" alt="calendar">
+            </a>
+        </li>
+        
+
+        <?php 
+            // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
+            $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'area')) ? 'active' : '';
+        ?>
+        <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
+            <a href="area" class="icon">
+                <img src="assets/img/svg/area.svg" alt="calendar">
             </a>
         </li>
     </ul>
