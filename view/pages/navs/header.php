@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 	if (!isset($_SESSION['sesion']) && $_GET["pagina"] != 'Login') {
 		header('Location: login');
     	exit();

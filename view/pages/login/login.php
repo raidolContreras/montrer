@@ -1,5 +1,4 @@
-<?php 
-	session_start();
+<?php
 	if (isset($_SESSION['sesion'])){
 		header('Location: inicio');
     	exit();

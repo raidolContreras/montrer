@@ -1,21 +1,26 @@
 <?php
 
+
 	$pagina = $_GET['pagina'] ?? 'inicio';
-	$navs = ['inicio', 'registers', 'register', 'change_pass', 'area'];
+	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea'];
+
+	session_start();
 
 	if (in_array($pagina, $navs)) {
 		include "view/pages/navs/header.php";
 		include "view/pages/navs/sidenav.php";
 	}
 	
-	if (isset($_SESSION['sesion']) && $_GET["pagina"] != 'Login'){
+	if (isset($_SESSION['sesion']) && $_GET["pagina"] != 'login'){
 		if ($pagina == 'register' || $pagina == 'registers') {
 			include "view/pages/register/$pagina.php";
 		} elseif ($pagina == 'inicio') {
 			include "view/pages/$pagina.php";
 		} elseif ($pagina == 'change_pass') {
 			include "view/pages/login/$pagina.php";
-		}else {
+		} elseif ($pagina == 'registerArea') {
+			include "view/pages/area/$pagina.php";
+		} else {
 			include "view/pages/404.php";
 		}
 	} elseif ($pagina == 'login') {

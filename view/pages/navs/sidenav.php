@@ -24,7 +24,7 @@
 
         <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-            $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'area')) ? 'active' : '';
+            $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
             <a href="area" class="icon">
