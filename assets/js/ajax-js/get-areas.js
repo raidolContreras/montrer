@@ -21,6 +21,19 @@ $(document).ready(function () {
                     return data.firstname + ' ' + data.lastname ;
                 }
             }
-        ]
+        ],
+        language: {
+            "paginate": {
+                "first":      "<<",
+                "last":       ">>",
+                "next":       ">",
+                "previous":   "<"
+            },
+            "search":         "Buscar:",
+            "lengthMenu":     "Ver _MENU_ resultados",
+            "loadingRecords": "Cargando...",
+            "info":           "Mostrando _START_ de _END_ en _TOTAL_ resultados",
+            "infoEmpty":      "Mostrando 0 resultados",
+        }
     });
 });
