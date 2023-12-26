@@ -2,6 +2,20 @@
 header('Content-Type: text/html; charset=utf-8');
 ?>
 
+<?php
+// Obtener el agente de usuario
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+// Verificar si el agente de usuario indica un dispositivo móvil
+$is_mobile = (bool) preg_match('/(android|iphone|ipad|ipod|blackberry|mobile|opera mini|windows phone|iemobile)/i', $user_agent);
+
+// Si es un dispositivo móvil, redirigir o mostrar un mensaje
+if ($is_mobile) {
+    // Puedes redirigir a otra página o mostrar un mensaje de error
+    header("Location: mobile-error.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
