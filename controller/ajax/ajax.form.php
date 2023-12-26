@@ -21,6 +21,11 @@ session_start();
 			return $changePassword;
 		}
 
+		static function AddArea($data){
+			$addArea = FormsController::ctrAddArea($data);
+			return $addArea;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -64,8 +69,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 if (isset($_POST['actualPassword']) && isset($_POST['newPassword']) && isset($_POST['user'])) {
 
 	$data = array(
-		'actualPassword' => $actualPassword = crypt($_POST['actualPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
-		'newPassword' => $newPassword = crypt($_POST['newPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
+		'actualPassword' => crypt($_POST['actualPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
+		'newPassword' => crypt($_POST['newPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
 		'user' => $_POST['user']
 	);
 
@@ -75,4 +80,15 @@ if (isset($_POST['actualPassword']) && isset($_POST['newPassword']) && isset($_P
 		$_SESSION['changedPass'] = 0;
 	}
 	echo $changePassword;
+}
+
+if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POST['user'])) {
+	
+	$data = array(
+		'nameArea' =>  $_POST['areaName'],
+		'areaDescription' =>  $_POST['areaDescription'],
+		'user' => $_POST['user']
+	);
+	$addArea = AjaxForm::AddArea($data);
+	echo $addArea;
 }

@@ -24,10 +24,10 @@
 
         <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-            $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea')) ? 'active' : '';
+            $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea' || $_GET['pagina'] == 'areas')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
-            <a href="registerArea" class="icon">
+            <a href="areas" class="icon">
                 <img src="assets/img/svg/area.svg" alt="calendar">
             </a>
         </li>

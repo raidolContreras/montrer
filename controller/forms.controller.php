@@ -8,7 +8,12 @@ class FormsController {
 
 	static public function ctrGetUsers(){
 		$getUser = FormsModels::mdlGetUsers();
-    	return json_encode($getUser);
+    	return $getUser;
+	}
+
+	static public function ctrGetAreas(){
+		$getAreas = FormsModels::mdlGetAreas();
+    	return $getAreas;
 	}
 
 	static public function ctrLoginUser($data){
@@ -61,4 +66,8 @@ class FormsController {
 	   
 	}
 	
+	static public function ctrAddArea($data){
+	   $addArea = FormsModels::mdlAddArea($data);
+	   return $addArea;
+	}
 }

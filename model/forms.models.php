@@ -260,9 +260,9 @@ class FormsModels {
 	}
 
 	static public function mdlUpdatePassword($data){
-	   $pdo = Conexion::conectar();
-	   $sql = "UPDATE montrer_users SET password = :newPassword WHERE idUsers = :idUsers";
-	   $stmt = $pdo->prepare($sql);
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_users SET password = :newPassword WHERE idUsers = :idUsers";
+		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':newPassword', $data['newPassword'], PDO::PARAM_STR);
 		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_INT);
 	   if($stmt->execute()){
@@ -270,6 +270,38 @@ class FormsModels {
 	   } else {
 		print_r($pdo->errorInfo());
 	   }
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	
+	static public function mdlAddArea($data){
+	   $pdo = Conexion::conectar();
+	   $sql = "INSERT INTO montrer_area(nameArea, description, idUser) VALUES (:nameArea, :description, :idUser)";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->bindParam(':nameArea', $data['nameArea'], PDO::PARAM_STR);
+	   $stmt->bindParam(':description', $data['areaDescription'], PDO::PARAM_STR);
+	   $stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
+	   if($stmt->execute()){
+		return "ok";
+	   } else {
+		print_r($pdo->errorInfo());
+	   }
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlGetAreas(){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT a.idArea, a.nameArea, a.description, u.firstname, u.lastname FROM montrer_area a
+				LEFT JOIN montrer_users u ON u.idUsers = a.idUser;";
+		$stmt = $pdo->prepare($sql);
+		
+		if ($stmt->execute()){
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
 	}

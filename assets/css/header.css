@@ -41,7 +41,6 @@ Header Content Content Style
   display: block;
   margin: 6px 0;
   transition: all 0.5s ease-in-out;
-  filter: brightness(100);
 }
 .header-area .responsive-burger-menu.active span.top-bar {
   transform: rotate(45deg);

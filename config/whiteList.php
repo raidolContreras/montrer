@@ -2,7 +2,7 @@
 
 
 	$pagina = $_GET['pagina'] ?? 'inicio';
-	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea'];
+	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea', 'areas'];
 
 
 	if (in_array($pagina, $navs)) {
@@ -17,7 +17,7 @@
 			include "view/pages/$pagina.php";
 		} elseif ($pagina == 'change_pass') {
 			include "view/pages/login/$pagina.php";
-		} elseif ($pagina == 'registerArea') {
+		} elseif ($pagina == 'registerArea' || $pagina == 'areas') {
 			include "view/pages/area/$pagina.php";
 		} else {
 			include "view/pages/404.php";
