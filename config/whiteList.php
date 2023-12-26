@@ -10,7 +10,7 @@
 		include "view/pages/navs/sidenav.php";
 	}
 	
-	if (isset($_SESSION['sesion']) && $_GET["pagina"] != 'login'){
+	if (isset($_SESSION['sesion']) && $pagina != 'login'){
 		if ($pagina == 'register' || $pagina == 'registers') {
 			include "view/pages/register/$pagina.php";
 		} elseif ($pagina == 'inicio') {
