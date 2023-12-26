@@ -4,7 +4,6 @@
 	$pagina = $_GET['pagina'] ?? 'inicio';
 	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea'];
 
-	session_start();
 
 	if (in_array($pagina, $navs)) {
 		include "view/pages/navs/header.php";
