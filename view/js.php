@@ -15,3 +15,6 @@
 
 		<!-- Datatable Script -->
 		<script src="assets/vendor/DataTables/datatables.min.js"></script>
+		
+		<!-- Dropzone Script -->
+		<script src="assets/vendor/dropzone/dropzone-min.js"></script>

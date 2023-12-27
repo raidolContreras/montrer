@@ -16,6 +16,11 @@ class FormsController {
     	return $getAreas;
 	}
 
+	static public function ctrGetCompanies(){
+		$getCompanies = FormsModels::mdlGetCompanies();
+    	return $getCompanies;
+	}
+
 	static public function ctrLoginUser($data){
 		$value = '';
 		$selectUser = FormsModels::mdlSelectUser($data['email']);
