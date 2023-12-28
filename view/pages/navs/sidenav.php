@@ -33,10 +33,20 @@
 
         <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-            $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'company' || $_GET['pagina'] == 'registerCompany')) ? 'active' : '';
+            $activeCompany = (isset($_GET['pagina']) && ($_GET['pagina'] == 'company' || $_GET['pagina'] == 'registerCompany')) ? 'active' : '';
         ?>
-        <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
+        <li class="list-group-item main-grid <?php echo $activeCompany; ?>">
             <a href="company" class="icon">
+                <img src="assets/img/svg/company.svg" alt="calendar">
+            </a>
+        </li>
+
+        <?php 
+            // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
+            $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'exercise' || $_GET['pagina'] == 'registerExercise')) ? 'active' : '';
+        ?>
+        <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
+            <a href="exercise" class="icon">
                 <img src="assets/img/svg/company.svg" alt="calendar">
             </a>
         </li>
