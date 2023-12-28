@@ -44,8 +44,8 @@ if (!$is_mobile) {
 </head>
 
 <body>
-    <h1>Error - Acceso desde Dispositivo Móvil</h1>
-    <p>Lo sentimos, el acceso a esta página desde dispositivos móviles no está permitido.</p>
+    <h1>Error - Acceso desde dispositivo móvil</h1>
+    <p>Lo sentimos, el acceso a este portal desde dispositivos móviles no está permitido.</p>
 </body>
 
 </html>

@@ -92,3 +92,7 @@ if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POS
 	$addArea = AjaxForm::AddArea($data);
 	echo $addArea;
 }
+
+if (isset($_POST['companyName']) && isset($_POST['colors']) && isset($_POST['companyDescription'])) {
+	echo 1;
+}

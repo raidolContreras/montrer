@@ -19,7 +19,7 @@
                 <div class="col-md-6">
                     <label for="logo" class="form-label">Logo</label>
                     <div id="logoDropzone" class="dropzone"></div>
-                    <input type="hidden" id="logo" name="logo" /> <!-- Este campo oculto almacenará la URL del archivo cargado -->
+                    <input type="hidden" id="logo" name="logo" />
                 </div>
 
                 <!-- ... Otros campos del formulario ... -->
