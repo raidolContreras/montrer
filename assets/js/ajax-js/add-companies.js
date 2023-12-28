@@ -69,9 +69,6 @@ $(document).ready(function () {
 
                     idCompany = response;
                     myDropzone.processQueue();
-                    
-					// Limpiar el Dropzone
-					myDropzone.removeAllFiles();
 
 					// Vaciar los campos del formulario
 					$("#companyName").val("");
@@ -81,6 +78,11 @@ $(document).ready(function () {
 					$("#accentColor").val("#2ecc71");
 					$("#background1Color").val("#ecf0f1");
 					$("#background2Color").val("#ffffff");
+                    
+                    setTimeout(() => {
+                        // Limpiar el Dropzone
+                        myDropzone.removeAllFiles();
+                    }, 1000);
 
                 } else {
 					Toast.fire({

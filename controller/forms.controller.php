@@ -21,6 +21,16 @@ class FormsController {
     	return $getCompanies;
 	}
 
+	static public function ctrAddCompany($data){
+		$addCompany = FormsModels::mdlAddCompany($data);
+    	return $addCompany;
+	}
+
+	static public function ctrAddLogo($data){
+		$addLogo = FormsModels::mdlAddLogo($data);
+    	return $addLogo;
+	}
+
 	static public function ctrLoginUser($data){
 		$value = '';
 		$selectUser = FormsModels::mdlSelectUser($data['email']);

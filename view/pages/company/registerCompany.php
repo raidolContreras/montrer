@@ -5,7 +5,7 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar Área</h3>
+            <h3>Registrar Empresa</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">

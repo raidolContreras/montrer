@@ -319,5 +319,41 @@ class FormsModels {
 	   $stmt->closeCursor();
 	   $stmt = null;
 	}
+
+	static public function mdlAddCompany($data){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_company(name, colors, description) VALUES (:name, :colors, :description)";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':name', $data['companyName'], PDO::PARAM_STR);
+		$stmt->bindParam(':colors', $data['colors'], PDO::PARAM_STR);
+		$stmt->bindParam(':description', $data['companyDescription'], PDO::PARAM_STR);
+		if($stmt->execute()){
+			if (($pdo -> lastInsertId() != 0)){
+				$idCompany = $pdo -> lastInsertId();
+				return $idCompany;
+			} else {
+				return 'Error';
+			}
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		 $stmt->closeCursor();
+		 $stmt = null;  
+	}
+
+	static public function mdlAddLogo($data){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_company SET logo = :logo WHERE idCompany = :idCompany";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':logo', $data['logo'], PDO::PARAM_STR);
+		$stmt->bindParam(':idCompany', $data['idCompany'], PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }

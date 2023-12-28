@@ -26,6 +26,16 @@ session_start();
 			return $addArea;
 		}
 
+		static function AddCompany($data){
+			$addCompany = FormsController::ctrAddCompany($data);
+			return $addCompany;
+		}
+
+		static public function AddLogo($data){
+			$addLogo = FormsController::ctrAddLogo($data);
+			return $addLogo;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -94,5 +104,45 @@ if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POS
 }
 
 if (isset($_POST['companyName']) && isset($_POST['colors']) && isset($_POST['companyDescription'])) {
-	echo 1;
+	$data = array(
+		'companyName' => $_POST['companyName'],
+		'colors' => $_POST['colors'],
+		'companyDescription' => $_POST['companyDescription'],
+	);
+	$addCompany = AjaxForm::AddCompany($data);
+	echo $addCompany;
+}
+
+if (isset($_POST['idCompany']) && isset($_FILES['logo'])) {
+    $data = array(
+        'idCompany' => $_POST['idCompany'],
+        'logo' => $_FILES['logo']['name']
+    );
+
+    $addLogo = AjaxForm::AddLogo($data);
+
+    if ($addLogo == 'ok') {
+        $targetDir = "../../assets/img/companies/" . $_POST['idCompany'] . "/"; // Reemplaza con la ruta adecuada
+        $fileName = basename($_FILES["logo"]["name"]);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+        // Verifica si la carpeta existe, si no, la crea
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        // Verificar si el archivo es una imagen
+        $allowTypes = array('jpg', 'jpeg', 'png');
+        if (in_array($fileType, $allowTypes)) {
+            // Mover el archivo al directorio de destino
+            if (move_uploaded_file($_FILES["logo"]["tmp_name"], $targetFilePath)) {
+                echo json_encode(array('status' => 'success', 'logoUrl' => $targetFilePath));
+            } else {
+                echo json_encode(array('status' => 'error', 'message' => 'Error al cargar el archivo.'));
+            }
+        } else {
+            echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (jpg, jpeg, png).'));
+        }
+    }
 }
