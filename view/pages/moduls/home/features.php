@@ -8,9 +8,9 @@
 						<div class="row align-items-center">
 							<div class="col-xl-6 col-sm-6">
 								<div class="single-click-content">
-									<span class="features-title">CLICK THROUGH</span>
-									<h3>9,670 <span>-0.21%</span></h3>
-									<p>Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed.</p>
+									<span class="features-title">Total presupuesto</span>
+									<h3>$ 1,250,500</h3>
+									<p>Total del presupuesto aprobado para el Ejercicio 2024.</p>
 								</div>
 							</div>
 
@@ -28,9 +28,9 @@
 						<div class="row align-items-center">
 							<div class="col-xl-6 col-sm-6">
 								<div class="single-click-content">
-									<span class="features-title">VIEW THROUGH</span>
-									<h3>5,952 <span>+0.21%</span></h3>
-									<p>Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed.</p>
+									<span class="features-title">Presupuesto utilizado</span>
+									<h3>$ 225,400 <span>18.02%</span></h3>
+									<p>Presupuesto utilizado en el Ejercicio 2024.</p>
 								</div>
 							</div>
 
@@ -48,9 +48,9 @@
 						<div class="row align-items-center">
 							<div class="col-xl-6 col-sm-6">
 								<div class="single-click-content">
-									<span class="features-title">TOTAL CONVERSIONS</span>
-									<h3>10,302 <span>+0.21%</span></h3>
-									<p>Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed.</p>
+									<span class="features-title">Presupuesto Restante</span>
+									<h3>$ 1,025,100 <span>81.98%</span></h3>
+									<p>Presupuesto restante en el Ejercicio 2024.</p>
 								</div>
 							</div>
 

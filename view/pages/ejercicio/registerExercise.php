@@ -22,6 +22,7 @@
                 </div>
 
                 <div class="col-12">
+                    <input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
                     <hr>
                 </div>
 

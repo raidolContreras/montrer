@@ -31,7 +31,7 @@
             </a>
         </li>
 
-        <?php 
+        <!-- <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
             $activeCompany = (isset($_GET['pagina']) && ($_GET['pagina'] == 'company' || $_GET['pagina'] == 'registerCompany')) ? 'active' : '';
         ?>
@@ -39,7 +39,7 @@
             <a href="company" class="icon">
                 <img src="assets/img/svg/company.svg" alt="calendar">
             </a>
-        </li>
+        </li> -->
 
         <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
@@ -47,7 +47,7 @@
         ?>
         <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
             <a href="exercise" class="icon">
-                <img src="assets/img/svg/company.svg" alt="calendar">
+                <img src="assets/img/svg/exercise.svg" alt="calendar">
             </a>
         </li>
     </ul>

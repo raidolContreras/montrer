@@ -21,6 +21,11 @@ class FormsController {
     	return $getCompanies;
 	}
 
+	static public function ctrGetExercise(){
+		$getExercise = FormsModels::mdlGetExercise();
+    	return $getExercise;
+	}
+
 	static public function ctrAddCompany($data){
 		$addCompany = FormsModels::mdlAddCompany($data);
     	return $addCompany;
@@ -29,6 +34,11 @@ class FormsController {
 	static public function ctrAddLogo($data){
 		$addLogo = FormsModels::mdlAddLogo($data);
     	return $addLogo;
+	}
+
+	static public function ctrAddExercise($data){
+		$addExercise = FormsModels::mdlAddExercise($data);
+    	return $addExercise;
 	}
 
 	static public function ctrLoginUser($data){

@@ -4,20 +4,20 @@ $(document).ready(function () {
 		event.preventDefault();
 
 		// Recoge los valores del formulario
-		var firstname = $("input[name='firstname']").val();
-		var lastname = $("input[name='lastname']").val();
-		var email = $("input[name='email']").val();
-		var level = $("select[name='level']").val();
+		var exerciseName = $("input[name='exerciseName']").val();
+		var initialDate = $("input[name='initialDate']").val();
+		var finalDate = $("input[name='finalDate']").val();
+		var user = $("input[name='user']").val();
 
 		// Realiza la solicitud Ajax
 		$.ajax({
 			type: "POST",
 			url: "controller/ajax/ajax.form.php",
 			data: {
-				firstname: firstname,
-				lastname: lastname,
-				email: email,
-				level: level
+				exerciseName: exerciseName,
+				initialDate: initialDate,
+				finalDate: finalDate,
+				user: user
 			},
 			success: function (response) {
 
@@ -33,20 +33,15 @@ $(document).ready(function () {
 				  }
 				});
 
-			    if (response !== 'Error' && response !== 'Error: Email duplicado') {
+			    if (response === 'ok') {
 					Toast.fire({
 					  icon: "success",
-					  title: 'Usuario '+response+' creado exitosamente'
-					});
-			    } else if (response === 'Error: Email duplicado') {
-					Toast.fire({
-			          icon: 'error',
-					  title: response
+					  title: 'Ejercicio creado exitosamente'
 					});
 			    } else {
 					Toast.fire({
 			          icon: 'error',
-					  title: 'Error al crear el usuario'
+					  title: 'Error al crear el ejercicio'
 					});
 			    }
 			},

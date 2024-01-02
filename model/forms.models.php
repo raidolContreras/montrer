@@ -340,7 +340,7 @@ class FormsModels {
 		 $stmt->closeCursor();
 		 $stmt = null;  
 	}
-
+	
 	static public function mdlAddLogo($data){
 		$pdo = Conexion::conectar();
 		$sql = "UPDATE montrer_company SET logo = :logo WHERE idCompany = :idCompany";
@@ -355,5 +355,33 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+	
+	static public function mdlGetExercise(){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_exercise";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	
+		static public function mdlAddExercise($data){
+			$pdo = Conexion::conectar();
+			$sql = "INSERT INTO montrer_exercise(exerciseName, initialDate, finalDate, idRoot) VALUES (:exerciseName, :initialDate, :finalDate, :idRoot)";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':exerciseName', $data['exerciseName'], PDO::PARAM_STR);
+			$stmt->bindParam(':initialDate', $data['initialDate'], PDO::PARAM_STR);
+			$stmt->bindParam(':finalDate', $data['finalDate'], PDO::PARAM_STR);
+			$stmt->bindParam(':idRoot', $data['user'], PDO::PARAM_INT);
+			if($stmt->execute()){
+				return 'ok';
+			} else {
+				return 'Error';
+				print_r($pdo->errorInfo());
+			}
+			 $stmt->closeCursor();
+			 $stmt = null;  
+		}
 	
 }

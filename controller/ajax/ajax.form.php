@@ -36,6 +36,11 @@ session_start();
 			return $addLogo;
 		}
 
+		static public function AddExercise($data){
+			$addExercise = FormsController::ctrAddExercise($data);
+			return $addExercise;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -145,4 +150,18 @@ if (isset($_POST['idCompany']) && isset($_FILES['logo'])) {
             echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (jpg, jpeg, png).'));
         }
     }
+
+}
+
+if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POST['finalDate']) && isset($_POST['user'])) {
+	
+	$data = array(
+		'exerciseName' =>  $_POST['exerciseName'],
+		'initialDate' =>  $_POST['initialDate'],
+		'finalDate' =>  $_POST['finalDate'],
+		'user' => $_POST['user']
+	);
+	$addExercise = AjaxForm::AddExercise($data);
+	echo $addExercise;
+
 }

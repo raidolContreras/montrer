@@ -7,13 +7,13 @@
 					<a class="btn btn-primary" href="registerExercise">Nuevo ejercicio</a>
 				</div>
 
-				<table class="table table-responsive" id="areas">
+				<table class="table table-responsive" id="exercise">
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Area</th>
-							<th>Descripción</th>
-							<th>Encargado</th>
+							<th>Ejercicio</th>
+							<th>Inicio del Ejercicio</th>
+							<th>Cierre del Ejercicio</th>
 						</tr>
 					</thead>
 				</table>
@@ -24,4 +24,4 @@
 	<!-- End Main Content Area -->
 </div>
 
-<script src="assets/js/ajax-js/get-areas.js"></script>
+<script src="assets/js/ajax-js/get-exercise.js"></script>
