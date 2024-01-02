@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="exerciseName" class="form-label">Nombre del Ejercicio</label>
-                    <input type="text" class="form-control" id="exerciseName" name="exerciseName" placeholder="Nombre de la Ejercicio">
+                    <input type="text" class="form-control" id="exerciseName" name="exerciseName" placeholder="Nombre del Ejercicio">
                 </div>
                 <div class="col-md-6">
                     <label for="initialDate" class="form-label">Fecha de inicio del ejercicio</label>
