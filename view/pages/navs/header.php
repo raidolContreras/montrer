@@ -47,7 +47,7 @@
 														</div>
 												</div>
 
-												<div class="dropdown-wrap">
+												<!-- <div class="dropdown-wrap">
 														<ul class="profile-nav p-0 pt-3">
 																<li class="nav-item">
 																		<a href="profile.html" class="nav-link">
@@ -63,7 +63,7 @@
 																		</a>
 																</li> 
 														</ul>
-												</div>
+												</div> -->
 
 												<div class="dropdown-footer">
 														<ul class="profile-nav">
