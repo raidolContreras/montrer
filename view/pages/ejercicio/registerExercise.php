@@ -17,7 +17,7 @@
                     <input type="date" class="form-control" id="initialDate" name="initialDate">
                 </div>
                 <div class="col-md-6">
-                    <label for="finalDate" class="form-label">Fecha de inicio del ejercicio</label>
+                    <label for="finalDate" class="form-label">Fecha de cierre del ejercicio</label>
                     <input type="date" class="form-control" id="finalDate" name="finalDate">
                 </div>
 
