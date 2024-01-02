@@ -15,6 +15,7 @@
 							<th>Email</th>
 							<th>Fecha de Creación</th>
 							<th>Última Conexión</th>
+							<th>Acciones</th>
 						</tr>
 					</thead>
 				</table>

@@ -24,4 +24,4 @@
 	<!-- End Main Content Area -->
 </div>
 
-<script src="assets/js/ajax-js/get-areas.js"></script>
+<script src="assets/js/ajax-js/get-budgets.js"></script>
