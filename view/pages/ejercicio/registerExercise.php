@@ -20,6 +20,13 @@
                     <label for="finalDate" class="form-label">Fecha de cierre del ejercicio</label>
                     <input type="date" class="form-control" id="finalDate" name="finalDate">
                 </div>
+                <div class="col-md-6">
+                    <label for="budget" class="form-label">Presupuesto del ejercicio</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" step="any" class="form-control" id="budget" name="budget">
+                    </div>
+                </div>
 
                 <div class="col-12">
                     <input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">

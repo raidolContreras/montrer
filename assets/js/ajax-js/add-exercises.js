@@ -7,6 +7,7 @@ $(document).ready(function () {
 		var exerciseName = $("input[name='exerciseName']").val();
 		var initialDate = $("input[name='initialDate']").val();
 		var finalDate = $("input[name='finalDate']").val();
+		var budget = $("input[name='budget']").val();
 		var user = $("input[name='user']").val();
 
 		// Realiza la solicitud Ajax
@@ -17,6 +18,7 @@ $(document).ready(function () {
 				exerciseName: exerciseName,
 				initialDate: initialDate,
 				finalDate: finalDate,
+				budget: budget,
 				user: user
 			},
 			success: function (response) {

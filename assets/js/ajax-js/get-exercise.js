@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    moment.locale('es');
     $('#exercise').DataTable({
         ajax: {
             url: 'controller/ajax/getExercises.php', // Cambia el nombre del script PHP según tu estructura de archivos
@@ -13,8 +14,30 @@ $(document).ready(function () {
                     return '<a href="">' + data.exerciseName + '</a>';
                 }
             },
-            { data: 'initialDate' },
-            { data: 'finalDate' }
+            { 
+                data: 'initialDate',
+                render: function(data, type, row) {
+                    return moment(data).format('DD-MMM-YYYY');
+                }
+            },
+            { 
+                data: 'finalDate',
+                render: function(data, type, row) {
+                    return moment(data).format('DD-MMM-YYYY');
+                }
+            },
+            {
+                data: 'budget',
+                render: function (data, type, row) {
+                    // Formatea el número usando toLocaleString
+                    var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN'
+                    });
+
+                    return formattedBudget;
+                }
+            },
         ],
         language: {
             "paginate": {

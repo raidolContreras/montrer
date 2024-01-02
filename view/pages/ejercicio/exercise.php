@@ -1,3 +1,6 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/es.js"></script>
+
 	<!-- Start Main Content Area -->
 	<main class="main-content-wrap">
 		<div class="col-xl-12">
@@ -14,6 +17,7 @@
 							<th>Ejercicio</th>
 							<th>Inicio del Ejercicio</th>
 							<th>Cierre del Ejercicio</th>
+							<th>Presupuesto</th>
 						</tr>
 					</thead>
 				</table>

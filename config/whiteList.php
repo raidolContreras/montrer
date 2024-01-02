@@ -23,6 +23,8 @@
 			include "view/pages/company/$pagina.php";
 		} elseif ($pagina == 'exercise' || $pagina == 'registerExercise') {
 			include "view/pages/ejercicio/$pagina.php";
+		} elseif ($pagina == 'budgets' || $pagina == 'registerBudgets') {
+			include "view/pages/budgets/$pagina.php";
 		} else {
 			include "view/pages/404.php";
 		}

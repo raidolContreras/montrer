@@ -153,12 +153,13 @@ if (isset($_POST['idCompany']) && isset($_FILES['logo'])) {
 
 }
 
-if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POST['finalDate']) && isset($_POST['user'])) {
+if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POST['finalDate']) && isset($_POST['user']) && isset($_POST['budget'])) {
 	
 	$data = array(
 		'exerciseName' =>  $_POST['exerciseName'],
 		'initialDate' =>  $_POST['initialDate'],
 		'finalDate' =>  $_POST['finalDate'],
+		'budget' =>  $_POST['budget'],
 		'user' => $_POST['user']
 	);
 	$addExercise = AjaxForm::AddExercise($data);

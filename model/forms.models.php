@@ -368,11 +368,12 @@ class FormsModels {
 	
 		static public function mdlAddExercise($data){
 			$pdo = Conexion::conectar();
-			$sql = "INSERT INTO montrer_exercise(exerciseName, initialDate, finalDate, idRoot) VALUES (:exerciseName, :initialDate, :finalDate, :idRoot)";
+			$sql = "INSERT INTO montrer_exercise(exerciseName, initialDate, finalDate, budget, idRoot) VALUES (:exerciseName, :initialDate, :finalDate, :budget, :idRoot)";
 			$stmt = $pdo->prepare($sql);
 			$stmt->bindParam(':exerciseName', $data['exerciseName'], PDO::PARAM_STR);
 			$stmt->bindParam(':initialDate', $data['initialDate'], PDO::PARAM_STR);
 			$stmt->bindParam(':finalDate', $data['finalDate'], PDO::PARAM_STR);
+			$stmt->bindParam(':budget', $data['budget'], PDO::PARAM_STR);
 			$stmt->bindParam(':idRoot', $data['user'], PDO::PARAM_INT);
 			if($stmt->execute()){
 				return 'ok';
