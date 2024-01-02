@@ -20,7 +20,7 @@ $(document).ready(function () {
 				  toast: true,
 				  position: "top-end",
 				  showConfirmButton: false,
-				  timer: 3000,
+				  timer: 1000,
 				  timerProgressBar: true,
 				  didOpen: (toast) => {
 				    toast.onmouseenter = Swal.stopTimer;
@@ -36,7 +36,7 @@ $(document).ready(function () {
 					// Redirigir a la página de inicio
 					setTimeout(function () {
 						window.location.href = 'inicio';
-					}, 3000);
+					}, 1000);
 			    }else {
 					Toast.fire({
 			          icon: 'error',
