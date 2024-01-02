@@ -14,7 +14,7 @@ if (!$is_mobile) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
