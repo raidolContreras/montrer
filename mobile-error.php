@@ -46,6 +46,7 @@ if (!$is_mobile) {
 <body>
     <h1>Error - Acceso desde dispositivo móvil</h1>
     <p>Lo sentimos, el acceso a este portal desde dispositivos móviles no está permitido.</p>
+    <img src="assets\img\logo.png" alt="">
 </body>
 
 </html>
