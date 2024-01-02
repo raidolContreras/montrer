@@ -40,6 +40,11 @@ if (!$is_mobile) {
         p {
             color: #555;
         }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 
