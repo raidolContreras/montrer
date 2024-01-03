@@ -76,9 +76,6 @@ $(document).ready(function () {
             url: "controller/ajax/exerciseOn.php",
             data: { idExercise: idExercise },
             success: function (response) {
-                // Realiza las acciones necesarias después de activar el ejercicio
-                console.log(response);
-                // Por ejemplo, recargar la tabla de ejercicios
                 exerciseTable.ajax.reload();
             },
             error: function (error) {

@@ -400,7 +400,7 @@ class FormsModels {
 
 	static public function mdlActiveExercise(){
 	   $pdo = Conexion::conectar();
-	   $sql = "SELECT * FROM montrer_exercise WHERE status = 1";
+	   $sql = "SELECT budget, idExercise, exerciseName FROM montrer_exercise WHERE status = 1";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->execute();
 	   return $stmt->fetch();
