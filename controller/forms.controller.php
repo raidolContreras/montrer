@@ -2,6 +2,14 @@
 
 class FormsController {
 
+	static public function ctrActiveExercise(){
+		return FormsModels::mdlActiveExercise();
+	}
+
+	static public function ctrUpdateActiveExercise($idExercise){
+		return FormsModels::mdlUpdateActiveExercise($idExercise);
+	}
+
 	static public function ctrCreateUser($data){
 		return FormsModels::mdlCreateUser($data);
 	}
@@ -24,6 +32,11 @@ class FormsController {
 	static public function ctrGetExercise(){
 		$getExercise = FormsModels::mdlGetExercise();
     	return $getExercise;
+	}
+
+	static public function ctrGetBudgets(){
+		$getBudgets = FormsModels::mdlGetBudgets();
+    	return $getBudgets;
 	}
 
 	static public function ctrAddCompany($data){

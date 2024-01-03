@@ -1,8 +1,7 @@
 <?php
 
-
 	$pagina = $_GET['pagina'] ?? 'inicio';
-	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea', 'areas', 'company', 'registerCompany', 'exercise', 'registerExercise'];
+	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea', 'areas', 'company', 'registerCompany', 'exercise', 'registerExercise', 'budgets', 'registerBudgets'];
 
 
 	if (in_array($pagina, $navs)) {

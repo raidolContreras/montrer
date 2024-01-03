@@ -1,8 +1,8 @@
 $(document).ready(function () {
     moment.locale('es');
-    $('#exercise').DataTable({
+    var exerciseTable = $('#exercise').DataTable({
         ajax: {
-            url: 'controller/ajax/getExercises.php', // Cambia el nombre del script PHP según tu estructura de archivos
+            url: 'controller/ajax/getExercises.php',
             dataSrc: ''
         },
         columns: [
@@ -11,7 +11,7 @@ $(document).ready(function () {
                 data: null,
                 render: function(data, type, row) {
                     // Combina los campos de nombre y apellido en una sola columna y agrega un botón
-                    return '<a href="">' + data.exerciseName + '</a>';
+                    return data.exerciseName;
                 }
             },
             { 
@@ -38,6 +38,18 @@ $(document).ready(function () {
                     return formattedBudget;
                 }
             },
+            {
+                data: null,
+                render: function(data, type, row) {
+                    if (data.status === 0) {
+                        // Si status es 0, muestra el botón para activar
+                        return '<button data-exercise="' + data.idExercise + '" class="btn btn-success activate-btn">Activar</button>';
+                    } else {
+                        // En otros casos, puedes mostrar otro contenido o simplemente dejarlo vacío
+                        return '';
+                    }
+                }
+            }
         ],
         language: {
             "paginate": {
@@ -52,5 +64,26 @@ $(document).ready(function () {
             "info":           "Mostrando _START_ de _END_ en _TOTAL_ resultados",
             "infoEmpty":      "Mostrando 0 resultados",
         }
+    });
+
+    // Agrega un evento de clic al botón "Activar"
+    $('#exercise').on('click', '.activate-btn', function () {
+        var idExercise = $(this).data('exercise');
+
+        // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
+        $.ajax({
+            type: "POST",
+            url: "controller/ajax/exerciseOn.php",
+            data: { idExercise: idExercise },
+            success: function (response) {
+                // Realiza las acciones necesarias después de activar el ejercicio
+                console.log(response);
+                // Por ejemplo, recargar la tabla de ejercicios
+                exerciseTable.ajax.reload();
+            },
+            error: function (error) {
+                console.log("Error en la solicitud Ajax:", error);
+            }
+        });
     });
 });

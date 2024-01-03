@@ -50,6 +50,16 @@
                 <img src="assets/img/svg/exercise.svg" alt="calendar">
             </a>
         </li>
+
+        <?php 
+            // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
+            $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'budgets' || $_GET['pagina'] == 'registerBudgets')) ? 'active' : '';
+        ?>
+        <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
+            <a href="budgets" class="icon">
+                <img src="assets/img/svg/budget.svg" alt="calendar">
+            </a>
+        </li>
     </ul>
 </nav>
 <!-- End Sidebar Menu Area -->

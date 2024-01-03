@@ -18,6 +18,7 @@
 							<th>Inicio del Ejercicio</th>
 							<th>Cierre del Ejercicio</th>
 							<th>Presupuesto</th>
+							<th></th>
 						</tr>
 					</thead>
 				</table>

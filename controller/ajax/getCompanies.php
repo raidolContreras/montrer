@@ -5,4 +5,3 @@
 
     $getCompanies = FormsController::ctrGetCompanies();
     echo json_encode($getCompanies);
-?>

@@ -5,4 +5,3 @@
 
     $getUsers = FormsController::ctrGetUsers();
     echo json_encode($getUsers);
-?>

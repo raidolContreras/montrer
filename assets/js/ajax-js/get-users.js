@@ -8,7 +8,7 @@ $(document).ready(function () {
             { data: 'idUsers' },
             { 
                 data: null,
-                render: function(data, type, row) {
+                render: function(data) {
                     return data.firstname + ' ' + data.lastname;
                 }
             },

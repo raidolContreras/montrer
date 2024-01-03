@@ -366,23 +366,59 @@ class FormsModels {
 		$stmt = null;
 	}
 	
-		static public function mdlAddExercise($data){
-			$pdo = Conexion::conectar();
-			$sql = "INSERT INTO montrer_exercise(exerciseName, initialDate, finalDate, budget, idRoot) VALUES (:exerciseName, :initialDate, :finalDate, :budget, :idRoot)";
-			$stmt = $pdo->prepare($sql);
-			$stmt->bindParam(':exerciseName', $data['exerciseName'], PDO::PARAM_STR);
-			$stmt->bindParam(':initialDate', $data['initialDate'], PDO::PARAM_STR);
-			$stmt->bindParam(':finalDate', $data['finalDate'], PDO::PARAM_STR);
-			$stmt->bindParam(':budget', $data['budget'], PDO::PARAM_STR);
-			$stmt->bindParam(':idRoot', $data['user'], PDO::PARAM_INT);
-			if($stmt->execute()){
-				return 'ok';
-			} else {
-				return 'Error';
-				print_r($pdo->errorInfo());
-			}
-			 $stmt->closeCursor();
-			 $stmt = null;  
+	static public function mdlAddExercise($data){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_exercise(exerciseName, initialDate, finalDate, budget, idRoot) VALUES (:exerciseName, :initialDate, :finalDate, :budget, :idRoot)";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':exerciseName', $data['exerciseName'], PDO::PARAM_STR);
+		$stmt->bindParam(':initialDate', $data['initialDate'], PDO::PARAM_STR);
+		$stmt->bindParam(':finalDate', $data['finalDate'], PDO::PARAM_STR);
+		$stmt->bindParam(':budget', $data['budget'], PDO::PARAM_STR);
+		$stmt->bindParam(':idRoot', $data['user'], PDO::PARAM_INT);
+		if($stmt->execute()){
+			return 'ok';
+		} else {
+			return 'Error';
+			print_r($pdo->errorInfo());
 		}
+		$stmt->closeCursor();
+		$stmt = null;  
+	}
+	
+	static public function mdlGetBudgets(){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, e.status, e.idExercise
+				FROM montrer_budgets b
+				LEFT JOIN montrer_area a ON a.idArea = b.idArea
+				LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise;";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlActiveExercise(){
+	   $pdo = Conexion::conectar();
+	   $sql = "SELECT * FROM montrer_exercise WHERE status = 1";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->execute();
+	   return $stmt->fetch();
+	}
+
+	static public function mdlUpdateActiveExercise($idExercise){
+	   $pdo = Conexion::conectar();
+	   $sql = "UPDATE montrer_exercise SET status = 0 WHERE status = 1;";
+	   $sql .= "UPDATE montrer_exercise SET status = 1 WHERE idExercise = :idExercise ";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
+	   if($stmt->execute()){
+		return "ok";
+	   } else {
+		print_r($pdo->errorInfo());
+	   }
+	   $stmt->closeCursor();
+	   $stmt = null;
+	}
 	
 }

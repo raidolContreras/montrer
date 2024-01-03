@@ -5,4 +5,3 @@
 
     $getAreas = FormsController::ctrGetAreas();
     echo json_encode($getAreas);
-?>
