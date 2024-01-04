@@ -18,7 +18,7 @@
 							<th>Inicio del Ejercicio</th>
 							<th>Cierre del Ejercicio</th>
 							<th>Presupuesto</th>
-							<th></th>
+							<th width="10%"></th>
 						</tr>
 					</thead>
 				</table>

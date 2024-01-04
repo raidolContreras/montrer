@@ -42,13 +42,11 @@ $(document).ready(function () {
                 data: null,
                 render: function(data, type, row) {
                     if (data.status === 0) {
-                        // Si status es 0, muestra el botón para activar
-                        return '<button data-exercise="' + data.idExercise + '" class="btn btn-success activate-btn">Activar</button>';
+                        return '<div class="d-grid gap-2"><button data-exercise="' + data.idExercise + '" class="btn btn-success activate-btn mb-0 py-1 mx-3">Activar</button></div>';
                     } else {
-                        // En otros casos, puedes mostrar otro contenido o simplemente dejarlo vacío
-                        return '';
+                        return '<div class="alert alert-success mb-0 py-1 mx-3" role="alert"><div class="d-flex justify-content-center"><i class="ri-check-line"></i><p>Activo</p></div></div>';
                     }
-                }
+                }                
             }
         ],
         language: {

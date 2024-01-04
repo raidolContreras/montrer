@@ -376,13 +376,28 @@ class FormsModels {
 		$stmt->bindParam(':budget', $data['budget'], PDO::PARAM_STR);
 		$stmt->bindParam(':idRoot', $data['user'], PDO::PARAM_INT);
 		if($stmt->execute()){
-			return 'ok';
+			$idExercise = $pdo->lastInsertId();
+			$montrer_budget_net = FormsModels::mdlAddBudgetNet($idExercise, $data['budget']);
+			return $montrer_budget_net;
 		} else {
 			return 'Error';
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;  
+	}
+
+	static public function mdlAddBudgetNet($idExercise, $budget){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_budget_net(Exercise_idExercise, total_budget_net) VALUES (:Exercise_idExercise, :total_budget_net)";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':Exercise_idExercise', $idExercise, PDO::PARAM_INT);
+		$stmt->bindParam(':total_budget_net', $budget, PDO::PARAM_STR);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
 	}
 	
 	static public function mdlGetBudgets(){
@@ -419,6 +434,23 @@ class FormsModels {
 	   }
 	   $stmt->closeCursor();
 	   $stmt = null;
+	}
+	
+	static public function mdlAddBudgets($data){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_budgets(idArea, AuthorizedAmount, idExercise) VALUES (:area, :AuthorizedAmount, :exercise);";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':area', $data['area'], PDO::PARAM_INT);
+		$stmt->bindParam(':AuthorizedAmount', $data['AuthorizedAmount'], PDO::PARAM_STR);
+		$stmt->bindParam(':exercise', $data['exercise'], PDO::PARAM_INT);
+		if($stmt->execute()){
+			return 'ok';
+		} else {
+			return 'Error';
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;  
 	}
 	
 }

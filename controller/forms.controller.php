@@ -54,6 +54,22 @@ class FormsController {
     	return $addExercise;
 	}
 
+	static public function ctrAddBudgets($data){
+		$getBudgets = FormsModels::mdlGetBudgets();
+		$value = true;
+		foreach ($getBudgets as $budgets){
+			if($budgets['idArea'] == $data['area'] && $budgets['idExercise'] == $data['exercise']){
+				$value = false;
+			}
+		}
+		if ($value){
+			$addBudgets = FormsModels::mdlAddBudgets($data);
+		} else {
+			$addBudgets = 'Error: Presupuesto ya asignado';
+		}
+    	return $addBudgets;
+	}
+
 	static public function ctrLoginUser($data){
 		$value = '';
 		$selectUser = FormsModels::mdlSelectUser($data['email']);
