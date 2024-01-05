@@ -20,33 +20,36 @@ $(document).ready(function () {
 				level: level
 			},
 			success: function (response) {
-
-		    	const Toast = Swal.mixin({
-				  toast: true,
-				  position: "top-end",
-				  showConfirmButton: false,
-				  timer: 3000,
-				  timerProgressBar: true,
-				  didOpen: (toast) => {
-				    toast.onmouseenter = Swal.stopTimer;
-				    toast.onmouseleave = Swal.resumeTimer;
-				  }
-				});
+				
+				const Toast = Swal.mixin({
+					toast: true,
+					position: "center",
+					showConfirmButton: false,
+					timer: 3000,
+					timerProgressBar: true,
+					didOpen: (toast) => {
+					  toast.onmouseenter = Swal.stopTimer;
+					  toast.onmouseleave = Swal.resumeTimer;
+					}
+				  });				  
 
 			    if (response !== 'Error' && response !== 'Error: Email duplicado') {
-					Toast.fire({
+					Swal.fire({
 					  icon: "success",
-					  title: 'Usuario '+response+' creado exitosamente'
+					  title: 'Usuario '+response+' creado exitosamente',
+					  icon: "success"
 					});
 			    } else if (response === 'Error: Email duplicado') {
-					Toast.fire({
+					Swal.fire({
 			          icon: 'error',
-					  title: response
+					  title: response,
+					  icon: "error"
 					});
 			    } else {
-					Toast.fire({
+					Swal.fire({
 			          icon: 'error',
-					  title: 'Error al crear el usuario'
+					  title: 'Error al crear el usuario',
+					  icon: "error"
 					});
 			    }
 			},

@@ -11,8 +11,8 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Area</th>
-							<th>Presupuesto Autorizado</th>
+							<th>Departamento</th>
+							<th>Presupuesto autorizado</th>
 							<th>Ejercicio</th>
 						</tr>
 					</thead>

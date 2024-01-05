@@ -32,19 +32,22 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
-					Toast.fire({
+					Swal.fire({
 					  icon: "success",
-					  title: 'Presupuesto asignado'
+					  title: 'Presupuesto asignado',
+					  icon: "success"
 					});
 			    } else if (response === 'Error: Presupuesto ya asignado') {
-					Toast.fire({
+					Swal.fire({
 					  icon: "error",
-					  title: 'Presupuesto ya asignado a esta area'
+					  title: 'Presupuesto ya asignado a esta area',
+					  icon: "error"
 					});
 			    } else {
-					Toast.fire({
+					Swal.fire({
 			          icon: 'error',
-					  title: 'Error al asignar el presupuesto'
+					  title: 'Error al asignar el presupuesto',
+					  icon: "error"
 					});
 			    }
 			},

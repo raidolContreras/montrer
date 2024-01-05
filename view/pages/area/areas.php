@@ -3,17 +3,18 @@
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
 				<div class="main-title d-flex justify-content-between align-items-center">
-					<h3>Lista de Areas</h3>
-					<a class="btn btn-primary" href="registerArea">Nueva area</a>
+					<h3>Lista de Departamentos</h3>
+					<a class="btn btn-primary" href="registerArea">Nueva Departamento</a>
 				</div>
 
 				<table class="table table-responsive" id="areas">
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Area</th>
+							<th>Departamento</th>
 							<th>Descripción</th>
 							<th>Encargado</th>
+							<th width="20%"></th>
 						</tr>
 					</thead>
 				</table>

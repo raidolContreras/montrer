@@ -142,7 +142,12 @@ class FormsModels {
 						font-size: 20px;
 						font-weight: bold;
 						color: #ff0000;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						height: 100%;
 					}
+					
 					.link {
 						font-size: 16px;
 						text-decoration: none;
@@ -156,12 +161,11 @@ class FormsModels {
 						<img src="https://tests.contreras-flota.click/FinFlair/assets/img/logo.png" alt="Logo" class="logo">
 					</div>
 					<div class="content">
-						<p class="greeting">Hola '.$firstname.' '.$lastname.', Has sido registrado en nuestro sitio web FinFlair.</p>
-						<p class="message">Para acceder a tu cuenta, necesitas una contraseña temporal que te hemos generado. Esta es tu contraseña temporal:</p>
+						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuesto de Universidad Montrer.
+						Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://tests.hucco.com/" class="link">Ingresar a la plataforma</a>), el usuario es: correo electrónico y su '.$email.' temporal:
 						<p class="password">'.$password.'</p>
-						<p class="message">Te recomendamos que iniciar sesión con esta contraseña lo antes posible. Para hacerlo, puedes seguir este enlace:</p>
-						<p><a href="https://tests.contreras-flota.click/FinFlair/" class="link">Ingresar a la plataforma</a></p>
-						<p class="message">Si tienes alguna duda o problema, no dudes en contactarnos. Estamos para ayudarte.</p>
+						<p class="message">En el primer acceso, deberá cambiar su contraseña, respetando las siguientes condiciones: 10 caracteres (obligatorio: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo).</p>
+						<p Gracias.</p>
 					</div>
 					<div class="footer">
 						<p>© 2023 FinFlair. Todos los derechos reservados.</p>

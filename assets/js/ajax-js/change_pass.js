@@ -27,7 +27,7 @@ $(document).ready(function () {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'La contraseña debe contener al menos 1 letra mayúscula, 1 letra minúscula, 1 número, 1 símbolo y tener al menos 10 caracteres.',
+                text: 'La contraseña debe contener 10 caracteres, de los cuáles obligatoriamente: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo.',
             });
             return;
         }

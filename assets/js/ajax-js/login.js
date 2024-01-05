@@ -29,18 +29,20 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
-					Toast.fire({
+					Swal.fire({
 					  icon: "success",
-					  title: 'Inicio de sesión exitoso'
+					  title: 'Inicio de sesión exitoso',
+					  icon: "success"
 					});
 					// Redirigir a la página de inicio
 					setTimeout(function () {
 						window.location.href = 'inicio';
 					}, 1000);
 			    }else {
-					Toast.fire({
+					Swal.fire({
 			          icon: 'error',
-					  title: 'Error al iniciar sesión, verifica tu correo o contraseña'
+					  title: 'Error al iniciar sesión, verifica tu correo o contraseña',
+					  icon: "error"
 					});
 			    }
 			},

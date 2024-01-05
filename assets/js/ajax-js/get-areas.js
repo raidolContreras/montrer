@@ -20,6 +20,16 @@ $(document).ready(function () {
                     // Combina los campos de nombre y apellido en una sola columna y agrega un botón
                     return data.firstname + ' ' + data.lastname ;
                 }
+            },
+            {
+                data: null,
+                render: function(data, type, row) {
+                    var idArea = data.idArea;
+                    return '<div class="btn-group" role="group">' +
+                           '<button type="button" class="btn btn-success edit-button" data-id="' + idArea + '"><i class="ri-edit-line"></i> Editar</button>' +
+                           '<button type="button" class="btn btn-danger disable-button" data-id="' + idArea + '"><i class="ri-forbid-line"></i> Inhabilitar</button>' +
+                           '</div>';
+                }
             }
         ],
         language: {

@@ -13,7 +13,7 @@
 
 					<form class="account-wrap">
 						<div class="form-group mb-24 icon">
-							<input name="actualPassword" type="password" class="form-control" placeholder="Contraseña Actual" required>
+							<input name="actualPassword" type="password" class="form-control" placeholder="Contraseña actual" required>
 							<img src="assets/img/svg/lock.svg">
 						</div>
 						<div class="form-group mb-24 icon">

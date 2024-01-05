@@ -21,7 +21,7 @@ $(document).ready(function () {
 
 		    	const Toast = Swal.mixin({
 				  toast: true,
-				  position: "top-end",
+				  position: "center",
 				  showConfirmButton: false,
 				  timer: 1500,
 				  timerProgressBar: true,
@@ -32,14 +32,16 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
-					Toast.fire({
+					Swal.fire({
 					  icon: "success",
-					  title: 'Area registrada'
+					  title: 'Area registrada',
+					  icon: "success"
 					});
 			    } else {
-					Toast.fire({
+					Swal.fire({
 			          icon: 'error',
-					  title: 'Error al registrar el area'
+					  title: 'Error al registrar el area',
+					  icon: "error"
 					});
 			    }
 			},

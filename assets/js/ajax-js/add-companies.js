@@ -62,9 +62,10 @@ $(document).ready(function () {
 
                 if (response !== 'Error') {
                     
-					Toast.fire({
+					Swal.fire({
                         icon: "success",
-                        title: 'Empresa '+companyName+' creada exitosamente'
+                        title: 'Empresa '+companyName+' creada exitosamente',
+                        icon: "success"
                     });
 
                     idCompany = response;
@@ -85,9 +86,10 @@ $(document).ready(function () {
                     }, 1000);
 
                 } else {
-					Toast.fire({
+					Swal.fire({
 			          icon: 'error',
-					  title: response
+					  title: response,
+					  icon: "error"
 					});
                 }
             },

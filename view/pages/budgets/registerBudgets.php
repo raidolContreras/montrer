@@ -4,13 +4,13 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar Empresa</h3>
+            <h3>Registrar Presupuesto</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">
             <div class="row">
                 <div class="col-md-6">
-                    <label for="area" class="form-label">Area</label>
+                    <label for="area" class="form-label">Departamentos registrados</label>
                     <select name="area" id="area" class="form-select form-control" required>
                     </select>
                 </div>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-primary">Registrar Empresa</button>
+                    <button type="submit" class="btn btn-primary">Registrar Presupuesto</button>
                 </div>
             </div>
         </form>

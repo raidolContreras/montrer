@@ -11,7 +11,7 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Usuario</th>
+							<th>Nombre colabolador</th>
 							<th>Email</th>
 							<th>Fecha de Creación</th>
 							<th>Última Conexión</th>

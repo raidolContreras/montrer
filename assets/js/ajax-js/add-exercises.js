@@ -36,14 +36,16 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
-					Toast.fire({
+					Swal.fire({
 					  icon: "success",
-					  title: 'Ejercicio creado exitosamente'
+					  title: 'Ejercicio creado exitosamente',
+					  icon: "success"
 					});
 			    } else {
-					Toast.fire({
+					Swal.fire({
 			          icon: 'error',
-					  title: 'Error al crear el ejercicio'
+					  title: 'Error al crear el ejercicio',
+					  icon: "error"
 					});
 			    }
 			},

@@ -30,7 +30,7 @@
 							<img src="assets/img/svg/level.svg">
 							<select class="form-select form-control" name="level">
 								<option value="1">Administrador</option>
-								<option value="2">Encargado de area</option>
+								<option value="2">Responsable de departamento</option>
 							</select>
 						</div>
 						<div class="form-group mb-24">
