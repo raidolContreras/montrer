@@ -137,6 +137,7 @@ class FormsModels {
 					.message {
 						font-size: 18px;
 						line-height: 1.5;
+						text-align: justify;
 					}
 					.password {
 						font-size: 20px;
