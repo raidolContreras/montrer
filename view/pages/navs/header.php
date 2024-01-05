@@ -23,7 +23,7 @@
 
 										<div class="main-logo">
 												<a href="inicio">
-														<img src="assets/img/logo.png" width="70px" class="m-0" alt="main-logo">
+														<img src="assets/img/logo.png" width="150px" class="m-0" alt="main-logo">
 												</a>
 										</div>
 
