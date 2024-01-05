@@ -6,7 +6,7 @@
             $activeInicio = (!isset($_GET['pagina']) || $_GET['pagina'] == 'inicio') ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeInicio; ?>">
-            <a href="inicio" class="icon">
+            <a href="inicio" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Inicio">
                 <img src="assets/img/svg/element.svg" alt="element">
             </a>
         </li>
@@ -16,7 +16,7 @@
             $activeRegisters = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registers' || $_GET['pagina'] == 'register')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeRegisters; ?>">
-            <a href="registers" class="icon">
+            <a href="registers" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Registros de usuarios">
                 <img src="assets/img/svg/profile-2user.svg" alt="calendar">
             </a>
         </li>
@@ -26,7 +26,7 @@
             $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea' || $_GET['pagina'] == 'areas')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
-            <a href="areas" class="icon">
+            <a href="areas" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Departamentos">
                 <img src="assets/img/svg/area.svg" alt="calendar">
             </a>
         </li>
@@ -46,7 +46,7 @@
             $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'exercise' || $_GET['pagina'] == 'registerExercise')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
-            <a href="exercise" class="icon">
+            <a href="exercise" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Ejercicios">
                 <img src="assets/img/svg/exercise.svg" alt="calendar">
             </a>
         </li>
@@ -56,10 +56,16 @@
             $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'budgets' || $_GET['pagina'] == 'registerBudgets')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
-            <a href="budgets" class="icon">
+            <a href="budgets" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Asignación de presupuestos">
                 <img src="assets/img/svg/budget.svg" alt="calendar">
             </a>
         </li>
     </ul>
 </nav>
 <!-- End Sidebar Menu Area -->
+
+<script>
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip()
+    })
+</script>
