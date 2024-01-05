@@ -29,8 +29,8 @@
 								<div class="col-lg-4 col-sm-6">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
-											<h5>Areas</h5>
-											<h4>1</h4>
+											<h5>Departamentos</h5>
+											<h4>3</h4>
 										</div>
 										<div class="icon">
 											<img src="assets/img/svg/area.svg" alt="eye" style="filter: brightness(100)">
