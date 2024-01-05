@@ -93,7 +93,7 @@ class FormsModels {
 		
 			// enviar un correo electrónico al usuario creado
 			$to = $email; // la dirección de correo electrónico del usuario
-			$subject = "Bienvenido a nuestro sitio web"; // el asunto del correo electrónico
+			$subject = "Bienvenido a la plataforma de presupuestos"; // el asunto del correo electrónico
 			// el cuerpo del correo electrónico en HTML
 			$message = '
 			<html>
@@ -161,21 +161,23 @@ class FormsModels {
 						<img src="https://tests.contreras-flota.click/FinFlair/assets/img/logo.png" alt="Logo" class="logo">
 					</div>
 					<div class="content">
-						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuesto de Universidad Montrer.
-						Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://tests.hucco.com/" class="link">Ingresar a la plataforma</a>), el usuario es: correo electrónico y su '.$email.' temporal:
-						<p class="password">'.$password.'</p>
+						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuesto de Universidad Montrer.</p>
+						<p class="message">Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://tests.hucco.com/" class="link">Ingresar a la plataforma</a>), su usuario es: '.$email.' y su contraseña temporal:
+						<center><p class="password">'.$password.'</p></center>
 						<p class="message">En el primer acceso, deberá cambiar su contraseña, respetando las siguientes condiciones: 10 caracteres (obligatorio: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo).</p>
 						<p Gracias.</p>
 					</div>
 					<div class="footer">
-						<p>© 2023 FinFlair. Todos los derechos reservados.</p>
+						<p>© 2024 UNIMO. Todos los derechos reservados.</p>
 					</div>
 				</div>
 			</body>
 			</html>';
+			// Nombre personalizado
+			$fromName = "UNIMO (NO RESPONDER)";
 
 			// el encabezado De y el tipo de contenido
-			$headers = "From: noreply@finflair.com\r\n";
+			$headers = "From: $fromName <noreply@unimontrer.edu.mx>\r\n";
 			$headers .= "Content-type: text/html\r\n";
 			// llamar a la función mail ()
 			mail ($to, $subject, $message, $headers);

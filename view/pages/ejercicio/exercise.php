@@ -6,7 +6,7 @@
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
 				<div class="main-title d-flex justify-content-between align-items-center">
-					<h3>Lista de Ejercicios</h3>
+					<h3>Lista de ejercicios</h3>
 					<a class="btn btn-primary" href="registerExercise">Nuevo ejercicio</a>
 				</div>
 
@@ -15,8 +15,8 @@
 						<tr>
 							<th>#</th>
 							<th>Ejercicio</th>
-							<th>Inicio del Ejercicio</th>
-							<th>Cierre del Ejercicio</th>
+							<th>Inicio del ejercicio</th>
+							<th>Cierre del ejercicio</th>
 							<th>Presupuesto</th>
 							<th width="10%"></th>
 						</tr>

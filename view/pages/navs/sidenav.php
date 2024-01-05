@@ -6,7 +6,7 @@
             $activeInicio = (!isset($_GET['pagina']) || $_GET['pagina'] == 'inicio') ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeInicio; ?>">
-            <a href="inicio" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Inicio">
+            <a href="inicio" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Tablero">
                 <img src="assets/img/svg/element.svg" alt="element">
             </a>
         </li>
@@ -16,7 +16,7 @@
             $activeRegisters = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registers' || $_GET['pagina'] == 'register')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeRegisters; ?>">
-            <a href="registers" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Registros de usuarios">
+            <a href="registers" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Usuarios">
                 <img src="assets/img/svg/profile-2user.svg" alt="calendar">
             </a>
         </li>

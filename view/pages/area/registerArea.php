@@ -6,21 +6,21 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar Departamento</h3>
+            <h3>Registrar departamento</h3>
         </div>
 
         <form class="account-wrap">
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label for="areaName" class="form-label">Nombre del Departamento</label>
-                    <input type="text" class="form-control" id="areaName" name="areaName" placeholder="Nombre del Departamento">
+                    <label for="areaName" class="form-label">Nombre del departamento</label>
+                    <input type="text" class="form-control" id="areaName" name="areaName" placeholder="Nombre del departamento">
                 </div>
                 <div class="col-md-6">
-                    <label for="areaDescription" class="form-label">Descripción del Departamento</label>
+                    <label for="areaDescription" class="form-label">Descripción del departamento</label>
                     <input type="text" class="form-control" id="areaDescription" name="areaDescription">
                 </div>
                 <div class="col-md-6">
-                    <label for="responsibleUser" class="form-label">Usuario Encargado</label>
+                    <label for="responsibleUser" class="form-label">Usuario encargado</label>
                     <select id="responsibleUser" name="user" class="form-select form-control">
                         <option selected disabled>Seleccionar...</option>
                         <?php foreach ($users as $user): ?>

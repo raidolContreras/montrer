@@ -3,8 +3,8 @@
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
 				<div class="main-title d-flex justify-content-between align-items-center">
-					<h3>Lista de Presupuestos</h3>
-					<a class="btn btn-primary" href="registerBudgets">Asignar Presupuesto</a>
+					<h3>Lista de presupuestos</h3>
+					<a class="btn btn-primary" href="registerBudgets">Asignar presupuesto</a>
 				</div>
 
 				<table class="table table-responsive" id="budgets">

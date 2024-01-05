@@ -3,8 +3,8 @@
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
 				<div class="main-title d-flex justify-content-between align-items-center">
-					<h3>Lista de Departamentos</h3>
-					<a class="btn btn-primary" href="registerArea">Nueva Departamento</a>
+					<h3>Lista de departamentos</h3>
+					<a class="btn btn-primary" href="registerArea">Nuevo departamento</a>
 				</div>
 
 				<table class="table table-responsive" id="areas">

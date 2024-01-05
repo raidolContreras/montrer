@@ -3,14 +3,14 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar Ejercicio</h3>
+            <h3>Registrar ejercicio</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">
             <div class="row">
                 <div class="col-md-6">
-                    <label for="exerciseName" class="form-label">Nombre del Ejercicio</label>
-                    <input type="text" class="form-control" id="exerciseName" name="exerciseName" placeholder="Nombre del Ejercicio">
+                    <label for="exerciseName" class="form-label">Nombre del ejercicio</label>
+                    <input type="text" class="form-control" id="exerciseName" name="exerciseName" placeholder="Nombre del ejercicio">
                 </div>
                 <div class="col-md-6">
                     <label for="initialDate" class="form-label">Fecha de inicio del ejercicio</label>
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-primary">Registrar Ejercicio</button>
+                    <button type="submit" class="btn btn-primary">Registrar ejercicio</button>
                 </div>
             </div>
         </form>

@@ -8,8 +8,7 @@
 					<div class="overview-content-wrap card-box-style">
 						<div class="overview-content d-flex justify-content-between align-items-center">
 							<div class="overview-title">
-								<h3>Audience Overview</h3>
-								<span>1 July, 2021 - 14 July, 2021</span>
+								<h3>Datos generales</h3>
 							</div>
 						</div>
 
@@ -18,8 +17,8 @@
 								<div class="col-lg-4 col-sm-6">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
-											<h5>Users</h5>
-											<h4>2</h4>
+											<h5>Usuarios</h5>
+											<h4>3</h4>
 										</div>
 										<div class="icon">
 											<img src="assets/img/svg/white-profile-2user.svg" alt="white-profile-2user">

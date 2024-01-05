@@ -5,13 +5,13 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar Empresa</h3>
+            <h3>Registrar empresa</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">
             <div class="row">
                 <div class="col-md-6">
-                    <label for="companyName" class="form-label">Nombre de la Empresa</label>
+                    <label for="companyName" class="form-label">Nombre de la empresa</label>
                     <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Nombre de la Empresa">
                 </div>
                 <!-- ... Otras partes del formulario ... -->
@@ -52,12 +52,12 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="areaDescription" class="form-label">Descripción de la Empresa</label>
-                    <input type="text" class="form-control" id="companyDescription" name="companyDescription" placeholder="Descripción de la Empresa">
+                    <label for="areaDescription" class="form-label">Descripción de la empresa</label>
+                    <input type="text" class="form-control" id="companyDescription" name="companyDescription" placeholder="Descripción de la empresa">
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-primary">Registrar Empresa</button>
+                    <button type="submit" class="btn btn-primary">Registrar empresa</button>
                 </div>
             </div>
         </form>

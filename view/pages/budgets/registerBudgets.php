@@ -4,7 +4,7 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar Presupuesto</h3>
+            <h3>Registrar presupuesto</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-primary">Registrar Presupuesto</button>
+                    <button type="submit" class="btn btn-primary">Registrar presupuesto</button>
                 </div>
             </div>
         </form>

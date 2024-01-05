@@ -48,9 +48,9 @@
 						<div class="row align-items-center">
 							<div class="col-xl-6 col-sm-6">
 								<div class="single-click-content">
-									<span class="features-title">Presupuesto Restante</span>
+									<span class="features-title">Presupuesto restante</span>
 									<h3>$ 1,025,100 <span>81.98%</span></h3>
-									<p>Presupuesto restante en el Ejercicio 2024.</p>
+									<p>Presupuesto restante en el ejercicio 2024.</p>
 								</div>
 							</div>
 
