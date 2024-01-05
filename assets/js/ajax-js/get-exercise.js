@@ -40,10 +40,11 @@ $(document).ready(function () {
             },
             {
                 data: null,
-                render: function(data, type, row) {
+                render: function(data) {
                     if (data.status === 0) {
                         return '<div class="d-grid gap-2"><button data-exercise="' + data.idExercise + '" class="btn btn-success activate-btn mb-0 py-1 mx-3">Activar</button></div>';
                     } else {
+                        console.log(data.exerciseName);
                         return '<div class="alert alert-success mb-0 py-1 mx-3" role="alert"><div class="d-flex justify-content-center"><i class="ri-check-line"></i><p>Activo</p></div></div>';
                     }
                 }                

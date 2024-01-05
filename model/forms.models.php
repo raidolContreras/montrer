@@ -132,24 +132,20 @@ class FormsModels {
 					}
 					.greeting {
 						font-size: 18px;
-						font-weight: bold;
+						text-align: justify;
 					}
 					.message {
-						font-size: 16px;
+						font-size: 18px;
 						line-height: 1.5;
 					}
 					.password {
 						font-size: 20px;
 						font-weight: bold;
 						color: #ff0000;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						height: 100%;
 					}
 					
 					.link {
-						font-size: 16px;
+						font-size: 18px;
 						text-decoration: none;
 						color: #0000ff;
 					}
@@ -158,7 +154,7 @@ class FormsModels {
 			<body>
 				<div class="container">
 					<div class="header">
-						<img src="https://tests.contreras-flota.click/FinFlair/assets/img/logo.png" alt="Logo" class="logo">
+						<img src="https://tests.hucco.com.mx/assets/img/logo.png" alt="Logo" class="logo">
 					</div>
 					<div class="content">
 						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuesto de Universidad Montrer.</p>
@@ -174,7 +170,7 @@ class FormsModels {
 			</body>
 			</html>';
 			// Nombre personalizado
-			$fromName = "UNIMO (NO RESPONDER)";
+			$fromName = "UNIMO (no responder)";
 
 			// el encabezado De y el tipo de contenido
 			$headers = "From: $fromName <noreply@unimontrer.edu.mx>\r\n";
