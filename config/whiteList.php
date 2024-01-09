@@ -1,7 +1,7 @@
 <?php
 
 	$pagina = $_GET['pagina'] ?? 'inicio';
-	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea', 'areas', 'company', 'registerCompany', 'exercise', 'registerExercise', 'budgets', 'registerBudgets'];
+	$navs = ['inicio', 'registers', 'register', 'change_pass', 'registerArea', 'areas', 'company', 'registerCompany', 'exercise', 'registerExercise', 'budgets', 'registerBudgets', 'editRegister'];
 
 
 	if (in_array($pagina, $navs)) {
@@ -10,7 +10,7 @@
 	}
 	
 	if (isset($_SESSION['sesion']) && $pagina != 'login'){
-		if ($pagina == 'register' || $pagina == 'registers') {
+		if ($pagina == 'register' || $pagina == 'registers' || $pagina == 'editRegister') {
 			include "view/pages/register/$pagina.php";
 		} elseif ($pagina == 'inicio') {
 			include "view/pages/$pagina.php";

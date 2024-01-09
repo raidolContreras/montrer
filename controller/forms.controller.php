@@ -59,6 +59,11 @@ class FormsController {
     	return $addExercise;
 	}
 
+	static public function ctrGetUser($register){
+		$getUser = FormsModels::mdlGetUser($register);
+    	return $getUser;
+	}
+
 	static public function ctrAddBudgets($data){
 		$getBudgets = FormsModels::mdlGetBudgets();
 		$value = true;
@@ -128,5 +133,10 @@ class FormsController {
 	static public function ctrAddArea($data){
 	   $addArea = FormsModels::mdlAddArea($data);
 	   return $addArea;
+	}
+
+	static public function ctrUpdateUser($data){
+		$updateUser = FormsModels::mdlUpdateUser($data);
+		return $updateUser;
 	}
 }

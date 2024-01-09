@@ -472,5 +472,35 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;  
 	}
+
+	static public function mdlGetUser($register){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT u.idUsers, u.firstname, u.lastname, s.level, u.email FROM montrer_users u
+				LEFT JOIN montrer_settings s ON s.idUser = u.idUsers
+				WHERE u.idUsers = :idUsers";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUsers', $register, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlUpdateUser($data){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_users SET firstname = :firstname, lastname = :lastname, email = :email WHERE idUsers = :idUsers ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':firstname', $data['firstname'], PDO::PARAM_STR);
+		$stmt->bindParam(':lastname', $data['lastname'], PDO::PARAM_STR);
+		$stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_STR);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }

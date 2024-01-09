@@ -46,6 +46,11 @@ session_start();
 			return $addBudgets;
 		}
 
+		static public function UpdateUser($data){
+			$updateUser = FormsController::ctrUpdateUser($data);
+			return $updateUser;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -182,4 +187,16 @@ if (isset($_POST['area']) && isset($_POST['AuthorizedAmount']) && isset($_POST['
 	$addBudgets = AjaxForm::AddBudgets($data);
 	echo $addBudgets;
 
+}
+
+if (isset($_POST['updateFirstname']) && isset($_POST['updateLastname']) && isset($_POST['updateEmail']) && isset($_POST['updateLevel']) && isset($_POST['updateUser'])) {
+	$data = array (
+		'firstname' => $_POST['updateFirstname'],
+		'lastname' => $_POST['updateLastname'],
+		'email' => $_POST['updateEmail'],
+		'level' => $_POST['updateLevel'],
+		'user' => $_POST['updateUser'],
+	);
+	$updateUser = AjaxForm::UpdateUser($data);
+	echo $updateUser;
 }
