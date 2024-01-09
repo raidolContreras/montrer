@@ -18,7 +18,7 @@
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
 											<h5>Usuarios</h5>
-											<h4>3</h4>
+											<h4 class="count-user"></h4>
 										</div>
 										<div class="icon">
 											<img src="assets/img/svg/white-profile-2user.svg" alt="white-profile-2user">
@@ -30,7 +30,7 @@
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
 											<h5>Departamentos</h5>
-											<h4>3</h4>
+											<h4 class="count-area"></h4>
 										</div>
 										<div class="icon">
 											<img src="assets/img/svg/area.svg" alt="eye" style="filter: brightness(100)">
@@ -42,7 +42,7 @@
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content color-style-fe5957">
 											<h5>Ejercicio actual</h5>
-											<h4>Ejercicio 2024</h4>
+											<h4 class="exercise"></h4>
 										</div>
 										<div class="icon">
 											<img src="assets/img/svg/mask.svg" alt="mask">
@@ -57,3 +57,5 @@
 						</div>
 					</div>
 				</div>
+				
+<script src="assets/js/ajax-js/counts.js"></script>

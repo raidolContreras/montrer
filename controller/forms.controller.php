@@ -1,6 +1,11 @@
 <?php 
 
 class FormsController {
+	// Inicio de Contadores
+	static public function ctrCountAreas(){
+		return FormsModels::mdlCountAreas();
+	}
+	// Fin de Contadores
 
 	static public function ctrActiveExercise(){
 		return FormsModels::mdlActiveExercise();

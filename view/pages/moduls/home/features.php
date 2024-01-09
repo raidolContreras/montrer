@@ -9,8 +9,8 @@
 							<div class="col-xl-6 col-sm-6">
 								<div class="single-click-content">
 									<span class="features-title">Total presupuesto</span>
-									<h3>$ 1,250,500</h3>
-									<p>Total del presupuesto aprobado para el Ejercicio 2024.</p>
+									<h3 class="budget"></h3>
+									<p class="budget-message"></p>
 								</div>
 							</div>
 
@@ -29,8 +29,8 @@
 							<div class="col-xl-6 col-sm-6">
 								<div class="single-click-content">
 									<span class="features-title">Presupuesto utilizado</span>
-									<h3>$ 225,400 <span>18.02%</span></h3>
-									<p>Presupuesto utilizado en el Ejercicio 2024.</p>
+									<h3 class="total-use"></h3>
+									<p class="budget-message-uses"></p>
 								</div>
 							</div>
 
@@ -49,8 +49,8 @@
 							<div class="col-xl-6 col-sm-6">
 								<div class="single-click-content">
 									<span class="features-title">Presupuesto restante</span>
-									<h3>$ 1,025,100 <span>81.98%</span></h3>
-									<p>Presupuesto restante en el ejercicio 2024.</p>
+									<h3 class="rest"></h3>
+									<p class="budget-message-rest"></p>
 								</div>
 							</div>
 

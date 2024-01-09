@@ -15,6 +15,23 @@ function generarPassword() {
 
 class FormsModels {
 
+	// Inicio de Contadores
+	static public function mdlCountAreas(){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT 
+				(SELECT COUNT(*) FROM montrer_area WHERE status = 1) AS areas,
+				(SELECT COUNT(*) FROM montrer_users u LEFT JOIN montrer_settings s ON s.idUser = u.idUsers WHERE s.status = 1) AS users,
+				(SELECT exerciseName FROM montrer_exercise WHERE status = 1 ) AS name,
+				(SELECT budget FROM montrer_exercise WHERE status = 1 ) AS budget,
+				(SELECT bn.total_budget_net FROM montrer_budget_net bn LEFT JOIN montrer_exercise e ON e.idExercise = bn.Exercise_idExercise WHERE e.status = 1  ) AS rest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	// Fin de Contadores
+
 	static public function mdlCreateUser($data){
 		try {
 			$pdo = Conexion::conectar();
