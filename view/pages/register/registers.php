@@ -25,5 +25,44 @@
 	</main>
 	<!-- End Main Content Area -->
 </div>
+<!-- Disable Modal -->
+<div class="modal fade" id="disableModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="disableModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="disableModalLabel">Inhabilitar Usuario</h5>
+      </div>
+      <div class="modal-body">
+        <p id="userInfo">¿Estás seguro de que deseas inhabilitar al usuario <strong id="userName"></strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmDisable">Inhabilitar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Enable Modal -->
+<div class="modal fade" id="enableModal" tabindex="-1" aria-labelledby="enableModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enableModalLabel">Habilitar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas habilitar al usuario <strong id="enableUserName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmEnable">Habilitar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script src="assets/js/ajax-js/get-users.js"></script>
+<script src="assets/js/sweetalert2.all.min.js"></script>

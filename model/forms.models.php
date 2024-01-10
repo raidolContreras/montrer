@@ -204,7 +204,9 @@ class FormsModels {
 	
 	static public function mdlGetUsers(){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_users";
+		$sql = "SELECT u.idUsers, u.firstname, u.lastname, u.email, s.status, s.level, u.lastConection, u.createDate
+				FROM montrer_users u
+				LEFT JOIN montrer_settings s ON s.idUser = u.idUsers;";
 		$stmt = $pdo->prepare($sql);
 		
 		if ($stmt->execute()){
@@ -312,7 +314,7 @@ class FormsModels {
 
 	static public function mdlGetAreas(){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT a.idArea, a.nameArea, a.description, u.firstname, u.lastname FROM montrer_area a
+		$sql = "SELECT a.idArea, a.nameArea, a.description, u.firstname, u.lastname, a.status FROM montrer_area a
 				LEFT JOIN montrer_users u ON u.idUsers = a.idUser;";
 		$stmt = $pdo->prepare($sql);
 		
@@ -494,6 +496,62 @@ class FormsModels {
 		$stmt->bindParam(':lastname', $data['lastname'], PDO::PARAM_STR);
 		$stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
 		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_STR);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlDeleteRegister($idUsers){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_settings SET status = 0 WHERE idUser = :idUser ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUsers, PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	
+	static public function mdlEnableRegister($idUsers){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_settings SET status = 1 WHERE idUser = :idUser ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUsers, PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	
+	static public function mdlDisableArea($idArea){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_area SET status = 0 WHERE idArea = :idArea ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	
+	static public function mdlEnableArea($idArea){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_area SET status = 1 WHERE idArea = :idArea ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		if($stmt->execute()){
 			return "ok";
 		} else {

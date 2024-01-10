@@ -139,4 +139,24 @@ class FormsController {
 		$updateUser = FormsModels::mdlUpdateUser($data);
 		return $updateUser;
 	}
+
+	static public function ctrDeleteRegister($idUsers){
+		$deleteRegister = FormsModels::mdlDeleteRegister($idUsers);
+		return $deleteRegister;
+	}
+
+	static public function ctrEnableRegister($idUsers){
+		$enableRegister = FormsModels::mdlEnableRegister($idUsers);
+		return $enableRegister;
+	}
+
+	static public function ctrDisableArea($idArea){
+		$disableArea = FormsModels::mdlDisableArea($idArea);
+		return $disableArea;
+	}
+
+	static public function ctrEnableArea($idArea){
+		$enableArea = FormsModels::mdlEnableArea($idArea);
+		return $enableArea;
+	}
 }

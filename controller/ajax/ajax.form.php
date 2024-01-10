@@ -51,6 +51,26 @@ session_start();
 			return $updateUser;
 		}
 
+		static public function DeleteRegister($idUsers){
+			$deleteRegister = FormsController::ctrDeleteRegister($idUsers);
+			return $deleteRegister;
+		}
+
+		static public function EnableRegister($idUsers){
+			$enableRegister = FormsController::ctrEnableRegister($idUsers);
+			return $enableRegister;
+		}
+
+		static public function DisableArea($idArea){
+			$disableArea = FormsController::ctrDisableArea($idArea);
+			return $disableArea;
+		}
+
+		static public function EnableArea($idArea){
+			$enableArea = FormsController::ctrEnableArea($idArea);
+			return $enableArea;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -199,4 +219,24 @@ if (isset($_POST['updateFirstname']) && isset($_POST['updateLastname']) && isset
 	);
 	$updateUser = AjaxForm::UpdateUser($data);
 	echo $updateUser;
+}
+
+if (isset($_POST['disableUser'])) {
+	$deleteRegister = AjaxForm::DeleteRegister($_POST['disableUser']);
+	echo $deleteRegister;
+}
+
+if (isset($_POST['enableUser'])) {
+	$enableRegister = AjaxForm::EnableRegister($_POST['enableUser']);
+	echo $enableRegister;
+}
+
+if (isset($_POST['disableArea'])) {
+	$disableArea = AjaxForm::DisableArea($_POST['disableArea']);
+	echo $disableArea;
+}
+
+if (isset($_POST['enableArea'])) {
+	$enableArea = AjaxForm::EnableArea($_POST['enableArea']);
+	echo $enableArea;
 }

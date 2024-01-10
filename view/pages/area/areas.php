@@ -24,5 +24,42 @@
 	</main>
 	<!-- End Main Content Area -->
 </div>
+<!-- Disable Area Modal -->
+<div class="modal fade" id="disableAreaModal" tabindex="-1" aria-labelledby="disableAreaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disableAreaModalLabel">Inhabilitar Área</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas inhabilitar el área <strong id="disableAreaName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDisableArea">Inhabilitar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enable Area Modal -->
+<div class="modal fade" id="enableAreaModal" tabindex="-1" aria-labelledby="enableAreaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enableAreaModalLabel">Habilitar Área</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas habilitar el área <strong id="enableAreaName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmEnableArea">Habilitar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="assets/js/ajax-js/get-areas.js"></script>

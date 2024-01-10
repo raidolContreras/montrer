@@ -16,6 +16,9 @@ function getUser(registerValue) {
         dataType: 'json',
         success: function (response) {
             console.log('Respuesta del servidor:', response);
+            if (response == false) {
+                window.location.href = "registers";
+            }
 
             // Rellena el formulario con los datos obtenidos
             $('input[name="firstname"]').val(response.firstname);
