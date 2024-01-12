@@ -107,8 +107,13 @@ class FormsController {
 		}
 
 		if($value == "ok"){
-			$selectUser['changedPass'] = $changedPass;
-			$selectUser['sesion'] = $value;
+			if ($selectUser['status'] === 0) {
+				$selectUser['changedPass'] = $changedPass;
+				$selectUser['sesion'] = 'status off';
+			} else {
+				$selectUser['changedPass'] = $changedPass;
+				$selectUser['sesion'] = $value;
+			}
 		}
 		
 		return $selectUser;

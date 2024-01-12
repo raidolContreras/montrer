@@ -222,7 +222,7 @@ class FormsModels {
 
 	static public function mdlSelectUser($email){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_users WHERE email = :email";
+		$sql = "SELECT * FROM montrer_users u LEFT JOIN montrer_settings s ON s.idUser = u.idUsers WHERE email =:email";
 		$stmt = $pdo->prepare($sql);
 		
 		$stmt->bindParam(':email', $email, PDO::PARAM_STR);

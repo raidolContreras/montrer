@@ -38,6 +38,12 @@ $(document).ready(function () {
 					setTimeout(function () {
 						window.location.href = 'inicio';
 					}, 1000);
+			    }else if (response === 'status off') {
+					Swal.fire({
+						title: "Usuario Inhabilitado",
+						icon: "warning",
+						text: 'Comuniquese con dirección en caso de haber un error.',
+					});
 			    }else {
 					Swal.fire({
 			          icon: 'error',

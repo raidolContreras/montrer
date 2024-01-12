@@ -99,14 +99,16 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	if (!isset($loginUser['sesion'])) {
 		print_r( $loginUser);
 	} else {
-		$_SESSION['sesion'] = $loginUser['sesion'];
-		$_SESSION['idUser'] = $loginUser['idUsers'];
-		$_SESSION['firstname'] = $loginUser['firstname'];
-		$_SESSION['lastname'] = $loginUser['lastname'];
-		$_SESSION['email'] = $loginUser['email'];
-		$_SESSION['changedPass'] = $loginUser['changedPass'];
+		if ($loginUser['sesion'] == 'ok'){
+			$_SESSION['sesion'] = $loginUser['sesion'];
+			$_SESSION['idUser'] = $loginUser['idUsers'];
+			$_SESSION['firstname'] = $loginUser['firstname'];
+			$_SESSION['lastname'] = $loginUser['lastname'];
+			$_SESSION['email'] = $loginUser['email'];
+			$_SESSION['changedPass'] = $loginUser['changedPass'];
+		}
 
-		echo $_SESSION['sesion'];
+		echo $loginUser['sesion'];
 	}
 
 }
