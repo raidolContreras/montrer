@@ -97,23 +97,20 @@ class FormsController {
 				$value = "Error";
 				$selectUser = "Error: correo no existente";
 			}
-		} elseif (!empty($selectUser) && $selectUser['password'] == $cryptPassword) {
+		} elseif (!empty($selectUser) && $selectUser['password'] == $cryptPassword && $selectUser['status'] == 1) {
 			FormsModels::mdlUpdateLog($selectUser['idUsers']);
 			$changedPass = 0;
 			$value = "ok";
+			$selectUser['changedPass'] = $changedPass;
+			$selectUser['sesion'] = $value;
+		} elseif ($selectUser['status'] == 0) {
+			$changedPass = 0;
+			$value = "status off";
+			$selectUser['changedPass'] = $changedPass;
+			$selectUser['sesion'] = $value;
 		} else {
 			$value = "error";
 			$selectUser = "Error: datos incorrectos";
-		}
-
-		if($value == "ok"){
-			if ($selectUser['status'] === 0) {
-				$selectUser['changedPass'] = $changedPass;
-				$selectUser['sesion'] = 'status off';
-			} else {
-				$selectUser['changedPass'] = $changedPass;
-				$selectUser['sesion'] = $value;
-			}
 		}
 		
 		return $selectUser;
