@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var verifyId = 0;
     var registersData = $('#registers').DataTable({
         ajax: {
             url: 'controller/ajax/getUsers.php',

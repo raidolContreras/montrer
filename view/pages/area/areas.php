@@ -33,7 +33,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Estás seguro de que deseas inhabilitar el área <strong id="disableAreaName"></strong>?</p>
+                <p>Esta seguro de que desea inhabilitar el departamento <strong id="disableAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -48,11 +48,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="enableAreaModalLabel">Habilitar Área</h5>
+                <h5 class="modal-title" id="enableAreaModalLabel">Habilitar departamento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Estás seguro de que deseas habilitar el área <strong id="enableAreaName"></strong>?</p>
+                <p>Esta seguro de que desea habilitar el departamento <strong id="enableAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
