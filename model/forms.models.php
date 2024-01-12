@@ -19,11 +19,12 @@ class FormsModels {
 	static public function mdlCountAreas(){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT 
-				(SELECT COUNT(*) FROM montrer_area WHERE status = 1) AS areas,
-				(SELECT COUNT(*) FROM montrer_users u LEFT JOIN montrer_settings s ON s.idUser = u.idUsers WHERE s.status = 1) AS users,
-				(SELECT exerciseName FROM montrer_exercise WHERE status = 1 ) AS name,
-				(SELECT budget FROM montrer_exercise WHERE status = 1 ) AS budget,
-				(SELECT bn.total_budget_net FROM montrer_budget_net bn LEFT JOIN montrer_exercise e ON e.idExercise = bn.Exercise_idExercise WHERE e.status = 1  ) AS rest";
+		(SELECT COUNT(*) FROM montrer_area WHERE status = 1) AS areas,
+		(SELECT COUNT(*) FROM montrer_users u LEFT JOIN montrer_settings s ON s.idUser = u.idUsers WHERE s.status = 1) AS users,
+		(SELECT exerciseName FROM montrer_exercise WHERE status = 1) AS name,
+		(SELECT SUM(AuthorizedAmount) FROM montrer_budgets b LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise WHERE e.status = 1 AND b.status = 1) AS used,
+		(SELECT budget FROM montrer_exercise WHERE status = 1) AS budget,
+		((SELECT budget FROM montrer_exercise WHERE status = 1) - (SELECT SUM(AuthorizedAmount) FROM montrer_budgets b LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise WHERE e.status = 1 AND b.status = 1)) AS remaining;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetch();
@@ -176,7 +177,7 @@ class FormsModels {
 					</div>
 					<div class="content">
 						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuesto de Universidad Montrer.</p>
-						<p class="message">Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://tests.hucco.com/" class="link">Ingresar a la plataforma</a>), su usuario es: '.$email.' y su contraseña temporal:
+						<p class="message">Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://tests.hucco.com.mx/" class="link">Ingresar a la plataforma</a>), su usuario es: '.$email.' y su contraseña temporal:
 						<center><p class="password">'.$password.'</p></center>
 						<p class="message">En el primer acceso, deberá cambiar su contraseña, respetando las siguientes condiciones: 10 caracteres (obligatorio: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo).</p>
 						<p Gracias.</p>
@@ -433,6 +434,21 @@ class FormsModels {
 		return $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
+	}
+
+	static public function mdlUpdateBudgetNet($idExercise, $budget){
+	   $pdo = Conexion::conectar();
+	   $sql = "UPDATE montrer_budget_net SET total_budget_net = :total_budget_net WHERE Exercise_idExercise = :Exercise_idExercise";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->bindParam(':total_budget_net', $budget, PDO::PARAM_STR);
+	   $stmt->bindParam(':Exercise_idExercise', $idExercise, PDO::PARAM_INT);
+	   if($stmt->execute()){
+		return "ok";
+	   } else {
+		print_r($pdo->errorInfo());
+	   }
+	   $stmt->closeCursor();
+	   $stmt = null;
 	}
 
 	static public function mdlActiveExercise(){

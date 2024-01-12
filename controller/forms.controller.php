@@ -92,6 +92,8 @@ class FormsController {
 				$changedPass = 1;
 				FormsModels::mdlUpdateLog($selectUser['idUsers']);
 				$value = "ok";
+				$selectUser['sesion'] = "ok";
+				$selectUser['changedPass'] = $changedPass;
 			} else {
 				$changedPass = 0;
 				$value = "Error";
@@ -100,9 +102,8 @@ class FormsController {
 		} elseif (!empty($selectUser) && $selectUser['password'] == $cryptPassword && $selectUser['status'] == 1) {
 			FormsModels::mdlUpdateLog($selectUser['idUsers']);
 			$changedPass = 0;
-			$value = "ok";
 			$selectUser['changedPass'] = $changedPass;
-			$selectUser['sesion'] = $value;
+			$selectUser['sesion'] = "ok";
 		} elseif ($selectUser['status'] == 0) {
 			$changedPass = 0;
 			$value = "status off";

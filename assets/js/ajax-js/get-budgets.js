@@ -7,9 +7,24 @@ $(document).ready(function () {
         columns: [
             { data: 'idBudget' },
             { data: 'nameArea' },
-            { data: 'AuthorizedAmount' },
+            { 
+                data: 'AuthorizedAmount',
+                render: function(data, type, row) {
+                    
+                
+                    if (type === 'display' || type === 'filter') {
+                        // Formatear como pesos
+                        var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
+                            style: 'currency',
+                            currency: 'MXN'
+                        });
+                        return formattedBudget; // Cambia 'es-MX' según tu localización
+                    }
+                    return data;
+                }
+            },
             { data: 'exerciseName' },
-        ],
+        ],        
         language: {
             "paginate": {
                 "first":      "<<",

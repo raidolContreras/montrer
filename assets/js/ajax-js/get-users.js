@@ -6,7 +6,13 @@ $(document).ready(function () {
             dataSrc: ''
         },
         columns: [
-            { data: 'idUsers' },
+            { 
+            data: null,
+            render: function (data, type, row, meta) {
+            // Utilizando el contador proporcionado por DataTables
+            return meta.row + 1;
+        }
+            },
             { 
                 data: null,
                 render: function(data) {

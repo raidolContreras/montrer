@@ -20,7 +20,7 @@
                     <input type="text" class="form-control" id="areaDescription" name="areaDescription">
                 </div>
                 <div class="col-md-6">
-                    <label for="responsibleUser" class="form-label">Usuario encargado</label>
+                    <label for="responsibleUser" class="form-label">Colaborador responsable</label>
                     <select id="responsibleUser" name="user" class="form-select form-control">
                         <option selected disabled>Seleccionar...</option>
                         <?php foreach ($users as $user): ?>
@@ -29,7 +29,7 @@
                     </select>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Registrar Departamento</button>
+                    <button type="submit" class="btn btn-primary">Registrar departamento</button>
                 </div>
             </div>
         </form>

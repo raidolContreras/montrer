@@ -20,12 +20,12 @@ function getAreas() {
                     style: 'currency',
                     currency: 'MXN'
                 });
-                var formattedRest = parseFloat(response.rest).toLocaleString('es-MX', {
+                var formattedRest = parseFloat(response.remaining).toLocaleString('es-MX', {
                     style: 'currency',
                     currency: 'MXN'
                 });
 
-                var totalUse = parseFloat(response.budget - response.rest);
+                var totalUse = parseFloat(response.budget - response.remaining);
                 var percentageUsed = (totalUse / response.budget) * 100;
                 var formattedPercentageUsed = percentageUsed.toLocaleString('es-MX', {
                     minimumFractionDigits: 2,

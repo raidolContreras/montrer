@@ -42,12 +42,12 @@ $(document).ready(function () {
 					Swal.fire({
 						title: "Usuario Inhabilitado",
 						icon: "warning",
-						text: 'Comuniquese con dirección en caso de haber un error.',
+						text: 'Comuníquese con el administrador de la plataforma, para cualquier aclalaración.',
 					});
 			    }else {
 					Swal.fire({
 			          icon: 'error',
-					  title: 'Error al iniciar sesión, verifica tu correo o contraseña',
+					  title: 'Error al iniciar sesión, verifique su correo o contraseña',
 					  icon: "error"
 					});
 			    }

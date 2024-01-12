@@ -136,23 +136,33 @@ $(document).ready(function () {
         });
     });
 
-
+    
     function renderAreaActionButtons(idArea, status) {
-        var editButtonClass = status === 1 ? 'btn-success' : 'btn-success disable';
+        if (status == 1){
 
-        var disableButtonClass = status === 1 ? 'btn-danger disable-button' : 'btn-primary enable-button';
-
-        var editButtonDisabled = status === 0 ? 'disabled' : '';
-
-        return `<div class="btn-group" role="group">
-                <button type="button" class="btn ${editButtonClass} edit-button" data-id="${idArea}" ${editButtonDisabled}>
-                <i class="ri-edit-line"></i> Editar
-                </button>
-                <button type="button" class="btn ${disableButtonClass}" data-id="${idArea}">
-                <i class=${status === 1 ? '"ri-forbid-line"></i> Inhabilitar' : '"ri-checkbox-circle-line"></i> Habilitar'}
-                </button>
+            return `
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success edit-button" data-id="${idArea}">
+                        <i class="ri-edit-line"></i> Editar
+                    </button>
+                    <button type="button" class="btn btn-danger disable-button" data-id="${idArea}">
+                        <i class="ri-forbid-line"></i> Inhabilitar
+                    </button>
                 </div>
-                `;
+            `;
+
+        } else {
+            return `
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success disable edit-button" data-id="${idArea}" disabled>
+                        <i class="ri-edit-line"></i> Editar
+                    </button>
+                    <button type="button" class="btn btn-primary enable-button" data-id="${idArea}">
+                        <i class="ri-checkbox-circle-line"></i>Habilitar
+                    </button>
+                </div>
+            `;
+        }
     }
 
 });

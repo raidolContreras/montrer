@@ -34,13 +34,13 @@ $(document).ready(function () {
 			    if (response === 'ok') {
 					Swal.fire({
 					  icon: "success",
-					  title: 'Area registrada',
+					  title: 'Departamento registrado',
 					  icon: "success"
 					});
 			    } else {
 					Swal.fire({
 			          icon: 'error',
-					  title: 'Error al registrar el area',
+					  title: 'Error al registrar el departamento',
 					  icon: "error"
 					});
 			    }

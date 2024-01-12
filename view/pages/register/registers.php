@@ -33,7 +33,7 @@
         <h5 class="modal-title" id="disableModalLabel">Inhabilitar Usuario</h5>
       </div>
       <div class="modal-body">
-        <p id="userInfo">¿Estás seguro de que deseas inhabilitar al usuario <strong id="userName"></strong>?</p>
+        <p id="userInfo">Esta seguro de que deseas inhabilitar al usuario <strong id="userName"></strong>?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -52,7 +52,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>¿Estás seguro de que deseas habilitar al usuario <strong id="enableUserName"></strong>?</p>
+                <p>¿Está seguro de que desea habilitar al usuario <strong id="enableUserName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
