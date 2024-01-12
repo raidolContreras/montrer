@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var value = 0;
     var registersData = $('#registers').DataTable({
         ajax: {
             url: 'controller/ajax/getUsers.php',
@@ -21,10 +20,7 @@ $(document).ready(function () {
                 render: function(data){
                     var idUser = data.idUsers;
                     var status = data.status;
-                    if (value !== idUser){
-                        value = idUser;
-                        return renderActionButtons(idUser, status);
-                    }
+                    return renderActionButtons(idUser, status);
                 }
             }
         ],
@@ -135,23 +131,18 @@ $(document).ready(function () {
     function renderActionButtons(idUser, status) {
         var editButtonClass = status === 1 ? 'btn-success' : 'btn-success disable';
         var disableButtonClass = status === 1 ? 'btn-danger disable-button' : 'btn-primary enable-button';
-    
+
         var editButtonDisabled = status === 0 ? 'disabled' : ''; // Agregamos el atributo 'disabled' si status es 0
-    
-        var html = `
+
+        return `
             <div class="btn-group" role="group">
                 <button type="button" class="btn ${editButtonClass} edit-button" data-id="${idUser}" ${editButtonDisabled}>
                     <i class="ri-edit-line"></i> Editar
                 </button>
                 <button type="button" class="btn ${disableButtonClass}" data-id="${idUser}">
-                    <i class=${status === 1 ? '"ri-forbid-line"></i> Inhabilitar' : '"ri-checkbox-circle-line"></i> Habilitar'}
+                    <i class= ${status === 1 ? '"ri-forbid-line"></i> Inhabilitar' : '"ri-checkbox-circle-line"></i> Habilitar'}
                 </button>
             </div>
         `;
-    
-        console.log(html); // Imprimir el HTML generado en la consola
-    
-        return html;
     }
-    
 });
