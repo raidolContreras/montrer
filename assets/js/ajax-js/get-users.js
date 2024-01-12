@@ -21,7 +21,7 @@ $(document).ready(function () {
                     var idUser = data.idUsers;
                     var status = data.status;
                     
-                    var editButtonClass = status === 1 ? 'btn-success' : 'btn-success disable';
+                    var editButtonClass = status === 0 ? 'btn-success disable' :'btn-success';
                     var disableButtonClass = status === 1 ? 'btn-danger disable-button' : 'btn-primary enable-button';
                 
                     var editButtonDisabled = status === 1 ?  '': 'disabled';
