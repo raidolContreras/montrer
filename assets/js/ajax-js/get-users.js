@@ -25,7 +25,7 @@ $(document).ready(function () {
                     var disableButtonClass = status === 1 ? 'btn-danger disable-button' : 'btn-primary enable-button';
                 
                     var editButtonDisabled = status === 0 ? 'disabled' : '';
-                
+                    console.log(status);
                     return `
                         <div class="btn-group" role="group">
                             <button type="button" class="btn ${editButtonClass} edit-button" data-id="${idUser}" ${editButtonDisabled}>
