@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    var value = 0;
     var registersData = $('#registers').DataTable({
         ajax: {
             url: 'controller/ajax/getUsers.php',
@@ -20,7 +21,10 @@ $(document).ready(function () {
                 render: function(data){
                     var idUser = data.idUsers;
                     var status = data.status;
-                    return renderActionButtons(idUser, status);
+                    if (value !== idUser){
+                        value = idUser;
+                        return renderActionButtons(idUser, status);
+                    }
                 }
             }
         ],
