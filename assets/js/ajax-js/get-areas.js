@@ -100,6 +100,12 @@ $(document).ready(function () {
             });
         });
     });
+    
+    // Manejar el clic del botón de edición
+    $('#areas').on('click', '.edit-button', function() {
+        var idArea = $(this).data('id');
+        sendForm('editArea', idArea);
+    });
 
     // Manejar el clic del botón de habilitar área
     $('#areas').on('click', '.enable-button', function () {
@@ -136,6 +142,15 @@ $(document).ready(function () {
         });
     });
 
+    function sendForm(action, idUser) {
+        // Crear un formulario oculto y agregar el idUser como un campo oculto
+        var form = $('<form action="' + action + '" method="post"></form>');
+        form.append('<input type="hidden" name="register" value="' + idUser + '">');
+
+        // Adjuntar el formulario al cuerpo del documento y enviarlo
+        $('body').append(form);
+        form.submit();
+    }
     
     function renderAreaActionButtons(idArea, status) {
         if (status == 1){

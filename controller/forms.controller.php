@@ -64,6 +64,11 @@ class FormsController {
     	return $getUser;
 	}
 
+	static public function ctrGetArea($register){
+		$getArea = FormsModels::mdlGetArea($register);
+    	return $getArea;
+	}
+
 	static public function ctrAddBudgets($data){
 		$getBudgets = FormsModels::mdlGetBudgets();
 		$value = true;
@@ -161,5 +166,10 @@ class FormsController {
 	static public function ctrEnableArea($idArea){
 		$enableArea = FormsModels::mdlEnableArea($idArea);
 		return $enableArea;
+	}
+
+	static public function ctrUpdateArea($data){
+		$updateArea = FormsModels::mdlUpdateArea($data);
+		return $updateArea;
 	}
 }

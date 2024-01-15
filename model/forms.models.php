@@ -504,6 +504,17 @@ class FormsModels {
 		$stmt = null;
 	}
 
+	static public function mdlGetArea($register){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_area a LEFT JOIN montrer_users u ON u.idUsers = a.idUser WHERE idArea = :idArea";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $register, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
 	static public function mdlUpdateUser($data){
 		$pdo = Conexion::conectar();
 		$sql = "UPDATE montrer_users SET firstname = :firstname, lastname = :lastname, email = :email WHERE idUsers = :idUsers ";
@@ -568,6 +579,22 @@ class FormsModels {
 		$sql = "UPDATE montrer_area SET status = 1 WHERE idArea = :idArea ";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	static public function mdlUpdateArea($data){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_area SET nameArea = :nameArea, description = :description, idUser = :idUser WHERE idArea = :idArea ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':nameArea', $data['nameArea'], PDO::PARAM_STR);
+		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
+		$stmt->bindParam(':idArea', $data['idArea'], PDO::PARAM_INT);
 		if($stmt->execute()){
 			return "ok";
 		} else {

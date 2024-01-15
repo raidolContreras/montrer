@@ -71,6 +71,11 @@ session_start();
 			return $enableArea;
 		}
 
+		static public function UpdateArea($data){
+			$updateArea = FormsController::ctrUpdateArea($data);
+			return $updateArea;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -241,4 +246,15 @@ if (isset($_POST['disableArea'])) {
 if (isset($_POST['enableArea'])) {
 	$enableArea = AjaxForm::EnableArea($_POST['enableArea']);
 	echo $enableArea;
+}
+
+if (isset($_POST['updateAreaName']) && isset($_POST['updateAreaDescription']) && isset($_POST['updateUser']) && isset($_POST['updateArea'])) {
+	$data = array (
+		'nameArea' => $_POST['updateAreaName'],
+		'description' => $_POST['updateAreaDescription'],
+		'idUser' => $_POST['updateUser'],
+		'idArea' => $_POST['updateArea'],
+	);
+	$updateArea = AjaxForm::UpdateArea($data);
+	echo $updateArea;
 }
