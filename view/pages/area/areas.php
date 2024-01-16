@@ -14,7 +14,7 @@
 							<th>Departamento</th>
 							<th>Descripción</th>
 							<th>Encargado</th>
-							<th width="20%"></th>
+							<th width="25%"></th>
 						</tr>
 					</thead>
 				</table>
