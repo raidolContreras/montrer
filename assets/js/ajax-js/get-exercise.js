@@ -41,12 +41,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function(data) {
-                    if (data.status == 0) {
-                        return '<div class="d-grid gap-2"><button data-exercise="' + data.idExercise + '" class="btn btn-success activate-btn mb-0 py-1 mx-3">Activar</button></div>';
-                    } else {
-                        console.log(data.exerciseName);
-                        return '<div class="alert alert-success mb-0 py-1 mx-3" role="alert"><div class="d-flex justify-content-center"><i class="ri-check-line"></i><p>Activo</p></div></div>';
-                    }
+                    return renderActionButtons(data.idExercise, data.status, data.active);
                 }                
             }
         ],
@@ -82,4 +77,117 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Manejar el clic del botón de inhabilitar ejercicio
+    $('#exercise').on('click', '.disable-button', function () {
+        var idExercise = $(this).data('id');
+        var exerciseName = $(this).closest('tr').find('td:eq(1)').text();
+
+        // Mostrar el nombre del ejercicio en el modal
+        $('#disableExerciseName').text(exerciseName);
+
+        // Mostrar el modal de inhabilitar ejercicio
+        $('#disableExerciseModal').modal('show');
+
+        // Manejar el clic del botón "Inhabilitar" en el modal
+        $('#confirmDisableExercise').on('click', function () {
+            handleUserAction(idExercise, 'disableExercise', 'No se pudo inhabilitar el ejercicio');
+        });
+    });
+
+    // Manejar el clic del botón de habilitar ejercicio
+    $('#exercise').on('click', '.enable-button', function () {
+        var idExercise = $(this).data('id');
+        var exerciseName = $(this).closest('tr').find('td:eq(1)').text(); // Obtener el nombre del ejercicio desde la fila
+
+        // Mostrar el nombre del ejercicio en el modal
+        $('#enableExerciseName').text(exerciseName);
+
+        // Mostrar el modal de habilitar ejercicio
+        $('#enableExerciseModal').modal('show');
+
+        // Manejar el clic del botón "Habilitar" en el modal
+        $('#confirmEnableExercise').on('click', function () {
+            handleUserAction(idExercise, 'enableExercise', 'No se pudo habilitar el ejercicio');
+        });
+    });
+
+    // Manejar el clic del botón de edición
+    $('#exercise').on('click', '.edit-button', function() {
+        var idExercise = $(this).data('id');
+        sendForm('editExercise', idExercise);
+    });
+    
+    function sendForm(action, idExercise) {
+        // Crear un formulario oculto y agregar el idExercise como un campo oculto
+        var form = $('<form action="' + action + '" method="post"></form>');
+        form.append('<input type="hidden" name="register" value="' + idExercise + '">');
+
+        // Adjuntar el formulario al cuerpo del documento y enviarlo
+        $('body').append(form);
+        form.submit();
+    }
+
+    function renderActionButtons(idExercise, status, active) {
+        if (active == 1){
+            if (status == 1) {
+                return `
+                    <center>
+                        <div class="btn-group" role="group">
+                        
+                            <button type="button" class="btn btn-success" disabled>
+                                Activo
+                            </button>
+                        </div>
+                    </center>
+                `;
+            } else {
+                return `
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
+                            Activar
+                        </button>
+                        <button type="button" class="btn btn-success edit-button" data-id="${idExercise}">
+                            <i class="ri-edit-line"></i> Editar
+                        </button>
+                        <button type="button" class="btn btn-danger disable-button" data-id="${idExercise}">
+                            <i class="ri-forbid-line"></i> Inhabilitar
+                        </button>
+                    </div>
+                `;
+            }
+
+        } else {
+            return `
+                    <center>
+                <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary enable-button" data-id="${idExercise}">
+                            <i class="ri-checkbox-circle-line"></i>Habilitar
+                        </button>
+                        <button type="button" class="btn btn-danger delete-button" data-id="${idExercise}">
+                            <i class="ri-forbid-line"></i> Eliminar
+                        </button>
+                </div>
+                    </center>
+            `;
+        }
+    }
+
+    function handleUserAction (idExercise, nameVariant, errorMessage){
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
+            data: { [nameVariant]: idExercise },
+            success: function (response) {
+                if (response === 'ok') {
+                } else {
+                    console.error(errorMessage);
+                }
+            },
+            complete: function () {
+                location.reload();
+            }
+        });
+    }
+
 });

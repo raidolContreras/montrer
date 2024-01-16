@@ -43,24 +43,6 @@ $(document).ready(function () {
         }
     });
 
-    // Manejar el clic del botón de edición de área
-    $('#areas').on('click', '.edit-button', function () {
-        var idArea = $(this).data('id');
-        // Implementa la lógica para editar el área
-    });
-
-    // Manejar el clic del botón de inhabilitar área
-    $('#areas').on('click', '.disable-button', function () {
-        var idArea = $(this).data('id');
-        var areaName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del área desde la fila
-
-        // Mostrar el nombre del área en el modal
-        $('#disableAreaName').text(areaName);
-
-        // Mostrar el modal de inhabilitar área
-        $('#disableAreaModal').modal('show');
-    });
-
     // Manejar el clic del botón "Inhabilitar" en el modal
     $('#confirmDisableArea').on('click', function () {
         $('#disableAreaModal').modal('hide');

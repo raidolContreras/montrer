@@ -39,6 +39,11 @@ class FormsController {
     	return $getExercise;
 	}
 
+	static public function ctrGetExercises($idExercise){
+		$getExercise = FormsModels::mdlGetExercises($idExercise);
+    	return $getExercise;
+	}
+
 	static public function ctrGetBudgets(){
 		$getBudgets = FormsModels::mdlGetBudgets();
     	return $getBudgets;
@@ -171,5 +176,20 @@ class FormsController {
 	static public function ctrUpdateArea($data){
 		$updateArea = FormsModels::mdlUpdateArea($data);
 		return $updateArea;
+	}
+
+	static public function ctrUpdateExercise($data){
+		$updateExercise = FormsModels::mdlUpdateExercise($data);
+		return $updateExercise;
+	}
+
+	static public function ctrDisableExercise($idExercise){
+		$disableExercise = FormsModels::mdlDisableExercise($idExercise);
+		return $disableExercise;
+	}
+
+	static public function ctrEnableExercise($idExercise){
+		$enableExercise = FormsModels::mdlEnableExercise($idExercise);
+		return $enableExercise;
 	}
 }

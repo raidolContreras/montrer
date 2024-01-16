@@ -76,6 +76,21 @@ session_start();
 			return $updateArea;
 		}
 
+		static public function UpdateExercise($data){
+			$updateExercise = FormsController::ctrUpdateExercise($data);
+			return $updateExercise;
+		}
+
+		static public function disableExercise($idExercise){
+			$disableExercise = FormsController::ctrDisableExercise($idExercise);
+			return $disableExercise;
+		}
+
+		static public function enableExercise($idExercise){
+			$enableExercise = FormsController::ctrEnableExercise($idExercise);
+			return $enableExercise;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -257,4 +272,34 @@ if (isset($_POST['updateAreaName']) && isset($_POST['updateAreaDescription']) &&
 	);
 	$updateArea = AjaxForm::UpdateArea($data);
 	echo $updateArea;
+}
+
+if (
+	isset($_POST['updateExerciseName']) &&
+	isset($_POST['updateInitialDate']) &&
+	isset($_POST['updateFinalDate']) &&
+	isset($_POST['updateUser']) &&
+	isset($_POST['updateBudget']) &&
+	isset($_POST['updateExercise'])
+) {
+	$data = array(
+		'exerciseName' => $_POST['updateExerciseName'],
+		'initialDate' => $_POST['updateInitialDate'],
+		'finalDate' => $_POST['updateFinalDate'],
+		'budget' => $_POST['updateBudget'],
+		'idUser' => $_POST['updateUser'],
+		'idExercise' => $_POST['updateExercise']
+	);
+	$updateExercise = AjaxForm::UpdateExercise($data);
+	echo $updateExercise;
+}
+
+if (isset($_POST['enableExercise'])){
+	$enableExercise = AjaxForm::enableExercise($_POST['enableExercise']);
+	echo $enableExercise;
+}
+
+if (isset($_POST['disableExercise'])){
+	$disableExercise = AjaxForm::disableExercise($_POST['disableExercise']);
+	echo $disableExercise;
 }
