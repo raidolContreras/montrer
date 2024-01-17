@@ -665,5 +665,22 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+
+	static public function mdlDeleteUser($idUsers){
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_users
+				WHERE idUsers = :idUsers";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }

@@ -54,36 +54,52 @@ $(document).ready(function () {
     $('#registers').on('click', '.disable-button', function() {
         var idUser = $(this).data('id');
         var userName = $(this).closest('tr').find('td:eq(1)').text(); // Obtener el nombre del usuario desde la fila
-
+    
         // Mostrar el nombre del usuario en el modal
         $('#userName').text(userName);
-
+    
         // Mostrar el modal de inhabilitar
         $('#disableModal').modal('show');
-
+    
         // Manejar el clic del botón "Inhabilitar" en el modal
         $('#confirmDisable').on('click', function() {
-            handleUserAction(idUser, 'disableUser', 'Usuario inhabilitado');
+            handleUserAction(idUser, 'disableUser', 'El usuario ha sido inhabilitado', 'No se pudo inhabilitar al usuario');
         });
     });
-
+    
     $('#registers').on('click', '.enable-button', function() {
         var idUser = $(this).data('id');
         var userName = $(this).closest('tr').find('td:eq(1)').text(); // Obtener el nombre del usuario desde la fila
-
+    
         // Mostrar el nombre del usuario en el modal
         $('#enableUserName').text(userName);
-
+    
         // Mostrar el modal de habilitar
         $('#enableModal').modal('show');
-
+    
         // Manejar el clic del botón "Habilitar" en el modal
         $('#confirmEnable').on('click', function() {
-            handleUserAction(idUser, 'enableUser', 'Usuario habilitado');
+            handleUserAction(idUser, 'enableUser', 'El usuario ha sido habilitado', 'No se pudo habilitar al usuario');
         });
     });
-
-    function handleUserAction(idUser, action, successMessage) {
+    
+    $('#registers').on('click', '.delete-button', function() {
+        var idUser = $(this).data('id');
+        var userName = $(this).closest('tr').find('td:eq(1)').text(); // Obtener el nombre del usuario desde la fila
+    
+        // Mostrar el nombre del usuario en el modal
+        $('#deleteUserName').text(userName);
+    
+        // Mostrar el modal de eliminar
+        $('#deleteModal').modal('show');
+    
+        // Manejar el clic del botón "Eliminar" en el modal
+        $('#confirmDelete').on('click', function() {
+            handleUserAction(idUser, 'deleteUser', 'El usuario ha sido eliminado', 'No se pudo eliminar al usuario');
+        });
+    });
+    
+    function handleUserAction(idUser, action, successMessage, errorMessage) {
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -95,7 +111,7 @@ $(document).ready(function () {
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
-
+    
         $.ajax({
             type: 'POST',
             url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
@@ -106,23 +122,24 @@ $(document).ready(function () {
                         icon: "success",
                         title: successMessage
                     });
-
-                    registersData.ajax.reload();
-
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+    
                 } else {
                     Swal.fire({
                         icon: "error",
-                        title: `No se pudo ${successMessage.toLowerCase()} al usuario`
+                        title: errorMessage
                     });
                 }
             },
             complete: function () {
                 // Ocultar el modal después de completar la solicitud
                 idUser = 0;
-                $('#disableModal, #enableModal').modal('hide');
+                $('#disableModal, #enableModal, #deleteModal').modal('hide');
             }
         });
-    }
+    }    
 
     function sendForm(action, idUser) {
         // Crear un formulario oculto y agregar el idUser como un campo oculto
@@ -155,7 +172,10 @@ $(document).ready(function () {
                         <i class="ri-edit-line"></i> Editar
                     </button>
                     <button type="button" class="btn btn-primary enable-button" data-id="${idUser}">
-                        <i class="ri-checkbox-circle-line"></i>Habilitar
+                        <i class="ri-checkbox-circle-line"></i> Habilitar
+                    </button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="${idUser}">
+                        <i class="ri-forbid-line"></i> Eliminar
                     </button>
                 </div>
             `;

@@ -197,4 +197,9 @@ class FormsController {
 		$deleteExercise = FormsModels::mdlDeleteExercise($idExercise);
 		return $deleteExercise;
 	}
+
+	static public function ctrDeleteUser($idUsers){
+		$deleteUser = FormsModels::mdlDeleteUser($idUsers);
+		return $deleteUser;
+	}
 }
