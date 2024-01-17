@@ -32,6 +32,11 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
+					
+					$("select[name='area']").val('');
+					$("input[name='AuthorizedAmount']").val('');
+					$("select[name='exercise']").val('');
+					
 					Swal.fire({
 					  icon: "success",
 					  title: 'Presupuesto asignado',

@@ -32,6 +32,11 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
+					
+					$("input[name='areaName']").val('');
+					$("input[name='areaDescription']").val('');
+					$("select[name='user']").val('');
+
 					Swal.fire({
 					  icon: "success",
 					  title: 'Departamento registrado',

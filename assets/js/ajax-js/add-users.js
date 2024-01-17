@@ -34,6 +34,11 @@ $(document).ready(function () {
 				  });				  
 
 			    if (response !== 'Error' && response !== 'Error: Email duplicado') {
+					
+					$("input[name='firstname']").val('');
+					$("input[name='lastname']").val('');
+					$("input[name='email']").val('');
+					$("select[name='level']").val('');
 					Swal.fire({
 					  icon: "success",
 					  title: 'Usuario '+response+' creado exitosamente',

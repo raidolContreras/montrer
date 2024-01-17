@@ -36,6 +36,12 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
+
+					$("input[name='exerciseName']").val('');
+                    $("input[name='initialDate']").val('');
+                    $("input[name='finalDate']").val('');
+                    $("input[name='budget']").val('');
+
 					Swal.fire({
 					  icon: "success",
 					  title: 'Ejercicio creado exitosamente',
