@@ -682,5 +682,22 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+
+	static public function mdlDeleteArea($idArea){
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_area
+				WHERE idArea = :idArea";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }

@@ -62,4 +62,23 @@
     </div>
 </div>
 
+<!-- Delete Area Modal -->
+<div class="modal fade" id="deleteAreaModal" tabindex="-1" aria-labelledby="deleteAreaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteAreaModalLabel">Habilitar departamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Esta seguro de que desea eliminar el departamento <strong id="deleteAreaName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteArea">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="assets/js/ajax-js/get-areas.js"></script>

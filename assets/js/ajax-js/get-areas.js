@@ -43,11 +43,6 @@ $(document).ready(function () {
         }
     });
 
-    // Manejar el clic del botón "Inhabilitar" en el modal
-    $('#confirmDisableArea').on('click', function () {
-        $('#disableAreaModal').modal('hide');
-    });
-
     // Manejar el clic del botón de inhabilitar área
     $('#areas').on('click', '.disable-button', function () {
         var idArea = $(this).data('id');
@@ -68,10 +63,10 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response === 'ok') {
                         // Implementa acciones adicionales si es necesario
-                        console.log('Área inhabilitada con éxito');
+                        console.log('Departamento inhabilitada con éxito');
                         areasData.ajax.reload(); // Recargar datos de DataTable
                     } else {
-                        console.error('No se pudo inhabilitar el área');
+                        console.error('No se pudo inhabilitar el departamento');
                     }
                 },
                 complete: function () {
@@ -109,16 +104,49 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response === 'ok') {
                         // Implementa acciones adicionales si es necesario
-                        console.log('Área habilitada con éxito');
+                        console.log('Departamento habilitado con éxito');
                         areasData.ajax.reload(); // Recargar datos de DataTable
                     } else {
-                        console.error('No se pudo habilitar el área');
+                        console.error('No se pudo habilitar el departamento');
                     }
                 },
                 complete: function () {
                     // Ocultar el modal después de completar la solicitud
                     idArea = 0;
                     $('#enableAreaModal').modal('hide');
+                }
+            });
+        });
+    });
+
+    // Manejar el clic del botón de eliminar área
+    $('#areas').on('click', '.delete-button', function () {
+        var idArea = $(this).data('id');
+        var areaName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del área desde la fila
+
+        // Mostrar el nombre del área en el modal
+        $('#deleteAreaName').text(areaName);
+
+        // Mostrar el modal de eliminar área
+        $('#deleteAreaModal').modal('show');
+
+        // Manejar el clic del botón "eliminar" en el modal
+        $('#confirmDeleteArea').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
+                data: { 'deleteArea': idArea },
+                success: function (response) {
+                    if (response === 'ok') {
+                        location.reload();
+                    } else {
+                        console.error('No se pudo eliminar el departamento');
+                    }
+                },
+                complete: function () {
+                    // Ocultar el modal después de completar la solicitud
+                    idArea = 0;
+                    $('#deleteAreaModal').modal('hide');
                 }
             });
         });
@@ -151,11 +179,11 @@ $(document).ready(function () {
         } else {
             return `
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success disable edit-button" data-id="${idArea}" disabled>
-                        <i class="ri-edit-line"></i> Editar
-                    </button>
                     <button type="button" class="btn btn-primary enable-button" data-id="${idArea}">
                         <i class="ri-checkbox-circle-line"></i>Habilitar
+                    </button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="${idArea}">
+                        <i class="ri-forbid-line"></i> Eliminar
                     </button>
                 </div>
             `;

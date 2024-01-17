@@ -202,4 +202,9 @@ class FormsController {
 		$deleteUser = FormsModels::mdlDeleteUser($idUsers);
 		return $deleteUser;
 	}
+
+	static public function ctrDeleteArea($idArea){
+		$deleteArea = FormsModels::mdlDeleteArea($idArea);
+		return $deleteArea;
+	}
 }

@@ -101,6 +101,11 @@ session_start();
 			return $deleteUser;
 		}
 
+		static public function deleteArea($idArea){
+			$deleteArea = FormsController::ctrDeleteArea($idArea);
+			return $deleteArea;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -322,4 +327,9 @@ if (isset($_POST['deleteExercise'])){
 if (isset($_POST['deleteUser'])){
 	$deleteUser = AjaxForm::deleteUser($_POST['deleteUser']);
 	echo $deleteUser;
+}
+
+if (isset($_POST['deleteArea'])){
+	$deleteArea = AjaxForm::deleteArea($_POST['deleteArea']);
+	echo $deleteArea;
 }
