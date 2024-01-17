@@ -222,4 +222,9 @@ class FormsController {
 		$disableBudget = FormsModels::mdlDisableBudget($idBudget);
 		return $disableBudget;
 	}
+
+	static public function ctrGetBudget($idBudget){
+		$getBudget = FormsModels::mdlGetBudget($idBudget);
+		return $getBudget;
+	}
 }

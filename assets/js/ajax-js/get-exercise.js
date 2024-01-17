@@ -166,17 +166,19 @@ $(document).ready(function () {
                 `;
             } else {
                 return `
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
-                            Activar
-                        </button>
-                        <button type="button" class="btn btn-primary edit-button" data-id="${idExercise}">
-                            <i class="ri-edit-line"></i> Editar
-                        </button>
-                        <button type="button" class="btn btn-danger disable-button" data-id="${idExercise}">
-                            <i class="ri-forbid-line"></i> Inhabilitar
-                        </button>
-                    </div>
+                    <center>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
+                                Activar
+                            </button>
+                            <button type="button" class="btn btn-primary edit-button" data-id="${idExercise}">
+                                <i class="ri-edit-line"></i> Editar
+                            </button>
+                            <button type="button" class="btn btn-danger disable-button" data-id="${idExercise}">
+                                <i class="ri-forbid-line"></i> Inhabilitar
+                            </button>
+                        </div>
+                    </center>
                 `;
             }
 

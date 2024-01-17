@@ -16,7 +16,8 @@
 		'registerBudgets',
 		'editRegister',
 		'editArea',
-		'editExercise'
+		'editExercise',
+		'editBudgets'
 	];
 
 
@@ -38,7 +39,7 @@
 			include "view/pages/company/$pagina.php";
 		} elseif ($pagina == 'exercise' || $pagina == 'registerExercise' || $pagina == 'editExercise') {
 			include "view/pages/ejercicio/$pagina.php";
-		} elseif ($pagina == 'budgets' || $pagina == 'registerBudgets') {
+		} elseif ($pagina == 'budgets' || $pagina == 'registerBudgets' || $pagina == 'editBudgets') {
 			include "view/pages/budgets/$pagina.php";
 		} else {
 			include "view/pages/404.php";

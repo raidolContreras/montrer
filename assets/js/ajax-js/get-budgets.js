@@ -45,6 +45,22 @@ $(document).ready(function () {
             "infoEmpty": "Mostrando 0 resultados",
         }
     });
+    
+    // Manejar el clic del botón de edición
+    $('#budgets').on('click', '.edit-button', function() {
+        var idBudget = $(this).data('id');
+        sendForm('editBudgets', idBudget);
+    });
+    
+    function sendForm(action, idBudget) {
+        // Crear un formulario oculto y agregar el idBudget como un campo oculto
+        var form = $('<form action="' + action + '" method="post"></form>');
+        form.append('<input type="hidden" name="register" value="' + idBudget + '">');
+
+        // Adjuntar el formulario al cuerpo del documento y enviarlo
+        $('body').append(form);
+        form.submit();
+    }
 
     $('#budgets').on('click', '.disable-button', function () {
         var idBudget = $(this).data('id');
