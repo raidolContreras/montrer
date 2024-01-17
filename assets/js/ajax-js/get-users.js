@@ -168,9 +168,6 @@ $(document).ready(function () {
         } else {
             return `
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success disable edit-button" data-id="${idUser}" disabled>
-                        <i class="ri-edit-line"></i> Editar
-                    </button>
                     <button type="button" class="btn btn-primary enable-button" data-id="${idUser}">
                         <i class="ri-checkbox-circle-line"></i> Habilitar
                     </button>

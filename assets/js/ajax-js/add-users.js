@@ -8,6 +8,7 @@ $(document).ready(function () {
 		var lastname = $("input[name='lastname']").val();
 		var email = $("input[name='email']").val();
 		var level = $("select[name='level']").val();
+		var area = $("select[name='area']").val();
 
 		// Realiza la solicitud Ajax
 		$.ajax({
@@ -17,7 +18,8 @@ $(document).ready(function () {
 				firstname: firstname,
 				lastname: lastname,
 				email: email,
-				level: level
+				level: level,
+				area: area
 			},
 			success: function (response) {
 				
@@ -38,7 +40,8 @@ $(document).ready(function () {
 					$("input[name='firstname']").val('');
 					$("input[name='lastname']").val('');
 					$("input[name='email']").val('');
-					$("select[name='level']").val('');
+					$("select[name='level']").val('2');
+					$("select[name='area']").val('');
 					Swal.fire({
 					  icon: "success",
 					  title: 'Usuario '+response+' creado exitosamente',
@@ -62,5 +65,13 @@ $(document).ready(function () {
 				console.log("Error en la solicitud Ajax:", error);
 			}
 		});
+	});
+});
+
+document.getElementById('questionBtn').addEventListener('click', function () {
+	Swal.fire({
+		icon: 'info',
+		title: 'Seleccione el departamento',
+		text: 'Si el departamento no está listado, deje el campo vacío.'
 	});
 });

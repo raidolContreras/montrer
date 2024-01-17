@@ -46,6 +46,17 @@ if ($is_mobile) {
     <link rel="icon" type="image/png" href="assets/img/svg/favicon.svg">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            padding: 6px 0px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.42857;
+        }
+    </style>
 </head>
 
 <body class="body-bg-f8faff">
