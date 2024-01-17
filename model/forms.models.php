@@ -445,7 +445,7 @@ class FormsModels {
 	
 	static public function mdlGetBudgets(){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, e.status, e.idExercise
+		$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
 				FROM montrer_budgets b
 				LEFT JOIN montrer_area a ON a.idArea = b.idArea
 				LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise;";
