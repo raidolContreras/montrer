@@ -67,4 +67,23 @@
     </div>
 </div>
 
+<!-- Delete Exercise Modal -->
+<div class="modal fade" id="deleteExerciseModal" tabindex="-1" aria-labelledby="deleteExerciseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteExerciseModalLabel">Habilitar ejercicio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Esta seguro de que desea eliminar el ejercicio <strong id="deleteExerciseName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteExercise">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="assets/js/ajax-js/get-exercise.js"></script>

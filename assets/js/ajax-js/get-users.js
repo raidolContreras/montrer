@@ -6,11 +6,11 @@ $(document).ready(function () {
         },
         columns: [
             { 
-            data: null,
-            render: function (data, type, row, meta) {
-            // Utilizando el contador proporcionado por DataTables
-            return meta.row + 1;
-        }
+                data: null,
+                    render: function (data, type, row, meta) {
+                    // Utilizando el contador proporcionado por DataTables
+                    return meta.row + 1;
+                }
             },
             { 
                 data: null,

@@ -648,5 +648,22 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+
+	static public function mdlDeleteExercise($idExercise){
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_exercise
+				WHERE idExercise = :idExercise";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }

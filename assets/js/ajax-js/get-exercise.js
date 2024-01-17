@@ -6,7 +6,13 @@ $(document).ready(function () {
             dataSrc: ''
         },
         columns: [
-            { data: 'idExercise' },
+            {
+                data: null,
+                    render: function (data, type, row, meta) {
+                    // Utilizando el contador proporcionado por DataTables
+                    return meta.row + 1;
+                }
+            },
             { 
                 data: null,
                 render: function(data, type, row) {
@@ -109,6 +115,23 @@ $(document).ready(function () {
         // Manejar el clic del botón "Habilitar" en el modal
         $('#confirmEnableExercise').on('click', function () {
             handleUserAction(idExercise, 'enableExercise', 'No se pudo habilitar el ejercicio');
+        });
+    });
+
+    // Manejar el clic del botón de habilitar ejercicio
+    $('#exercise').on('click', '.delete-button', function () {
+        var idExercise = $(this).data('id');
+        var exerciseName = $(this).closest('tr').find('td:eq(1)').text(); // Obtener el nombre del ejercicio desde la fila
+
+        // Mostrar el nombre del ejercicio en el modal
+        $('#deleteExerciseName').text(exerciseName);
+
+        // Mostrar el modal de habilitar ejercicio
+        $('#deleteExerciseModal').modal('show');
+
+        // Manejar el clic del botón "Habilitar" en el modal
+        $('#confirmDeleteExercise').on('click', function () {
+            handleUserAction(idExercise, 'deleteExercise', 'No se pudo eliminar el ejercicio');
         });
     });
 

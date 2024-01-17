@@ -192,4 +192,9 @@ class FormsController {
 		$enableExercise = FormsModels::mdlEnableExercise($idExercise);
 		return $enableExercise;
 	}
+
+	static public function ctrDeleteExercise($idExercise){
+		$deleteExercise = FormsModels::mdlDeleteExercise($idExercise);
+		return $deleteExercise;
+	}
 }

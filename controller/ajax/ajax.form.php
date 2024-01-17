@@ -91,6 +91,11 @@ session_start();
 			return $enableExercise;
 		}
 
+		static public function deleteExercise($idExercise){
+			$deleteExercise = FormsController::ctrDeleteExercise($idExercise);
+			return $deleteExercise;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -302,4 +307,9 @@ if (isset($_POST['enableExercise'])){
 if (isset($_POST['disableExercise'])){
 	$disableExercise = AjaxForm::disableExercise($_POST['disableExercise']);
 	echo $disableExercise;
+}
+
+if (isset($_POST['deleteExercise'])){
+	$deleteExercise = AjaxForm::deleteExercise($_POST['deleteExercise']);
+	echo $deleteExercise;
 }
