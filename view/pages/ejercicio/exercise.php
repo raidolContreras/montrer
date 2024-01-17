@@ -1,3 +1,7 @@
+<?php if ($_SESSION['level']  == 1):?>
+<?php
+    $areas = FormsController::ctrGetAreas();
+?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/es.js"></script>
 
@@ -87,3 +91,8 @@
 </div>
 
 <script src="assets/js/ajax-js/get-exercise.js"></script>
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>

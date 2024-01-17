@@ -1,3 +1,7 @@
+<?php if ($_SESSION['level']  == 1):?>
+<?php
+    $areas = FormsController::ctrGetAreas();
+?>
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 
@@ -46,3 +50,8 @@
 <script src="assets/js/ajax-js/get-exercises.js"></script>
 <script src="assets/js/ajax-js/edit-exercises.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>

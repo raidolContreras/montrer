@@ -7,6 +7,7 @@
 		header('Location: change_pass');
     	exit();
 	}
+	$level = ($_SESSION['level'] == 1) ? 'Administrador' : 'Responsable';
 
 ?>
 <!-- Start Header Area -->
@@ -33,7 +34,7 @@
 										<a class="dropdown-item dropdown-toggle avatar d-flex align-items-center show" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="true">
 												<div class="d-none d-lg-block d-md-block">
 														<h3 class="profile-name"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
-														<span class="profile-level">Super Admin</span>
+														<span class="profile-level"><?php echo $level ?></span>
 												</div>
 										</a>
 

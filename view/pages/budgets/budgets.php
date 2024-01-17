@@ -1,4 +1,8 @@
-	<!-- Start Main Content Budget -->
+<?php if ($_SESSION['level']  == 1):?>
+<?php
+    $areas = FormsController::ctrGetAreas();
+?>
+<!-- Start Main Content Budget -->
 	<main class="main-content-wrap">
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
@@ -44,3 +48,8 @@
 </div>
 
 <script src="assets/js/ajax-js/get-budgets.js"></script>
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>

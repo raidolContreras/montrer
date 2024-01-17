@@ -140,6 +140,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 			$_SESSION['firstname'] = $loginUser['firstname'];
 			$_SESSION['lastname'] = $loginUser['lastname'];
 			$_SESSION['email'] = $loginUser['email'];
+			$_SESSION['level'] = $loginUser['level'];
 			$_SESSION['changedPass'] = $loginUser['changedPass'];
 		}
 

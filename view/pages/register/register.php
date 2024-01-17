@@ -1,3 +1,4 @@
+<?php if ($_SESSION['level']  == 1):?>
 <?php
     $areas = FormsController::ctrGetAreas();
 ?>
@@ -65,3 +66,9 @@
 <!-- End Account Area -->
 <script src="assets/js/ajax-js/add-users.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
+
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>

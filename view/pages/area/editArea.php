@@ -1,3 +1,7 @@
+<?php if ($_SESSION['level']  == 1):?>
+<?php
+    $areas = FormsController::ctrGetAreas();
+?>
 <?php
     $users = FormsController::ctrGetUsers();
 ?>
@@ -41,3 +45,8 @@
 <script src="assets/js/ajax-js/get-area.js"></script>
 <script src="assets/js/ajax-js/edit-area.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>

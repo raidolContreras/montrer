@@ -1,3 +1,7 @@
+<?php if ($_SESSION['level']  == 1):?>
+<?php
+    $areas = FormsController::ctrGetAreas();
+?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css" />
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
@@ -39,3 +43,8 @@
 <script src="assets/js/ajax-js/active-exercise.js"></script>
 <script src="assets/js/ajax-js/areas.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>

@@ -1,4 +1,8 @@
-	<!-- Start Main Content Area -->
+<?php if ($_SESSION['level']  == 1):?>
+<?php
+    $areas = FormsController::ctrGetAreas();
+?>
+<!-- Start Main Content Area -->
 	<main class="main-content-wrap">
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
@@ -85,3 +89,8 @@
 
 <script src="assets/js/ajax-js/get-users.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>
