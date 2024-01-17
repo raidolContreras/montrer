@@ -40,6 +40,10 @@ $(document).ready(function () {
 					  icon: "success"
 					});
 					
+					setTimeout(function () {
+						window.location.href = 'budgets';
+					}, 1000);
+					
 			    } else {
 					Swal.fire({
 			          icon: 'error',

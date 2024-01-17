@@ -121,6 +121,11 @@ session_start();
 			return $disableBudget;
 		}
 
+		static public function UpdateBudget($data){
+			$updateBudget = FormsController::ctrUpdateBudget($data);
+			return $updateBudget;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -364,4 +369,20 @@ if (isset($_POST['enableBudget'])){
 if (isset($_POST['disableBudget'])){
 	$disableBudget = AjaxForm::disableBudget($_POST['disableBudget']);
 	echo $disableBudget;
+}
+
+if (
+	isset($_POST['updateAuthorizedAmount']) &&
+	isset($_POST['updateArea']) &&
+	isset($_POST['updateExercise']) &&
+	isset($_POST['updateBudget'])
+) {
+	$data = array(
+		'AuthorizedAmount' => $_POST['updateAuthorizedAmount'],
+		'idArea' => $_POST['updateArea'],
+		'idExercise' => $_POST['updateExercise'],
+		'idBudget' => $_POST['updateBudget']
+	);
+	$updateExercise = AjaxForm::UpdateBudget($data);
+	echo $updateExercise;
 }

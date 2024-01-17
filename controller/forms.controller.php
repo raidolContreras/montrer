@@ -227,4 +227,9 @@ class FormsController {
 		$getBudget = FormsModels::mdlGetBudget($idBudget);
 		return $getBudget;
 	}
+
+	static public function ctrUpdateBudget($data){
+		$updateBudget = FormsModels::mdlUpdateBudget($data);
+		return $updateBudget;
+	}
 }

@@ -792,5 +792,26 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+
+	static public function mdlUpdateBudget($data){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budgets
+				SET AuthorizedAmount = :AuthorizedAmount, idArea = :idArea, idExercise = :idExercise
+				WHERE idBudget = :idBudget";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':AuthorizedAmount', $data['AuthorizedAmount'], PDO::PARAM_INT);
+		$stmt->bindParam(':idArea', $data['idArea'], PDO::PARAM_INT);
+		$stmt->bindParam(':idExercise', $data['idExercise'], PDO::PARAM_INT);
+		$stmt->bindParam(':idBudget', $data['idBudget'], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }
