@@ -172,7 +172,7 @@ $(document).ready(function () {
                         <i class="ri-checkbox-circle-line"></i> Habilitar
                     </button>
                     <button type="button" class="btn btn-danger delete-button" data-id="${idUser}">
-                        <i class="ri-forbid-line"></i> Eliminar
+                        <i class="ri-delete-bin-6-line"></i> Eliminar
                     </button>
                 </div>
             `;

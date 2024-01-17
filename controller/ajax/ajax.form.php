@@ -106,6 +106,21 @@ session_start();
 			return $deleteArea;
 		}
 
+		static public function deleteBudget($idBudget){
+			$deleteBudget = FormsController::ctrDeleteBudget($idBudget);
+			return $deleteBudget;
+		}
+
+		static public function enableBudget($idBudget){
+			$enableBudget = FormsController::ctrEnableBudget($idBudget);
+			return $enableBudget;
+		}
+
+		static public function disableBudget($idBudget){
+			$disableBudget = FormsController::ctrDisableBudget($idBudget);
+			return $disableBudget;
+		}
+
 	}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
@@ -114,7 +129,8 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['ema
 		'firstname' => $_POST['firstname'],
 		'lastname' => $_POST['lastname'],
 		'email' => $_POST['email'],
-		'level' => $_POST['level']
+		'level' => $_POST['level'],
+		'area' => $_POST['area']
 	);
 
 	$createUser = AjaxForm::CreateUser($data);
@@ -333,4 +349,19 @@ if (isset($_POST['deleteUser'])){
 if (isset($_POST['deleteArea'])){
 	$deleteArea = AjaxForm::deleteArea($_POST['deleteArea']);
 	echo $deleteArea;
+}
+
+if (isset($_POST['deleteBudget'])){
+	$deleteBudget = AjaxForm::deleteBudget($_POST['deleteBudget']);
+	echo $deleteBudget;
+}
+
+if (isset($_POST['enableBudget'])){
+	$enableBudget = AjaxForm::enableBudget($_POST['enableBudget']);
+	echo $enableBudget;
+}
+
+if (isset($_POST['disableBudget'])){
+	$disableBudget = AjaxForm::disableBudget($_POST['disableBudget']);
+	echo $disableBudget;
 }

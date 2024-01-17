@@ -48,10 +48,19 @@ class FormsModels {
 				$userId = $pdo->lastInsertId();
 				$temporalPassword = FormsModels::mdlSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
 				$settings = FormsModels::mdlSettingsUser($userId, $data['level'], 0);
-				if($temporalPassword == 'ok' && $settings == 'ok'){
-					return $data['email'];
+				if ($data['area'] != '') {
+					$area = FormsModels::mdlUpdateAreaUser($userId, $data['area']);
+					if($temporalPassword == 'ok' && $settings == 'ok' && $area == 'ok'){
+						return $data['email'];
+					} else {
+						return 'Error';
+					}
 				} else {
-					return 'Error';
+					if($temporalPassword == 'ok' && $settings == 'ok'){
+						return $data['email'];
+					} else {
+						return 'Error';
+					}
 				}
 			} else {
 				return 'Error';
@@ -70,6 +79,21 @@ class FormsModels {
 			$stmt->closeCursor();
 			$stmt = null;
 		}
+	}
+	
+	static public function mdlUpdateAreaUser($idUser, $idArea){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_area SET idUser = :idUser WHERE idArea = :idArea ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
 	}
 	
 	static public function mdlRegisterPassword($userId, $cryptPassword){
@@ -690,6 +714,59 @@ class FormsModels {
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlDeleteBudget($idBudget){
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_budgets
+				WHERE idBudget = :idBudget";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlEnableBudget($idBudget){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budgets
+				SET status = 1
+				WHERE idBudget = :idBudget";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlDisableBudget($idBudget){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budgets
+				SET status = 0
+				WHERE idBudget = :idBudget";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
 
 		if($stmt->execute()){
 			return "ok";

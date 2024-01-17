@@ -207,4 +207,19 @@ class FormsController {
 		$deleteArea = FormsModels::mdlDeleteArea($idArea);
 		return $deleteArea;
 	}
+
+	static public function ctrDeleteBudget($idBudget){
+		$deleteBudget = FormsModels::mdlDeleteBudget($idBudget);
+		return $deleteBudget;
+	}
+
+	static public function ctrEnableBudget($idBudget){
+		$enableBudget = FormsModels::mdlEnableBudget($idBudget);
+		return $enableBudget;
+	}
+
+	static public function ctrDisableBudget($idBudget){
+		$disableBudget = FormsModels::mdlDisableBudget($idBudget);
+		return $disableBudget;
+	}
 }
