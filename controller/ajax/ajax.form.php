@@ -416,3 +416,15 @@ if (
 	$updateExercise = AjaxForm::UpdateBudget($data);
 	echo $updateExercise;
 }
+
+if (isset($_POST['idUsers']) && isset($_POST['newPassword'])) {
+	
+	$data = array(
+		'newPassword' => crypt($_POST['newPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
+		'user' => $_POST['idUsers']
+	);
+
+	$changePassword = FormsController::ctrChangePasswordAdmin($data);
+
+	echo $changePassword;
+}

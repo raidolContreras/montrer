@@ -143,6 +143,27 @@ class FormsController {
 	   
 	}
 
+	static public function ctrChangePasswordAdmin($data){
+
+		$temporal = FormsModels::mdlFirstLoginUser($data['user']);
+
+		if (!empty($temporal)) {
+			$dataTemp = array(
+				'user' => $temporal['User_idUser'],
+				'actualPassword' => $temporal['temporal_password'],
+			);
+			FormsModels::mdlDelTemporalPassword($dataTemp);
+		}
+
+		$updatePassword = FormsModels::mdlUpdatePassword($data);
+		if ($updatePassword) {
+			return "ok";
+		} else {
+			return "Error: Inexistente";
+		}
+	   
+	}
+
 	static public function ctrChangeNewPassword($data){
 
 		$searchPassword = FormsModels::mdlSelectPasswordUser($data['user']);
