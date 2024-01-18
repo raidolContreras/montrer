@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="area" class="form-label">Departamentos registrados</label>
-                    <select name="area" id="area" class="form-select form-control" required>
+                    <select name="area" id="area" class="form-select form-control">
                     </select>
                 </div>
 
@@ -25,7 +25,7 @@
                 
                 <div class="col-md-3">
                     <label for="exercise" class="form-label">Ejercicio</label>
-                    <select name="exercise" id="exercise" class="form-select form-control" required>
+                    <select name="exercise" id="exercise" class="form-select form-control">
                     </select>
                 </div>
 

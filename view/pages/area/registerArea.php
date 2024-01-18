@@ -16,16 +16,16 @@
         <form class="account-wrap">
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label for="areaName" class="form-label">Nombre del departamento</label>
-                    <input type="text" class="form-control" id="areaName" name="areaName" placeholder="Nombre del departamento">
+                    <label for="areaName" class="form-label">Nombre del departamento<span class="required"></span></label>
+                    <input type="text" class="form-control required-field" id="areaName" name="areaName" placeholder="Nombre del departamento">
                 </div>
                 <div class="col-md-6">
                     <label for="areaDescription" class="form-label">Descripción del departamento</label>
                     <input type="text" class="form-control" id="areaDescription" name="areaDescription">
                 </div>
                 <div class="col-md-6">
-                    <label for="responsibleUser" class="form-label">Colaborador responsable</label>
-                    <select id="responsibleUser" name="user" class="form-select form-control">
+                    <label for="responsibleUser" class="form-label">Colaborador responsable<span class="required"></span></label>
+                    <select id="responsibleUser" name="user" class="form-select form-control required-field">
                         <option selected disabled>Seleccionar...</option>
                         <?php foreach ($users as $user): ?>
                             <option value="<?php echo $user['idUsers']; ?>"><?php echo $user['firstname']." ".$user['lastname']; ?></option>

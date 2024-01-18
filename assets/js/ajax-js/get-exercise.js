@@ -164,7 +164,7 @@ $(document).ready(function () {
             } else {
                 return `
                 <div class="d-grid gap-2 btn-group" role="group">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="ri-more-fill"></i>
                     </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -188,6 +188,9 @@ $(document).ready(function () {
                 <i class="ri-more-fill"></i>
             </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
+                            Activar
+                        </button>
                         <button class="dropdown-item btn btn-success enable-button" data-id="${idExercise}">
                             <i class="ri-checkbox-circle-line"></i> Habilitar
                         </button>

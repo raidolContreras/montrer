@@ -153,7 +153,7 @@ $(document).ready(function () {
         if (status == 1) {
             return `
                 <div class="d-grid gap-2 btn-group" role="group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ri-more-fill"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -173,6 +173,9 @@ $(document).ready(function () {
                             <i class="ri-more-fill"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button class="dropdown-item btn btn-success edit-button" data-id="${idBudget}">
+                                <i class="ri-edit-line"></i> Editar
+                            </button>
                             <button class="dropdown-item btn btn-primary enable-button" data-id="${idBudget}">
                                 <i class="ri-checkbox-circle-line"></i> Habilitar
                             </button>

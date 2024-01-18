@@ -56,6 +56,20 @@ if ($is_mobile) {
             font-size: 12px;
             line-height: 1.42857;
         }
+        
+        /* .required-field {
+        } */
+
+        .required-field:focus {
+            border: 1px solid #dc3545;
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+
+        .required::after {
+            content: " *"; 
+            color: #dc3545; 
+        }
+
     </style>
 </head>
 

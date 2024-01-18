@@ -85,6 +85,31 @@
     </div>
 </div>
 
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Cambiar Contraseña: <span id="changePasswordUserName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mb-24 icon">
+                    <input name="newPassword" type="password" class="form-control required-field" placeholder="Nueva Contraseña">
+                    <img src="assets/img/svg/lock.svg" alt="Icono de Contraseña">
+                </div>
+                <div class="form-group mb-24 icon">
+                    <input name="confirmPassword" type="password" class="form-control required-field" placeholder="Confirme la Contraseña">
+                    <img src="assets/img/svg/lock.svg" alt="Icono de Contraseña">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmChangePassword">Cambiar Contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="assets/js/ajax-js/get-users.js"></script>
