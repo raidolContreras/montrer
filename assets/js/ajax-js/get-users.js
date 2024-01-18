@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    var registersData = $('#registers').DataTable({
+    moment.locale('es');
+    $('#registers').DataTable({
         ajax: {
             url: 'controller/ajax/getUsers.php',
             dataSrc: ''
@@ -19,8 +20,18 @@ $(document).ready(function () {
                 }
             },
             { data: 'email' },
-            { data: 'createDate' },
-            { data: 'lastConection' },
+            {
+                data: 'createDate',
+                render: function (data) {
+                    return moment(data).format('DD MMM YYYY, h:mm a');
+                }
+            },
+            {
+                data: 'lastConection',
+                render: function (data) {
+                    return moment(data).format('DD MMM YYYY, h:mm a');
+                }
+            },
             { 
                 data: null,
                 render: function(data){

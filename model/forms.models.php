@@ -288,7 +288,7 @@ class FormsModels {
 	static public function mdlUpdateLog($idUsers){
 
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_users SET lastConection = NOW() WHERE idUsers = :idUsers";
+		$sql = "UPDATE montrer_users SET lastConection = DATE_ADD(NOW(), INTERVAL -6 HOUR) WHERE idUsers = :idUsers";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_INT);
 		if($stmt->execute()){
