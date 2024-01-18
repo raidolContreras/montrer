@@ -286,21 +286,26 @@ class FormsModels {
 	}
 
 	static public function mdlUpdateLog($idUsers){
-
 		$pdo = Conexion::conectar();
+		
+		// Establecer la zona horaria en la base de datos
+		$pdo->exec("SET time_zone = 'America/Mexico_City';");
+	
 		$sql = "UPDATE montrer_users SET lastConection = NOW() WHERE idUsers = :idUsers";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_INT);
+	
 		if($stmt->execute()){
 			return "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
+	
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
-		
 	}
+	
 
 	static public function mdlDelTemporalPassword($data){
 		
