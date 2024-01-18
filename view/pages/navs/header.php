@@ -48,23 +48,23 @@
 														</div>
 												</div>
 
-												<!-- <div class="dropdown-wrap">
+												<div class="dropdown-wrap">
 														<ul class="profile-nav p-0 pt-3">
 																<li class="nav-item">
-																		<a href="profile.html" class="nav-link">
+																		<a href="changePassword" class="nav-link">
 																				<i class="ri-user-line"></i> 
-																				<span>Perfil</span>
+																				<span>Cambiar contraseña</span>
 																		</a>
 																</li>
 
-																<li class="nav-item">
+																<!-- <li class="nav-item">
 																		<a href="inbox.html" class="nav-link">
 																				<i class="ri-mail-send-line"></i> 
 																				<span>Mis mensajes</span>
 																		</a>
-																</li> 
+																</li> -->
 														</ul>
-												</div> -->
+												</div> 
 
 												<div class="dropdown-footer">
 														<ul class="profile-nav">

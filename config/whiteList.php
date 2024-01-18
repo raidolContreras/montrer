@@ -17,7 +17,8 @@
 		'editRegister',
 		'editArea',
 		'editExercise',
-		'editBudgets'
+		'editBudgets',
+		'changePassword'
 	];
 
 
@@ -31,7 +32,7 @@
 			include "view/pages/register/$pagina.php";
 		} elseif ($pagina == 'inicio') {
 			include "view/pages/$pagina.php";
-		} elseif ($pagina == 'change_pass') {
+		} elseif ($pagina == 'change_pass' || $pagina == 'changePassword') {
 			include "view/pages/login/$pagina.php";
 		} elseif ($pagina == 'registerArea' || $pagina == 'areas' || $pagina == 'editArea') {
 			include "view/pages/area/$pagina.php";
