@@ -152,30 +152,37 @@ $(document).ready(function () {
     function renderActionButtons(idBudget, status) {
         if (status == 1) {
             return `
-                <center>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success edit-button" data-id="${idBudget}">
-                            <i class="ri-edit-line"></i> Editar
+                <div class="d-grid gap-2 btn-group" role="group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-more-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger disable-button" data-id="${idBudget}">
-                            <i class="ri-forbid-line"></i> Inhabilitar
-                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button class="dropdown-item btn btn-success edit-button" data-id="${idBudget}">
+                                <i class="ri-edit-line"></i> Editar
+                            </button>
+                            <button class="dropdown-item btn btn-danger disable-button" data-id="${idBudget}">
+                                <i class="ri-forbid-line"></i> Inhabilitar
+                            </button>
+                        </div>
                     </div>
-                </center>
             `;
         } else {
             return `
-                <center>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary enable-button" data-id="${idBudget}">
-                            <i class="ri-checkbox-circle-line"></i> Habilitar
+                <div class="d-grid gap-2 btn-group" role="group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-more-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger delete-button" data-id="${idBudget}">
-                            <i class="ri-delete-bin-6-line"></i> Eliminar
-                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button class="dropdown-item btn btn-primary enable-button" data-id="${idBudget}">
+                                <i class="ri-checkbox-circle-line"></i> Habilitar
+                            </button>
+                            <button class="dropdown-item btn btn-danger delete-button" data-id="${idBudget}">
+                                <i class="ri-delete-bin-6-line"></i> Eliminar
+                            </button>
+                        </div>
                     </div>
-                </center>
             `;
         }
     }
+    
 });

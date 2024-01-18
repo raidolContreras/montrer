@@ -19,7 +19,7 @@
 							<th>Email</th>
 							<th>Fecha de creación</th>
 							<th>Última conexión</th>
-							<th>Acciones</th>
+							<th width="10%"></th>
 						</tr>
 					</thead>
 				</table>

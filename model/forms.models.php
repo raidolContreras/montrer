@@ -259,6 +259,19 @@ class FormsModels {
 		$stmt = null;
 	}
 
+	static public function mdlSelectPasswordUser($idUsers){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT u.password FROM montrer_users u LEFT JOIN montrer_settings s ON s.idUser = u.idUsers WHERE u.idUsers = :idUsers";
+		$stmt = $pdo->prepare($sql);
+		
+		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetch();
+		// Asegúrate de cerrar la conexión en el bloque finally
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
 	static public function mdlFirstLoginUser($idUsers){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT * FROM montrer_temporal_password WHERE User_idUser = :User_idUser";

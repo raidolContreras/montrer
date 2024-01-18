@@ -43,7 +43,7 @@ $(document).ready(function () {
                 user: user,
             },
             success: function (response) {
-                if (response === "Error: Inexistente") {
+                if (response === "Error: Contraseñas distintas") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -55,7 +55,13 @@ $(document).ready(function () {
                         title: 'Error',
                         text: 'La contraseña actual no es correcta.',
                     });
-                } else {
+                } else if (response === "Error: Inexistente") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudo actualizar la contraseña, intentelo nuevamente.',
+                    });
+                } else if (response === "ok") {
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
@@ -64,6 +70,12 @@ $(document).ready(function () {
                         if (result.isConfirmed) {
                             window.location.href = 'inicio'; // Redirige al inicio
                         }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'La nueva contraseña no puede ser igual a la antigua.',
                     });
                 }
             },

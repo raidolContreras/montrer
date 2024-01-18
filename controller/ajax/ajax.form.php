@@ -21,6 +21,11 @@ session_start();
 			return $changePassword;
 		}
 
+		static function ChangeNewPassword($data){
+			$changePassword = FormsController::ctrChangeNewPassword($data);
+			return $changePassword;
+		}
+
 		static function AddArea($data){
 			$addArea = FormsController::ctrAddArea($data);
 			return $addArea;
@@ -184,6 +189,31 @@ if (isset($_POST['actualPassword']) && isset($_POST['newPassword']) && isset($_P
 		$_SESSION['changedPass'] = 0;
 	}
 	echo $changePassword;
+}
+
+if (isset($_POST['updateActualPassword']) && isset($_POST['updateNewPassword']) && isset($_POST['updateConfirmPassword']) && isset($_POST['user'])) {
+
+	if ( $_POST['updateNewPassword'] != $_POST['updateConfirmPassword']) {
+		echo 'Error: Contraseñas distintas';
+	} else {
+
+		if ( $_POST['updateActualPassword'] != $_POST['updateNewPassword']) {
+
+			$data = array(
+				'ActualPassword' => crypt($_POST['updateActualPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
+				'newPassword' => crypt($_POST['updateNewPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
+				'user' => $_POST['user']
+			);
+		
+			$changePassword = AjaxForm::ChangeNewPassword($data);
+	
+			echo $changePassword;
+
+		} else {
+			echo 'Error: contraseñas';
+		}
+
+	}
 }
 
 if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POST['user'])) {

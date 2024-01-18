@@ -152,51 +152,54 @@ $(document).ready(function () {
     }
 
     function renderActionButtons(idExercise, status, active) {
-        if (active == 1){
+        if (active == 1) {
             if (status == 1) {
                 return `
-                    <center>
-                        <div class="d-grid gap-2">
-                        
-                            <button type="button" class="btn btn-success btn-block" disabled>
-                                Activo
-                            </button>
-                        </div>
-                    </center>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-success btn-block" disabled>
+                            Activo
+                        </button>
+                    </div>
                 `;
             } else {
                 return `
-                    <center>
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
+                <div class="d-grid gap-2 btn-group" role="group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ri-more-fill"></i>
+                    </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button class="dropdown-item btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
                                 Activar
                             </button>
-                            <button type="button" class="btn btn-primary edit-button" data-id="${idExercise}">
+                            <button class="dropdown-item btn btn-primary edit-button" data-id="${idExercise}">
                                 <i class="ri-edit-line"></i> Editar
                             </button>
-                            <button type="button" class="btn btn-danger disable-button" data-id="${idExercise}">
+                            <button class="dropdown-item btn btn-danger disable-button" data-id="${idExercise}">
                                 <i class="ri-forbid-line"></i> Inhabilitar
                             </button>
                         </div>
-                    </center>
+                    </div>
                 `;
             }
-
         } else {
             return `
-                    <center>
-                <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success enable-button" data-id="${idExercise}">
+            <div class="d-grid gap-2 btn-group" role="group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ri-more-fill"></i>
+            </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item btn btn-success enable-button" data-id="${idExercise}">
                             <i class="ri-checkbox-circle-line"></i> Habilitar
                         </button>
-                        <button type="button" class="btn btn-danger delete-button" data-id="${idExercise}">
+                        <button class="dropdown-item btn btn-danger delete-button" data-id="${idExercise}">
                             <i class="ri-delete-bin-6-line"></i> Eliminar
                         </button>
+                    </div>
                 </div>
-                    </center>
             `;
         }
     }
+    
 
     function handleUserAction (idExercise, nameVariant, errorMessage){
         $.ajax({

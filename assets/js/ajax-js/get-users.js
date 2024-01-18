@@ -95,11 +95,11 @@ $(document).ready(function () {
     
         // Manejar el clic del botón "Eliminar" en el modal
         $('#confirmDelete').on('click', function() {
-            handleUserAction(idUser, 'deleteUser', 'El usuario ha sido eliminado', 'No se pudo eliminar al usuario');
+            handleUserAction(idUser, 'deleteUser', 'El usuario ha sido eliminado', 'No se pudo eliminar al usuario', 'El usuario pertenece a un departamento');
         });
     });
     
-    function handleUserAction(idUser, action, successMessage, errorMessage) {
+    function handleUserAction(idUser, action, successMessage, errorMessage, errorText) {
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -129,7 +129,8 @@ $(document).ready(function () {
                 } else {
                     Swal.fire({
                         icon: "error",
-                        title: errorMessage
+                        title: errorMessage,
+                        text: errorText
                     });
                 }
             },
@@ -152,30 +153,47 @@ $(document).ready(function () {
     }
 
     function renderActionButtons(idUser, status) {
-        if (status == 1){
-
+        if (status == 1) {
             return `
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success edit-button" data-id="${idUser}">
-                        <i class="ri-edit-line"></i> Editar
+            <div class="d-grid gap-2 btn-group" role="group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ri-more-fill"></i>
                     </button>
-                    <button type="button" class="btn btn-danger disable-button" data-id="${idUser}">
-                        <i class="ri-forbid-line"></i> Inhabilitar
-                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <button class="dropdown-item edit-button" data-id="${idUser}">
+                            <i class="ri-pencil-line"></i> Editar
+                        </button>
+                        <button class="dropdown-item disable-button" data-id="${idUser}">
+                            <i class="ri-forbid-line"></i> Inhabilitar
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item change-password-button" data-id="${idUser}">
+                            <i class="ri-lock-password-line"></i> Cambiar Contraseña
+                        </button>
+                    </div>
                 </div>
             `;
-
         } else {
             return `
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary enable-button" data-id="${idUser}">
-                        <i class="ri-checkbox-circle-line"></i> Habilitar
+            <div class="d-grid gap-2 btn-group" role="group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ri-more-fill"></i>
                     </button>
-                    <button type="button" class="btn btn-danger delete-button" data-id="${idUser}">
-                        <i class="ri-delete-bin-6-line"></i> Eliminar
-                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <button class="dropdown-item enable-button" data-id="${idUser}">
+                            <i class="ri-checkbox-circle-line"></i> Habilitar
+                        </button>
+                        <button class="dropdown-item delete-button" data-id="${idUser}">
+                            <i class="ri-delete-bin-6-line"></i> Eliminar
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item change-password-button" data-id="${idUser}">
+                            <i class="ri-lock-password-line"></i> Cambiar Contraseña
+                        </button>
+                    </div>
                 </div>
             `;
         }
     }
+    
 });

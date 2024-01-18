@@ -15,7 +15,7 @@
 							<th>Departamento</th>
 							<th>Presupuesto autorizado</th>
 							<th>Ejercicio</th>
-							<th width="25%"></th>
+							<th width="10%"></th>
 						</tr>
 					</thead>
 				</table>

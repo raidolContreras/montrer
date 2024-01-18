@@ -142,6 +142,22 @@ class FormsController {
 		}
 	   
 	}
+
+	static public function ctrChangeNewPassword($data){
+
+		$searchPassword = FormsModels::mdlSelectPasswordUser($data['user']);
+		if ($searchPassword['password'] === $data['ActualPassword']){
+			$updatePassword = FormsModels::mdlUpdatePassword($data);
+			if ($updatePassword) {
+				return "ok";
+			} else {
+				return "Error: Inexistente";
+			}
+		} else {
+			return "Error: Password";
+		}
+	   
+	}
 	
 	static public function ctrAddArea($data){
 	   $addArea = FormsModels::mdlAddArea($data);
