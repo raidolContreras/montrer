@@ -16,7 +16,11 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return data.firstname + ' ' + data.lastname;
+                    if (data.firstname == null) {
+                        return '';
+                    } else {
+                        return data.firstname + ' ' + data.lastname;
+                    }
                 }
             },
             {
