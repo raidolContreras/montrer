@@ -163,42 +163,34 @@ $(document).ready(function () {
                 `;
             } else {
                 return `
-                <div class="d-grid gap-2 btn-group" role="group">
-                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ri-more-fill"></i>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
+                        Activar
                     </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button class="dropdown-item btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
-                                Activar
-                            </button>
-                            <button class="dropdown-item btn btn-primary edit-button" data-id="${idExercise}">
-                                <i class="ri-edit-line"></i> Editar
-                            </button>
-                            <button class="dropdown-item btn btn-danger disable-button" data-id="${idExercise}">
-                                <i class="ri-forbid-line"></i> Inhabilitar
-                            </button>
-                        </div>
-                    </div>
+                    <button class="btn btn-primary edit-button" data-id="${idExercise}">
+                        <i class="ri-edit-line"></i> Editar
+                    </button>
+                    <button class="btn btn-warning disable-button" data-id="${idExercise}">
+                        <i class="ri-forbid-line"></i> Inhabilitar
+                    </button>
+                </div>
                 `;
             }
         } else {
             return `
-            <div class="d-grid gap-2 btn-group" role="group">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ri-more-fill"></i>
-            </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
-                            Activar
-                        </button>
-                        <button class="dropdown-item btn btn-success enable-button" data-id="${idExercise}">
-                            <i class="ri-checkbox-circle-line"></i> Habilitar
-                        </button>
-                        <button class="dropdown-item btn btn-danger delete-button" data-id="${idExercise}">
-                            <i class="ri-delete-bin-6-line"></i> Eliminar
-                        </button>
-                    </div>
-                </div>
+            <center>
+            <div class="btn-group" role="group">
+                <button class="btn btn-primary edit-button" data-id="${idExercise}">
+                    <i class="ri-edit-line"></i> Editar
+                </button>
+                <button class="btn btn-success enable-button" data-id="${idExercise}">
+                    <i class="ri-checkbox-circle-line"></i> Habilitar
+                </button>
+                <button class="btn btn-danger delete-button" data-id="${idExercise}">
+                    <i class="ri-delete-bin-6-line"></i> Eliminar
+                </button>
+            </div>
+            </center>
             `;
         }
     }

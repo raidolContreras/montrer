@@ -22,7 +22,7 @@
 							<th>Inicio del ejercicio</th>
 							<th>Cierre del ejercicio</th>
 							<th>Presupuesto</th>
-							<th width="10%"></th>
+							<th width="25%"></th>
 						</tr>
 					</thead>
 				</table>

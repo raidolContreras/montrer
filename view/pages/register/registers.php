@@ -21,7 +21,7 @@
 							<th>Email</th>
 							<th>Fecha de creación</th>
 							<th>Última conexión</th>
-							<th width="10%"></th>
+							<th width="30%"></th>
 						</tr>
 					</thead>
 				</table>

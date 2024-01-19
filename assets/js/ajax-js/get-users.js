@@ -249,48 +249,37 @@ $(document).ready(function () {
     function renderActionButtons(idUser, status) {
         if (status == 1) {
             return `
-            <div class="d-grid gap-2 btn-group" role="group">
-                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ri-more-fill"></i>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary edit-button" data-id="${idUser}">
+                        <i class="ri-pencil-line"></i> Editar
                     </button>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <button class="dropdown-item edit-button" data-id="${idUser}">
-                            <i class="ri-pencil-line"></i> Editar
-                        </button>
-                        <button class="dropdown-item disable-button" data-id="${idUser}">
-                            <i class="ri-forbid-line"></i> Inhabilitar
-                        </button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item change-password-button" data-id="${idUser}">
-                            <i class="ri-lock-password-line"></i> Cambiar Contraseña
-                        </button>
-                    </div>
+                    <button type="button" class="btn btn-warning disable-button" data-id="${idUser}">
+                        <i class="ri-forbid-line"></i> Inhabilitar
+                    </button>
+                    <button type="button" class="btn btn-secondary change-password-button" data-id="${idUser}">
+                        <i class="ri-lock-password-line"></i> Cambiar Contraseña
+                    </button>
                 </div>
             `;
         } else {
             return `
-            <div class="d-grid gap-2 btn-group" role="group">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ri-more-fill"></i>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary edit-button" data-id="${idUser}">
+                        <i class="ri-pencil-line"></i> Editar
                     </button>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <button class="dropdown-item edit-button" data-id="${idUser}">
-                            <i class="ri-pencil-line"></i> Editar
-                        </button>
-                        <button class="dropdown-item enable-button" data-id="${idUser}">
-                            <i class="ri-checkbox-circle-line"></i> Habilitar
-                        </button>
-                        <button class="dropdown-item delete-button" data-id="${idUser}">
-                            <i class="ri-delete-bin-6-line"></i> Eliminar
-                        </button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item change-password-button" data-id="${idUser}">
-                            <i class="ri-lock-password-line"></i> Cambiar Contraseña
-                        </button>
-                    </div>
+                    <button type="button" class="btn btn-success enable-button" data-id="${idUser}">
+                        <i class="ri-checkbox-circle-line"></i> Habilitar
+                    </button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="${idUser}">
+                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    </button>
+                    <button type="button" class="btn btn-secondary change-password-button" data-id="${idUser}">
+                        <i class="ri-lock-password-line"></i> Cambiar Contraseña
+                    </button>
                 </div>
             `;
         }
     }
+    
     
 });
