@@ -9,7 +9,7 @@
 						<div class="row align-items-center">
 							<div class="col-xl-12">
 								<div class="single-click-content">
-									<span class="features-title">Total presupuesto</span>
+									<span class="features-title">Presupuesto total</span>
 									<h3 class="budget"></h3>
 									<p class="budget-message"></p>
 								</div>
@@ -59,7 +59,7 @@
 								<div class="single-click-content">
 									<span class="features-title">Presupuesto comprobado</span>
 									<h3>$ 0.00 </h3>
-									<p >Presupuesto comprobado en el ejercicio</p>
+									<p class="budget-message-compr"></p>
 								</div>
 							</div>
 						</div>
@@ -75,7 +75,7 @@
 								<div class="single-click-content">
 									<span class="features-title">Presupuesto sin comprobar</span>
 									<h3>$ 0.00 </h3>
-									<p class="budget-message-rest"></p>
+									<p class="budget-message-no-compr"></p>
 								</div>
 							</div>
 						</div>
