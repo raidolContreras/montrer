@@ -257,6 +257,9 @@ $(document).ready(function () {
                     <button type="button" class="btn btn-warning disable-button" data-id="${idUser}">
                         <i class="ri-forbid-line"></i> Inhabilitar
                     </button>
+                    <button type="button" class="btn btn-danger delete-button" data-id="${idUser}">
+                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    </button>
                     <button type="button" class="btn btn-secondary change-password-button" data-id="${idUser}">
                         <i class="ri-lock-password-line"></i> Cambiar Contraseña
                     </button>

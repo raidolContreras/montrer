@@ -160,12 +160,16 @@ $(document).ready(function () {
                     <button class="btn btn-warning disable-button" data-id="${idBudget}">
                         <i class="ri-forbid-line"></i> Inhabilitar
                     </button>
+                    <button class="btn btn-danger delete-button" data-id="${idBudget}">
+                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    </button>
                 </div>
                 
             </center>
             `;
         } else {
             return `
+            <center>
                 <div class="btn-group" role="group">
                     <button class="btn btn-success edit-button" data-id="${idBudget}">
                         <i class="ri-edit-line"></i> Editar
@@ -177,6 +181,7 @@ $(document).ready(function () {
                         <i class="ri-delete-bin-6-line"></i> Eliminar
                     </button>
                 </div>
+                </center>
             `;
         }
     }

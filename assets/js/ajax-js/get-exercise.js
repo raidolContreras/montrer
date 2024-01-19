@@ -163,6 +163,7 @@ $(document).ready(function () {
                 `;
             } else {
                 return `
+                <center>
                 <div class="btn-group" role="group">
                     <button class="btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}">
                         Activar
@@ -173,7 +174,11 @@ $(document).ready(function () {
                     <button class="btn btn-warning disable-button" data-id="${idExercise}">
                         <i class="ri-forbid-line"></i> Inhabilitar
                     </button>
+                    <button class="btn btn-danger delete-button" data-id="${idExercise}">
+                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    </button>
                 </div>
+                </center>
                 `;
             }
         } else {
