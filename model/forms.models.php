@@ -751,6 +751,31 @@ class FormsModels {
 		$stmt = null;
 	}
 
+	static public function mdlSelectAreaUser($idUsers){
+	   $pdo = Conexion::conectar();
+	   $sql = "SELECT * FROM montrer_area WHERE idUser = :idUser";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->bindParam(':idUser', $idUsers, PDO::PARAM_INT);
+	   $stmt->execute();
+	   return $stmt->fetchAll();
+	   $stmt->closeCursor();
+	   $stmt = null;
+	}
+
+	static public function mdlNullAreaUser($idArea){
+	   $pdo = Conexion::conectar();
+	   $sql = "UPDATE montrer_area SET idUser = null WHERE idArea = :idArea ";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+	   if($stmt->execute()){
+		return "ok";
+	   } else {
+		print_r($pdo->errorInfo());
+	   }
+	   $stmt->closeCursor();
+	   $stmt = null;
+	}
+
 	static public function mdlDeleteArea($idArea){
 		$pdo = Conexion::conectar();
 		$sql = "DELETE FROM montrer_area

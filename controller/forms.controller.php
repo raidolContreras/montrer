@@ -236,6 +236,12 @@ class FormsController {
 	}
 
 	static public function ctrDeleteUser($idUsers){
+		$selectArea = FormsModels::mdlSelectAreaUser($idUsers);
+		if (!empty($selectArea)) {
+			foreach ($selectArea as $area) {
+				FormsModels::mdlNullAreaUser($area['idArea']);
+			}
+		}
 		$deleteUser = FormsModels::mdlDeleteUser($idUsers);
 		return $deleteUser;
 	}
