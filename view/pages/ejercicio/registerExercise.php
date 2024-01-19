@@ -2,6 +2,11 @@
 <?php
     $areas = FormsController::ctrGetAreas();
 ?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var $j = jQuery.noConflict();
+</script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 
@@ -27,8 +32,7 @@
                 <div class="col-md-6">
                     <label for="budget" class="form-label">Presupuesto del ejercicio</label>
                     <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input type="number" step="any" class="form-control" id="budget" name="budget">
+                        <input type="text" class="form-control inputmask" id="budget" name="budget" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                     </div>
                 </div>
 
@@ -49,6 +53,12 @@
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-exercises.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
+<script>
+    $j(document).ready(function() {
+        // Inicializa la máscara para el input con la clase 'inputmask'
+        $j('.inputmask').inputmask();
+    });
+</script>
 
 <?php else: ?>
 	<script>

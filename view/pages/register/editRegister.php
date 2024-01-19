@@ -14,7 +14,7 @@
 						<a href="inicio">
 							<img src="assets/img/logo.png" alt="main-logo">
 						</a>
-						<h3>Registro de nuevos usuarios</h3>
+						<h3>Actualizar usuario</h3>
 					</div>
 
 					<form class="account-wrap">

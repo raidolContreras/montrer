@@ -155,11 +155,22 @@ $(document).ready(function () {
         if (active == 1) {
             if (status == 1) {
                 return `
-                    <div class="d-grid gap-2">
+                    <center>
+                    <div class="btn-group" role="group">
                         <button type="button" class="btn btn-success btn-block" disabled>
                             Activo
                         </button>
+                        <button class="btn btn-primary edit-button" data-id="${idExercise}">
+                            <i class="ri-edit-line"></i> Editar
+                        </button>
+                        <button class="btn btn-warning disable-button" data-id="${idExercise}">
+                            <i class="ri-forbid-line"></i> Inhabilitar
+                        </button>
+                        <button class="btn btn-danger delete-button" data-id="${idExercise}">
+                            <i class="ri-delete-bin-6-line"></i> Eliminar
+                        </button>
                     </div>
+                    </center>
                 `;
             } else {
                 return `

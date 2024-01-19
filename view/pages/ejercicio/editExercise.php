@@ -2,12 +2,17 @@
 <?php
     $areas = FormsController::ctrGetAreas();
 ?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var $j = jQuery.noConflict();
+</script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar ejercicio</h3>
+            <h3>Actualizar ejercicio</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">
@@ -27,8 +32,7 @@
                 <div class="col-md-6">
                     <label for="budget" class="form-label">Presupuesto del ejercicio</label>
                     <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input type="number" step="any" class="form-control" id="budget" name="budget">
+                        <input type="text" class="form-control inputmask" id="budget" name="budget" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                     </div>
                 </div>
 
@@ -39,7 +43,7 @@
 
                 <div class="col-12 mt-2 text-end">
                     <a href="exercise" class="btn btn-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Registrar ejercicio</button>
+                    <button type="submit" class="btn btn-primary">Actualizar ejercicio</button>
                 </div>
             </div>
         </form>
@@ -51,6 +55,12 @@
 <script src="assets/js/ajax-js/get-exercises.js"></script>
 <script src="assets/js/ajax-js/edit-exercises.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
+<script>
+    $j(document).ready(function() {
+        // Inicializa la máscara para el input con la clase 'inputmask'
+        $j('.inputmask').inputmask();
+    });
+</script>
 <?php else: ?>
 	<script>
 		window.location.href = 'inicio';

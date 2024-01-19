@@ -25,21 +25,21 @@ $(document).ready(function () {
 		if (firstname == ''){
 			Swal.fire({
 			  icon: 'warning',
-			  title: 'Advertencia',
+			  title: 'Error',
 			  text: 'Se requiere ingresar el nombre del usuario',
 			  icon: "warning"
 			});
 		} else if ( lastname == '') {
 			Swal.fire({
 			  icon: 'warning',
-			  title: 'Advertencia',
+			  title: 'Error',
 			  text: 'Se requiere ingresar los apellidos del usuario',
 			  icon: "warning"
 			});
 		} else if ( email == '') {
 			Swal.fire({
 			  icon: 'warning',
-			  title: 'Advertencia',
+			  title: 'Error',
 			  text: 'Se requiere ingresar una dirección de correo electrónico válida',
 			  icon: "warning"
 			});
