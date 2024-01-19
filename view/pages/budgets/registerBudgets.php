@@ -30,6 +30,7 @@
                 </div>
 
                 <div class="col-12 mt-2 text-end">
+                    <a href="budgets" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Registrar presupuesto</button>
                 </div>
             </div>

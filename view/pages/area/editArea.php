@@ -33,6 +33,7 @@
                     </select>
                 </div>
                 <div class="col-12">
+                    <a href="areas" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Actualizar departamento</button>
                 </div>
             </div>

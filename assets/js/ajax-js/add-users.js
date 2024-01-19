@@ -32,14 +32,14 @@ $(document).ready(function () {
 		} else if ( lastname == '') {
 			Swal.fire({
 			  icon: 'warning',
-			  title: 'warning al crear el usuario',
+			  title: 'Advertencia',
 			  text: 'Se requiere ingresar los apellidos del usuario',
 			  icon: "warning"
 			});
 		} else if ( email == '') {
 			Swal.fire({
 			  icon: 'warning',
-			  title: 'warning al crear el usuario',
+			  title: 'Advertencia',
 			  text: 'Se requiere ingresar una dirección de correo electrónico válida',
 			  icon: "warning"
 			});
@@ -66,7 +66,8 @@ $(document).ready(function () {
 						$("select[name='area']").val('');
 						Swal.fire({
 						  icon: "success",
-						  title: 'Usuario '+response+' creado exitosamente',
+						  title: 'Usuario',
+						  text: response+' creado exitosamente',
 						  icon: "success"
 						});
 					} else if (response === 'Error: Email duplicado') {
