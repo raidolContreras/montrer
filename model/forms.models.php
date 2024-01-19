@@ -230,9 +230,24 @@ class FormsModels {
 	
 	static public function mdlGetUsers(){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT u.idUsers, u.firstname, u.lastname, u.email, s.status, s.level, u.lastConection, u.createDate
-				FROM montrer_users u
-				LEFT JOIN montrer_settings s ON s.idUser = u.idUsers;";
+		$sql = "SELECT 
+					u.idUsers,
+					u.firstname,
+					u.lastname,
+					u.email,
+					s.status,
+					s.level,
+					u.lastConection,
+					u.createDate,
+					GROUP_CONCAT(a.nameArea SEPARATOR ', ') AS nameArea
+				FROM 
+					montrer_users u
+				LEFT JOIN 
+					montrer_settings s ON s.idUser = u.idUsers
+				LEFT JOIN 
+					montrer_area a ON a.idUser = u.idUsers
+				GROUP BY 
+					u.idUsers;";
 		$stmt = $pdo->prepare($sql);
 		
 		if ($stmt->execute()){

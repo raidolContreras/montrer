@@ -52,7 +52,7 @@
 														<ul class="profile-nav p-0 pt-3">
 																<li class="nav-item">
 																		<a href="changePassword" class="nav-link">
-																				<i class="ri-user-line"></i> 
+																				<i class="ri-lock-2-line"></i> 
 																				<span>Cambiar contraseña</span>
 																		</a>
 																</li>

@@ -20,6 +20,7 @@ $(document).ready(function () {
                 }
             },
             { data: 'email' },
+            { data: 'nameArea' },
             {
                 data: 'createDate',
                 render: function (data) {

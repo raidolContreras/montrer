@@ -4,6 +4,7 @@
 		<div class="container-fluid">
 			<div class="row justify-content-center">
 				<div class="col-lg-4 col-md-6">
+					<a href="exercise">
 					<div class="single-features">
 						<div class="row align-items-center">
 							<div class="col-xl-6 col-sm-6">
@@ -21,9 +22,11 @@
 							</div>
 						</div>
 					</div>
+					</a>
 				</div>
 
 				<div class="col-lg-4 col-md-6">
+					<a href="budgets">
 					<div class="single-features color-style-1765fd">
 						<div class="row align-items-center">
 							<div class="col-xl-6 col-sm-6">
@@ -41,9 +44,11 @@
 							</div>
 						</div>
 					</div>
+					</a>
 				</div>
 
 				<div class="col-lg-4 col-md-6">
+					<a href="exercise">
 					<div class="single-features color-style-5c31d6">
 						<div class="row align-items-center">
 							<div class="col-xl-6 col-sm-6">
@@ -61,6 +66,7 @@
 							</div>
 						</div>
 					</div>
+					</a>
 				</div>
 			</div>
 		</div>

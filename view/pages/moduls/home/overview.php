@@ -15,6 +15,7 @@
 						<div class="audience-content-wrap">
 							<div class="row justify-content-center">
 								<div class="col-lg-4 col-sm-6">
+								<a href="registers">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
 											<h5>Usuarios</h5>
@@ -24,9 +25,11 @@
 											<img src="assets/img/svg/white-profile-2user.svg" alt="white-profile-2user">
 										</div>
 									</div>
+								</a>
 								</div>
 
 								<div class="col-lg-4 col-sm-6">
+								<a href="areas">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
 											<h5>Departamentos</h5>
@@ -36,9 +39,11 @@
 											<img src="assets/img/svg/area.svg" alt="eye" style="filter: brightness(100)">
 										</div>
 									</div>
+								</a>
 								</div>
 
 								<div class="col-lg-4 col-sm-6">
+								<a href="exercise">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content color-style-fe5957">
 											<h5>Ejercicio actual</h5>
@@ -48,6 +53,7 @@
 											<img src="assets/img/svg/mask.svg" alt="mask">
 										</div>
 									</div>
+								</a>
 								</div>
 							</div>
 
