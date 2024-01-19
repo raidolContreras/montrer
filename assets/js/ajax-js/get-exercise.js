@@ -185,6 +185,9 @@ $(document).ready(function () {
             return `
             <center>
             <div class="btn-group" role="group">
+                <button class="btn btn-success activate-btn disabled" disabled>
+                    Activar
+                </button>
                 <button class="btn btn-primary edit-button" data-id="${idExercise}">
                     <i class="ri-edit-line"></i> Editar
                 </button>
