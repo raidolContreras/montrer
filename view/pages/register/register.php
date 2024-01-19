@@ -50,8 +50,9 @@
 								
 							</select>
 						</div>
-						<div class="form-group mb-24">
-							<button type="submit" class="default-btn" id="register">Registrar</button>
+						<div class="form-group mb-24 row">
+							<a href="registers" class="btn btn-danger col-6">Cancelar</a>
+							<button type="submit" class="btn btn-primary col-6" id="register">Registrar</button>
 						</div>
 					</form>
 

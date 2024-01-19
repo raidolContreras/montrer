@@ -38,15 +38,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="disableExerciseModalLabel">Inhabilitar ejercicio</h5>
+                <h5 class="modal-title" id="disableExerciseModalLabel">Deshabilitar ejercicio</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Esta seguro de que desea inhabilitar el ejercicio <strong id="disableExerciseName"></strong>?</p>
+                <p>¿Está seguro de que desea deshabilitar el ejercicio <strong id="disableExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDisableExercise">Inhabilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDisableExercise">Deshabilitar</button>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Esta seguro de que desea habilitar el ejercicio <strong id="enableExerciseName"></strong>?</p>
+                <p>¿Está seguro de que desea habilitar el ejercicio <strong id="enableExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -76,11 +76,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteExerciseModalLabel">Habilitar ejercicio</h5>
+                <h5 class="modal-title" id="deleteExerciseModalLabel">Eliminar ejercicio</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Esta seguro de que desea eliminar el ejercicio <strong id="deleteExerciseName"></strong>?</p>
+                <p>¿Está seguro de que desea eliminar el ejercicio <strong id="deleteExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>

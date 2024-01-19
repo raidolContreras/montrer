@@ -33,15 +33,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="disableAreaModalLabel">Inhabilitar departamento</h5>
+                <h5 class="modal-title" id="disableAreaModalLabel">Deshabilitar departamento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Esta seguro de que desea inhabilitar el departamento <strong id="disableAreaName"></strong>?</p>
+                <p>¿Está seguro de que desea deshabilitar el departamento de <strong id="disableAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirmDisableArea">Inhabilitar</button>
+                <button type="button" class="btn btn-danger" id="confirmDisableArea">Deshabilitar</button>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Esta seguro de que desea habilitar el departamento <strong id="enableAreaName"></strong>?</p>
+                <p>¿Está seguro de que desea habilitar el departamento de <strong id="enableAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -71,11 +71,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteAreaModalLabel">Habilitar departamento</h5>
+                <h5 class="modal-title" id="deleteAreaModalLabel">Eliminar departamento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Esta seguro de que desea eliminar el departamento <strong id="deleteAreaName"></strong>?</p>
+                <p>¿Está seguro de que desea eliminar el departamento de <strong id="deleteAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>

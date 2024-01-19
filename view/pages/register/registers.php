@@ -37,14 +37,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="disableModalLabel">Inhabilitar Usuario</h5>
+        <h5 class="modal-title" id="disableModalLabel">Deshabilitar Usuario</h5>
       </div>
       <div class="modal-body">
-        <p id="userInfo">Esta seguro de que deseas inhabilitar al usuario <strong id="userName"></strong>?</p>
+        <p id="userInfo">¿Está seguro de que desea deshabilitar al usuario <strong id="userName"></strong>?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="confirmDisable">Inhabilitar</button>
+        <button type="button" class="btn btn-danger" id="confirmDisable">Deshabilitar</button>
       </div>
     </div>
   </div>
@@ -74,7 +74,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Habilitar Usuario</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Eliminar Usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

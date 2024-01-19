@@ -30,7 +30,11 @@ $(document).ready(function () {
             {
                 data: 'lastConection',
                 render: function (data) {
-                    return moment(data).format('DD MMM YYYY, h:mm a');
+                    if ( data == '0000-00-00 00:00:00' ) {
+                        return 'No ha accedido';
+                    } else {
+                        return moment(data).format('DD MMM YYYY, h:mm a');
+                    }
                 }
             },
             { 
