@@ -90,6 +90,25 @@
     </div>
 </div>
 
+<!-- activate Exercise Modal -->
+<div class="modal fade" id="activateExerciseModal" tabindex="-1" aria-labelledby="activateExerciseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activateExerciseModalLabel">Eliminar ejercicio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea activar el ejercicio <strong id="activateExerciseName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmActivateExercise">Activar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="assets/js/ajax-js/get-exercise.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
 <?php else: ?>

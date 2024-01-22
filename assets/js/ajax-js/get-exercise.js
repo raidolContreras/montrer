@@ -81,7 +81,23 @@ $(document).ready(function () {
 
     // Agrega un evento de clic al botón "Activar"
     $('#exercise').on('click', '.activate-btn', function () {
-        var idExercise = $(this).data('exercise');
+        
+        var idExercise = $(this).data('id');
+        var exerciseName = $(this).closest('tr').find('td:eq(1)').text(); // Obtener el nombre del ejercicio desde la fila
+
+        // Mostrar el nombre del ejercicio en el modal
+        $('#activateExerciseName').text(exerciseName);
+
+        // Mostrar el modal de habilitar ejercicio
+        $('#activateExerciseModal').modal('show');
+
+        // Manejar el clic del botón "Habilitar" en el modal
+        $('#confirmActivateExercise').on('click', function () {
+            activateExercise(idExercise, 'activateExercise', 'No se pudo activar el ejercicio');
+        });
+    });
+
+    function activateExercise(idExercise){
 
         // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
         $.ajax({
@@ -89,17 +105,18 @@ $(document).ready(function () {
             url: "controller/ajax/exerciseOn.php",
             data: { idExercise: idExercise },
             success: function (response) {
-                exerciseTable.ajax.reload();
                 Swal.fire({
-                icon: 'success',
-                title: 'Se cambio de ejercicio exitosamente',
+                    icon: 'success',
+                    title: 'Se cambio de ejercicio exitosamente',
                 });
+                location.reload();
             },
             error: function (error) {
                 console.log("Error en la solicitud Ajax:", error);
             }
         });
-    });
+
+    }
 
     // Manejar el clic del botón de inhabilitar ejercicio
     $('#exercise').on('click', '.disable-button', function () {
