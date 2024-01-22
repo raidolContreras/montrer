@@ -8,6 +8,18 @@ $(document).ready(function () {
         var areaDescription = $("input[name='areaDescription']").val();
         var user = $("select[name='user']").val();
 
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "center",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
         if (areaName !== '' && user !== null) {
             // Realiza la solicitud Ajax
             $.ajax({
@@ -19,17 +31,6 @@ $(document).ready(function () {
                     user: user
                 },
                 success: function (response) {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "center",
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
 
                     if (response === 'ok') {
                         $("input[name='areaName']").val('');
@@ -54,21 +55,10 @@ $(document).ready(function () {
                 }
             });
         } else {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "center",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
 
             Swal.fire({
 				icon: 'warning',
-				title: 'Advertencia',
+				title: 'Error',
 				text: 'Por favor, complete correctamente todos los campos obligatorios (nombre del departamento, colaborador responsable).',
 				icon: "warning"
 			});

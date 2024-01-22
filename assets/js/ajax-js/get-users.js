@@ -20,7 +20,16 @@ $(document).ready(function () {
                 }
             },
             { data: 'email' },
-            { data: 'nameArea' },
+            {
+                data: 'nameArea',
+                render: function(data) {
+                    if (data == null) {
+                        return 'Sin departamento asignado';
+                    } else {
+                        return data;
+                    }
+                }
+            },
             {
                 data: 'createDate',
                 render: function (data) {

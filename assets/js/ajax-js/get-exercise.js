@@ -1,4 +1,17 @@
 $(document).ready(function () {
+    
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "center",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    
     moment.locale('es');
     var exerciseTable = $('#exercise').DataTable({
         ajax: {
@@ -77,6 +90,10 @@ $(document).ready(function () {
             data: { idExercise: idExercise },
             success: function (response) {
                 exerciseTable.ajax.reload();
+                Swal.fire({
+                icon: 'success',
+                title: 'Se cambio de ejercicio exitosamente',
+                });
             },
             error: function (error) {
                 console.log("Error en la solicitud Ajax:", error);
@@ -157,7 +174,7 @@ $(document).ready(function () {
                 return `
                     <center>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success btn-block" disabled>
+                        <button type="button" class="btn btn-success btn-block disabled" disabled>
                             Activo
                         </button>
                         <button class="btn btn-primary edit-button" data-id="${idExercise}">

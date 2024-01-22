@@ -42,6 +42,7 @@ function getAreas() {
                 $('.budget-message').text('Presupuesto aprobado ' + response.name + '.');
                 $('.budget-message-uses').text('Presupuesto utilizado en el ' + response.name + '.');
                 $('.budget-message-rest').text('Presupuesto restante en el ' + response.name + '.');
+                $('.budget-message-soli').text('Presupuesto solicitado en el ' + response.name + '.');
                 $('.budget-message-compr').text('Presupuesto comprobado en el ' + response.name + '.');
                 $('.budget-message-no-compr').text('Presupuesto sin comprobar en el ' + response.name + '.');
             } else {

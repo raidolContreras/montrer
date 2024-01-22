@@ -15,7 +15,7 @@
 						<div class="audience-content-wrap">
 							<div class="row justify-content-center">
 								<div class="col-lg-4 col-sm-6">
-								<a href="registers">
+								<a href="registers" data-bs-toggle="tooltip" data-bs-placement="top" title="Registros">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
 											<h5>Usuarios</h5>
@@ -29,7 +29,7 @@
 								</div>
 
 								<div class="col-lg-4 col-sm-6">
-								<a href="areas">
+								<a href="areas" data-bs-toggle="tooltip" data-bs-placement="top" title="Departamentos">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content">
 											<h5>Departamentos</h5>
@@ -43,7 +43,7 @@
 								</div>
 
 								<div class="col-lg-4 col-sm-6">
-								<a href="exercise">
+								<a href="exercise" data-bs-toggle="tooltip" data-bs-placement="top" title="Ejercicios">
 									<div class="single-audience d-flex justify-content-between align-items-center">
 										<div class="audience-content color-style-fe5957">
 											<h5>Ejercicio actual</h5>
