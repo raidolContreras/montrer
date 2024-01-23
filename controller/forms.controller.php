@@ -74,6 +74,11 @@ class FormsController {
     	return $getArea;
 	}
 
+	static public function ctrGetProviders(){
+		$getProvider = FormsModels::mdlGetProvider();
+    	return $getProvider;
+	}
+
 	static public function ctrAddBudgets($data){
 		$getBudgets = FormsModels::mdlGetBudgets();
 		$value = true;

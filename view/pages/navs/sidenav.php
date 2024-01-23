@@ -55,15 +55,25 @@
 
             <?php 
                 // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-                $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'budgets' || $_GET['pagina'] == 'registerBudgets')) ? 'active' : '';
+                $activeBudget = (isset($_GET['pagina']) && ($_GET['pagina'] == 'budgets' || $_GET['pagina'] == 'registerBudgets')) ? 'active' : '';
             ?>
-            <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
+            <li class="list-group-item main-grid <?php echo $activeBudget; ?>">
                 <a href="budgets" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Asignación de presupuestos">
                     <img src="assets/img/svg/budget.svg" alt="calendar">
                 </a>
             </li>
         
         <?php endif ?>
+        
+        <?php 
+            // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
+            $activeProvider = (isset($_GET['pagina']) && ($_GET['pagina'] == 'provider' || $_GET['pagina'] == 'registerProvider')) ? 'active' : '';
+        ?>
+        <li class="list-group-item main-grid <?php echo $activeProvider; ?>">
+            <a href="provider" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Proveedores">
+                <img src="assets/img/svg/provider.svg" alt="calendar">
+            </a>
+        </li>
     </ul>
 </nav>
 <!-- End Sidebar Menu Area -->

@@ -866,5 +866,15 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+
+	static public function mdlGetProvider(){
+	   $pdo = Conexion::conectar();
+	   $sql = "SELECT * FROM montrer_providers";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->execute();
+	   return $stmt->fetchAll();
+	   $stmt->closeCursor();
+	   $stmt = null;
+	}
 	
 }
