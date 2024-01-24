@@ -45,7 +45,7 @@
 		} elseif ($pagina == 'budgets' || $pagina == 'registerBudgets' || $pagina == 'editBudgets') {
 			include "view/pages/budgets/$pagina.php";
 		} elseif ($pagina == 'provider' || $pagina == 'registerProvider' || $pagina == 'editProvider') {
-			include "view/pages/supplier/$pagina.php";
+			include "view/pages/provider/$pagina.php";
 		} else {
 			include "view/pages/404.php";
 		}

@@ -428,3 +428,29 @@ if (isset($_POST['idUsers']) && isset($_POST['newPassword'])) {
 
 	echo $changePassword;
 }
+
+if (isset($_POST['registerProvider']) && isset($_POST['providerKey'])) {
+	
+	$data = array(
+		'providerKey'           => $_POST['providerKey'],
+		'representativeName'    => $_POST['representativeName'],
+		'contactPhone'          => $_POST['contactPhone'],
+		'website'               => $_POST['website'],
+		'businessName'          => $_POST['businessName'],
+		'rfc'                   => $_POST['rfc'],
+		'fiscalAddressStreet'   => $_POST['fiscalAddressStreet'],
+		'fiscalAddressColonia'  => $_POST['fiscalAddressColonia'],
+		'fiscalAddressMunicipio'=> $_POST['fiscalAddressMunicipio'],
+		'fiscalAddressEstado'   => $_POST['fiscalAddressEstado'],
+		'fiscalAddressCP'       => $_POST['fiscalAddressCP'],
+		'bankName'              => $_POST['bankName'],
+		'accountHolder'         => $_POST['accountHolder'],
+		'accountNumber'         => $_POST['accountNumber'],
+		'clabe'                 => $_POST['clabe'],
+		'user'                  => $_POST['user'],
+	);
+
+	$registerProvider = FormsController::ctrRegisterProvider($data);
+
+	echo $registerProvider;
+}

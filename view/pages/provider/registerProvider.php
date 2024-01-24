@@ -8,7 +8,6 @@
 
         <form class="account-wrap" id="companyForm">
             <div class="row">
-                <!-- ... Otros campos existentes ... -->
 
                 <!-- Sección de Proveedores -->
                 <div class="col-12 mt-4">
@@ -78,12 +77,5 @@
 </main>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-provider.js"></script>
+<script src="assets/js/ajax-js/get-nextIdProvider.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
-<script>
-    function generateProviderKey() {
-        var currentYear = new Date().getFullYear().toString().substr(2);
-        providerKey = currentYear;
-
-        $('#providerKey').val(providerKey);
-    }
-</script>

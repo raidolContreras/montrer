@@ -876,5 +876,53 @@ class FormsModels {
 	   $stmt->closeCursor();
 	   $stmt = null;
 	}
+
+	static public function mdlRegisterProvider($data){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO `montrer_providers` 
+		(`provider_key`, `representative_name`, `contact_phone`, `website`, `business_name`, `rfc`, 
+		`fiscal_address_street`, `fiscal_address_colonia`, `fiscal_address_municipio`, `fiscal_address_estado`, 
+		`fiscal_address_cp`, `bank_name`, `account_holder`, `account_number`, `clabe`, `created_at`, `updated_at`) 
+		VALUES 
+		(:providerKey, :representativeName, :contactPhone, :website, :businessName, :rfc, 
+		:fiscalAddressStreet, :fiscalAddressColonia, :fiscalAddressMunicipio, :fiscalAddressEstado, 
+		:fiscalAddressCP, :bankName, :accountHolder, :accountNumber, :clabe, NOW(), NOW())";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':providerKey', $data['providerKey'], PDO::PARAM_STR);
+		$stmt->bindParam(':representativeName', $data['representativeName'], PDO::PARAM_STR);
+		$stmt->bindParam(':contactPhone', $data['contactPhone'], PDO::PARAM_STR);
+		$stmt->bindParam(':website', $data['website'], PDO::PARAM_STR);
+		$stmt->bindParam(':businessName', $data['businessName'], PDO::PARAM_STR);
+		$stmt->bindParam(':rfc', $data['rfc'], PDO::PARAM_STR);
+		$stmt->bindParam(':fiscalAddressStreet', $data['fiscalAddressStreet'], PDO::PARAM_STR);
+		$stmt->bindParam(':fiscalAddressColonia', $data['fiscalAddressColonia'], PDO::PARAM_STR);
+		$stmt->bindParam(':fiscalAddressMunicipio', $data['fiscalAddressMunicipio'], PDO::PARAM_STR);
+		$stmt->bindParam(':fiscalAddressEstado', $data['fiscalAddressEstado'], PDO::PARAM_STR);
+		$stmt->bindParam(':fiscalAddressCP', $data['fiscalAddressCP'], PDO::PARAM_STR);
+		$stmt->bindParam(':bankName', $data['bankName'], PDO::PARAM_STR);
+		$stmt->bindParam(':accountHolder', $data['accountHolder'], PDO::PARAM_STR);
+		$stmt->bindParam(':accountNumber', $data['accountNumber'], PDO::PARAM_STR);
+		$stmt->bindParam(':clabe', $data['clabe'], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+			return 'ok';
+		} else {
+			return 'Error';
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;  
+	}
+
+	static public function mdlNextIdProvider(){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT LPAD(IFNULL(MAX(idProvider), 0) + 1, 3, '0') AS nextIdProvider FROM montrer_providers;";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;  
+	}
 	
 }
