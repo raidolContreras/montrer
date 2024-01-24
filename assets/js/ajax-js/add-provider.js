@@ -74,18 +74,16 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response === 'ok') {
-                    // Limpiar los campos del formulario
-                    for (var key in fields) {
-                        if (fields.hasOwnProperty(key)) {
-                            $("input[name='" + key + "']").val('');
-                        }
-                    }
 
                     // Mostrar mensaje de éxito
                     Swal.fire({
                         icon: "success",
                         title: 'Proveedor creado exitosamente',
                         icon: "success"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
                     });
                 } else {
                     // Mostrar mensaje de error

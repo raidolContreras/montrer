@@ -429,25 +429,40 @@ if (isset($_POST['idUsers']) && isset($_POST['newPassword'])) {
 	echo $changePassword;
 }
 
-if (isset($_POST['registerProvider']) && isset($_POST['providerKey'])) {
+if (
+	isset($_POST['providerKey']) &&
+	isset($_POST['representativeName']) &&
+	isset($_POST['contactPhone']) &&
+	isset($_POST['website']) &&
+	isset($_POST['businessName']) &&
+	isset($_POST['rfc']) &&
+	isset($_POST['fiscalAddressStreet']) &&
+	isset($_POST['fiscalAddressColonia']) &&
+	isset($_POST['fiscalAddressMunicipio']) &&
+	isset($_POST['fiscalAddressEstado']) &&
+	isset($_POST['fiscalAddressCP']) &&
+	isset($_POST['bankName']) &&
+	isset($_POST['accountHolder']) &&
+	isset($_POST['accountNumber']) &&
+	isset($_POST['clabe'])
+) {
 	
 	$data = array(
-		'providerKey'           => $_POST['providerKey'],
-		'representativeName'    => $_POST['representativeName'],
-		'contactPhone'          => $_POST['contactPhone'],
-		'website'               => $_POST['website'],
-		'businessName'          => $_POST['businessName'],
-		'rfc'                   => $_POST['rfc'],
-		'fiscalAddressStreet'   => $_POST['fiscalAddressStreet'],
-		'fiscalAddressColonia'  => $_POST['fiscalAddressColonia'],
-		'fiscalAddressMunicipio'=> $_POST['fiscalAddressMunicipio'],
-		'fiscalAddressEstado'   => $_POST['fiscalAddressEstado'],
-		'fiscalAddressCP'       => $_POST['fiscalAddressCP'],
-		'bankName'              => $_POST['bankName'],
-		'accountHolder'         => $_POST['accountHolder'],
-		'accountNumber'         => $_POST['accountNumber'],
-		'clabe'                 => $_POST['clabe'],
-		'user'                  => $_POST['user'],
+		'providerKey' => $_POST['providerKey'],
+		'representativeName' => $_POST['representativeName'],
+		'contactPhone' => $_POST['contactPhone'],
+		'website' => $_POST['website'],
+		'businessName' => $_POST['businessName'],
+		'rfc' => $_POST['rfc'],
+		'fiscalAddressStreet' => $_POST['fiscalAddressStreet'],
+		'fiscalAddressColonia' => $_POST['fiscalAddressColonia'],
+		'fiscalAddressMunicipio' => $_POST['fiscalAddressMunicipio'],
+		'fiscalAddressEstado' => $_POST['fiscalAddressEstado'],
+		'fiscalAddressCP' => $_POST['fiscalAddressCP'],
+		'bankName' => $_POST['bankName'],
+		'accountHolder' => $_POST['accountHolder'],
+		'accountNumber' => $_POST['accountNumber'],
+		'clabe' => $_POST['clabe']
 	);
 
 	$registerProvider = FormsController::ctrRegisterProvider($data);

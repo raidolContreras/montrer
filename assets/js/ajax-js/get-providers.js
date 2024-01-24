@@ -1,5 +1,6 @@
 $(document).ready(function () {
-
+    level = $("input[name='level']").val();
+    
     const Toast = Swal.mixin({
         toast: true,
         position: "center",
@@ -26,38 +27,34 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'providerKey',
+                data: 'provider_key',
             },
             {
-                data: 'representativeName'
+                data: 'representative_name'
             },
             {
-                data: 'contactPhone'
+                data: 'contact_phone'
             },
             {
-                data: 'businessName'
+                data: 'rfc'
             },
             {
                 data: null,
                 render: function (data) {
                     // Combina los campos de la dirección fiscal en una sola columna
-                    return `${data.fiscalAddressStreet}, ${data.fiscalAddressColonia}, ${data.fiscalAddressMunicipio}, ${data.fiscalAddressEstado}, ${data.fiscalAddressCP}`;
-                }
-            },
-            {
-                data: 'budget',
-                render: function (data, type, row) {
-                    // Formatea el número usando toLocaleString
-                    var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN'
-                    });
-
-                    return formattedBudget;
+                    return `${data.fiscal_address_street}, ${data.fiscal_address_colonia}, ${data.fiscal_address_municipio}, ${data.fiscal_address_estado}, ${data.fiscal_address_cp}`;
                 }
             },
             {
                 data: null,
+                render: function (data) {
+                    // Combina los campos de la dirección fiscal en una sola columna
+                    return `${data.bank_name}, ${data.account_holder}, ${data.account_number}, ${data.clabe}`;
+                }
+            },
+            {
+                data: null,
+                visible: (level == 1), // Hace visible la columna solo si level es igual a 1
                 render: function (data) {
                     return renderActionButtons(data.idProvider, data.status);
                 }
@@ -79,15 +76,13 @@ $(document).ready(function () {
     });
 
 });
+
 function renderActionButtons(idProvider, status) {
 
     if (status == 1) {
         return `
             <center>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success btn-block disabled" disabled>
-                        Activo
-                    </button>
                     <button class="btn btn-primary edit-button" data-id="${idProvider}">
                         <i class="ri-edit-line"></i> Editar
                     </button>
@@ -104,9 +99,6 @@ function renderActionButtons(idProvider, status) {
         return `
             <center>
                 <div class="btn-group" role="group">
-                    <button class="btn btn-success activate-btn" data-provider="${idProvider}" data-id="${idProvider}">
-                        Activar
-                    </button>
                     <button class="btn btn-primary edit-button" data-id="${idProvider}">
                         <i class="ri-edit-line"></i> Editar
                     </button>

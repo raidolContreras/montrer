@@ -38,15 +38,40 @@
                     <label for="rfc" class="form-label">RFC<span class="required"></span></label>
                     <input type="text" class="form-control" id="rfc" name="rfc">
                 </div>
-                <div class="col-md-6">
-                    <label for="fiscalAddress" class="form-label">Dirección fiscal: Calle<span class="required"></span></label>
-                    <input type="text" class="form-control" id="fiscalAddress" name="fiscalAddress">
+
+                <div class="col-12 mt-4">
+                    <h4>Dirección fiscal</h4>
                 </div>
-                <!-- ... Otros campos de dirección fiscal ... -->
+
+                <div class="col-md-6">
+                    <label for="fiscalAddressStreet" class="form-label">Calle<span class="required"></span></label>
+                    <input type="text" class="form-control" id="fiscalAddressStreet" name="fiscalAddressStreet">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="fiscalAddressColonia" class="form-label">Colonia<span class="required"></span></label>
+                    <input type="text" class="form-control" id="fiscalAddressColonia" name="fiscalAddressColonia">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="fiscalAddressMunicipio" class="form-label">Municipio<span class="required"></span></label>
+                    <input type="text" class="form-control" id="fiscalAddressMunicipio" name="fiscalAddressMunicipio">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="fiscalAddressEstado" class="form-label">Estado<span class="required"></span></label>
+                    <input type="text" class="form-control" id="fiscalAddressEstado" name="fiscalAddressEstado">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="fiscalAddressCP" class="form-label">Código Postal<span class="required"></span></label>
+                    <input type="text" class="form-control" id="fiscalAddressCP" name="fiscalAddressCP">
+                </div>
 
                 <div class="col-12 mt-4">
                     <h4>Datos bancarios</h4>
                 </div>
+
                 <div class="col-md-6">
                     <label for="bankName" class="form-label">Nombre de entidad bancaria<span class="required"></span></label>
                     <input type="text" class="form-control" id="bankName" name="bankName">
@@ -63,8 +88,6 @@
                     <label for="clabe" class="form-label">CLABE interbancaria</label>
                     <input type="text" class="form-control" id="clabe" name="clabe">
                 </div>
-
-                <!-- ... Otros campos existentes ... -->
 
                 <div class="col-12 mt-2 text-end">
                     <a href="provider" class="btn btn-danger">Cancelar</a>
