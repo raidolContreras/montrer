@@ -89,6 +89,11 @@ class FormsController {
     	return $nextIdProvider;
 	}
 
+	static public function ctrUpdateProvider($data){
+		$UpdateProvider = FormsModels::mdlUpdateProvider($data);
+    	return $UpdateProvider;
+	}
+
 	static public function ctrAddBudgets($data){
 		$getBudgets = FormsModels::mdlGetBudgets();
 		$value = true;

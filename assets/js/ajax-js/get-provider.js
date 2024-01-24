@@ -3,36 +3,35 @@ $(document).ready(function () {
     // Obtén el valor de register desde el elemento HTML
     var registerValue = $('#register-value').data('register');
 
-    // Llama a la función para obtener el usuario con el valor de register
+    // Llama a la función para obtener el proveedor con el valor de register
     getProvider(registerValue);
 });
 
 function getProvider(registerValue) {
-    // Realiza la solicitud AJAX para obtener las áreas
+    // Realiza la solicitud AJAX para obtener el proveedor
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getProvider.php',
-        data: {'register': registerValue}, // Agrega el valor de register a la solicitud
+        data: {'register': registerValue},
         dataType: 'json',
         success: function (response) {
-            console.log('Respuesta del servidor:', response);
-
-            // Rellena el formulario con los datos obtenidos
+                
             $('input[name="providerKey"]').val(response.provider_key);
             $('input[name="representativeName"]').val(response.representative_name);
             $('input[name="contactPhone"]').val(response.contact_phone);
             $('input[name="website"]').val(response.website);
-            $('input[name="businessName"]').val(response.businessName);
+            $('input[name="businessName"]').val(response.business_name);
             $('input[name="rfc"]').val(response.rfc);
-            $('input[name="fiscalAddressStreet"]').val(response.fiscalAddressStreet);
-            $('input[name="fiscalAddressColonia"]').val(response.fiscalAddressColonia);
-            $('input[name="fiscalAddressMunicipio"]').val(response.fiscalAddressMunicipio);
-            $('input[name="fiscalAddressEstado"]').val(response.fiscalAddressEstado);
-            $('input[name="fiscalAddressCP"]').val(response.fiscalAddressCP);
-            $('input[name="bankName"]').val(response.bankName);
-            $('input[name="accountHolder"]').val(response.accountHolder);
-            $('input[name="accountNumber"]').val(response.accountNumber);
+            $('input[name="fiscalAddressStreet"]').val(response.fiscal_address_street);
+            $('input[name="fiscalAddressColonia"]').val(response.fiscal_address_colonia);
+            $('input[name="fiscalAddressMunicipio"]').val(response.fiscal_address_municipio);
+            $('input[name="fiscalAddressEstado"]').val(response.fiscal_address_estado);
+            $('input[name="fiscalAddressCP"]').val(response.fiscal_address_cp);
+            $('input[name="bankName"]').val(response.bank_name);
+            $('input[name="accountHolder"]').val(response.account_holder);
+            $('input[name="accountNumber"]').val(response.account_number);
             $('input[name="clabe"]').val(response.clabe);
+
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);

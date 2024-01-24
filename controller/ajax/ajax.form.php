@@ -470,6 +470,47 @@ if (
 	echo $registerProvider;
 }
 
+if (
+	isset($_POST['providerKey']) &&
+	isset($_POST['updaterepresentativeName']) &&
+	isset($_POST['updatecontactPhone']) &&
+	isset($_POST['updatewebsite']) &&
+	isset($_POST['updatebusinessName']) &&
+	isset($_POST['updaterfc']) &&
+	isset($_POST['updatefiscalAddressStreet']) &&
+	isset($_POST['updatefiscalAddressColonia']) &&
+	isset($_POST['updatefiscalAddressMunicipio']) &&
+	isset($_POST['updatefiscalAddressEstado']) &&
+	isset($_POST['updatefiscalAddressCP']) &&
+	isset($_POST['updatebankName']) &&
+	isset($_POST['updateaccountHolder']) &&
+	isset($_POST['updateaccountNumber']) &&
+	isset($_POST['updateclabe'])
+) {
+	
+	$data = array(
+		'providerKey' => $_POST['providerKey'],
+		'representativeName' => $_POST['updaterepresentativeName'],
+		'contactPhone' => $_POST['updatecontactPhone'],
+		'website' => $_POST['updatewebsite'],
+		'businessName' => $_POST['updatebusinessName'],
+		'rfc' => $_POST['updaterfc'],
+		'fiscalAddressStreet' => $_POST['updatefiscalAddressStreet'],
+		'fiscalAddressColonia' => $_POST['updatefiscalAddressColonia'],
+		'fiscalAddressMunicipio' => $_POST['updatefiscalAddressMunicipio'],
+		'fiscalAddressEstado' => $_POST['updatefiscalAddressEstado'],
+		'fiscalAddressCP' => $_POST['updatefiscalAddressCP'],
+		'bankName' => $_POST['updatebankName'],
+		'accountHolder' => $_POST['updateaccountHolder'],
+		'accountNumber' => $_POST['updateaccountNumber'],
+		'clabe' => $_POST['updateclabe']
+	);
+
+	$registerProvider = FormsController::ctrUpdateProvider($data);
+
+	echo $registerProvider;
+}
+
 if (isset($_POST['disableProvider'])){
 	$disableProvider = FormsController::ctrDisableProvider($_POST['disableProvider']);
 	echo $disableProvider;
