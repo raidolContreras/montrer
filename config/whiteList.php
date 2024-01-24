@@ -21,6 +21,7 @@
 		'changePassword',
 		'provider',
 		'registerProvider',
+		'editProvider',
 	];
 
 

@@ -867,7 +867,7 @@ class FormsModels {
 		$stmt = null;
 	}
 
-	static public function mdlGetProvider(){
+	static public function mdlGetProviders(){
 	   $pdo = Conexion::conectar();
 	   $sql = "SELECT * FROM montrer_providers";
 	   $stmt = $pdo->prepare($sql);
@@ -924,5 +924,69 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;  
 	}
+
+	static public function mdlDisableProvider($idProvider){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_providers
+				SET status = 0
+				WHERE idProvider = :idProvider";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlEnableProvider($idProvider){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_providers
+				SET status = 1
+				WHERE idProvider = :idProvider";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
+	static public function mdlDeleteProvider($idProvider){
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_providers
+				WHERE idProvider = :idProvider";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+	
+	static public function mdlGetProvider($idProvider){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_providers WHERE idProvider = :idProvider";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+	 }
 	
 }

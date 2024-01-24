@@ -13,7 +13,7 @@ $(document).ready(function () {
         }
     });
 
-    var providerTable = $('#provider').DataTable({
+    $('#provider').DataTable({
         ajax: {
             url: 'controller/ajax/getProviders.php', // Ajusta la URL según tu estructura
             dataSrc: ''
@@ -104,7 +104,7 @@ $(document).ready(function () {
                     if (response === 'ok') {
                         // Implementa acciones adicionales si es necesario
                         console.log('proveedor habilitado con éxito');
-                        providerTable.ajax.reload(); // Recargar datos de DataTable
+                        location.reload(); // Recargar datos de DataTable
                     } else {
                         console.error('No se pudo habilitar el proveedor');
                     }
@@ -139,7 +139,7 @@ $(document).ready(function () {
                     if (response === 'ok') {
                         // Implementa acciones adicionales si es necesario
                         console.log('proveedor deshabilitado con éxito');
-                        providerTable.ajax.reload(); // Recargar datos de DataTable
+                        location.reload(); // Recargar datos de DataTable
                     } else {
                         console.error('No se pudo deshabilitar el proveedor');
                     }
@@ -221,8 +221,8 @@ function renderActionButtons(idProvider, status) {
                     <button class="btn btn-primary edit-button" data-id="${idProvider}">
                         <i class="ri-edit-line"></i> Editar
                     </button>
-                    <button class="btn btn-warning disable-button" data-id="${idProvider}">
-                        <i class="ri-forbid-line"></i> Inhabilitar
+                    <button class="btn btn-success enable-button" data-id="${idProvider}">
+                        <i class="ri-forbid-line"></i> habilitar
                     </button>
                     <button class="btn btn-danger delete-button" data-id="${idProvider}">
                         <i class="ri-delete-bin-6-line"></i> Eliminar

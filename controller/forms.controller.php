@@ -75,7 +75,7 @@ class FormsController {
 	}
 
 	static public function ctrGetProviders(){
-		$getProvider = FormsModels::mdlGetProvider();
+		$getProvider = FormsModels::mdlGetProviders();
     	return $getProvider;
 	}
 
@@ -289,5 +289,25 @@ class FormsController {
 	static public function ctrUpdateBudget($data){
 		$updateBudget = FormsModels::mdlUpdateBudget($data);
 		return $updateBudget;
+	}
+
+	static public function ctrDisableProvider($idProvider){
+		$disableProvider = FormsModels::mdlDisableProvider($idProvider);
+		return $disableProvider;
+	}
+
+	static public function ctrEnableProvider($idProvider){
+		$enableProvider = FormsModels::mdlEnableProvider($idProvider);
+		return $enableProvider;
+	}
+
+	static public function ctrDeleteProvider($idProvider){
+		$deleteProvider = FormsModels::mdlDeleteProvider($idProvider);
+		return $deleteProvider;
+	}
+
+	static public function ctrGetProvider($idProvider){
+		$getProvider = FormsModels::mdlGetProvider($idProvider);
+		return $getProvider;
 	}
 }

@@ -3,7 +3,7 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar proveedor</h3>
+            <h3>Actualizar proveedor</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">
@@ -91,14 +91,14 @@
 
                 <div class="col-12 mt-2 text-end">
                     <a href="provider" class="btn btn-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Registrar proveedor</button>
+                    <button type="submit" class="btn btn-primary">Actualizar proveedor</button>
                 </div>
             </div>
         </form>
     </div>
 
 </main>
+<div id="register-value" data-register="<?php echo $_POST['register']; ?>"></div>
 <!-- End Main Content Area -->
-<script src="assets/js/ajax-js/add-provider.js"></script>
-<script src="assets/js/ajax-js/get-nextIdProvider.js"></script>
+<script src="assets/js/ajax-js/get-provider.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>

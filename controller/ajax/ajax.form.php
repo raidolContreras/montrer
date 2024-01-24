@@ -469,3 +469,16 @@ if (
 
 	echo $registerProvider;
 }
+
+if (isset($_POST['disableProvider'])){
+	$disableProvider = FormsController::ctrDisableProvider($_POST['disableProvider']);
+	echo $disableProvider;
+}
+if (isset($_POST['enableProvider'])){
+	$enableProvider = FormsController::ctrEnableProvider($_POST['enableProvider']);
+	echo $enableProvider;
+}
+if (isset($_POST['deleteProvider'])){
+	$deleteProvider = FormsController::ctrDeleteProvider($_POST['deleteProvider']);
+	echo $deleteProvider;
+}
