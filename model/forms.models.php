@@ -581,6 +581,21 @@ class FormsModels {
 		$stmt = null;
 	}
 
+	static public function mdlUpdateLevelUser($data){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_settings SET level = :level WHERE idUser = :idUsers ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':level', $data['level'], PDO::PARAM_INT);
+		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+	}
+
 	static public function mdlDeleteRegister($idUsers){
 		$pdo = Conexion::conectar();
 		$sql = "UPDATE montrer_settings SET status = 0 WHERE idUser = :idUser ";

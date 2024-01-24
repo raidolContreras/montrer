@@ -207,6 +207,8 @@ class FormsController {
 
 	static public function ctrUpdateUser($data){
 		$updateUser = FormsModels::mdlUpdateUser($data);
+		$updateLevelUser = FormsModels::mdlUpdateLevelUser($data);
+		
 		return $updateUser;
 	}
 
