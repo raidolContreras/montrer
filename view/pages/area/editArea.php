@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-primary">Actualizar departamento</button>
+                    <button type="submit" class="btn btn-success">Actualizar departamento</button>
                     <a class="btn btn-danger" id="cancelButton">Cancelar</a>
                 </div>
             </div>
