@@ -32,9 +32,15 @@
                         <?php endforeach ?>
                     </select>
                 </div>
+                
                 <div class="col-12">
-                    <a href="areas" class="btn btn-danger">Cancelar</a>
+                    <input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
+                    <hr>
+                </div>
+
+                <div class="col-12 mt-2 text-end">
                     <button type="submit" class="btn btn-primary">Actualizar departamento</button>
+                    <a href="areas" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
         </form>

@@ -42,8 +42,8 @@
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <a href="exercise" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Registrar ejercicio</button>
+                    <a href="exercise" class="btn btn-danger">Cancelar</a>
                 </div>
             </div>
         </form>
