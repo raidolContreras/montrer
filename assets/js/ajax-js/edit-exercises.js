@@ -23,29 +23,11 @@ $(document).ready(function () {
 		var exercise = $('#register-value').data('register');
 
 		
-		if (exerciseName == ''){
+		if (exerciseName == '' || initialDate == ''|| finalDate == '' || budget == ''){
 			Swal.fire({
 				icon: 'warning',
 				title: 'Advertencia',
-				text: 'Por favor, ingrese el nombre del ejercicio.',
-			});
-		} else if (initialDate == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, seleccione la fecha de inicio del ejercicio.',
-			});
-		} else if (finalDate == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, seleccione la fecha de finalización del ejercicio.',
-			});
-		} else if (budget == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, ingrese el presupuesto asignado para el ejercicio.',
+				text: 'Por favor, complete correctamente todos los campos obligatorios (nombre del ejercicio, fecha de inicio, fecha de cierre, presupuesto)',
 			});
 		} else {
 			// Realiza la solicitud Ajax

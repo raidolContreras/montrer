@@ -21,11 +21,11 @@ $(document).ready(function () {
                 Toast.fire({
                     icon: 'error',
                     title: 'No se ha activado ningún ejercicio'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'exercise';
+                    }
                 });
-
-                setTimeout(() => {
-                    window.location.href = 'exercise';
-                }, 1000);
 
             } else {
                 var exerciseSelect = document.getElementById('exercise');

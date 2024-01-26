@@ -21,25 +21,11 @@ $(document).ready(function () {
 		var level = $("select[name='level']").val();
 		var user = $('#register-value').data('register');
 
-		if (firstname == ''){
+		if (firstname == '' || lastname == '' || email == ''){
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
-			  text: 'Se requiere ingresar el nombre del usuario',
-			  icon: "warning"
-			});
-		} else if ( lastname == '') {
-			Swal.fire({
-			  icon: 'warning',
-			  title: 'Error',
-			  text: 'Se requiere ingresar los apellidos del usuario',
-			  icon: "warning"
-			});
-		} else if ( email == '') {
-			Swal.fire({
-			  icon: 'warning',
-			  title: 'Error',
-			  text: 'Se requiere ingresar una dirección de correo electrónico válida',
+			  text: 'Por favor, complete correctamente todos los campos obligatorios (nombre(s), apellidos, email)',
 			  icon: "warning"
 			});
 		} else {
@@ -59,8 +45,12 @@ $(document).ready(function () {
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
 						Swal.fire({
 						  icon: "success",
-						  title: 'Usuario '+response+' actualizados exitosamente',
+						  title: 'Datos del usuario actualizados exitosamente',
 						  icon: "success"
+						}).then((result) => {
+							if (result.isConfirmed) {
+								window.location.href = "registers";
+							}
 						});
 					} else if (response === 'Error: Email duplicado') {
 						Swal.fire({

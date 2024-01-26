@@ -60,17 +60,42 @@ $(document).ready(function () {
 
         // Manejar el clic del botón "Deshabilitar" en el modal
         $('#confirmDisableArea').on('click', function () {
+            
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "center",
+                showConfirmButton: false,
+                timerProgressBar: false,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+
             $.ajax({
                 type: 'POST',
                 url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
                 data: { 'disableArea': idArea },
                 success: function (response) {
+
                     if (response === 'ok') {
-                        // Implementa acciones adicionales si es necesario
-                        console.log('Departamento inhabilitada con éxito');
-                        areasData.ajax.reload(); // Recargar datos de DataTable
+                        
+						Swal.fire({
+                            icon: "success",
+                            title: 'Departamento deshabilitado con éxito',
+                            icon: "success"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "areas";
+                            }
+                        });
+                        
                     } else {
-                        console.error('No se pudo Deshabilitar el departamento');
+                        Swal.fire({
+                            icon: "success",
+                            title: 'No se pudo deshabilitar el departamento',
+                            icon: "success"
+                        });
                     }
                 },
                 complete: function () {
@@ -106,12 +131,25 @@ $(document).ready(function () {
                 url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
                 data: { 'enableArea': idArea },
                 success: function (response) {
+                    
                     if (response === 'ok') {
-                        // Implementa acciones adicionales si es necesario
-                        console.log('Departamento habilitado con éxito');
-                        areasData.ajax.reload(); // Recargar datos de DataTable
+                        
+						Swal.fire({
+                            icon: "success",
+                            title: 'Departamento habilitado con éxito',
+                            icon: "success"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "areas";
+                            }
+                        });
+                        
                     } else {
-                        console.error('No se pudo habilitar el departamento');
+                        Swal.fire({
+                            icon: "success",
+                            title: 'No se pudo habilitar el departamento',
+                            icon: "success"
+                        });
                     }
                 },
                 complete: function () {
@@ -142,9 +180,23 @@ $(document).ready(function () {
                 data: { 'deleteArea': idArea },
                 success: function (response) {
                     if (response === 'ok') {
-                        location.reload();
+                        
+						Swal.fire({
+                            icon: "success",
+                            title: 'Departamento eliminado con éxito',
+                            icon: "success"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "areas";
+                            }
+                        });
+                        
                     } else {
-                        console.error('No se pudo eliminar el departamento');
+                        Swal.fire({
+                            icon: "success",
+                            title: 'No se pudo eliminar el departamento',
+                            icon: "success"
+                        });
                     }
                 },
                 complete: function () {

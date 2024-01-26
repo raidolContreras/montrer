@@ -19,25 +19,13 @@ $(document).ready(function () {
             }
         });
 
-        if (area == ''){
-            Swal.fire({
-                icon: 'warning',
-                title: 'Advertencia',
-                text: 'Por favor, seleccione el departamento para asignar el presupuesto.',
-            });
-        } else if (AuthorizedAmount == '') {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Advertencia',
-                text: 'Por favor, ingrese la cantidad autorizada para el presupuesto.',
-            });
-        } else if (exercise == '') {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Advertencia',
-                text: 'Por favor, seleccione el ejercicio presupuestario.',
-            });
-        } else {
+        if (area == '' || AuthorizedAmount == '' || exercise == ''){
+			Swal.fire({
+				icon: 'warning',
+				title: 'Advertencia',
+				text: 'Por favor, complete correctamente todos los campos obligatorios (area, presupuesto asignado, ejercicio)',
+			});
+		} else {
             // Realiza la solicitud Ajax
             $.ajax({
                 type: "POST",

@@ -34,12 +34,12 @@ $(document).ready(function () {
         });
 
         // Función de validación
-        function validateField(fieldName, errorMessage) {
+        function validateField(fieldName) {
             if (!fields[fieldName]) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Advertencia',
-                    text: errorMessage,
+                    text: 'Por favor, complete correctamente todos los campos obligatorios (*)',
                 });
                 return false;
             }
@@ -47,17 +47,17 @@ $(document).ready(function () {
         }
 
         // Validar campos requeridos
-        if (!validateField('businessName', 'Por favor, ingrese la razón social del proveedor.') ||
-            !validateField('rfc', 'Por favor, ingrese el RFC del proveedor.') ||
-            !validateField('contactPhone', 'Por favor, ingrese el teléfono de contacto del proveedor.') ||
-            !validateField('fiscalAddressStreet', 'Por favor, ingrese la calle de la dirección fiscal del proveedor.') ||
-            !validateField('fiscalAddressColonia', 'Por favor, ingrese la colonia de la dirección fiscal del proveedor.') ||
-            !validateField('fiscalAddressMunicipio', 'Por favor, ingrese el municipio de la dirección fiscal del proveedor.') ||
-            !validateField('fiscalAddressEstado', 'Por favor, ingrese el estado de la dirección fiscal del proveedor.') ||
-            !validateField('fiscalAddressCP', 'Por favor, ingrese el código postal de la dirección fiscal del proveedor.') ||
-            !validateField('bankName', 'Por favor, ingrese el nombre de la entidad bancaria del proveedor.') ||
-            !validateField('accountHolder', 'Por favor, ingrese el titular de la cuenta bancaria del proveedor.') ||
-            !validateField('accountNumber', 'Por favor, ingrese el número de cuenta bancaria del proveedor.')
+        if (!validateField('businessName') ||
+            !validateField('rfc') ||
+            !validateField('contactPhone') ||
+            !validateField('fiscalAddressStreet') ||
+            !validateField('fiscalAddressColonia') ||
+            !validateField('fiscalAddressMunicipio') ||
+            !validateField('fiscalAddressEstado') ||
+            !validateField('fiscalAddressCP') ||
+            !validateField('bankName') ||
+            !validateField('accountHolder') ||
+            !validateField('accountNumber')
         ) {
             return;
         }

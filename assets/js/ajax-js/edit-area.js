@@ -9,18 +9,13 @@ $(document).ready(function () {
 		var user = $("select[name='user']").val();
 		var area = $('#register-value').data('register');
 
-        if (areaName == ''){
+        if (areaName == '' || user == null) {
             Swal.fire({
-                icon: 'warning',
-                title: 'Error',
-                text: 'Por favor, ingrese el nombre del departamento.',
-            });
-        } else if (user == '') {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Error',
-                text: 'Por favor, seleccione al usuario encargado del departamento.',
-            });
+				icon: 'warning',
+				title: 'Error',
+				text: 'Por favor, complete correctamente todos los campos obligatorios (nombre del departamento, colaborador responsable).',
+				icon: "warning"
+			});
         } else {
 			
 			// Realiza la solicitud Ajax
@@ -51,10 +46,11 @@ $(document).ready(function () {
 						  icon: "success",
 						  title: 'Departamento actualizado exitosamente',
 						  icon: "success"
+						}).then((result) => {
+							if (result.isConfirmed) {
+								window.location.href = 'areas';
+							}
 						});
-						setTimeout(function () {
-							window.location.href = 'areas';
-						}, 1000);
 					} else {
 						Swal.fire({
 						  icon: 'error',

@@ -20,23 +20,11 @@ $(document).ready(function () {
 					}
 				});
 
-		if (area == ''){
+		if (area == '' || AuthorizedAmount == '' || exercise == ''){
 			Swal.fire({
 				icon: 'warning',
 				title: 'Advertencia',
-				text: 'Por favor, seleccione el departamento para asignar el presupuesto.',
-			});
-		} else if (AuthorizedAmount == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, ingrese la cantidad autorizada para el presupuesto.',
-			});
-		} else if (exercise == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, seleccione el ejercicio presupuestario.',
+				text: 'Por favor, complete correctamente todos los campos obligatorios (area, presupuesto asignado, ejercicio)',
 			});
 		} else {
 			// Realiza la solicitud Ajax
@@ -56,12 +44,11 @@ $(document).ready(function () {
 						  icon: "success",
 						  title: 'Presupuesto actualizado exitosamente',
 						  icon: "success"
+						}).then((result) => {
+							if (result.isConfirmed) {
+								window.location.href = 'budgets';
+							}
 						});
-						
-						setTimeout(function () {
-							window.location.href = 'budgets';
-						}, 1000);
-						
 					} else {
 						Swal.fire({
 						  icon: 'error',

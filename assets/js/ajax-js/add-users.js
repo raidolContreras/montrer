@@ -21,25 +21,11 @@ $(document).ready(function () {
 			}
 		  });
 
-		if (firstname == ''){
+		  if (firstname == '' || lastname == '' || email == ''){
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
-			  text: 'Se requiere ingresar el nombre del usuario',
-			  icon: "warning"
-			});
-		} else if ( lastname == '') {
-			Swal.fire({
-			  icon: 'warning',
-			  title: 'Error',
-			  text: 'Se requiere ingresar los apellidos del usuario',
-			  icon: "warning"
-			});
-		} else if ( email == '') {
-			Swal.fire({
-			  icon: 'warning',
-			  title: 'Error',
-			  text: 'Se requiere ingresar una dirección de correo electrónico válida',
+			  text: 'Por favor, complete correctamente todos los campos obligatorios (Nombre(s), Apellidos, Email)',
 			  icon: "warning"
 			});
 		} else {

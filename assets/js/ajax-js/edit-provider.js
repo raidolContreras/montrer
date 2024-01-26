@@ -33,12 +33,12 @@ $(document).ready(function () {
         });
 
         // Función de validación
-        function validateField(fieldName, errorMessage) {
+        function validateField(fieldName) {
             if (!fields[fieldName]) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Advertencia',
-                    text: errorMessage,
+                    text: 'Por favor, complete correctamente todos los campos obligatorios (*)',
                 });
                 return false;
             }
@@ -46,17 +46,17 @@ $(document).ready(function () {
         }
 
         // Validar campos requeridos
-        if (!validateField('updatebusinessName', 'Por favor, ingrese la razón social del proveedor.') ||
-            !validateField('updaterfc', 'Por favor, ingrese el RFC del proveedor.') ||
-            !validateField('updatecontactPhone', 'Por favor, ingrese el teléfono de contacto del proveedor.') ||
-            !validateField('updatefiscalAddressStreet', 'Por favor, ingrese la calle de la dirección fiscal del proveedor.') ||
-            !validateField('updatefiscalAddressColonia', 'Por favor, ingrese la colonia de la dirección fiscal del proveedor.') ||
-            !validateField('updatefiscalAddressMunicipio', 'Por favor, ingrese el municipio de la dirección fiscal del proveedor.') ||
-            !validateField('updatefiscalAddressEstado', 'Por favor, ingrese el estado de la dirección fiscal del proveedor.') ||
-            !validateField('updatefiscalAddressCP', 'Por favor, ingrese el código postal de la dirección fiscal del proveedor.') ||
-            !validateField('updatebankName', 'Por favor, ingrese el nombre de la entidad bancaria del proveedor.') ||
-            !validateField('updateaccountHolder', 'Por favor, ingrese el titular de la cuenta bancaria del proveedor.') ||
-            !validateField('updateaccountNumber', 'Por favor, ingrese el número de cuenta bancaria del proveedor.')
+        if (!validateField('updatebusinessName') ||
+            !validateField('updaterfc') ||
+            !validateField('updatecontactPhone') ||
+            !validateField('updatefiscalAddressStreet') ||
+            !validateField('updatefiscalAddressColonia') ||
+            !validateField('updatefiscalAddressMunicipio') ||
+            !validateField('updatefiscalAddressEstado') ||
+            !validateField('updatefiscalAddressCP') ||
+            !validateField('updatebankName') ||
+            !validateField('updateaccountHolder') ||
+            !validateField('updateaccountNumber')
         ) {
             return;
         }
@@ -72,7 +72,6 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === 'ok') {
 
-                    // Mostrar mensaje de éxito
                     Swal.fire({
                         icon: "success",
                         title: 'Proveedor actualizado exitosamente',
