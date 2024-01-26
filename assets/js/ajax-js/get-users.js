@@ -88,7 +88,7 @@ $(document).ready(function () {
     
         // Manejar el clic del botón "Deshabilitar" en el modal
         $('#confirmDisable').on('click', function() {
-            handleUserAction(idUser, 'disableUser', 'El usuario ha sido inhabilitado', 'No se pudo Deshabilitar al usuario');
+            handleUserAction(idUser, 'disableUser', 'El usuario ha sido deshabilitado', 'No se pudo deshabilitar al usuario');
         });
     });
     

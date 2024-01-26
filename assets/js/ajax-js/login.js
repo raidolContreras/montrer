@@ -39,7 +39,7 @@ $(document).ready(function () {
                     });
 			    }else if (response === 'status off') {
 					Swal.fire({
-						title: "Usuario Inhabilitado",
+						title: "Usuario deshabilitado",
 						icon: "warning",
 						text: 'Comuníquese con el administrador de la plataforma, para cualquier aclalaración.',
 					});
