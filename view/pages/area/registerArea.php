@@ -40,7 +40,7 @@
 
                 <div class="col-12 mt-2 text-end">
                     <button type="submit" class="btn btn-primary">Registrar departamento</button>
-                    <a href="areas" class="btn btn-danger">Cancelar</a>
+                    <a class="btn btn-danger" id="cancelButton">Cancelar</a>
                 </div>
             </div>
         </form>

@@ -68,3 +68,30 @@ $(document).ready(function () {
 		}
 	});
 });
+
+// Esperar a que el documento esté listo
+document.addEventListener('DOMContentLoaded', function () {
+	// Obtener el botón de cancelar por su ID
+	var cancelButton = document.getElementById('cancelButton');
+
+	// Agregar un evento de clic al botón de cancelar
+	cancelButton.addEventListener('click', function (event) {
+		// Prevenir el comportamiento predeterminado del enlace
+		event.preventDefault();
+
+		// Mostrar un modal de confirmación con SweetAlert2
+		Swal.fire({
+			title: '¿Seguro que deseas cancelar?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Sí, cancelar',
+			cancelButtonText: 'No, seguir aquí',
+		}).then((result) => {
+			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
+			if (result.isConfirmed) {
+				window.location.href = "exercise";
+			}
+			// Si hacen clic en "No, seguir aquí", no hacer nada
+		});
+	});
+});

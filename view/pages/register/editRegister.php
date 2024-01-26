@@ -39,7 +39,7 @@
 						</div>
 						<div class="d-grid gap-2 mb-3">
 							<button type="submit" class="btn btn-primary" id="register">Actualizar datos</button>
-							<a href="registers" class="btn btn-danger">Cancelar</a>
+							<a class="btn btn-danger" id="cancelButton">Cancelar</a>
 						</div>
 					</form>
 				</div>

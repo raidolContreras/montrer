@@ -102,8 +102,8 @@
                 <p>¿Está seguro de que desea activar el ejercicio <strong id="activateExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmActivateExercise">Activar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

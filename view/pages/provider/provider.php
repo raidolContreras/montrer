@@ -79,24 +79,6 @@
         </div>
     </div>
 </div>
-<!-- Activate Provider Modal -->
-<div class="modal fade" id="activateProviderModal" tabindex="-1" aria-labelledby="activateProviderModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="activateProviderModalLabel">Activar proveedor</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Está seguro de que desea activar el proveedor <strong id="activateProviderName"></strong>?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmActivateProvider">Activar</button>
-            </div>
-        </div>
-    </div>
-</div>
 <input type="hidden" name="level" value="<?php echo $_SESSION['level'] ?>">
 <script src="assets/js/ajax-js/get-providers.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
