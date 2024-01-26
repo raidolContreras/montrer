@@ -22,6 +22,7 @@
 		'provider',
 		'registerProvider',
 		'editProvider',
+		'requestBudget',
 	];
 
 
@@ -47,6 +48,8 @@
 			include "view/pages/budgets/$pagina.php";
 		} elseif ($pagina == 'provider' || $pagina == 'registerProvider' || $pagina == 'editProvider') {
 			include "view/pages/provider/$pagina.php";
+		} elseif ($pagina == 'requestBudget' || $pagina == 'registerRequestBudget' || $pagina == 'editRequestBudget') {
+			include "view/pages/request_budget/$pagina.php";
 		} else {
 			include "view/pages/404.php";
 		}

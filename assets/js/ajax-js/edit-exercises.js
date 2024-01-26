@@ -47,7 +47,7 @@ $(document).ready(function () {
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
 						Swal.fire({
 						  icon: "success",
-						  title: 'Departamento actualizado exitosamente',
+						  title: 'Ejercicio actualizado exitosamente',
 						  icon: "success"
 						});
 						setTimeout(function () {
@@ -56,7 +56,7 @@ $(document).ready(function () {
 					} else {
 						Swal.fire({
 						  icon: 'error',
-						  title: 'Error al crear el departamento',
+						  title: 'Error al crear el ejercicio',
 						  icon: "error"
 						});
 					}
