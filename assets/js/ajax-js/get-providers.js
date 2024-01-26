@@ -116,49 +116,54 @@ $(document).ready(function () {
     });
 
     // Manejar el clic del botón de habilitar área
+   
+    // Manejar el clic del botón de deshabilitar proveedor
     $('#provider').on('click', '.enable-button', function () {
         var idProvider = $(this).data('id');
-        var ProviderName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del área desde la fila
+        var ProviderName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del proveedor desde la fila
 
-        // Mostrar el nombre del área en el modal
+        // Mostrar el nombre del proveedor en el modal
         $('#enableProviderName').text(ProviderName);
 
-        // Mostrar el modal de habilitar área
+        // Establecer el id del proveedor en un atributo de datos del botón "Deshabilitar"
+        $('#confirmEnableProvider').data('id', idProvider);
+
+        // Mostrar el modal de deshabilitar proveedor
         $('#enableProviderModal').modal('show');
+    });
 
-        // Manejar el clic del botón "Habilitar" en el modal
-        $('#confirmEnableProvider').on('click', function () {
-            $.ajax({
-                type: 'POST',
-                url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
-                data: { 'enableProvider': idProvider },
-                success: function (response) {
-                    
-                    if (response === 'ok'){
-                        Swal.fire({
-                            icon: "success",
-                            title: 'Proveedor habilitado con éxito'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-        
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: 'Error',
-                            text: 'No se pudo habilitar el proveedor'
-                        });
-                    }
+    // Manejar el clic del botón "Deshabilitar" en el modal
+    $('#confirmEnableProvider').on('click', function () {
+        var idProvider = $(this).data('id');
 
-                },
-                complete: function () {
-                    // Ocultar el modal después de completar la solicitud
-                    idProvider = 0;
-                    $('#enableProviderModal').modal('hide');
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
+            data: { 'enableProvider': idProvider },
+            success: function (response) {
+                if (response === 'ok') {
+                    Swal.fire({
+                        icon: "success",
+                        title: 'Proveedor deshabilitado con éxito'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: 'Error',
+                        text: 'No se pudo deshabilitar el proveedor'
+                    });
                 }
-            });
+            },
+            complete: function () {
+                // Ocultar el modal después de completar la solicitud
+                idProvider = 0;
+                $('#enableProviderModal').modal('hide');
+            }
         });
     });
 

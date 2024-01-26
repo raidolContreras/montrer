@@ -38,7 +38,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirmDisableBudget">Deshabilitar</button>
+                <button type="button" class="btn btn-warning" id="confirmDisableBudget">Deshabilitar</button>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmEnableBudget">Habilitar</button>
+                <button type="button" class="btn btn-success" id="confirmEnableBudget">Habilitar</button>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@
                 <p>¿Está seguro de que desea eliminar el departamento <strong id="deleteBudgetName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteBudget">Eliminar</button>
             </div>
         </div>
@@ -83,6 +83,8 @@
 </div>
 
 <script src="assets/js/ajax-js/get-budgets.js"></script>
+
+<script src="assets/js/sweetalert2.all.min.js"></script>
 <?php else: ?>
 	<script>
 		window.location.href = 'inicio';

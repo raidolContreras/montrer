@@ -1,4 +1,16 @@
 $(document).ready(function () {
+
+	const Toast = Swal.mixin({
+		toast: true,
+		position: "center",
+		showConfirmButton: false,
+		timerProgressBar: false,
+		didOpen: (toast) => {
+			toast.onmouseenter = Swal.stopTimer;
+			toast.onmouseleave = Swal.resumeTimer;
+		}
+	});
+
 	var budgetsData = $('#budgets').DataTable({
 		ajax: {
 			url: 'controller/ajax/getBudgets.php',
@@ -62,137 +74,6 @@ $(document).ready(function () {
 		form.submit();
 	}
 
-	$('#budgets').on('click', '.disable-button', function () {
-		var idBudget = $(this).data('id');
-		var budgetName = $(this).closest('tr').find('td:eq(1)').text();
-
-		$('#disableBudgetName').text(budgetName);
-		$('#disableBudgetModal').modal('show');
-
-		$('#confirmDisableBudget').off('click').on('click', function () {
-			// Lógica para Deshabilitar el presupuesto
-			$.ajax({
-				type: 'POST',
-				url: 'controller/ajax/ajax.form.php',
-				data: { 'disableBudget': idBudget },
-				success: function (response) {
-					
-					if (response === 'ok') {
-						
-						Swal.fire({
-							icon: "success",
-							title: 'presupuesto deshabilitado con éxito',
-							icon: "success"
-						}).then((result) => {
-							if (result.isConfirmed) {
-								location.reload();
-							}
-						});
-						
-					} else {
-						Swal.fire({
-							icon: "success",
-							title: 'No se pudo deshabilitar el presupuesto',
-							icon: "success"
-						});
-					}
-
-				},
-				complete: function () {
-					idBudget = 0;
-					$('#disableBudgetModal').modal('hide');
-				}
-			});
-		});
-	});
-
-	$('#budgets').on('click', '.enable-button', function () {
-		var idBudget = $(this).data('id');
-		var budgetName = $(this).closest('tr').find('td:eq(1)').text();
-
-		$('#enableBudgetName').text(budgetName);
-		$('#enableBudgetModal').modal('show');
-
-		$('#confirmEnableBudget').off('click').on('click', function () {
-			// Lógica para habilitar el presupuesto
-			$.ajax({
-				type: 'POST',
-				url: 'controller/ajax/ajax.form.php',
-				data: { 'enableBudget': idBudget },
-				success: function (response) {
-					
-					if (response === 'ok') {
-						
-						Swal.fire({
-							icon: "success",
-							title: 'presupuesto habilitado con éxito',
-							icon: "success"
-						}).then((result) => {
-							if (result.isConfirmed) {
-								location.reload();
-							}
-						});
-						
-					} else {
-						Swal.fire({
-							icon: "success",
-							title: 'No se pudo habilitar el presupuesto',
-							icon: "success"
-						});
-					}
-				},
-				complete: function () {
-					idBudget = 0;
-					$('#enableBudgetModal').modal('hide');
-				}
-			});
-		});
-	});
-
-	$('#budgets').on('click', '.delete-button', function () {
-		var idBudget = $(this).data('id');
-		var budgetName = $(this).closest('tr').find('td:eq(1)').text();
-
-		$('#deleteBudgetName').text(budgetName);
-		$('#deleteBudgetModal').modal('show');
-
-		$('#confirmDeleteBudget').off('click').on('click', function () {
-			// Lógica para habilitar el presupuesto
-			$.ajax({
-				type: 'POST',
-				url: 'controller/ajax/ajax.form.php',
-				data: { 'deleteBudget': idBudget },
-				success: function (response) {
-					
-					if (response === 'ok') {
-						
-						Swal.fire({
-							icon: "success",
-							title: 'presupuesto eliminado con éxito',
-							icon: "success"
-						}).then((result) => {
-							if (result.isConfirmed) {
-								location.reload();
-							}
-						});
-						
-					} else {
-						Swal.fire({
-							icon: "success",
-							title: 'No se pudo eliminar el presupuesto',
-							icon: "success"
-						});
-					}
-					
-				},
-				complete: function () {
-					idBudget = 0;
-					$('#deleteBudgetModal').modal('hide');
-				}
-			});
-		});
-	});
-
 	function renderActionButtons(idBudget, status) {
 		if (status == 1) {
 			return `
@@ -231,3 +112,56 @@ $(document).ready(function () {
 	}
 	
 });
+
+function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, successMessage) {
+    $('#budgets').on('click', `.${actionType}-button`, function () {
+        var idBudget = $(this).data('id');
+        var budgetName = $(this).closest('tr').find('td:eq(1)').text();
+
+        $(`#${nameId}`).text(budgetName);
+        $(`#${confirmButtonId}`).data('id', idBudget);
+
+        $(`#${modalId}`).modal('show');
+    });
+
+    $(`#${confirmButtonId}`).off('click').on('click', function () {
+        var idBudget = $(this).data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/ajax.form.php',
+            data: { [`${actionType}Budget`]: idBudget },
+            success: function (response) {
+                handleResponse(response, actionType, successMessage);
+            },
+            complete: function () {
+                idBudget = 0;
+                $(`#${modalId}`).modal('hide');
+            }
+        });
+    });
+}
+
+function handleResponse(response, actionType, successMessage) {
+    if (response === 'ok') {
+        Swal.fire({
+            icon: "success",
+            title: `Presupuesto ${successMessage} con éxito`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
+        });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: 'Error',
+            text: `No se pudo ${actionType.toLowerCase()} el presupuesto`
+        });
+    }
+}
+
+showModalAndSetData('disableBudgetModal', 'disableBudgetName', 'confirmDisableBudget', 'disable', 'deshabilitado');
+showModalAndSetData('enableBudgetModal', 'enableBudgetName', 'confirmEnableBudget', 'enable', 'habilitado');
+showModalAndSetData('deleteBudgetModal', 'deleteBudgetName', 'confirmDeleteBudget', 'delete', 'eliminado');
+

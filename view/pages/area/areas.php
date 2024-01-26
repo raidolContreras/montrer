@@ -41,7 +41,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirmDisableArea">Deshabilitar</button>
+                <button type="button" class="btn btn-warning" id="confirmDisableArea">Deshabilitar</button>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmEnableArea">Habilitar</button>
+                <button type="button" class="btn btn-success" id="confirmEnableArea">Habilitar</button>
             </div>
         </div>
     </div>
@@ -78,7 +78,7 @@
                 <p>¿Está seguro de que desea eliminar el departamento de <strong id="deleteAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteArea">Eliminar</button>
             </div>
         </div>
@@ -86,6 +86,7 @@
 </div>
 
 <script src="assets/js/ajax-js/get-areas.js"></script>
+<script src="assets/js/sweetalert2.all.min.js"></script>
 <?php else: ?>
 	<script>
 		window.location.href = 'inicio';

@@ -46,7 +46,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDisableExercise">Deshabilitar</button>
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="confirmDisableExercise">Deshabilitar</button>
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="confirmEnableExercise">Habilitar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmEnableExercise">Habilitar</button>
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@
                 <p>¿Está seguro de que desea eliminar el ejercicio <strong id="deleteExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteExercise">Eliminar</button>
             </div>
         </div>
