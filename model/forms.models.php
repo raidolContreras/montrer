@@ -895,11 +895,11 @@ class FormsModels {
 	static public function mdlRegisterProvider($data){
 		$pdo = Conexion::conectar();
 		$sql = "INSERT INTO montrer_providers 
-		(provider_key, representative_name, contact_phone, website, business_name, rfc, 
+		(provider_key, representative_name, contact_phone, email, website, business_name, rfc, 
 		fiscal_address_street, fiscal_address_colonia, fiscal_address_municipio, fiscal_address_estado, 
 		fiscal_address_cp, bank_name, account_holder, account_number, clabe, created_at, updated_at) 
 		VALUES 
-		(:providerKey, :representativeName, :contactPhone, :website, :businessName, :rfc, 
+		(:providerKey, :representativeName, :contactPhone, :email, :website, :businessName, :rfc, 
 		:fiscalAddressStreet, :fiscalAddressColonia, :fiscalAddressMunicipio, :fiscalAddressEstado, 
 		:fiscalAddressCP, :bankName, :accountHolder, :accountNumber, :clabe, NOW(), NOW())";
 
@@ -907,6 +907,7 @@ class FormsModels {
 		$stmt->bindParam(':providerKey', $data['providerKey'], PDO::PARAM_STR);
 		$stmt->bindParam(':representativeName', $data['representativeName'], PDO::PARAM_STR);
 		$stmt->bindParam(':contactPhone', $data['contactPhone'], PDO::PARAM_STR);
+		$stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
 		$stmt->bindParam(':website', $data['website'], PDO::PARAM_STR);
 		$stmt->bindParam(':businessName', $data['businessName'], PDO::PARAM_STR);
 		$stmt->bindParam(':rfc', $data['rfc'], PDO::PARAM_STR);
@@ -932,11 +933,12 @@ class FormsModels {
 
 	static public function mdlUpdateProvider($data){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_providers SET representative_name = :representativeName, contact_phone = :contactPhone, website = :website, business_name = :businessName, rfc = :rfc, fiscal_address_street = :fiscalAddressStreet, fiscal_address_colonia = :fiscalAddressColonia, fiscal_address_municipio = :fiscalAddressMunicipio, fiscal_address_estado = :fiscalAddressEstado, fiscal_address_cp = :fiscalAddressCP, bank_name = :bankName, account_holder = :accountHolder, account_number = :accountNumber, clabe = :clabe WHERE provider_key = :providerKey";
+		$sql = "UPDATE montrer_providers SET representative_name = :representativeName, contact_phone = :contactPhone, email = :email, website = :website, business_name = :businessName, rfc = :rfc, fiscal_address_street = :fiscalAddressStreet, fiscal_address_colonia = :fiscalAddressColonia, fiscal_address_municipio = :fiscalAddressMunicipio, fiscal_address_estado = :fiscalAddressEstado, fiscal_address_cp = :fiscalAddressCP, bank_name = :bankName, account_holder = :accountHolder, account_number = :accountNumber, clabe = :clabe WHERE provider_key = :providerKey";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':representativeName', $data['representativeName'], PDO::PARAM_STR);
 		$stmt->bindParam(':contactPhone', $data['contactPhone'], PDO::PARAM_STR);
+		$stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
 		$stmt->bindParam(':website', $data['website'], PDO::PARAM_STR);
 		$stmt->bindParam(':businessName', $data['businessName'], PDO::PARAM_STR);
 		$stmt->bindParam(':rfc', $data['rfc'], PDO::PARAM_STR);

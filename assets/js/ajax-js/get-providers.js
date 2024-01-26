@@ -29,10 +29,26 @@ $(document).ready(function () {
                 data: 'provider_key',
             },
             {
-                data: 'representative_name'
+                data: null,
+                render: function (data) {
+                    return `
+                        <div style="white-space: nowrap;">
+                            ${data.representative_name}
+                        <div>
+                    `;
+                }
             },
             {
-                data: 'contact_phone'
+                data: null,
+                render: function (data) {
+                    return `
+                    <div style="white-space: nowrap;">
+                        Teléfono: ${data.contact_phone}<br>
+                        Email: ${data.email}<br>
+                        ${data.website ? `Página web: ${data.website}<br>` : ''}
+                    </div>
+                `;
+                }
             },
             {
                 data: 'rfc'
@@ -41,14 +57,27 @@ $(document).ready(function () {
                 data: null,
                 render: function (data) {
                     // Combina los campos de la dirección fiscal en una sola columna
-                    return `${data.fiscal_address_street}, ${data.fiscal_address_colonia}, ${data.fiscal_address_municipio}, ${data.fiscal_address_estado}, ${data.fiscal_address_cp}`;
+                    return `
+                        <div style="white-space: nowrap;">
+                            ${data.fiscal_address_street}, ${data.fiscal_address_colonia},<br>
+                            ${data.fiscal_address_municipio}, ${data.fiscal_address_estado}, ${data.fiscal_address_cp}
+                        </div>
+                    `;
                 }
             },
             {
                 data: null,
                 render: function (data) {
                     // Combina los campos de la dirección fiscal en una sola columna
-                    return `${data.bank_name}, ${data.account_holder}, N° Cuenta: ${data.account_number}, CLABE: ${data.clabe}`;
+                    return `
+                        <div style="white-space: nowrap;">
+                            Banco: ${data.bank_name}<br>
+                            Titular: ${data.account_holder}<br>
+                            N° cuenta: ${data.account_number}<br>
+                            CLABE: ${data.clabe}
+                        </div>
+                    `;
+
                 }
             },
             {
@@ -59,6 +88,10 @@ $(document).ready(function () {
                 }
             }
         ],
+        fixedColumns: {
+            leftColumns: 2, // Fija las primeras 2 columnas
+            rightColumns: 1 // Fija la última columna
+        },
         language: {
             "paginate": {
                 "first": "<<",
@@ -129,96 +162,104 @@ $(document).ready(function () {
         });
     });
 
-    // Manejar el clic del botón de habilitar área
+    // Manejar el clic del botón de deshabilitar proveedor
     $('#provider').on('click', '.disable-button', function () {
         var idProvider = $(this).data('id');
-        var ProviderName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del área desde la fila
+        var ProviderName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del proveedor desde la fila
 
-        // Mostrar el nombre del área en el modal
+        // Mostrar el nombre del proveedor en el modal
         $('#disableProviderName').text(ProviderName);
 
-        // Mostrar el modal de habilitar área
-        $('#disableProviderModal').modal('show');
+        // Establecer el id del proveedor en un atributo de datos del botón "Deshabilitar"
+        $('#confirmDisableProvider').data('id', idProvider);
 
-        // Manejar el clic del botón "Habilitar" en el modal
-        $('#confirmDisableProvider').on('click', function () {
-            $.ajax({
-                type: 'POST',
-                url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
-                data: { 'disableProvider': idProvider },
-                success: function (response) {
-                    
-                    if (response === 'ok'){
-                        Swal.fire({
-                            icon: "success",
-                            title: 'Proveedor deshabilitado con éxito'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-        
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: 'Error',
-                            text: 'No se pudo deshabilitar el proveedor'
-                        });
-                    }
-                },
-                complete: function () {
-                    // Ocultar el modal después de completar la solicitud
-                    idProvider = 0;
-                    $('#disableProviderModal').modal('hide');
+        // Mostrar el modal de deshabilitar proveedor
+        $('#disableProviderModal').modal('show');
+    });
+
+    // Manejar el clic del botón "Deshabilitar" en el modal
+    $('#confirmDisableProvider').on('click', function () {
+        var idProvider = $(this).data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
+            data: { 'disableProvider': idProvider },
+            success: function (response) {
+                if (response === 'ok') {
+                    Swal.fire({
+                        icon: "success",
+                        title: 'Proveedor deshabilitado con éxito'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: 'Error',
+                        text: 'No se pudo deshabilitar el proveedor'
+                    });
                 }
-            });
+            },
+            complete: function () {
+                // Ocultar el modal después de completar la solicitud
+                idProvider = 0;
+                $('#disableProviderModal').modal('hide');
+            }
         });
     });
 
-    // Manejar el clic del botón de eliminar área
+    
+    // Manejar el clic del botón de deshabilitar proveedor
     $('#provider').on('click', '.delete-button', function () {
         var idProvider = $(this).data('id');
-        var ProviderName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del área desde la fila
+        var ProviderName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del proveedor desde la fila
 
-        // Mostrar el nombre del área en el modal
+        // Mostrar el nombre del proveedor en el modal
         $('#deleteProviderName').text(ProviderName);
 
-        // Mostrar el modal de eliminar área
-        $('#deleteProviderModal').modal('show');
+        // Establecer el id del proveedor en un atributo de datos del botón "Deshabilitar"
+        $('#confirmDeleteProvider').data('id', idProvider);
 
-        // Manejar el clic del botón "eliminar" en el modal
-        $('#confirmDeleteProvider').on('click', function () {
-            $.ajax({
-                type: 'POST',
-                url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
-                data: { 'deleteProvider': idProvider },
-                success: function (response) {
-                    
-                    if (response === 'ok'){
-                        Swal.fire({
-                            icon: "success",
-                            title: 'Proveedor eliminado con éxito'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-        
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: 'Error',
-                            text: 'No se pudo eliminar el proveedor'
-                        });
-                    }
-                    
-                },
-                complete: function () {
-                    // Ocultar el modal después de completar la solicitud
-                    idProvider = 0;
-                    $('#deleteProviderModal').modal('hide');
+        // Mostrar el modal de deshabilitar proveedor
+        $('#deleteProviderModal').modal('show');
+    });
+    
+    // Manejar el clic del botón "Deshabilitar" en el modal
+    $('#confirmDeleteProvider').on('click', function () {
+        var idProvider = $(this).data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
+            data: { 'deleteProvider': idProvider },
+            success: function (response) {
+                if (response === 'ok') {
+                    Swal.fire({
+                        icon: "success",
+                        title: 'Proveedor deshabilitado con éxito'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: 'Error',
+                        text: 'No se pudo deshabilitar el proveedor'
+                    });
                 }
-            });
+            },
+            complete: function () {
+                // Ocultar el modal después de completar la solicitud
+                idProvider = 0;
+                $('#deleteProviderModal').modal('hide');
+            }
         });
     });
 

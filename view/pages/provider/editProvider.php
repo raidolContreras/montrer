@@ -27,6 +27,10 @@
                     <input type="tel" class="form-control" id="contactPhone" name="contactPhone">
                 </div>
                 <div class="col-md-6">
+                    <label for="email" class="form-label">Email<span class="required"></span></label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="col-md-6">
                     <label for="website" class="form-label">Página web</label>
                     <input type="url" class="form-control" id="website" name="website">
                 </div>

@@ -21,29 +21,11 @@ $(document).ready(function () {
 			}
 		});
 
-		if (exerciseName == ''){
+		if (exerciseName == '' || initialDate == ''|| finalDate == '' || budget == ''){
 			Swal.fire({
 				icon: 'warning',
 				title: 'Advertencia',
-				text: 'Por favor, ingrese el nombre del ejercicio.',
-			});
-		} else if (initialDate == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, seleccione la fecha de inicio del ejercicio.',
-			});
-		} else if (finalDate == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, seleccione la fecha de finalización del ejercicio.',
-			});
-		} else if (budget == '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, ingrese el presupuesto asignado para el ejercicio.',
+				text: 'Por favor, complete correctamente todos los campos obligatorios (nombre del ejercicio, fecha de inicio, fecha de cierre, presupuesto)',
 			});
 		} else {
 			// Realiza la solicitud Ajax
@@ -112,4 +94,26 @@ document.addEventListener('DOMContentLoaded', function () {
 			// Si hacen clic en "No, seguir aquí", no hacer nada
 		});
 	});
+});
+
+function confirmExit(event, destination) {
+        event.preventDefault();
+	Swal.fire({
+		title: '¿Estás seguro?',
+		text: 'Si sales del formulario, perderás los cambios no guardados.',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Sí, salir',
+		cancelButtonText: 'Cancelar'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			window.location.href = destination;
+		}
+	});
+}
+
+$(function () {
+	$('[data-bs-toggle="tooltip"]').tooltip();
 });

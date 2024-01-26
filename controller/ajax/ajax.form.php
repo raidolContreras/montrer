@@ -433,6 +433,7 @@ if (
 	isset($_POST['providerKey']) &&
 	isset($_POST['representativeName']) &&
 	isset($_POST['contactPhone']) &&
+	isset($_POST['email']) &&
 	isset($_POST['website']) &&
 	isset($_POST['businessName']) &&
 	isset($_POST['rfc']) &&
@@ -451,6 +452,7 @@ if (
 		'providerKey' => $_POST['providerKey'],
 		'representativeName' => $_POST['representativeName'],
 		'contactPhone' => $_POST['contactPhone'],
+		'email' => $_POST['email'],
 		'website' => $_POST['website'],
 		'businessName' => $_POST['businessName'],
 		'rfc' => $_POST['rfc'],
@@ -473,6 +475,7 @@ if (
 if (
 	isset($_POST['providerKey']) &&
 	isset($_POST['updaterepresentativeName']) &&
+	isset($_POST['updateemail']) &&
 	isset($_POST['updatecontactPhone']) &&
 	isset($_POST['updatewebsite']) &&
 	isset($_POST['updatebusinessName']) &&
@@ -492,6 +495,7 @@ if (
 		'providerKey' => $_POST['providerKey'],
 		'representativeName' => $_POST['updaterepresentativeName'],
 		'contactPhone' => $_POST['updatecontactPhone'],
+		'email' => $_POST['updateemail'],
 		'website' => $_POST['updatewebsite'],
 		'businessName' => $_POST['updatebusinessName'],
 		'rfc' => $_POST['updaterfc'],

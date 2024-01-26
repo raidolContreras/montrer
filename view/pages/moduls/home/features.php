@@ -51,23 +51,7 @@
 					</a>
 				</div>
 
-				<div class="col-lg-4 col-md-6">
-					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Asignación de presupuestos">
-					<div class="single-features color-style-5c31d6">
-						<div class="row align-items-center">
-							<div class="col-xl-12">
-								<div class="single-click-content">
-									<span class="features-title">Presupuesto solicitado</span>
-									<h3>$ 0.00 </h3>
-									<p class="budget-message-soli"></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					</a>
-				</div>
-
-				<div class="col-lg-4 col-md-6">
+				<div class="col-lg-6 col-md-6">
 					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Asignación de presupuestos">
 					<div class="single-features color-style-5c31d6">
 						<div class="row align-items-center">
@@ -83,7 +67,7 @@
 					</a>
 				</div>
 
-				<div class="col-lg-4 col-md-6">
+				<div class="col-lg-6 col-md-6">
 					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Asignación de presupuestos">
 					<div class="single-features color-style-5c31d6">
 						<div class="row align-items-center">

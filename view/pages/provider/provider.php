@@ -13,7 +13,7 @@
                         <th>#</th>
                         <th>Clave del proveedor</th>
                         <th>Representante</th>
-                        <th>Teléfono</th>
+                        <th>Contacto</th>
                         <th>Razón Social</th>
                         <th>Dirección Fiscal</th>
                         <th>Datos bancarios</th>
@@ -38,7 +38,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDisableProvider">Deshabilitar</button>
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="confirmDisableProvider">Deshabilitar</button>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="confirmEnableProvider">Habilitar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmEnableProvider">Habilitar</button>
             </div>
         </div>
     </div>
@@ -73,7 +73,7 @@
                 <p>¿Está seguro de que desea eliminar el proveedor <strong id="deleteProviderName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteProvider">Eliminar</button>
             </div>
         </div>

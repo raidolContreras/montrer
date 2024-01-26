@@ -19,6 +19,7 @@ function getProvider(registerValue) {
             $('input[name="providerKey"]').val(response.provider_key);
             $('input[name="representativeName"]').val(response.representative_name);
             $('input[name="contactPhone"]').val(response.contact_phone);
+            $('input[name="email"]').val(response.email);
             $('input[name="website"]').val(response.website);
             $('input[name="businessName"]').val(response.business_name);
             $('input[name="rfc"]').val(response.rfc);

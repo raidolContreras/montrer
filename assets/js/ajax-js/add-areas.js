@@ -92,3 +92,25 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 });
+
+    function confirmExit(event, destination) {
+        event.preventDefault();
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Si sales del formulario, perderás los cambios no guardados.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, salir',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = destination;
+            }
+        });
+    }
+
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });

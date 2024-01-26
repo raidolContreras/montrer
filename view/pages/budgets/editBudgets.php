@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="area" class="form-label">Departamento registrado</label>
-                    <select name="area" id="area" class="form-select form-control" required>
+                    <select name="area" id="area" class="form-select form-control">
                         <option value>Seleccione un departamento</option>
                         <?php foreach ($areas as $area): ?>
                             <?php if ($area['status'] == 1): ?>

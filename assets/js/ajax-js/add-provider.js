@@ -2,11 +2,11 @@ $(document).ready(function () {
     $("form.account-wrap").submit(function (event) {
         event.preventDefault();
 
-        // Recoge los valores del formulario del proveedor
         var providerKey = $("input[name='providerKey']").val();
         var fields = {
             representativeName: $("input[name='representativeName']").val(),
             contactPhone: $("input[name='contactPhone']").val(),
+            email: $("input[name='email']").val(),
             website: $("input[name='website']").val(),
             businessName: $("input[name='businessName']").val(),
             rfc: $("input[name='rfc']").val(),
@@ -33,7 +33,6 @@ $(document).ready(function () {
             }
         });
 
-        // Función de validación
         function validateField(fieldName) {
             if (!fields[fieldName]) {
                 Swal.fire({
@@ -46,8 +45,9 @@ $(document).ready(function () {
             return true;
         }
 
-        // Validar campos requeridos
         if (!validateField('businessName') ||
+            !validateField('representativeName') ||
+            !validateField('email') ||
             !validateField('rfc') ||
             !validateField('contactPhone') ||
             !validateField('fiscalAddressStreet') ||
@@ -62,7 +62,6 @@ $(document).ready(function () {
             return;
         }
 
-        // Realizar la solicitud Ajax
         $.ajax({
             type: "POST",
             url: "controller/ajax/ajax.form.php",
@@ -74,18 +73,22 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === 'ok') {
 
-                    // Mostrar mensaje de éxito
                     Swal.fire({
                         icon: "success",
                         title: 'Proveedor creado exitosamente',
-                        icon: "success"
+                        text: '¿Desea agregar otro proveedor?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, agregar otro',
+                        cancelButtonText: 'No, regresar',
                     }).then((result) => {
                         if (result.isConfirmed) {
                             location.reload();
+                        } else {
+                            window.location.href = "provider";
                         }
                     });
+
                 } else {
-                    // Mostrar mensaje de error
                     Swal.fire({
                         icon: 'error',
                         title: 'Error al crear el proveedor',
@@ -100,29 +103,44 @@ $(document).ready(function () {
     });
 });
 
-// Esperar a que el documento esté listo
 document.addEventListener('DOMContentLoaded', function () {
-	// Obtener el botón de cancelar por su ID
-	var cancelButton = document.getElementById('cancelButton');
+    var cancelButton = document.getElementById('cancelButton');
 
-	// Agregar un evento de clic al botón de cancelar
-	cancelButton.addEventListener('click', function (event) {
-		// Prevenir el comportamiento predeterminado del enlace
-		event.preventDefault();
+    cancelButton.addEventListener('click', function (event) {
+        event.preventDefault();
 
-		// Mostrar un modal de confirmación con SweetAlert2
-		Swal.fire({
-			title: '¿Seguro que deseas cancelar?',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Sí, cancelar',
-			cancelButtonText: 'No, seguir aquí',
-		}).then((result) => {
-			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
-			if (result.isConfirmed) {
-				window.location.href = "provider";
-			}
-			// Si hacen clic en "No, seguir aquí", no hacer nada
-		});
-	});
+        Swal.fire({
+            title: '¿Seguro que deseas cancelar?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'No, seguir aquí',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "provider";
+            }
+        });
+    });
+});
+
+function confirmExit(event, destination) {
+    event.preventDefault();
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Si sales del formulario, perderás los cambios no guardados.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, salir',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = destination;
+        }
+    });
+}
+
+$(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip();
 });
