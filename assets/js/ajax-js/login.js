@@ -20,8 +20,7 @@ $(document).ready(function () {
 				  toast: true,
 				  position: "top-end",
 				  showConfirmButton: false,
-				  timer: 1000,
-				  timerProgressBar: true,
+				  timerProgressBar: false,
 				  didOpen: (toast) => {
 				    toast.onmouseenter = Swal.stopTimer;
 				    toast.onmouseleave = Swal.resumeTimer;
@@ -33,11 +32,11 @@ $(document).ready(function () {
 					  icon: "success",
 					  title: 'Inicio de sesión exitoso',
 					  icon: "success"
-					});
-					// Redirigir a la página de inicio
-					setTimeout(function () {
-						window.location.href = 'inicio';
-					}, 1000);
+					}).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = 'inicio';
+                        }
+                    });
 			    }else if (response === 'status off') {
 					Swal.fire({
 						title: "Usuario Inhabilitado",

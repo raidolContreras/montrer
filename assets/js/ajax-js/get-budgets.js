@@ -70,7 +70,7 @@ $(document).ready(function () {
         $('#disableBudgetModal').modal('show');
 
         $('#confirmDisableBudget').off('click').on('click', function () {
-            // Lógica para inhabilitar el presupuesto
+            // Lógica para Deshabilitar el presupuesto
             $.ajax({
                 type: 'POST',
                 url: 'controller/ajax/ajax.form.php',
@@ -80,7 +80,7 @@ $(document).ready(function () {
                         console.log('presupuesto inhabilitado con éxito');
                         location.reload();
                     } else {
-                        console.error('No se pudo inhabilitar el presupuesto');
+                        console.error('No se pudo Deshabilitar el presupuesto');
                     }
                 },
                 complete: function () {
@@ -154,11 +154,11 @@ $(document).ready(function () {
             return `
             <center>
                 <div class="btn-group" role="group">
-                    <button class="btn btn-success edit-button" data-id="${idBudget}">
+                    <button class="btn btn-primary edit-button" data-id="${idBudget}">
                         <i class="ri-edit-line"></i> Editar
                     </button>
                     <button class="btn btn-warning disable-button" data-id="${idBudget}">
-                        <i class="ri-forbid-line"></i> Inhabilitar
+                        <i class="ri-forbid-line"></i> Deshabilitar
                     </button>
                     <button class="btn btn-danger delete-button" data-id="${idBudget}">
                         <i class="ri-delete-bin-6-line"></i> Eliminar
@@ -171,10 +171,10 @@ $(document).ready(function () {
             return `
             <center>
                 <div class="btn-group" role="group">
-                    <button class="btn btn-success edit-button" data-id="${idBudget}">
+                    <button class="btn btn-primary edit-button" data-id="${idBudget}">
                         <i class="ri-edit-line"></i> Editar
                     </button>
-                    <button class="btn btn-primary enable-button" data-id="${idBudget}">
+                    <button class="btn btn-success enable-button" data-id="${idBudget}">
                         <i class="ri-checkbox-circle-line"></i> Habilitar
                     </button>
                     <button class="btn btn-danger delete-button" data-id="${idBudget}">

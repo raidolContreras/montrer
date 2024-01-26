@@ -47,7 +47,7 @@ $(document).ready(function () {
         }
     });
 
-    // Manejar el clic del botón de inhabilitar área
+    // Manejar el clic del botón de Deshabilitar área
     $('#areas').on('click', '.disable-button', function () {
         var idArea = $(this).data('id');
         var areaName = $(this).closest('tr').find('td:eq(1) a').text(); // Obtener el nombre del área desde la fila
@@ -55,10 +55,10 @@ $(document).ready(function () {
         // Mostrar el nombre del área en el modal
         $('#disableAreaName').text(areaName);
 
-        // Mostrar el modal de inhabilitar área
+        // Mostrar el modal de Deshabilitar área
         $('#disableAreaModal').modal('show');
 
-        // Manejar el clic del botón "Inhabilitar" en el modal
+        // Manejar el clic del botón "Deshabilitar" en el modal
         $('#confirmDisableArea').on('click', function () {
             $.ajax({
                 type: 'POST',
@@ -70,7 +70,7 @@ $(document).ready(function () {
                         console.log('Departamento inhabilitada con éxito');
                         areasData.ajax.reload(); // Recargar datos de DataTable
                     } else {
-                        console.error('No se pudo inhabilitar el departamento');
+                        console.error('No se pudo Deshabilitar el departamento');
                     }
                 },
                 complete: function () {
@@ -171,11 +171,11 @@ $(document).ready(function () {
             return `
             <center>
                 <div class="btn-group" role="group">
-                    <button class="btn btn-success edit-button" data-id="${idArea}">
+                    <button class="btn btn-primary edit-button" data-id="${idArea}">
                         <i class="ri-edit-line"></i> Editar
                     </button>
                     <button class="btn btn-warning disable-button" data-id="${idArea}">
-                        <i class="ri-forbid-line"></i> Inhabilitar
+                        <i class="ri-forbid-line"></i> Deshabilitar
                     </button>
                     <button class="btn btn-danger delete-button" data-id="${idArea}">
                         <i class="ri-delete-bin-6-line"></i> Eliminar
@@ -187,10 +187,10 @@ $(document).ready(function () {
             return `
             <center>
             <div class="btn-group" role="group">
-                <button class="btn btn-success edit-button" data-id="${idArea}">
+                <button class="btn btn-primary edit-button" data-id="${idArea}">
                     <i class="ri-edit-line"></i> Editar
                 </button>
-                <button class="btn btn-primary enable-button" data-id="${idArea}">
+                <button class="btn btn-success enable-button" data-id="${idArea}">
                     <i class="ri-checkbox-circle-line"></i> Habilitar
                 </button>
                 <button class="btn btn-danger delete-button" data-id="${idArea}">

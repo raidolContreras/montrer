@@ -83,12 +83,12 @@ $(document).ready(function () {
         // Mostrar el nombre del usuario en el modal
         $('#userName').text(userName);
     
-        // Mostrar el modal de inhabilitar
+        // Mostrar el modal de Deshabilitar
         $('#disableModal').modal('show');
     
-        // Manejar el clic del botón "Inhabilitar" en el modal
+        // Manejar el clic del botón "Deshabilitar" en el modal
         $('#confirmDisable').on('click', function() {
-            handleUserAction(idUser, 'disableUser', 'El usuario ha sido inhabilitado', 'No se pudo inhabilitar al usuario');
+            handleUserAction(idUser, 'disableUser', 'El usuario ha sido inhabilitado', 'No se pudo Deshabilitar al usuario');
         });
     });
     
@@ -147,8 +147,7 @@ $(document).ready(function () {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
+            timerProgressBar: false,
             didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
                 toast.onmouseleave = Swal.resumeTimer;
@@ -164,10 +163,11 @@ $(document).ready(function () {
                     Swal.fire({
                         icon: "success",
                         title: successMessage
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
                     });
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
     
                 } else {
                     Swal.fire({
@@ -190,8 +190,7 @@ $(document).ready(function () {
             toast: true,
             position: "top-end",
             showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
+            timerProgressBar: false,
             didOpen: (toast) => {
                 toast.onmouseenter = Swal.stopTimer;
                 toast.onmouseleave = Swal.resumeTimer;
@@ -227,10 +226,11 @@ $(document).ready(function () {
                         Swal.fire({
                             icon: "success",
                             title: 'Contraseña actualizada con exito'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
                         });
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1000);
         
                     } else {
                         Swal.fire({
@@ -268,7 +268,7 @@ $(document).ready(function () {
                         <i class="ri-pencil-line"></i> Editar
                     </button>
                     <button type="button" class="btn btn-warning disable-button" data-id="${idUser}">
-                        <i class="ri-forbid-line"></i> Inhabilitar
+                        <i class="ri-forbid-line"></i> Deshabilitar
                     </button>
                     <button type="button" class="btn btn-danger delete-button" data-id="${idUser}">
                         <i class="ri-delete-bin-6-line"></i> Eliminar

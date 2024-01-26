@@ -4,8 +4,7 @@ $(document).ready(function () {
         toast: true,
         position: "center",
         showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
+        timerProgressBar: false,
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
             toast.onmouseleave = Swal.resumeTimer;
@@ -93,7 +92,7 @@ $(document).ready(function () {
 
         // Manejar el clic del botón "Habilitar" en el modal
         $('#confirmActivateExercise').on('click', function () {
-            activateExercise(idExercise, 'activateExercise', 'No se pudo activar el ejercicio');
+            activateExercise(idExercise, 'activateExercise', 'No se pudo activar el ejercicio', 'Ejercicio activado con exito');
         });
     });
 
@@ -108,8 +107,11 @@ $(document).ready(function () {
                 Swal.fire({
                     icon: 'success',
                     title: 'Se cambio de ejercicio exitosamente',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
                 });
-                location.reload();
             },
             error: function (error) {
                 console.log("Error en la solicitud Ajax:", error);
@@ -118,7 +120,7 @@ $(document).ready(function () {
 
     }
 
-    // Manejar el clic del botón de inhabilitar ejercicio
+    // Manejar el clic del botón de Deshabilitar ejercicio
     $('#exercise').on('click', '.disable-button', function () {
         var idExercise = $(this).data('id');
         var exerciseName = $(this).closest('tr').find('td:eq(1)').text();
@@ -126,12 +128,12 @@ $(document).ready(function () {
         // Mostrar el nombre del ejercicio en el modal
         $('#disableExerciseName').text(exerciseName);
 
-        // Mostrar el modal de inhabilitar ejercicio
+        // Mostrar el modal de Deshabilitar ejercicio
         $('#disableExerciseModal').modal('show');
 
-        // Manejar el clic del botón "Inhabilitar" en el modal
+        // Manejar el clic del botón "Deshabilitar" en el modal
         $('#confirmDisableExercise').on('click', function () {
-            handleUserAction(idExercise, 'disableExercise', 'No se pudo inhabilitar el ejercicio');
+            handleUserAction(idExercise, 'disableExercise', 'No se pudo Deshabilitar el ejercicio', 'Ejercicio deshabilitado con exito');
         });
     });
 
@@ -148,7 +150,7 @@ $(document).ready(function () {
 
         // Manejar el clic del botón "Habilitar" en el modal
         $('#confirmEnableExercise').on('click', function () {
-            handleUserAction(idExercise, 'enableExercise', 'No se pudo habilitar el ejercicio');
+            handleUserAction(idExercise, 'enableExercise', 'No se pudo habilitar el ejercicio', 'Ejercicio habilitado con exito');
         });
     });
 
@@ -165,7 +167,7 @@ $(document).ready(function () {
 
         // Manejar el clic del botón "Habilitar" en el modal
         $('#confirmDeleteExercise').on('click', function () {
-            handleUserAction(idExercise, 'deleteExercise', 'No se pudo eliminar el ejercicio');
+            handleUserAction(idExercise, 'deleteExercise', 'No se pudo eliminar el ejercicio', 'Ejercicio eliminado con exito');
         });
     });
 
@@ -191,14 +193,14 @@ $(document).ready(function () {
                 return `
                     <center>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success btn-block disabled" disabled>
+                        <button type="button" class="btn btn-success activate-btn-disable disabled" disabled>
                             Activo
                         </button>
                         <button class="btn btn-primary edit-button" data-id="${idExercise}">
                             <i class="ri-edit-line"></i> Editar
                         </button>
                         <button class="btn btn-warning disable-button" data-id="${idExercise}">
-                            <i class="ri-forbid-line"></i> Inhabilitar
+                            <i class="ri-forbid-line"></i> Deshabilitar
                         </button>
                         <button class="btn btn-danger delete-button" data-id="${idExercise}">
                             <i class="ri-delete-bin-6-line"></i> Eliminar
@@ -217,7 +219,7 @@ $(document).ready(function () {
                         <i class="ri-edit-line"></i> Editar
                     </button>
                     <button class="btn btn-warning disable-button" data-id="${idExercise}">
-                        <i class="ri-forbid-line"></i> Inhabilitar
+                        <i class="ri-forbid-line"></i> Deshabilitar
                     </button>
                     <button class="btn btn-danger delete-button" data-id="${idExercise}">
                         <i class="ri-delete-bin-6-line"></i> Eliminar
@@ -249,19 +251,31 @@ $(document).ready(function () {
     }
     
 
-    function handleUserAction (idExercise, nameVariant, errorMessage){
+    function handleUserAction (idExercise, nameVariant, errorMessage, okMessage){
         $.ajax({
             type: 'POST',
             url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
             data: { [nameVariant]: idExercise },
             success: function (response) {
-                if (response === 'ok') {
+                
+                if (response === 'ok'){
+                    Swal.fire({
+                        icon: "success",
+                        title: okMessage
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+    
                 } else {
-                    console.error(errorMessage);
+                    Swal.fire({
+                        icon: "error",
+                        title: 'Error',
+                        text: errorMessage
+                    });
                 }
-            },
-            complete: function () {
-                location.reload();
+
             }
         });
     }

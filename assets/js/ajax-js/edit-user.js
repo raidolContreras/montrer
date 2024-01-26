@@ -7,8 +7,7 @@ $(document).ready(function () {
 			toast: true,
 			position: "center",
 			showConfirmButton: false,
-			timer: 3000,
-			timerProgressBar: true,
+			timerProgressBar: false,
 			didOpen: (toast) => {
 			  toast.onmouseenter = Swal.stopTimer;
 			  toast.onmouseleave = Swal.resumeTimer;

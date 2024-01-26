@@ -5,8 +5,7 @@ $(document).ready(function () {
         toast: true,
         position: "center",
         showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
+        timerProgressBar: false,
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
             toast.onmouseleave = Swal.resumeTimer;
@@ -49,7 +48,7 @@ $(document).ready(function () {
                 data: null,
                 render: function (data) {
                     // Combina los campos de la dirección fiscal en una sola columna
-                    return `${data.bank_name}, ${data.account_holder}, ${data.account_number}, ${data.clabe}`;
+                    return `${data.bank_name}, ${data.account_holder}, N° Cuenta: ${data.account_number}, CLABE: ${data.clabe}`;
                 }
             },
             {
@@ -101,13 +100,25 @@ $(document).ready(function () {
                 url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
                 data: { 'enableProvider': idProvider },
                 success: function (response) {
-                    if (response === 'ok') {
-                        // Implementa acciones adicionales si es necesario
-                        console.log('proveedor habilitado con éxito');
-                        location.reload(); // Recargar datos de DataTable
+                    
+                    if (response === 'ok'){
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Proveedor habilitado con éxito'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+        
                     } else {
-                        console.error('No se pudo habilitar el proveedor');
+                        Swal.fire({
+                            icon: "error",
+                            title: 'Error',
+                            text: 'No se pudo habilitar el proveedor'
+                        });
                     }
+
                 },
                 complete: function () {
                     // Ocultar el modal después de completar la solicitud
@@ -136,12 +147,23 @@ $(document).ready(function () {
                 url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
                 data: { 'disableProvider': idProvider },
                 success: function (response) {
-                    if (response === 'ok') {
-                        // Implementa acciones adicionales si es necesario
-                        console.log('proveedor deshabilitado con éxito');
-                        location.reload(); // Recargar datos de DataTable
+                    
+                    if (response === 'ok'){
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Proveedor deshabilitado con éxito'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+        
                     } else {
-                        console.error('No se pudo deshabilitar el proveedor');
+                        Swal.fire({
+                            icon: "error",
+                            title: 'Error',
+                            text: 'No se pudo deshabilitar el proveedor'
+                        });
                     }
                 },
                 complete: function () {
@@ -171,11 +193,25 @@ $(document).ready(function () {
                 url: 'controller/ajax/ajax.form.php', // Ajusta la URL según tu estructura
                 data: { 'deleteProvider': idProvider },
                 success: function (response) {
-                    if (response === 'ok') {
-                        location.reload();
+                    
+                    if (response === 'ok'){
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Proveedor eliminado con éxito'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+        
                     } else {
-                        console.error('No se pudo eliminar el proveedor');
+                        Swal.fire({
+                            icon: "error",
+                            title: 'Error',
+                            text: 'No se pudo eliminar el proveedor'
+                        });
                     }
+                    
                 },
                 complete: function () {
                     // Ocultar el modal después de completar la solicitud
@@ -206,7 +242,7 @@ function renderActionButtons(idProvider, status) {
                         <i class="ri-edit-line"></i> Editar
                     </button>
                     <button class="btn btn-warning disable-button" data-id="${idProvider}">
-                        <i class="ri-forbid-line"></i> Inhabilitar
+                        <i class="ri-forbid-line"></i> Deshabilitar
                     </button>
                     <button class="btn btn-danger delete-button" data-id="${idProvider}">
                         <i class="ri-delete-bin-6-line"></i> Eliminar

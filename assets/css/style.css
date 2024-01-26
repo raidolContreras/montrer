@@ -5963,3 +5963,21 @@ Template Sidebar CSS
 .subtitulo-sup {
   font-size: 10px;
 }
+
+.activate-btn,
+.activate-btn-disable,
+.change-password-button,
+.edit-button,
+.enable-button,
+.disable-button,
+.delete-button{
+  font-size: 12px !important;
+  width: 100%;
+  white-space: nowrap;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.btn-group {
+  width: 100%;
+}
