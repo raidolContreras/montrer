@@ -1,9 +1,8 @@
 $(document).ready(function () {
 	$("form.account-wrap").submit(function (event) {
-		// Evitar el envío del formulario por defecto
+
 		event.preventDefault();
 
-		// Recoge los valores del formulario
 		var idBudget = $("input[name='idBudget']").val();
 		var area = $("select[name='area']").val();
 		var provider = $("select[name='provider']").val();
@@ -21,7 +20,7 @@ $(document).ready(function () {
 			}
 		  });
 
-		  if (firstname == '' || lastname == '' || email == ''){
+		  if (area == '' || provider == '' || requestedAmount == ''){
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
@@ -29,7 +28,7 @@ $(document).ready(function () {
 			  icon: "warning"
 			});
 		} else {
-			// Realiza la solicitud Ajax
+
 			$.ajax({
 				type: "POST",
 				url: "controller/ajax/ajax.form.php",
@@ -71,17 +70,13 @@ $(document).ready(function () {
 	});
 });
 
-// Esperar a que el documento esté listo
 document.addEventListener('DOMContentLoaded', function () {
-	// Obtener el botón de cancelar por su ID
 	var cancelButton = document.getElementById('cancelButton');
 
-	// Agregar un evento de clic al botón de cancelar
 	cancelButton.addEventListener('click', function (event) {
-		// Prevenir el comportamiento predeterminado del enlace
+
 		event.preventDefault();
 
-		// Mostrar un modal de confirmación con SweetAlert2
 		Swal.fire({
 			title: '¿Seguro que deseas cancelar?',
 			icon: 'warning',
@@ -89,39 +84,36 @@ document.addEventListener('DOMContentLoaded', function () {
 			confirmButtonText: 'Sí, cancelar',
 			cancelButtonText: 'No, seguir aquí',
 		}).then((result) => {
-			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
 			if (result.isConfirmed) {
 				window.location.href = "requestBudget";
 			}
-			// Si hacen clic en "No, seguir aquí", no hacer nada
 		});
 	});
 });
 
 $(document).ready(function () {
-    // Obtén el valor de register desde el elemento HTML
     var registerValue = $('#register-value').data('register');
 
-    // Llama a la función para obtener el usuario con el valor de register
     getArea(registerValue);
     getProviders();
 
 });
 
 function getArea(registerValue) {
-    // Realiza la solicitud AJAX para obtener las áreas
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getAreasManager.php',
         data: {user: registerValue},
         dataType: 'json',
         success: function (response) {
-
-            // Rellena el formulario con los datos obtenidos
             $('select[name="area"]').val(response.nameArea);
 
-            // Llama a la función para llenar el select con las áreas
-            fillSelect('area',response, 'departamento');
+            // Obtén el valor de AuthorizedAmount desde la respuesta
+            var authorizedAmount = response.AuthorizedAmount;
+
+            // Llena el select de áreas
+            fillAreaSelect('area', response, 'departamento');
+
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);
@@ -129,8 +121,59 @@ function getArea(registerValue) {
     });
 }
 
+function fillAreaSelect(select, datas, message) {
+    var selectOption = $('#' + select);
+
+    selectOption.empty();
+
+    var option = $('<option>').val('').text('Seleccionar ' + message);
+    selectOption.append(option);
+
+    datas.forEach(function (data) {
+        var option = $('<option>').val(data[0]).text(data[1]);
+        selectOption.append(option);
+    });
+}
+
+// Luego, agrega el evento change al select de áreas
+$('#area').on('change', function() {
+    var selectedAreaId = $(this).val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getAuthorizedAmount.php',
+        data: { areaId: selectedAreaId },
+        dataType: 'json',
+        success: function (response) {
+            updateMaxRequestedAmount(response.AuthorizedAmount);
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+});
+
+function updateMaxRequestedAmount(authorizedAmount) {
+    var numberOfMonths = 12;
+    var maxRequestedAmount = authorizedAmount / numberOfMonths;
+
+    // Verifica si maxRequestedAmount es un número
+    if (!isNaN(maxRequestedAmount)) {
+        // Si es un número, habilita el campo de entrada y actualiza el texto de la etiqueta
+        $('#requestedAmount').prop('disabled', false);
+        var formattedBudget = parseFloat(maxRequestedAmount).toLocaleString('es-MX', {
+            style: 'currency',
+            currency: 'MXN'
+        });
+        $('.requestMax').text('Monto máximo disponible este mes: ' + formattedBudget);
+    } else {
+        // Si no es un número, deshabilita el campo de entrada y establece el texto en vacío
+        $('#requestedAmount').prop('disabled', true).val('');
+        $('.requestMax').text('');
+    }
+}
+
 function getProviders() {
-    // Realiza la solicitud AJAX para obtener las áreas
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getProviderON.php',
@@ -138,10 +181,10 @@ function getProviders() {
         success: function (response) {
             console.log('Respuesta del servidor:', response);
 
-            // Rellena el formulario con los datos obtenidos
+
             $('select[name="provider"]').val(response.business_name);
 
-            // Llama a la función para llenar el select con las áreas
+
             fillSelect('provider',response, 'proveedor');
         },
         error: function (error) {
@@ -150,19 +193,16 @@ function getProviders() {
     });
 }
 
-// Función para llenar el select con las áreas
 function fillSelect(select, datas, message) {
     var selectOption = $('#' + select);
 
-    // Limpia el select antes de agregar nuevas opciones
     selectOption.empty();
 
     var option = $('<option>').val('').text('Seleccionar ' + message);
     selectOption.append(option);
 
-    // Agrega una opción por cada área recibida
     datas.forEach(function (data) {
-        // Accede a las propiedades utilizando la notación de corchetes
+
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
     });

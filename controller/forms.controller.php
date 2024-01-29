@@ -79,6 +79,11 @@ class FormsController {
     	return $getArea;
 	}
 
+	static public function ctrGetAuthorizedAmount($register){
+		$getAuthorizedAmount = FormsModels::mdlGetAuthorizedAmount($register);
+    	return $getAuthorizedAmount;
+	}
+
 	static public function ctrGetProviders(){
 		$getProvider = FormsModels::mdlGetProviders();
     	return $getProvider;

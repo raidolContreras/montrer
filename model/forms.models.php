@@ -1045,18 +1045,34 @@ class FormsModels {
 		return $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
-	 }
-	
+	}
 	
 	static public function mdlGetAreaManager($idUser){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_area WHERE idUser = :idUser AND status = 1";
+		$sql = "SELECT a.idArea, a.nameArea, b.AuthorizedAmount FROM montrer_exercise e
+				LEFT JOIN montrer_budgets b ON b.idExercise = e.idExercise
+				LEFT JOIN montrer_area a ON a.idArea = b.idArea
+				WHERE b.status = 1 AND a.idUser = :idUser";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
-	 }
+	}
+	
+	static public function mdlGetAuthorizedAmount($idArea){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT b.AuthorizedAmount FROM montrer_budgets b
+				LEFT JOIN montrer_area a ON a.idArea = b.idArea
+				LEFT JOIN montrer_exercise e ON e.status = 1
+				WHERE a.idArea = :idArea";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+	}
 	
 }
