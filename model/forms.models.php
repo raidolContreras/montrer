@@ -892,6 +892,16 @@ class FormsModels {
 	   $stmt = null;
 	}
 
+	static public function mdlGetProviderON(){
+	   $pdo = Conexion::conectar();
+	   $sql = "SELECT idProvider, CONCAT(representative_name,'(',provider_key,')') FROM montrer_providers WHERE status = 1;";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->execute();
+	   return $stmt->fetchAll();
+	   $stmt->closeCursor();
+	   $stmt = null;
+	}
+
 	static public function mdlRegisterProvider($data){
 		$pdo = Conexion::conectar();
 		$sql = "INSERT INTO montrer_providers 
@@ -1033,6 +1043,18 @@ class FormsModels {
 		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+	 }
+	
+	
+	static public function mdlGetAreaManager($idUser){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_area WHERE idUser = :idUser AND status = 1";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
 	 }

@@ -1,51 +1,47 @@
 <!-- Start Main Content Area -->
-<main class="main-content-wrap">
+	<main class="main-content-wrap">
+		<div class="col-xl-12">
+			<div class="total-browse-content card-box-style single-features">
+				<div class="main-title d-flex justify-content-between align-items-center">
+					<h3>Lista de solicitudes</h3>
+					<a class="btn btn-primary" href="registerRequestBudget">Nueva solicitud</a>
+				</div>
 
-    <div class="card-box-style">
-        <div class="others-title">
-            <h3>Solicitud de Presupuesto</h3>
-        </div>
+				<table class="table table-responsive" id="requests">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Solicitud</th>
+							<th>Presupuesto solicitado</th>
+							<th width="30%"></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
 
-        <form class="account-wrap" id="budgetRequestForm">
-            <div class="row">
+	</main>
+	<!-- End Main Content Area -->
+</div>
 
-                <!-- Sección de Solicitud de Presupuesto -->
-                <div class="col-12 mt-4">
-                    <h4>Solicitud de Presupuesto</h4>
-                </div>
-
-                <input type="hidden" class="form-control" id="idBudget" name="idBudget" >
-
-                <div class="col-md-6">
-                    <label for="idArea" class="form-label">ID del Área</label>
-                    <input type="text" class="form-control" id="idArea" name="idArea" readonly>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="idProvider" class="form-label">ID del Proveedor</label>
-                    <input type="text" class="form-control" id="idProvider" name="idProvider">
-                </div>
-
-                <div class="col-md-6">
-                    <label for="requestedAmount" class="form-label">Monto Solicitado ($)</label>
-                    <input type="number" class="form-control" id="requestedAmount" name="requestedAmount"> 
-                </div>
-
-                <div class="col-md-12">
-                    <label for="description" class="form-label">Descripción</label>
-                    <textarea class="form-control" id="description" name="description"></textarea>
-                </div>
-
-                <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-success">Enviar Solicitud</button>
-                    <a class="btn btn-danger" id="cancelButton">Cancelar</a>
-                </div>
+<!-- delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Eliminar solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </form>
+            <div class="modal-body">
+              <p>¿Está seguro de que desea eliminar de forma permanente al solicitud <strong id="deleteRequestName"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+            </div>
+        </div>
     </div>
+</div>
 
-</main>
-<!-- End Main Content Area -->
-<script src="assets/js/ajax-js/add-budget-request.js"></script>
-<script src="assets/js/ajax-js/get-nextIdBudgetRequest.js"></script>
+<script src="assets/js/ajax-js/get-requests.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>

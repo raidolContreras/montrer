@@ -23,6 +23,7 @@
 		'registerProvider',
 		'editProvider',
 		'requestBudget',
+		'registerRequestBudget',
 	];
 
 

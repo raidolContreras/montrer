@@ -45,6 +45,16 @@ $(document).ready(function () {
                         Swal.fire({
                             icon: "success",
                             title: 'Presupuesto asignado correctamente.',
+                            text: '¿Agregar otro presupuesto?',
+                            showCancelButton: true,
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonColor: '#d33',
+                            cancelButtonText: 'Sí',
+                            confirmButtonText: 'No, salir'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = 'budgets';
+                            }
                         });
                     } else if (response === 'Error: Presupuesto ya asignado') {
                         Swal.fire({

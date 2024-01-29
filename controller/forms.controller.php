@@ -74,8 +74,18 @@ class FormsController {
     	return $getArea;
 	}
 
+	static public function ctrGetAreaManager($register){
+		$getArea = FormsModels::mdlGetAreaManager($register);
+    	return $getArea;
+	}
+
 	static public function ctrGetProviders(){
 		$getProvider = FormsModels::mdlGetProviders();
+    	return $getProvider;
+	}
+
+	static public function ctrGetProviderON(){
+		$getProvider = FormsModels::mdlGetProviderON();
     	return $getProvider;
 	}
 

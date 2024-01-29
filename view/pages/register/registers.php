@@ -1,9 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/es.js"></script>
 <?php if ($_SESSION['level']  == 1):?>
-<?php
-    $areas = FormsController::ctrGetAreas();
-?>
 <!-- Start Main Content Area -->
 	<main class="main-content-wrap">
 		<div class="col-xl-12">

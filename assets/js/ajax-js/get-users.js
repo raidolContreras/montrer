@@ -21,7 +21,7 @@ $(document).ready(function () {
             },
             { data: 'email' },
             {
-                data: 'nameUser',
+                data: 'nameArea',
                 render: function(data) {
                     if (data == null) {
                         return 'Sin departamento asignado';
