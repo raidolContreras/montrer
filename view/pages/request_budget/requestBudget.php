@@ -14,10 +14,7 @@
                     <h4>Solicitud de Presupuesto</h4>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="idBudget" class="form-label">ID del Presupuesto</label>
-                    <input type="text" class="form-control" id="idBudget" name="idBudget" readonly>
-                </div>
+                <input type="hidden" class="form-control" id="idBudget" name="idBudget" >
 
                 <div class="col-md-6">
                     <label for="idArea" class="form-label">ID del Área</label>
@@ -31,7 +28,7 @@
 
                 <div class="col-md-6">
                     <label for="requestedAmount" class="form-label">Monto Solicitado ($)</label>
-                    <input type="number" class="form-control" id="requestedAmount" name="requestedAmount">
+                    <input type="number" class="form-control" id="requestedAmount" name="requestedAmount"> 
                 </div>
 
                 <div class="col-md-12">
