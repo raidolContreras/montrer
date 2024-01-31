@@ -24,7 +24,7 @@ $(document).ready(function () {
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
-			  text: 'Por favor, complete correctamente todos los campos obligatorios ()',
+			  text: 'Por favor, complete correctamente todos los campos obligatorios (departamento, proveedor, y presupuesto solicitado)',
 			  icon: "warning"
 			});
 		} else {
@@ -179,7 +179,7 @@ function getProviders() {
         url: 'controller/ajax/getProviderON.php',
         dataType: 'json',
         success: function (response) {
-            console.log('Respuesta del servidor:', response);
+            console.log('Respuesta del servidor: ', response);
 
 
             $('select[name="provider"]').val(response.business_name);
