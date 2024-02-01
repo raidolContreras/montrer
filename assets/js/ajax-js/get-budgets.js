@@ -17,7 +17,13 @@ $(document).ready(function () {
 			dataSrc: ''
 		},
 		columns: [
-			{ data: 'idBudget' },
+            { 
+                data: null,
+                    render: function (data, type, row, meta) {
+                    // Utilizando el contador proporcionado por DataTables
+                    return meta.row + 1;
+                }
+            },
 			{ data: 'nameArea' },
 			{
 				data: 'AuthorizedAmount',
@@ -31,6 +37,21 @@ $(document).ready(function () {
 						return formattedBudget;
 					}
 					return data;
+				}
+			},
+			{ data: null,
+				render: function () {
+					return '0';
+				}
+			},
+			{ data: null,
+				render: function () {
+					return '0';
+				}
+			},
+			{ data: null,
+				render: function () {
+					return '0';
 				}
 			},
 			{ data: 'exerciseName' },

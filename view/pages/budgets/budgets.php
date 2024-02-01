@@ -14,6 +14,9 @@
 							<th>#</th>
 							<th>Departamento</th>
 							<th>Presupuesto autorizado</th>
+							<th>Presupuesto solicitado</th>
+							<th>Presupuesto comprobado</th>
+							<th>Presupuesto sin comprobar</th>
 							<th>Ejercicio</th>
 							<th width="25%"></th>
 						</tr>
