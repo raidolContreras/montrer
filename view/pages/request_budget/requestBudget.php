@@ -3,7 +3,7 @@
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
 				<div class="main-title d-flex justify-content-between align-items-center">
-					<h3>Lista de solicitudes</h3>
+					<h3>Solicitudes de presupuesto</h3>
 					<a class="btn btn-primary" href="registerRequestBudget">Nueva solicitud</a>
 				</div>
 
