@@ -28,15 +28,7 @@ $(document).ready(function () {
 				});
 
 			    if (response === 'ok') {
-					Swal.fire({
-					  icon: "success",
-					  title: 'Inicio de sesión exitoso',
-					  icon: "success"
-					}).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = 'inicio';
-                        }
-                    });
+                    window.location.href = 'inicio';
 			    }else if (response === 'status off') {
 					Swal.fire({
 						title: "Usuario deshabilitado",

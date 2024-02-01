@@ -181,11 +181,7 @@ function getProviders() {
         success: function (response) {
             console.log('Respuesta del servidor: ', response);
 
-
-            $('select[name="provider"]').val(response.business_name);
-
-
-            fillSelect('provider',response, 'proveedor');
+            fillSelect('provider', response, 'proveedor');
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);
@@ -202,26 +198,48 @@ function fillSelect(select, datas, message) {
     selectOption.append(option);
 
     datas.forEach(function (data) {
-
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
     });
+
+    if (message == 'proveedor'){
+        // Agregar el botón para agregar proveedor
+        var addProviderOption = $('<option>').val('addProvider').text('Agregar Proveedor');
+        selectOption.append(addProviderOption);
+
+        // Configurar el evento click para el botón
+        selectOption.change(function () {
+            if ($(this).val() === 'addProvider') {
+                openAddProviderModal();
+            }
+        });
+    }
+
+}
+
+function openAddProviderModal() {
+    $('#addProviderModal').modal('show');
 }
 
 function confirmExit(event, destination) {
     event.preventDefault();
-Swal.fire({
-    title: '¿Estás seguro?',
-    text: 'Si sales del formulario, perderás los cambios no guardados.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Sí, salir',
-    cancelButtonText: 'Cancelar'
-}).then((result) => {
-    if (result.isConfirmed) {
-        window.location.href = destination;
-    }
-});
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Si sales del formulario, perderás los cambios no guardados.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, salir',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = destination;
+        }
+    });
 }
+
+$(document).on('click', '.cancel-provider', function () {
+    $('#addProviderModal').modal('hide');
+    $('select[name="provider"]').val('');
+});
