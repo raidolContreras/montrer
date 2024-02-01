@@ -14,7 +14,7 @@
 						<a href="inicio">
 							<img src="assets/img/logo.png" alt="main-logo">
 						</a>
-						<h3>Iniciar sesión</h3>
+						<h3>Bienvenido</h3>
 					</div>
 
 					<form class="account-wrap">
