@@ -24,6 +24,7 @@
 		'editProvider',
 		'requestBudget',
 		'registerRequestBudget',
+		'solicitudSendBudget',
 	];
 
 

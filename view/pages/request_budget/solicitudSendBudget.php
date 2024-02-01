@@ -5,89 +5,121 @@
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
-
-    <div class="card-box-style">
+<div class="card-box-style">
         <div class="others-title">
-            <h3>Solicitud de Presupuesto</h3>
+            <h3>Justificación de Presupuesto</h3>
         </div>
-
-        <form class="account-wrap" id="budgetRequestForm">
+            <form id="budgetRequestForm">
             <div class="row">
 
-            <label for="adeudos">TIENE ADEUDOS POR COMPROBAR CON MAS DE 8 DIAS</label>
-        <input type="radio" name="adeudos" value="SI"> SI
-        <input type="radio" name="adeudos" value="NO"> NO
+                <!-- Agregar los campos del formulario aquí -->
 
-        <label for="nombreCompleto">Nombre completo solicitante</label>
-        <input type="text" name="nombreCompleto" required>
+                <div class="mb-3 form-check">
+                    <input type="radio" class="form-check-input" name="adeudos" id="adeudosSI" value="SI">
+                    <label class="form-check-label" for="adeudosSI">TIENE ADEUDOS POR COMPROBAR CON MAS DE 8 DIAS</label>
+                </div>
 
-        <label for="fechaSolicitud">Fecha de solicitud</label>
-        <input type="date" name="fechaSolicitud" required>
+                <div class="mb-3">
+                    <label for="nombreCompleto" class="form-label">Nombre completo solicitante</label>
+                    <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" required>
+                </div>
 
-        <label for="folioSolicitud">Folio de solicitud</label>
-        <input type="text" name="folioSolicitud" required>
+                <div class="mb-3">
+                    <label for="fechaSolicitud" class="form-label">Fecha de solicitud</label>
+                    <input type="date" class="form-control" id="fechaSolicitud" name="fechaSolicitud" required>
+                </div>
 
-        <!-- Agrega más campos según tus necesidades -->
+                <!-- Agregar más campos según tus necesidades -->
 
-        <label for="proveedor">PROVEEDOR</label>
-        <select name="proveedor">
-            <!-- Opciones de proveedores -->
-        </select>
+                <div class="mb-3">
+                    <label for="proveedor" class="form-label">PROVEEDOR</label>
+                    <select class="form-select" id="proveedor" name="proveedor">
+                        <!-- Opciones de proveedores -->
+                    </select>
+                </div>
 
-        <label for="areaCargo">AREA DE CARGO</label>
-        <select name="areaCargo">
-            <!-- Opciones de departamentos -->
-        </select>
+                <div class="mb-3">
+                    <label for="areaCargo" class="form-label">AREA DE CARGO</label>
+                    <select class="form-select" id="areaCargo" name="areaCargo">
+                        <!-- Opciones de departamentos -->
+                    </select>
+                </div>
 
-        <!-- Agrega más campos según tus necesidades -->
+                <!-- Agregar más campos según tus necesidades -->
 
-        <label for="importeSolicitado">IMPORTE SOLICITADO</label>
-        <input type="text" name="importeSolicitado" required>
+                <div class="mb-3">
+                    <label for="importeSolicitado" class="form-label">IMPORTE SOLICITADO</label>
+                    <input type="text" class="form-control" id="importeSolicitado" name="importeSolicitado" required>
+                </div>
 
-        <label for="importeLetra">IMPORTE CON LETRA</label>
-        <input type="text" name="importeLetra" required>
+                <div class="mb-3">
+                    <label for="importeLetra" class="form-label">IMPORTE CON LETRA</label>
+                    <input type="text" class="form-control" id="importeLetra" name="importeLetra" required>
+                </div>
 
-        <!-- Agrega más campos según tus necesidades -->
+                <!-- Agregar más campos según tus necesidades -->
 
-        <label for="formaPago">PAGO CON:</label>
-        <input type="checkbox" name="cheque"> CHEQUE
-        <input type="checkbox" name="transferencia"> TRANSFERENCIA
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="cheque" name="cheque">
+                    <label class="form-check-label" for="cheque">CHEQUE</label>
+                </div>
 
-        <label for="chequeNombre">CHEQUE A NOMBRE DE</label>
-        <input type="text" name="chequeNombre">
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="transferencia" name="transferencia">
+                    <label class="form-check-label" for="transferencia">TRANSFERENCIA</label>
+                </div>
 
-        <label for="titularCuenta">TITULAR DE LA CUENTA</label>
-        <input type="text" name="titularCuenta">
+                <div class="mb-3">
+                    <label for="chequeNombre" class="form-label">CHEQUE A NOMBRE DE</label>
+                    <input type="text" class="form-control" id="chequeNombre" name="chequeNombre">
+                </div>
 
-        <label for="entidadBancaria">ENTIDAD BANCARIA</label>
-        <input type="text" name="entidadBancaria">
+                <div class="mb-3">
+                    <label for="titularCuenta" class="form-label">TITULAR DE LA CUENTA</label>
+                    <input type="text" class="form-control" id="titularCuenta" name="titularCuenta">
+                </div>
 
-        <!-- Agrega más campos según tus necesidades -->
+                <div class="mb-3">
+                    <label for="entidadBancaria" class="form-label">ENTIDAD BANCARIA</label>
+                    <input type="text" class="form-control" id="entidadBancaria" name="entidadBancaria">
+                </div>
 
-        <label for="conceptoPago">CONCEPTO DEL PAGO</label>
-        <input type="text" name="conceptoPago">
+                <!-- Agregar más campos según tus necesidades -->
 
-        <label for="anexaComprobante">ANEXA COMPROBANTE FISCAL</label>
-        <input type="radio" name="anexaComprobante" value="SI"> SI
-        <input type="radio" name="anexaComprobante" value="NO"> NO
+                <div class="mb-3">
+                    <label for="conceptoPago" class="form-label">CONCEPTO DEL PAGO</label>
+                    <input type="text" class="form-control" id="conceptoPago" name="conceptoPago">
+                </div>
 
-        <!-- Agrega más campos según tus necesidades -->
+                <div class="mb-3 form-check">
+                    <input type="radio" class="form-check-input" id="anexaComprobanteSI" name="anexaComprobante" value="SI">
+                    <label class="form-check-label" for="anexaComprobanteSI">ANEXA COMPROBANTE FISCAL</label>
+                </div>
 
-        <label for="enviarSolicitud">ENVIAR SOLICITUD:</label>
-        <select name="enviarSolicitud">
-            <option value="SE ENVIO">SE ENVIO</option>
-            <option value="NO ENVIADO">NO ENVIADO</option>
-        </select>
+                <div class="mb-3">
+                    <label for="enviarSolicitud" class="form-label">ENVIAR SOLICITUD:</label>
+                    <select class="form-select" id="enviarSolicitud" name="enviarSolicitud">
+                        <option value="SE ENVIO">SE ENVIO</option>
+                        <option value="NO ENVIADO">NO ENVIADO</option>
+                    </select>
+                </div>
 
-        <label for="fechaEnvio">FECHA DE ENVIO</label>
-        <input type="date" name="fechaEnvio">
+                <div class="mb-3">
+                    <label for="fechaEnvio" class="form-label">FECHA DE ENVIO</label>
+                    <input type="date" class="form-control" id="fechaEnvio" name="fechaEnvio">
+                </div>
 
-        <label for="folioConfirmacion">FOLIO DE CONFIRMACION DE ENVIO DE LA SOLICITUD</label>
-        <input type="text" name="folioConfirmacion">
+                <div class="mb-3">
+                    <label for="folioConfirmacion" class="form-label">FOLIO DE CONFIRMACION DE ENVIO DE LA SOLICITUD</label>
+                    <input type="text" class="form-control" id="folioConfirmacion" name="folioConfirmacion">
+                </div>
 
-        <input type="submit" value="Enviar Solicitud">
+                <div class="col-12 mt-2 text-end">
+                    <button type="submit" class="btn btn-success">Enviar solicitud</button>
+                    <a class="btn btn-danger" id="cancelButton">Cancelar</a>
+                </div>
             </div>
-        </form>
+            </form>
     </div>
 
 </main>
