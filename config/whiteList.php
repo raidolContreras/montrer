@@ -49,7 +49,7 @@
 			include "view/pages/budgets/$pagina.php";
 		} elseif ($pagina == 'provider' || $pagina == 'registerProvider' || $pagina == 'editProvider') {
 			include "view/pages/provider/$pagina.php";
-		} elseif ($pagina == 'requestBudget' || $pagina == 'registerRequestBudget' || $pagina == 'editRequestBudget') {
+		} elseif ($pagina == 'requestBudget' || $pagina == 'registerRequestBudget' || $pagina == 'editRequestBudget' || $pagina == 'solicitudSendBudget') {
 			include "view/pages/request_budget/$pagina.php";
 		} else {
 			include "view/pages/404.php";
