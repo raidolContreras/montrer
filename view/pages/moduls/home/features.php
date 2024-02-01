@@ -21,7 +21,7 @@
 
 				<div class="col-lg-4 col-md-6">
 					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Asignación de presupuestos">
-					<div class="single-features color-style-1765fd">
+					<div class="single-features">
 						<div class="row align-items-center">
 							<div class="col-xl-12">
 								<div class="single-click-content">

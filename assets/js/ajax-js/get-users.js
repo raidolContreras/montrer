@@ -157,7 +157,7 @@ $(document).ready(function () {
         if (response === 'ok') {
             Swal.fire({
                 icon: "success",
-                title: `Departamento ${successMessage} con éxito`
+                title: `usuario ${successMessage} con éxito`
             }).then((result) => {
                 if (result.isConfirmed) {
                     location.reload();
@@ -167,7 +167,7 @@ $(document).ready(function () {
             Swal.fire({
                 icon: "error",
                 title: 'Error',
-                text: `No se pudo ${actionType.toLowerCase()} el departamento`
+                text: `No se pudo ${actionType.toLowerCase()} el usuario`
             });
         }
     }
@@ -175,20 +175,6 @@ $(document).ready(function () {
     showModalAndSetData('disableModal', 'disableUserName', 'confirmDisable', 'disable', 'deshabilitado');
     showModalAndSetData('enableModal', 'enableUserName', 'confirmEnable', 'enable', 'habilitado');
     showModalAndSetData('deleteModal', 'deleteUserName', 'confirmDelete', 'delete', 'eliminado');
-
-    function showModalAndSetData(modalId, nameId, confirmButtonId, action) {
-        $('#registers').on('click', `.${action}-button`, function () {
-            var idUser = $(this).data('id');
-            var userName = $(this).closest('tr').find('td:eq(1)').text();
-    
-            $(`#${nameId}`).text(userName);
-            $(`#${modalId}`).modal('show');
-    
-            $(`#${confirmButtonId}`).off('click').on('click', function () {
-                handlePasswordChange(idUser);
-            });
-        });
-    }
     
     function handlePasswordChange(idUser) {
         var newPassword = $("input[name='newPassword']").val();
@@ -218,6 +204,20 @@ $(document).ready(function () {
         });
     }
     
+    function showModalPass(modalId, nameId, confirmButtonId, action) {
+        $('#registers').on('click', `.${action}-button`, function () {
+            var idUser = $(this).data('id');
+            var userName = $(this).closest('tr').find('td:eq(1)').text();
+    
+            $(`#${nameId}`).text(userName);
+            $(`#${modalId}`).modal('show');
+    
+            $(`#${confirmButtonId}`).off('click').on('click', function () {
+                handlePasswordChange(idUser);
+            });
+        });
+    }
+    
     function showError(message) {
         Swal.fire({
             icon: 'error',
@@ -241,7 +241,7 @@ $(document).ready(function () {
         }
     }
     
-    showModalAndSetData('changePasswordModal', 'changePasswordUserName', 'confirmChangePassword', 'change-password');
+    showModalPass('changePasswordModal', 'changePasswordUserName', 'confirmChangePassword', 'change-password');
     
     
 });
