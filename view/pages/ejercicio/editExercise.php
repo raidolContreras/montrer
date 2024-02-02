@@ -18,19 +18,19 @@
         <form class="account-wrap" id="companyForm">
             <div class="row">
                 <div class="col-md-6">
-                    <label for="exerciseName" class="form-label">Nombre del ejercicio</label>
+                    <label for="exerciseName" class="form-label">Nombre del ejercicio<span class="required"></span></label>
                     <input type="text" class="form-control" id="exerciseName" name="exerciseName" placeholder="Nombre del ejercicio">
                 </div>
                 <div class="col-md-6">
-                    <label for="initialDate" class="form-label">Fecha de inicio del ejercicio</label>
+                    <label for="initialDate" class="form-label">Fecha de inicio del ejercicio<span class="required"></span></label>
                     <input type="date" class="form-control" id="initialDate" name="initialDate">
                 </div>
                 <div class="col-md-6">
-                    <label for="finalDate" class="form-label">Fecha de cierre del ejercicio</label>
+                    <label for="finalDate" class="form-label">Fecha de cierre del ejercicio<span class="required"></span></label>
                     <input type="date" class="form-control" id="finalDate" name="finalDate">
                 </div>
                 <div class="col-md-6">
-                    <label for="budget" class="form-label">Presupuesto del ejercicio</label>
+                    <label for="budget" class="form-label">Presupuesto del ejercicio<span class="required"></span></label>
                     <div class="input-group">
                         <input type="text" class="form-control inputmask" id="budget" name="budget" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                     </div>

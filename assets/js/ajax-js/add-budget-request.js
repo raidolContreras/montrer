@@ -24,8 +24,9 @@ $(document).ready(function () {
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
-			  text: 'Por favor, complete correctamente todos los campos obligatorios (departamento, proveedor, y presupuesto solicitado)',
-			  icon: "warning"
+			  text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
+              confirmButtonColor: '#026f35',
+              confirmButtonText: 'Aceptar'
 			});
 		} else {
 
@@ -51,13 +52,15 @@ $(document).ready(function () {
 						Swal.fire({
 						  icon: "success",
 						  title: 'Solicitud creada con exito',
-						  icon: "success"
+                          confirmButtonColor: '#026f35',
+                          confirmButtonText: 'Aceptar'
 						});
 					} else {
 						Swal.fire({
 						  icon: 'error',
 						  title: 'Error al crear la solicitud',
-						  icon: "error"
+                          confirmButtonColor: '#026f35',
+                          confirmButtonText: 'Aceptar'
 						});
 					}
 				},
@@ -81,8 +84,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			title: '¿Seguro que deseas cancelar?',
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Sí, cancelar',
-			cancelButtonText: 'No, seguir aquí',
+			cancelButtonColor: '#d33',
+			confirmButtonColor: '#026f35',
+			cancelButtonText: 'Cancelar',
+			confirmButtonText: 'Aceptar',
+			reverseButtons: true,
 		}).then((result) => {
 			if (result.isConfirmed) {
 				window.location.href = "requestBudget";
@@ -228,10 +234,11 @@ function confirmExit(event, destination) {
         text: 'Si sales del formulario, perderás los cambios no guardados.',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#026f35',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, salir',
-        cancelButtonText: 'Cancelar'
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = destination;

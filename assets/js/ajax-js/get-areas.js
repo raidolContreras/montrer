@@ -132,7 +132,9 @@ $(document).ready(function () {
         if (response === 'ok') {
             Swal.fire({
                 icon: "success",
-                title: `Departamento ${successMessage} con éxito`
+                title: `Departamento ${successMessage} con éxito`,
+                confirmButtonColor: '#026f35',
+                confirmButtonText: 'Aceptar'
             }).then((result) => {
                 if (result.isConfirmed) {
                     location.reload();
@@ -142,7 +144,9 @@ $(document).ready(function () {
             Swal.fire({
                 icon: "error",
                 title: 'Error',
-                text: `No se pudo ${actionType.toLowerCase()} el departamento`
+                text: `No se pudo ${actionType.toLowerCase()} el departamento`,
+                confirmButtonColor: '#026f35',
+                confirmButtonText: 'Aceptar'
             });
         }
     }

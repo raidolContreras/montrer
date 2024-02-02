@@ -124,7 +124,7 @@ $(document).ready(function () {
         }
     }
     
-    function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, successMessage) {
+    function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, successMessage, errorMessage) {
         $('#registers').on('click', `.${actionType}-button`, function () {
             var idUser = $(this).data('id');
             var UserName = $(this).closest('tr').find('td:eq(1)').text();
@@ -143,7 +143,7 @@ $(document).ready(function () {
                 url: 'controller/ajax/ajax.form.php',
                 data: { [`${actionType}User`]: idUser },
                 success: function (response) {
-                    handleResponse(response, actionType, successMessage);
+                    handleResponse(response, successMessage, errorMessage);
                 },
                 complete: function () {
                     idUser = 0;
@@ -153,11 +153,13 @@ $(document).ready(function () {
         });
     }
     
-    function handleResponse(response, actionType, successMessage) {
+    function handleResponse(response, successMessage, errorMessage) {
         if (response === 'ok') {
             Swal.fire({
                 icon: "success",
-                title: `usuario ${successMessage} con éxito`
+                title: successMessage,
+                confirmButtonColor: '#026f35',
+                confirmButtonText: 'Aceptar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     location.reload();
@@ -167,14 +169,16 @@ $(document).ready(function () {
             Swal.fire({
                 icon: "error",
                 title: 'Error',
-                text: `No se pudo ${actionType.toLowerCase()} el usuario`
+                text: `No se pudo ${errorMessage.toLowerCase()} el usuario`,
+                confirmButtonColor: '#026f35',
+                confirmButtonText: 'Aceptar',
             });
         }
     }
     
-    showModalAndSetData('disableModal', 'disableUserName', 'confirmDisable', 'disable', 'deshabilitado');
-    showModalAndSetData('enableModal', 'enableUserName', 'confirmEnable', 'enable', 'habilitado');
-    showModalAndSetData('deleteModal', 'deleteUserName', 'confirmDelete', 'delete', 'eliminado');
+    showModalAndSetData('disableModal', 'disableUserName', 'confirmDisable', 'disable', 'Usuario deshabilitado con éxito', 'deshabilitar');
+    showModalAndSetData('enableModal', 'enableUserName', 'confirmEnable', 'enable', 'Usuario habilitado con éxito', 'habilitar');
+    showModalAndSetData('deleteModal', 'deleteUserName', 'confirmDelete', 'delete', 'Usuario eliminado con éxito', 'eliminar');
     
     function handlePasswordChange(idUser) {
         var newPassword = $("input[name='newPassword']").val();
@@ -223,6 +227,8 @@ $(document).ready(function () {
             icon: 'error',
             title: 'Error',
             text: message,
+            confirmButtonColor: '#026f35',
+            confirmButtonText: 'Aceptar',
         });
     }
     
@@ -230,7 +236,9 @@ $(document).ready(function () {
         if (response === 'ok') {
             Swal.fire({
                 icon: "success",
-                title: successMessage
+                title: successMessage,
+                confirmButtonColor: '#026f35',
+                confirmButtonText: 'Aceptar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     location.reload();

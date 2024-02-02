@@ -144,7 +144,9 @@ $(document).ready(function () {
                 if (response === 'ok') {
                     Swal.fire({
                         icon: "success",
-                        title: 'Proveedor deshabilitado con éxito'
+                        title: 'Proveedor deshabilitado con éxito',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             location.reload();
@@ -155,7 +157,9 @@ $(document).ready(function () {
                     Swal.fire({
                         icon: "error",
                         title: 'Error',
-                        text: 'No se pudo deshabilitar el proveedor'
+                        text: 'No se pudo deshabilitar el proveedor',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     });
                 }
             },
@@ -194,7 +198,9 @@ $(document).ready(function () {
                 if (response === 'ok') {
                     Swal.fire({
                         icon: "success",
-                        title: 'Proveedor deshabilitado con éxito'
+                        title: 'Proveedor deshabilitado con éxito',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             location.reload();
@@ -205,7 +211,9 @@ $(document).ready(function () {
                     Swal.fire({
                         icon: "error",
                         title: 'Error',
-                        text: 'No se pudo deshabilitar el proveedor'
+                        text: 'No se pudo deshabilitar el proveedor',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     });
                 }
             },
@@ -245,7 +253,9 @@ $(document).ready(function () {
                 if (response === 'ok') {
                     Swal.fire({
                         icon: "success",
-                        title: 'Proveedor deshabilitado con éxito'
+                        title: 'Proveedor deshabilitado con éxito',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             location.reload();
@@ -256,7 +266,9 @@ $(document).ready(function () {
                     Swal.fire({
                         icon: "error",
                         title: 'Error',
-                        text: 'No se pudo deshabilitar el proveedor'
+                        text: 'No se pudo deshabilitar el proveedor',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     });
                 }
             },

@@ -64,7 +64,8 @@ $(document).ready(function () {
 					Swal.fire({
                         icon: "success",
                         title: 'Empresa '+companyName+' creada exitosamente',
-                        icon: "success"
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     });
 
                     idCompany = response;
@@ -88,7 +89,8 @@ $(document).ready(function () {
 					Swal.fire({
 			          icon: 'error',
 					  title: response,
-					  icon: "error"
+                      confirmButtonColor: '#026f35',
+                      confirmButtonText: 'Aceptar'
 					});
                 }
             },

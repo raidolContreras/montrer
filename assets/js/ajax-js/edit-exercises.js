@@ -27,7 +27,9 @@ $(document).ready(function () {
 			Swal.fire({
 				icon: 'warning',
 				title: 'Advertencia',
-				text: 'Por favor, complete correctamente todos los campos obligatorios (nombre del ejercicio, fecha de inicio, fecha de cierre, presupuesto)',
+				text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
+				confirmButtonColor: '#026f35',
+				confirmButtonText: 'Aceptar'
 			});
 		} else {
 			// Realiza la solicitud Ajax
@@ -48,7 +50,8 @@ $(document).ready(function () {
 						Swal.fire({
 						  icon: "success",
 						  title: 'Ejercicio actualizado exitosamente',
-						  icon: "success"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						});
 						setTimeout(function () {
 							window.location.href = 'exercise';
@@ -57,7 +60,8 @@ $(document).ready(function () {
 						Swal.fire({
 						  icon: 'error',
 						  title: 'Error al crear el ejercicio',
-						  icon: "error"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						});
 					}
 				},
@@ -84,8 +88,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			title: '¿Seguro que deseas cancelar?',
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Sí, cancelar',
-			cancelButtonText: 'No, seguir aquí',
+			cancelButtonColor: '#d33',
+			confirmButtonColor: '#026f35',
+			cancelButtonText: 'Cancelar',
+			confirmButtonText: 'Aceptar',
+			reverseButtons: true,
 		}).then((result) => {
 			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
 			if (result.isConfirmed) {
@@ -103,10 +110,11 @@ function confirmExit(event, destination) {
 		text: 'Si sales del formulario, perderás los cambios no guardados.',
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
+		confirmButtonColor: '#026f35',
 		cancelButtonColor: '#d33',
-		confirmButtonText: 'Sí, salir',
-		cancelButtonText: 'Cancelar'
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
 	}).then((result) => {
 		if (result.isConfirmed) {
 			window.location.href = destination;

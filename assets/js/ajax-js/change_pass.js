@@ -14,6 +14,8 @@ $(document).ready(function () {
                 icon: 'error',
                 title: 'Error',
                 text: 'La nueva contraseña y la confirmación no coinciden.',
+                confirmButtonColor: '#026f35',
+                confirmButtonText: 'Aceptar'
             });
             return;
         }
@@ -28,6 +30,8 @@ $(document).ready(function () {
                 icon: 'error',
                 title: 'Error',
                 text: 'La contraseña debe contener 10 caracteres, de los cuáles obligatoriamente: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo.',
+                confirmButtonColor: '#026f35',
+                confirmButtonText: 'Aceptar'
             });
             return;
         }
@@ -48,18 +52,24 @@ $(document).ready(function () {
                         icon: 'error',
                         title: 'Error',
                         text: 'Error al actualizar la contraseña.',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     });
                 } else if (response === "Error: Password") {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         text: 'La contraseña actual no es correcta.',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     });
                 } else {
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
                         text: 'Contraseña actualizada correctamente.',
+                        confirmButtonColor: '#026f35',
+                        confirmButtonText: 'Aceptar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location.href = 'inicio'; // Redirige al inicio

@@ -18,20 +18,20 @@
         <form class="account-wrap" id="companyForm">
             <div class="row">
                 <div class="col-md-6">
-                    <label for="area" class="form-label">Departamentos registrados</label>
+                    <label for="area" class="form-label">Departamentos registrados<span class="required"></span></label>
                     <select name="area" id="area" class="form-select form-control">
                     </select>
                 </div>
                 
                 <div class="col-3">
-                    <label for="AuthorizedAmount" class="form-label">Presupuesto asignado</label>
+                    <label for="AuthorizedAmount" class="form-label">Presupuesto asignado<span class="required"></span></label>
                     <div class="input-group">
                         <input type="text" name="AuthorizedAmount" id="AuthorizedAmount" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                     </div>
                 </div>
                 
                 <div class="col-md-3">
-                    <label for="exercise" class="form-label">Ejercicio</label>
+                    <label for="exercise" class="form-label">Ejercicio<span class="required"></span></label>
                     <select name="exercise" id="exercise" class="form-select form-control">
                     </select>
                 </div>

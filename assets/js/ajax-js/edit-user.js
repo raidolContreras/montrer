@@ -25,8 +25,10 @@ $(document).ready(function () {
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
-			  text: 'Por favor, complete correctamente todos los campos obligatorios (nombre(s), apellidos, email)',
-			  icon: "warning"
+			  text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
+			  confirmButtonText: 'Aceptar',
+			  cancelButtonText: 'Cancelar',
+			  reverseButtons: true,
 			});
 		} else {
 			// Realiza la solicitud Ajax
@@ -46,7 +48,8 @@ $(document).ready(function () {
 						Swal.fire({
 						  icon: "success",
 						  title: 'Datos del usuario actualizados exitosamente',
-						  icon: "success"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						}).then((result) => {
 							if (result.isConfirmed) {
 								window.location.href = "registers";
@@ -56,13 +59,15 @@ $(document).ready(function () {
 						Swal.fire({
 						  icon: 'error',
 						  title: response,
-						  icon: "error"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						});
 					} else {
 						Swal.fire({
 						  icon: 'error',
 						  title: 'Error al crear el usuario',
-						  icon: "error"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						});
 					}
 				},
@@ -89,8 +94,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			title: '¿Seguro que deseas cancelar?',
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Sí, cancelar',
-			cancelButtonText: 'No, seguir aquí',
+            confirmButtonColor: '#026f35',
+			confirmButtonText: 'Aceptar',
+			cancelButtonText: 'Cancelar',
+			reverseButtons: true,
 		}).then((result) => {
 			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
 			if (result.isConfirmed) {
@@ -108,10 +115,11 @@ function confirmExit(event, destination) {
 		text: 'Si sales del formulario, perderás los cambios no guardados.',
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
+		confirmButtonColor: '#026f35',
 		cancelButtonColor: '#d33',
-		confirmButtonText: 'Sí, salir',
-		cancelButtonText: 'Cancelar'
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
 	}).then((result) => {
 		if (result.isConfirmed) {
 			window.location.href = destination;

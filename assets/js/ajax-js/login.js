@@ -33,13 +33,17 @@ $(document).ready(function () {
 					Swal.fire({
 						title: "Usuario deshabilitado",
 						icon: "warning",
-						text: 'Comuníquese con el administrador de la plataforma, para cualquier aclalaración.',
+						text: 'Comuníquese con el administrador de la plataforma, para cualquier aclaración.',
+						confirmButtonColor: '#026f35',
+						confirmButtonText: 'Aceptar'
 					});
 			    }else {
 					Swal.fire({
 			          icon: 'error',
 					  title: 'Error al iniciar sesión, verifique su correo o contraseña',
-					  icon: "error"
+					  icon: "error",
+					  confirmButtonColor: '#026f35',
+					  confirmButtonText: 'Aceptar'
 					});
 			    }
 			},

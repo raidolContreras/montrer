@@ -76,7 +76,6 @@ if ($is_mobile) {
 <body class="body-bg-f8faff">
     <!-- Start Preloader Area -->
     <div class="preloader">
-        <img src="assets/img/logo.png" width="200px" alt="main-logo">
     </div>
     <!-- Start All Section Area -->
     <div class="all-section-area">

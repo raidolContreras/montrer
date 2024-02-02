@@ -25,8 +25,9 @@ $(document).ready(function () {
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
-			  text: 'Por favor, complete correctamente todos los campos obligatorios (Nombre(s), Apellidos, Email)',
-			  icon: "warning"
+			  text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
+              confirmButtonColor: '#026f35',
+              confirmButtonText: 'Aceptar'
 			});
 		} else {
 			// Realiza la solicitud Ajax
@@ -53,19 +54,22 @@ $(document).ready(function () {
 						  icon: "success",
 						  title: 'Usuario',
 						  text: response+' creado exitosamente',
-						  icon: "success"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						});
 					} else if (response === 'Error: Email duplicado') {
 						Swal.fire({
 						  icon: 'error',
 						  title: response,
-						  icon: "error"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						});
 					} else {
 						Swal.fire({
 						  icon: 'error',
 						  title: 'Error al crear el usuario',
-						  icon: "error"
+						  confirmButtonColor: '#026f35',
+						  confirmButtonText: 'Aceptar'
 						});
 					}
 				},
@@ -80,9 +84,11 @@ $(document).ready(function () {
 
 document.getElementById('questionBtn').addEventListener('click', function () {
 	Swal.fire({
-		icon: 'info',
+		icon: 'warning',
 		title: 'Seleccione el departamento',
-		text: 'Si el departamento no está listado, deje el campo vacío.'
+		text: 'Si el departamento no está listado, deje el campo vacío.',
+		confirmButtonColor: '#026f35',
+		confirmButtonText: 'Aceptar'
 	});
 });
 
@@ -101,8 +107,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			title: '¿Seguro que deseas cancelar?',
 			icon: 'warning',
 			showCancelButton: true,
-			confirmButtonText: 'Sí, cancelar',
-			cancelButtonText: 'No, seguir aquí',
+			cancelButtonColor: '#d33',
+			confirmButtonColor: '#026f35',
+			cancelButtonText: 'Cancelar',
+			confirmButtonText: 'Aceptar',
+			reverseButtons: true,
 		}).then((result) => {
 			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
 			if (result.isConfirmed) {
@@ -120,10 +129,11 @@ function confirmExit(event, destination) {
 		text: 'Si sales del formulario, perderás los cambios no guardados.',
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
-		confirmButtonText: 'Sí, salir',
-		cancelButtonText: 'Cancelar'
+		confirmButtonColor: '#026f35',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Aceptar',
+		reverseButtons: true,
 	}).then((result) => {
 		if (result.isConfirmed) {
 			window.location.href = destination;

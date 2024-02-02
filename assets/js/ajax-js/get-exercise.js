@@ -106,7 +106,9 @@ $(document).ready(function () {
 			success: function (response) {
 				Swal.fire({
 					icon: 'success',
-					title: 'Se cambio de ejercicio exitosamente',
+					title: 'Se activo de ejercicio exitosamente',
+					confirmButtonColor: '#026f35',
+					confirmButtonText: 'Aceptar'
 				}).then((result) => {
 					if (result.isConfirmed) {
 						location.reload();
@@ -235,7 +237,9 @@ function handleResponse(response, actionType, message) {
     if (response === 'ok') {
         Swal.fire({
             icon: "success",
-            title: `Ejercicio ${message} con éxito`
+            title: `Ejercicio ${message} con éxito`,
+			confirmButtonColor: '#026f35',
+			confirmButtonText: 'Aceptar'
         }).then((result) => {
             if (result.isConfirmed) {
                 location.reload();
@@ -245,7 +249,9 @@ function handleResponse(response, actionType, message) {
         Swal.fire({
             icon: "error",
             title: 'Error',
-            text: `No se pudo ${actionType.toLowerCase()} el ejercicio`
+            text: `No se pudo ${actionType.toLowerCase()} el ejercicio`,
+			confirmButtonColor: '#026f35',
+			confirmButtonText: 'Aceptar'
         });
     }
 }

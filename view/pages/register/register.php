@@ -19,15 +19,15 @@
 
 					<form class="account-wrap">
 						<div class="form-group mb-24 icon">
-							<input name="firstname" type="text" class="form-control" placeholder="Nombre(s)">
+							<input name="firstname" type="text" class="form-control" placeholder="Nombre(s) *">
 							<img src="assets/img/svg/user.svg">
 						</div>
 						<div class="form-group mb-24 icon">
-							<input name="lastname" type="text" class="form-control" placeholder="Apellidos">
+							<input name="lastname" type="text" class="form-control" placeholder="Apellidos *">
 							<img src="assets/img/svg/seconduser.svg">
 						</div>
 						<div class="form-group mb-24 icon">
-							<input name="email" type="email" class="form-control" placeholder="Email">
+							<input name="email" type="email" class="form-control" placeholder="Email *">
 							<img src="assets/img/svg/sms.svg">
 						</div>
 						<div class="form-group mb-24 icon">
@@ -39,7 +39,7 @@
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon3">
-								<button type="button" class="btn btn-primary btn-circle question-btn" id="questionBtn">?</button>
+								<button type="button" class="btn btn-danger btn-circle question-btn" id="questionBtn">!</button>
 							</span>
 							<select class="form-select form-control" name="area">
 								<option value="">Seleccione el departamento</option>

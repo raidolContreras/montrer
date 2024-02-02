@@ -167,7 +167,9 @@ function handleResponse(response, actionType, successMessage) {
     if (response === 'ok') {
         Swal.fire({
             icon: "success",
-            title: `Presupuesto ${successMessage} con éxito`
+            title: `Presupuesto ${successMessage} con éxito`,
+			confirmButtonColor: '#026f35',
+			confirmButtonText: 'Aceptar'
         }).then((result) => {
             if (result.isConfirmed) {
                 location.reload();
@@ -177,7 +179,9 @@ function handleResponse(response, actionType, successMessage) {
         Swal.fire({
             icon: "error",
             title: 'Error',
-            text: `No se pudo ${actionType.toLowerCase()} el presupuesto`
+            text: `No se pudo ${actionType.toLowerCase()} el presupuesto`,
+			confirmButtonColor: '#026f35',
+			confirmButtonText: 'Aceptar'
         });
     }
 }

@@ -41,7 +41,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="confirmDisable">Deshabilitar</button>
+        <button type="button" class="btn btn-warning" id="confirmDisable">Deshabilitar</button>
       </div>
     </div>
   </div>
@@ -60,7 +60,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmEnable">Habilitar</button>
+                <button type="button" class="btn btn-success" id="confirmEnable">Habilitar</button>
             </div>
         </div>
     </div>

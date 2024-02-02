@@ -20,7 +20,7 @@
         <form class="account-wrap" id="companyForm">
             <div class="row">
                 <div class="col-md-6">
-                    <label for="area" class="form-label">Departamento registrado</label>
+                    <label for="area" class="form-label">Departamento registrado<span class="required"></span></label>
                     <select name="area" id="area" class="form-select form-control">
                         <option value>Seleccione un departamento</option>
                         <?php foreach ($areas as $area): ?>
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="col-3">
-                    <label for="AuthorizedAmount" class="form-label">Presupuesto asignado</label>
+                    <label for="AuthorizedAmount" class="form-label">Presupuesto asignado<span class="required"></span></label>
                     <div class="input-group">
                         <input type="text" name="AuthorizedAmount" id="AuthorizedAmount" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                     </div>
@@ -40,7 +40,7 @@
 
                 
                 <div class="col-md-3">
-                    <label for="exercise" class="form-label">Ejercicio</label>
+                    <label for="exercise" class="form-label">Ejercicio<span class="required"></span></label>
                     <select name="exercise" id="exercise" class="form-select form-control" required>
                         <?php foreach ($exercises as $exercise): ?>
                             <?php if ($exercise['active'] == 1): ?>

@@ -20,7 +20,9 @@ $(document).ready(function () {
 
                 Toast.fire({
                     icon: 'error',
-                    title: 'No se ha activado ningún ejercicio'
+                    title: 'No se ha activado ningún ejercicio',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = 'exercise';
