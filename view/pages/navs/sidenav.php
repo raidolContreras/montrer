@@ -19,7 +19,7 @@
             ?>
             <li class="list-group-item main-grid <?php echo $activeRegisters; ?>">
                 <a href="registers" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Usuarios" onclick="confirmExit(event, 'registers')">
-                    <img src="assets/img/svg/profile-2user.svg" alt="calendar">
+                    <img src="assets/img/png/registers.png" width='25px' alt="calendar">
                 </a>
             </li>
             
@@ -29,7 +29,7 @@
             ?>
             <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
                 <a href="areas" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Departamentos" onclick="confirmExit(event, 'areas')">
-                    <img src="assets/img/svg/area.svg" alt="calendar">
+                <img src="assets/img/png/areas.png" width='25px' alt="calendar">
                 </a>
             </li>
 
@@ -39,7 +39,7 @@
             ?>
             <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
                 <a href="exercise" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Ejercicios" onclick="confirmExit(event, 'exercise')">
-                    <img src="assets/img/svg/exercise.svg" alt="calendar">
+                    <img src="assets/img/png/exercises.png" width='25px' alt="calendar">
                 </a>
             </li>
 
@@ -49,7 +49,7 @@
             ?>
             <li class="list-group-item main-grid <?php echo $activeBudget; ?>">
                 <a href="budgets" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Asignación de presupuestos" onclick="confirmExit(event, 'budgets')">
-                    <img src="assets/img/svg/budget.svg" alt="calendar">
+                    <img src="assets/img/png/budgets.png" width='25px' alt="calendar">
                 </a>
             </li>
         
@@ -61,7 +61,7 @@
         ?>
         <li class="list-group-item main-grid <?php echo $activeProvider; ?>">
             <a href="provider" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Proveedores" onclick="confirmExit(event, 'provider')">
-                <img src="assets/img/svg/provider.svg" alt="calendar">
+                <img src="assets/img/png/providers.png" width='25px' alt="calendar">
             </a>
         </li>
         
@@ -71,7 +71,7 @@
         ?>
         <li class="list-group-item main-grid <?php echo $activeRequest; ?>">
             <a href="requestBudget" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Solicitudes de presupuestos" onclick="confirmExit(event, 'requestBudget')">
-                <img src="assets/img/svg/request.svg" alt="calendar">
+                <img src="assets/img/png/justifyRequest.png" width='25px' alt="calendar">
             </a>
         </li>
         <?php 
@@ -80,7 +80,7 @@
         ?>
         <li class="list-group-item main-grid <?php echo $activeRequest; ?>">
             <a href="solicitudSendBudget" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Justificar de presupuestos" onclick="confirmExit(event, 'requestBudget')">
-                <img src="assets/img/svg/request.svg" alt="calendar">
+                <img src="assets/img/png/request.png" width='25px' alt="calendar">
             </a>
         </li>
     </ul>
