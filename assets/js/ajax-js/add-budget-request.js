@@ -5,7 +5,6 @@ $(document).ready(function () {
 
 		var idBudget = $("input[name='idBudget']").val();
 		var area = $("select[name='area']").val();
-		var provider = $("select[name='provider']").val();
 		var requestedAmount = $("input[name='requestedAmount']").val();
 		var description = $("input[name='description']").val();
 		
@@ -20,7 +19,7 @@ $(document).ready(function () {
 			}
 		  });
 
-		  if (area == '' || provider == '' || requestedAmount == ''){
+		  if (area == '' || requestedAmount == ''){
 			Swal.fire({
 			  icon: 'warning',
 			  title: 'Error',
@@ -46,7 +45,6 @@ $(document).ready(function () {
 						
 						$("input[name='idBudget']").val('');
 						$("select[name='area']").val('');
-						$("select[name='provider']").val('');
 						$("input[name='requestedAmount']").val('2');
 						$("input[name='description']").val('');
 						Swal.fire({
@@ -101,7 +99,7 @@ $(document).ready(function () {
     var registerValue = $('#register-value').data('register');
 
     getArea(registerValue);
-    getProviders();
+    // getProviders();
 
 });
 
@@ -131,13 +129,25 @@ function fillAreaSelect(select, datas, message) {
     var selectOption = $('#' + select);
 
     selectOption.empty();
-
-    var option = $('<option>').val('').text('Seleccionar ' + message);
-    selectOption.append(option);
-
+    var init = 1;
     datas.forEach(function (data) {
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
+        if (init == 1) {
+            $.ajax({
+                type: 'POST',
+                url: 'controller/ajax/getAuthorizedAmount.php',
+                data: { areaId: data[0] },
+                dataType: 'json',
+                success: function (response) {
+                    updateMaxRequestedAmount(response.AuthorizedAmount);
+                },
+                error: function (error) {
+                    console.log('Error en la solicitud AJAX:', error);
+                }
+            });
+            init = 0;
+        }
     });
 }
 
@@ -160,40 +170,46 @@ $('#area').on('change', function() {
 });
 
 function updateMaxRequestedAmount(authorizedAmount) {
-    var numberOfMonths = 12;
-    var maxRequestedAmount = authorizedAmount / numberOfMonths;
-
-    // Verifica si maxRequestedAmount es un número
-    if (!isNaN(maxRequestedAmount)) {
-        // Si es un número, habilita el campo de entrada y actualiza el texto de la etiqueta
-        $('#requestedAmount').prop('disabled', false);
-        var formattedBudget = parseFloat(maxRequestedAmount).toLocaleString('es-MX', {
-            style: 'currency',
-            currency: 'MXN'
-        });
-        $('.requestMax').text('Monto máximo disponible este mes: ' + formattedBudget);
+    if (!authorizedAmount) {
+        // Si authorizedAmount es falsy (undefined, null, 0, '', false), deshabilita el campo de entrada y reinicia los valores
+        $('#requestedAmount').prop('disabled', true);
+        $('#requestedAmount').val('');
+        $('.requestMax').text('En el presente ejercicio, no se ha asignado un presupuesto para el departamento correspondiente');
     } else {
-        // Si no es un número, deshabilita el campo de entrada y establece el texto en vacío
-        $('#requestedAmount').prop('disabled', true).val('');
-        $('.requestMax').text('');
+        var numberOfMonths = 12;
+        var maxRequestedAmount = authorizedAmount / numberOfMonths;
+
+        // Verifica si maxRequestedAmount es un número
+        if (!isNaN(maxRequestedAmount)) {
+            // Si es un número, habilita el campo de entrada y actualiza el texto de la etiqueta
+            $('#requestedAmount').prop('disabled', false);
+            var formattedBudget = parseFloat(maxRequestedAmount).toLocaleString('es-MX', {
+                style: 'currency',
+                currency: 'MXN'
+            });
+            $('#requestedAmount').val(formattedBudget);
+            $('.requestMax').text('Monto máximo disponible este mes: ' + formattedBudget);
+        } else {
+            $('#requestedAmount').prop('disabled', true);
+            $('#requestedAmount').val('');
+            $('.requestMax').text('');
+        }
     }
 }
 
-function getProviders() {
-    $.ajax({
-        type: 'POST',
-        url: 'controller/ajax/getProviderON.php',
-        dataType: 'json',
-        success: function (response) {
-            console.log('Respuesta del servidor: ', response);
-
-            fillSelect('provider', response, 'proveedor');
-        },
-        error: function (error) {
-            console.log('Error en la solicitud AJAX:', error);
-        }
-    });
-}
+// function getProviders() {
+//     $.ajax({
+//         type: 'POST',
+//         url: 'controller/ajax/getProviderON.php',
+//         dataType: 'json',
+//         success: function (response) {
+//             console.log('Respuesta del servidor: ', response);
+//         },
+//         error: function (error) {
+//             console.log('Error en la solicitud AJAX:', error);
+//         }
+//     });
+// }
 
 function fillSelect(select, datas, message) {
     var selectOption = $('#' + select);
@@ -207,19 +223,6 @@ function fillSelect(select, datas, message) {
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
     });
-
-    if (message == 'proveedor'){
-        // Agregar el botón para agregar proveedor
-        var addProviderOption = $('<option>').val('addProvider').text('Agregar Proveedor');
-        selectOption.append(addProviderOption);
-
-        // Configurar el evento click para el botón
-        selectOption.change(function () {
-            if ($(this).val() === 'addProvider') {
-                openAddProviderModal();
-            }
-        });
-    }
 
 }
 
@@ -246,7 +249,24 @@ function confirmExit(event, destination) {
     });
 }
 
-$(document).on('click', '.cancel-provider', function () {
-    $('#addProviderModal').modal('hide');
-    $('select[name="provider"]').val('');
+// $(document).on('click', '.cancel-provider', function () {
+//     $('#addProviderModal').modal('hide');
+//     $('select[name="provider"]').val('');
+// });
+
+
+$(document).ready(function () {
+
+    // Verificar si el día actual es de lunes a miércoles (días 1 a 3)
+    var today = new Date();
+    if (today.getDay() >= 1 && today.getDay() <= 3) {
+    } else {
+        Swal.fire({
+            title: 'Atención',
+            text: 'Las solicitudes recibidas después del miércoles se tramitarán la semana siguiente. Agradecemos su comprensión.',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
 });

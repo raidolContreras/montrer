@@ -5981,3 +5981,8 @@ Template Sidebar CSS
 .btn-group {
   width: 100%;
 }
+
+.requestMax {
+  font-size: 10px;
+  color: green;
+}

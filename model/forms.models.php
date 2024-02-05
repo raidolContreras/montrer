@@ -1063,10 +1063,10 @@ class FormsModels {
 	
 	static public function mdlGetAuthorizedAmount($idArea){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.AuthorizedAmount FROM montrer_budgets b
+		$sql = "SELECT * FROM montrer_budgets b
 				LEFT JOIN montrer_area a ON a.idArea = b.idArea
-				LEFT JOIN montrer_exercise e ON e.status = 1
-				WHERE a.idArea = :idArea";
+				RIGHT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+				WHERE a.idArea = :idArea AND e.status = 1;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		$stmt->execute();

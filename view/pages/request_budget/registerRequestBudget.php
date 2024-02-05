@@ -8,15 +8,11 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Solicitud de Presupuesto</h3>
+            <h3>Solicitud de presupuesto</h3>
         </div>
 
         <form class="account-wrap" id="budgetRequestForm">
             <div class="row">
-
-                <div class="col-12 mt-4">
-                    <h4>Solicitud de Presupuesto</h4>
-                </div>
 
                 <input type="hidden" class="form-control" id="idBudget" name="idBudget" >
 
@@ -28,16 +24,14 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
-                    <select name="provider" id="provider" class="form-select form-control">
-                        <option value="">Seleccionar proveedor</option>
-                    </select>
+                    <label for="requestedAmount" class="form-label">Monto Solicitado ($)<span class="required"></span></label>
+                    <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true"> 
+                    <label class="requestMax"></label>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="requestedAmount" class="form-label">Monto Solicitado ($)<span class="required"></span></label>
-                    <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled> 
-                    <label class="requestMax"></label>
+                    <label for="fecha" class="form-label">Fecha de petición<span class="required"></span></label>
+                    <input class="form-control" type="date" id="fecha" name="fecha" value="<?php echo date('Y-m-d'); ?>" readonly>
                 </div>
 
                 <div class="col-md-6">
