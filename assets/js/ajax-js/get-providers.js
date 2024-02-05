@@ -88,10 +88,8 @@ $(document).ready(function () {
                 }
             }
         ],
-        fixedColumns: {
-            leftColumns: 2, // Fija las primeras 2 columnas
-            rightColumns: 1 // Fija la última columna
-        },
+        fixedColumns: true,
+        scrollX: true,
         language: {
             "paginate": {
                 "first": "<<",

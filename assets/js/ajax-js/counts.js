@@ -33,7 +33,9 @@ function getAreas() {
                 });
 
                 $('.budget').text(formattedBudget);
-                $('.rest').html(formattedRest + ' <span>' + (100 - formattedPercentageUsed) + '%</span>');
+                
+                $('.rest').html(formattedRest + ' <span>' + (100 - formattedPercentageUsed).toFixed(2) + '%</span>');
+
                 $('.total-use').html(totalUse.toLocaleString('es-MX', {
                     style: 'currency',
                     currency: 'MXN'
