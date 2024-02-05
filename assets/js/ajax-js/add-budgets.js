@@ -49,14 +49,15 @@ $(document).ready(function () {
                             title: 'Presupuesto asignado correctamente.',
                             text: '¿Agregar otro presupuesto?',
                             showCancelButton: true,
-                            cancelButtonColor: '#d33',
-                            confirmButtonColor: '#026f35',
-                            confirmButtonText: 'Aceptar',
-                            cancelButtonText: 'Cancelar',
-                            reverseButtons: true,
+                            cancelButtonColor: '#026f35',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'Cancelar',
+                            cancelButtonText: 'Aceptar',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location.href = 'budgets';
+                            } else {
+                                window.location.href = 'registerBudgets';
                             }
                         });
                     } else if (response === 'Error: Presupuesto ya asignado') {
