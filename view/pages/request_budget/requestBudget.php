@@ -11,9 +11,11 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Solicitud</th>
-							<th>Presupuesto solicitado</th>
-							<th width="30%"></th>
+							<th>Departamento</th>
+							<th>Ejercicio</th>
+							<th>Descripción</th>
+							<th>Fecha de solicitud</th>
+							<th></th>
 						</tr>
 					</thead>
 				</table>

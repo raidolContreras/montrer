@@ -1074,5 +1074,15 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+
+	static public function mdlGetRequests(){
+	   $pdo = Conexion::conectar();
+	   $sql = "SELECT * FROM montrer_budget_requests";
+	   $stmt = $pdo->prepare($sql);
+	   $stmt->execute();
+	   return $stmt->fetchAll();
+	   $stmt->closeCursor();
+	   $stmt = null;
+	}
 	
 }
