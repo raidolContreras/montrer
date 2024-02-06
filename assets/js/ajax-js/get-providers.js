@@ -88,7 +88,6 @@ $(document).ready(function () {
                 }
             }
         ],
-        fixedColumns: true,
         scrollX: true,
         language: {
             "paginate": {
