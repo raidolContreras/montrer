@@ -125,21 +125,23 @@ class FormsController {
 		if ($value){
 			$Budget = FormsModels::mdlAddBudgets($data);
 			$exercise = FormsController::ctrGetExercises($data['exercise']);
-
+			
 			// Convertir las fechas a objetos DateTime para facilitar el cálculo
 			$initialDate = new DateTime($exercise['initialDate']);
 			$finalDate = new DateTime($exercise['finalDate']);
-
-			// Calcular la diferencia en meses
-			$interval = $initialDate->diff($finalDate);
-			$months = $interval->y * 12 + $interval->m;
+			
+			$initialMonth = (int)$initialDate->format('n');
+			$finalMonth = (int)$finalDate->format('n');
+			$months = 0;
+			for ($i = $initialMonth; $i <= $finalMonth; $i++) {
+				$months++;
+			}
 
 			$budget_month = $data['AuthorizedAmount'] / $months;
-			
+
 			$budget_month_formatted = sprintf("%.2f", $budget_month);
 
-			for ($i = 1; $i < $months; $i++ ) {
-
+			for ($i = $initialMonth; $i <= $finalMonth; $i++) {
 				$datos = array(
 					'budget_month' => $budget_month_formatted,
 					'idBudget' => $Budget,
