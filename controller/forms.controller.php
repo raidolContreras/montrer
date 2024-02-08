@@ -123,11 +123,41 @@ class FormsController {
 			}
 		}
 		if ($value){
-			$addBudgets = FormsModels::mdlAddBudgets($data);
+			$Budget = FormsModels::mdlAddBudgets($data);
+			$exercise = FormsController::ctrGetExercises($data['exercise']);
+
+			// Convertir las fechas a objetos DateTime para facilitar el cálculo
+			$initialDate = new DateTime($exercise['initialDate']);
+			$finalDate = new DateTime($exercise['finalDate']);
+
+			// Calcular la diferencia en meses
+			$interval = $initialDate->diff($finalDate);
+			$months = $interval->y * 12 + $interval->m;
+
+			$budget_month = $data['AuthorizedAmount'] / $months;
+			
+			$budget_month_formatted = sprintf("%.2f", $budget_month);
+
+			for ($i = 1; $i < $months; $i++ ) {
+
+				$datos = array(
+					'budget_month' => $budget_month_formatted,
+					'idBudget' => $Budget,
+				);
+				$addBudgetMonth = FormsModels::mdlAddBudgetsMonths($i, $datos);
+			}
+
+			if ($addBudgetMonth == 'ok'){
+				return $addBudgetMonth;
+			} else {
+				$result = 'Error: Presupuesto ya asignado';
+			}
+
+
 		} else {
-			$addBudgets = 'Error: Presupuesto ya asignado';
+			$result = 'Error: Presupuesto ya asignado';
 		}
-    	return $addBudgets;
+    	return $result;
 	}
 
 	static public function ctrLoginUser($data){

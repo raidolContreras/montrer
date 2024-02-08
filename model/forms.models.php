@@ -531,6 +531,24 @@ class FormsModels {
 		$stmt->bindParam(':AuthorizedAmount', $data['AuthorizedAmount'], PDO::PARAM_STR);
 		$stmt->bindParam(':exercise', $data['exercise'], PDO::PARAM_INT);
 		if($stmt->execute()){
+			$idBudget = $pdo -> lastInsertId();
+			return $idBudget;
+		} else {
+			return 'Error';
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;  
+	}
+
+	static public function mdlAddBudgetsMonths($month, $data){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_month_budget(month, budget_month, idBudget) VALUES (:month, :budget_month, :idBudget)";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':month', $month, PDO::PARAM_INT);
+		$stmt->bindParam(':budget_month', $data['budget_month'], PDO::PARAM_STR);
+		$stmt->bindParam(':idBudget', $data['idBudget'], PDO::PARAM_INT);
+		if($stmt->execute()){
 			return 'ok';
 		} else {
 			return 'Error';
