@@ -472,7 +472,7 @@ class FormsModels {
 		$stmt = null;  
 	}
 	
-	static public function mdlGetBudgets(){
+	static public function mdlGetBudgets($idExercices){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
 				FROM montrer_budgets b

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+	
+    var exercise = $('#exercise').data('exercise');
 
 	const Toast = Swal.mixin({
 		toast: true,
@@ -13,8 +15,9 @@ $(document).ready(function () {
 
 	var budgetsData = $('#budgets').DataTable({
 		ajax: {
+			type: 'POST',
 			url: 'controller/ajax/getBudgets.php',
-			dataSrc: ''
+			data: {'idExercise': exercise}
 		},
 		columns: [
             { 

@@ -44,8 +44,8 @@ class FormsController {
     	return $getExercise;
 	}
 
-	static public function ctrGetBudgets(){
-		$getBudgets = FormsModels::mdlGetBudgets();
+	static public function ctrGetBudgets($idExercices){
+		$getBudgets = FormsModels::mdlGetBudgets($idExercices);
     	return $getBudgets;
 	}
 
@@ -115,7 +115,7 @@ class FormsController {
 	}
 
 	static public function ctrAddBudgets($data){
-		$getBudgets = FormsModels::mdlGetBudgets();
+		$getBudgets = FormsModels::mdlGetBudgets('all');
 		$value = true;
 		foreach ($getBudgets as $budgets){
 			if($budgets['idArea'] == $data['area'] && $budgets['idExercise'] == $data['exercise']){
