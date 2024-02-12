@@ -1082,7 +1082,7 @@ class FormsModels {
 		$sql = "SELECT a.idArea, a.nameArea, b.AuthorizedAmount FROM montrer_exercise e
 				LEFT JOIN montrer_budgets b ON b.idExercise = e.idExercise
 				LEFT JOIN montrer_area a ON a.idArea = b.idArea
-				WHERE b.status = 1 AND a.idUser = :idUser";
+				WHERE b.status = 1 AND e.status = 1 AND a.idUser = :idUser";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
