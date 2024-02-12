@@ -472,13 +472,25 @@ class FormsModels {
 		$stmt = null;  
 	}
 	
-	static public function mdlGetBudgets($idExercices){
+	static public function mdlGetBudgets($idExercise){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
-				FROM montrer_budgets b
-				LEFT JOIN montrer_area a ON a.idArea = b.idArea
-				LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise;";
-		$stmt = $pdo->prepare($sql);
+		if($idExercise  != 'all'){
+			$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
+					FROM montrer_budgets b
+					LEFT JOIN montrer_area a ON a.idArea = b.idArea
+					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+					WHERE e.idExercise = :idExercise
+					Order By nameArea;";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
+		} else {
+			$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
+					FROM montrer_budgets b
+					LEFT JOIN montrer_area a ON a.idArea = b.idArea
+					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+					Order By nameArea;";
+			$stmt = $pdo->prepare($sql);
+		}
 		$stmt->execute();
 		return $stmt->fetchAll();
 		$stmt->closeCursor();

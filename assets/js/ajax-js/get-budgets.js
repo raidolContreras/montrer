@@ -1,6 +1,6 @@
 $(document).ready(function () {
-	
-    var exercise = $('#exercise').data('exercise');
+
+    exercise = $("input[name='exercise']").val();
 
 	const Toast = Swal.mixin({
 		toast: true,
@@ -12,12 +12,14 @@ $(document).ready(function () {
 			toast.onmouseleave = Swal.resumeTimer;
 		}
 	});
+	
 
 	var budgetsData = $('#budgets').DataTable({
 		ajax: {
 			type: 'POST',
 			url: 'controller/ajax/getBudgets.php',
-			data: {'idExercise': exercise}
+			data: {'idExercise': exercise},
+			dataSrc: ''
 		},
 		columns: [
             { 

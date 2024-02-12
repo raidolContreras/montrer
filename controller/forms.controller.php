@@ -44,8 +44,8 @@ class FormsController {
     	return $getExercise;
 	}
 
-	static public function ctrGetBudgets($idExercices){
-		$getBudgets = FormsModels::mdlGetBudgets($idExercices);
+	static public function ctrGetBudgets($idExercise){
+		$getBudgets = FormsModels::mdlGetBudgets($idExercise);
     	return $getBudgets;
 	}
 
