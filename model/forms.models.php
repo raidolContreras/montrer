@@ -488,7 +488,7 @@ class FormsModels {
 					FROM montrer_budgets b
 					LEFT JOIN montrer_area a ON a.idArea = b.idArea
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-					Order By nameArea;";
+					Order By exerciseName;";
 			$stmt = $pdo->prepare($sql);
 		}
 		$stmt->execute();
