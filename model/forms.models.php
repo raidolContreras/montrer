@@ -1093,26 +1093,75 @@ class FormsModels {
 	
 	static public function mdlGetAuthorizedAmount($idArea){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_budgets b
+		$sql = "SELECT b.idBudget, a.idArea, m.month, m.budget_month, m.budget_used, m.total_used, r.requestedAmount, r.approvedAmount FROM montrer_budgets b
+				LEFT JOIN montrer_month_budget m ON m.idBudget = b.idBudget
+				LEFT JOIN montrer_budget_requests r ON r.idBudget = b.idBudget
 				LEFT JOIN montrer_area a ON a.idArea = b.idArea
 				RIGHT JOIN montrer_exercise e ON e.idExercise = b.idExercise
 				WHERE a.idArea = :idArea AND e.status = 1;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
+		return $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
 	}
 
 	static public function mdlGetRequests(){
 	   $pdo = Conexion::conectar();
-	   $sql = "SELECT * FROM montrer_budget_requests";
+	   $sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount,
+					r.description, r.requestDate, r.responseDate, r.status,
+					a.nameArea, u.idUsers, u.firstname, u.lastname
+				FROM montrer_budget_requests r
+					LEFT JOIN montrer_area a ON a.idArea = r.idArea
+					LEFT JOIN montrer_users u ON u.idUsers = a.idUser
+				WHERE a.status = 1;";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->execute();
 	   return $stmt->fetchAll();
 	   $stmt->closeCursor();
 	   $stmt = null;
+	}
+
+	static public function mdlRequestBudget($data){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_budget_requests
+				(idArea, idBudget, requestedAmount, description, requestDate, idUser)
+				VALUES
+				(:idArea ,:idBudget ,:requestedAmount ,:description, DATE_ADD(NOW(), INTERVAL -6 HOUR), :idUser)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $data['area'], PDO::PARAM_INT);
+		$stmt->bindParam(':idBudget', $data['budget'], PDO::PARAM_INT);
+		$stmt->bindParam(':requestedAmount', $data['requestedAmount'], PDO::PARAM_STR);
+		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return 'ok';
+		} else {
+			return 'Error';
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;  
+	}
+
+	static public function mdlDeleteRequest($idRequest){
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_budget_requests
+				WHERE idRequest = :idRequest";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			return "ok";
+		} else {
+			print_r($pdo->errorInfo());
+		}
+		$stmt->closeCursor();
+		$stmt = null;
 	}
 	
 }

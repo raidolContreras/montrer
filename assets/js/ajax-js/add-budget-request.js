@@ -3,21 +3,21 @@ $(document).ready(function () {
 
 		event.preventDefault();
 
-		var idBudget = $("input[name='idBudget']").val();
 		var area = $("select[name='area']").val();
+		var budget = $("input[name='budget']").val();
 		var requestedAmount = $("input[name='requestedAmount']").val();
-		var description = $("input[name='description']").val();
+		var description = $("textarea[name='description']").val();
 		
-		const Toast = Swal.mixin({
+		Swal.mixin({
 			toast: true,
 			position: "center",
 			showConfirmButton: false,
 			timerProgressBar: false,
 			didOpen: (toast) => {
-			  toast.onmouseenter = Swal.stopTimer;
-			  toast.onmouseleave = Swal.resumeTimer;
+			    toast.onmouseenter = Swal.stopTimer;
+			    toast.onmouseleave = Swal.resumeTimer;
 			}
-		  });
+		});
 
 		  if (area == '' || requestedAmount == ''){
 			Swal.fire({
@@ -33,9 +33,8 @@ $(document).ready(function () {
 				type: "POST",
 				url: "controller/ajax/ajax.form.php",
 				data: {
-					idBudget: idBudget,
 					area: area,
-					provider: provider,
+					budget: budget,
 					requestedAmount: requestedAmount,
 					description: description
 				},
@@ -43,10 +42,9 @@ $(document).ready(function () {
 	
 					if (response === 'ok') {
 						
-						$("input[name='idBudget']").val('');
 						$("select[name='area']").val('');
-						$("input[name='requestedAmount']").val('2');
-						$("input[name='description']").val('');
+						$("input[name='requestedAmount']").val('');
+						$("textarea[name='description']").val('');
 						Swal.fire({
 						  icon: "success",
 						  title: 'Solicitud creada con exito',
@@ -99,7 +97,6 @@ $(document).ready(function () {
     var registerValue = $('#register-value').data('register');
 
     getArea(registerValue);
-    // getProviders();
 
 });
 
@@ -140,7 +137,7 @@ function fillAreaSelect(select, datas, message) {
                 data: { areaId: data[0] },
                 dataType: 'json',
                 success: function (response) {
-                    updateMaxRequestedAmount(response.AuthorizedAmount);
+                    updateMaxRequestedAmount(response);
                 },
                 error: function (error) {
                     console.log('Error en la solicitud AJAX:', error);
@@ -161,7 +158,7 @@ $('#area').on('change', function() {
         data: { areaId: selectedAreaId },
         dataType: 'json',
         success: function (response) {
-            updateMaxRequestedAmount(response.AuthorizedAmount);
+            updateMaxRequestedAmount(response);
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);
@@ -169,49 +166,46 @@ $('#area').on('change', function() {
     });
 });
 
-function updateMaxRequestedAmount(authorizedAmount) {
-    if (!authorizedAmount) {
-        // Si authorizedAmount es falsy (undefined, null, 0, '', false), deshabilita el campo de entrada y reinicia los valores
+function updateMaxRequestedAmount(datos) {
+    if (!datos) {
+        // Si authorizedAmount es falso (undefined, null, 0, '', false), deshabilita el campo de entrada y reinicia los valores
         $('#requestedAmount').prop('disabled', true);
         $('#requestedAmount').val('');
         $('.requestMax').text('En el presente ejercicio, no se ha asignado un presupuesto para el departamento correspondiente');
     } else {
-        var numberOfMonths = 12;
-        var maxRequestedAmount = authorizedAmount / numberOfMonths;
+        // Obtén el mes actual
+        var today = new Date();
+        var currentMonth = today.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que sumamos 1.
+    
+        // Filtra los datos hasta el mes actual
+        var datosHastaMesActual = datos.filter(function (dato) {
+            return dato.month <= currentMonth;
+        });
+    
+        // Suma los valores de budget_month hasta el mes actual
+        var sumaBudgetMonth = datosHastaMesActual.reduce(function (total, dato) {
+            return total + dato.budget_month - dato.budget_used;
+        }, 0);
 
-        // Verifica si maxRequestedAmount es un número
-        if (!isNaN(maxRequestedAmount)) {
-            // Si es un número, habilita el campo de entrada y actualiza el texto de la etiqueta
-            $('#requestedAmount').prop('disabled', false);
-            var formattedBudget = parseFloat(maxRequestedAmount).toLocaleString('es-MX', {
-                style: 'currency',
-                currency: 'MXN'
-            });
-            $('#requestedAmount').val(formattedBudget);
-            $('.requestMax').text('Monto máximo disponible este mes: ' + formattedBudget);
+        // Obtiene el idBudget del primer elemento del array (puedes ajustar esto según tus necesidades)
+        var idBudget = datos[0].idBudget;
+        
+        if(datos[0].approvedAmount !== 0){
+            
+            // Muestra la suma y el idBudget en los lugares deseados
+            $("input[name='budget']").val(idBudget);
+            $('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
+            $('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + sumaBudgetMonth.toFixed(2));
+
         } else {
             $('#requestedAmount').prop('disabled', true);
-            $('#requestedAmount').val('');
-            $('.requestMax').text('');
+            $('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
         }
     }
 }
 
-// function getProviders() {
-//     $.ajax({
-//         type: 'POST',
-//         url: 'controller/ajax/getProviderON.php',
-//         dataType: 'json',
-//         success: function (response) {
-//             console.log('Respuesta del servidor: ', response);
-//         },
-//         error: function (error) {
-//             console.log('Error en la solicitud AJAX:', error);
-//         }
-//     });
-// }
-
 function fillSelect(select, datas, message) {
+
     var selectOption = $('#' + select);
 
     selectOption.empty();

@@ -369,4 +369,14 @@ class FormsController {
 		$getProvider = FormsModels::mdlGetProvider($idProvider);
 		return $getProvider;
 	}
+
+	static public function ctrRequestBudget($data){
+		$requestBudget = FormsModels::mdlRequestBudget($data);
+		return $requestBudget;
+	}
+
+	static public function ctrDeleteRequest($idRequests){
+		$deleteRequest = FormsModels::mdlDeleteRequest($idRequests);
+		return $deleteRequest;
+	}
 }

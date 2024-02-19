@@ -527,3 +527,18 @@ if (isset($_POST['deleteProvider'])){
 	$deleteProvider = FormsController::ctrDeleteProvider($_POST['deleteProvider']);
 	echo $deleteProvider;
 }
+if (isset($_POST['deleteRequest'])){
+	$deleteRequest = FormsController::ctrDeleteRequest($_POST['deleteRequest']);
+	echo $deleteRequest;
+}
+
+if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['description']) && isset($_POST['budget'])){
+	$data =  array(
+		'area' => $_POST['area'],
+		'requestedAmount' => $_POST['requestedAmount'],
+		'description' => $_POST['description'],
+		'budget' => $_POST['budget'],
+		'idUser' => $_SESSION['idUser']
+	);
+	echo FormsController::ctrRequestBudget($data);
+}
