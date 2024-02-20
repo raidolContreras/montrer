@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    
-	var level = $("input[name='level']").val();
+    var level = $("input[name='level']").val();
+    var user = $("input[name='user']").val();
 
     const Toast = Swal.mixin({
         toast: true,
@@ -13,7 +13,7 @@ $(document).ready(function () {
         }
     });
 
-	moment.locale('es');
+    moment.locale('es');
     $('#requests').DataTable({
         ajax: {
             url: 'controller/ajax/getRequests.php', // Ajusta la URL según tu estructura
@@ -31,22 +31,22 @@ $(document).ready(function () {
                 data: 'nameArea',
             },
             {
-				data: 'requestedAmount',
-				render: function (data, type, row) {
-					if (type === 'display' || type === 'filter') {
-						// Formatear como pesos
-						var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
-							style: 'currency',
-							currency: 'MXN'
-						});
-						return formattedBudget;
-					}
-					return data;
-				}
+                data: 'requestedAmount',
+                render: function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        // Formatear como pesos
+                        var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
+                            style: 'currency',
+                            currency: 'MXN'
+                        });
+                        return formattedBudget;
+                    }
+                    return data;
+                }
             },
             {
                 data: null,
-                render: function (data){
+                render: function (data) {
                     return data.firstname + ' ' + data.lastname;
                 }
             },
@@ -55,14 +55,14 @@ $(document).ready(function () {
             },
             {
                 data: 'requestDate',
-				render: function(data, type, row) {
-					return moment(data).format('DD-MMM-YYYY hh:mm A');
-				}
+                render: function (data, type, row) {
+                    return moment(data).format('DD-MMM-YYYY hh:mm A');
+                }
             },
             {
                 data: null,
                 render: function (data) {
-                    return renderActionButtons(data.idRequest, data.status, data.user);
+                    return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level);
                 }
             }
         ],
@@ -83,55 +83,56 @@ $(document).ready(function () {
 
 });
 
-    $('#requests').on('click', '.delete-button', function () {
-        var idRequest = $(this).data('id');
-        var RequestName = $(this).closest('tr').find('td:eq(1) a').text();
+// Mueve la asignación de eventos fuera de $(document).ready()
+$('#requests').on('click', '.delete-button', function () {
+    var idRequest = $(this).data('id');
+    var RequestName = $(this).closest('tr').find('td:eq(1) a').text();
 
-        $('#deleteRequestName').text(RequestName);
-        $('#confirmDeleteRequest').data('id', idRequest);
-        $('#deleteModal').modal('show');
-    });
+    $('#deleteRequestName').text(RequestName);
+    $('#confirmDeleteRequest').data('id', idRequest);
+    $('#deleteModal').modal('show');
+});
 
-    $('#confirmDeleteRequest').on('click', function () {
-        var idRequest = $(this).data('id');
+$('#confirmDeleteRequest').on('click', function () {
+    var idRequest = $(this).data('id');
 
-        $.ajax({
-            type: 'POST',
-            url: 'controller/ajax/ajax.form.php',
-            data: { 'deleteRequest': idRequest },
-            success: function (response) {
-                if (response === 'ok') {
-                    Swal.fire({
-                        icon: "success",
-                        title: 'Solicitud eliminada con éxito',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: { 'deleteRequest': idRequest },
+        success: function (response) {
+            if (response === 'ok') {
+                Swal.fire({
+                    icon: "success",
+                    title: 'Solicitud eliminada con éxito',
+                    confirmButtonColor: '#026f35',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
 
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: 'Error',
-                        text: 'No se pudo eliminar la solicitud',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
-            },
-            complete: function () {
-                idRequest = 0;
-                $('#deleteModal').modal('hide');
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: 'Error',
+                    text: 'No se pudo eliminar la solicitud',
+                    confirmButtonColor: '#026f35',
+                    confirmButtonText: 'Aceptar'
+                });
             }
-        });
+        },
+        complete: function () {
+            idRequest = 0;
+            $('#deleteModal').modal('hide');
+        }
     });
+});
 
-function renderActionButtons(idRequest, status, level) {
+function renderActionButtons(idRequest, status, userRequest, user, level) {
 
-    if (status = 0 && level != 1){
+    if (status == 0 && userRequest == user){
         return `
             <center>
                 <div class="btn-group" role="group">
@@ -144,14 +145,14 @@ function renderActionButtons(idRequest, status, level) {
                 </div>
             </center>
         `;
-    } else {
+    } else if (status == 0 && level == 1 && userRequest != user) {
         return `
             <center>
                 <div class="btn-group" role="group">
                     <button class="btn btn-success edit-button" data-id="${idRequest}">
-                        <i class="ri-forbid-line"></i> Aceptar
+                        Aceptar
                     </button>
-                    <button class="btn btn-danger delete-button" data-id="${idRequest}">
+                    <button class="btn btn-danger denegate-button" data-id="${idRequest}">
                         <i class="ri-delete-bin-6-line"></i> Denegar
                     </button>
                 </div>

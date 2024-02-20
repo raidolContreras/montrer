@@ -5970,6 +5970,7 @@ Template Sidebar CSS
 .edit-button,
 .enable-button,
 .disable-button,
+.denegate-button,
 .delete-button{
   font-size: 12px !important;
   width: 100%;

@@ -27,6 +27,7 @@
 
 	</main>
 	<input type="hidden" name = "level" value="<?php echo $_SESSION['level'] ?>">
+	<input type="hidden" name = "user" value="<?php echo $_SESSION['idUser'] ?>">
 	<!-- End Main Content Area -->
 </div>
 <!-- delete Modal -->
