@@ -82,35 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	cancelButton.addEventListener('click', function (event) {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
+		
+		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'exercise');
 
-		// Mostrar un modal de confirmación con SweetAlert2
-		Swal.fire({
-			title: '¿Seguro que deseas cancelar?',
-			icon: 'warning',
-			showCancelButton: true,
-			cancelButtonColor: '#d33',
-			confirmButtonColor: '#026f35',
-			cancelButtonText: 'Cancelar',
-			confirmButtonText: 'Aceptar',
-			reverseButtons: true,
-		}).then((result) => {
-			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
-			if (result.isConfirmed) {
-				window.location.href = "exercise";
-			}
-			// Si hacen clic en "No, seguir aquí", no hacer nada
-		});
 	});
 });
 
 function confirmExit(event, destination) {
-        event.preventDefault();
-	$('#modalLabel').text('¿Estás seguro?');
-    $('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
-    $('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
-    $('#alertModal').modal('show');
+	event.preventDefault();
+	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
 }
-
-$(function () {
-	$('[data-bs-toggle="tooltip"]').tooltip();
-});

@@ -18,3 +18,33 @@
 		
 		<!-- Dropzone Script -->
 		<script src="assets/vendor/dropzone/dropzone-min.js"></script>
+		<script>
+			
+			$(function () {
+				$('[data-bs-toggle="tooltip"]').tooltip();
+			});
+			
+			var modalFooter = $('.modal-footer');
+			// Show Bootstrap Modal with a custom message
+			function showAlertBootstrap(title, message) {
+				$('#modalLabel').text(title); // Set the title of the modal
+				$('.modal-body').text(message); // Set the message of the modal
+					modalFooter.html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
+				$('#alertModal').modal('show'); // Show the modal
+			}
+			
+			function showAlertBootstrap2(title, message, adress) {
+				$('#modalLabel').text(title);
+				$('.modal-body').text(message);
+				$('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
+				$('#alertModal').modal('show');
+			}
+			
+			function showAlertBootstrap3(title, message, adress, cancel) {
+				$('#modalLabel').text(title);
+				$('.modal-body').text(message);
+				$('.modal-footer').html('<button type="button" class="btn btn-danger" onclick="window.location.href=\''+ cancel +'\'">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
+				$('#alertModal').modal('show');
+			}
+
+		</script>

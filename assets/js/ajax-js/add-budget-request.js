@@ -7,26 +7,11 @@ $(document).ready(function () {
 		var budget = $("input[name='budget']").val();
 		var requestedAmount = $("input[name='requestedAmount']").val();
 		var description = $("textarea[name='description']").val();
-		
-		Swal.mixin({
-			toast: true,
-			position: "center",
-			showConfirmButton: false,
-			timerProgressBar: false,
-			didOpen: (toast) => {
-			    toast.onmouseenter = Swal.stopTimer;
-			    toast.onmouseleave = Swal.resumeTimer;
-			}
-		});
 
 		  if (area == '' || requestedAmount == ''){
-			Swal.fire({
-			  icon: 'warning',
-			  title: 'Error',
-			  text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-              confirmButtonColor: '#026f35',
-              confirmButtonText: 'Aceptar'
-			});
+            
+            showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            
 		} else {
 
 			$.ajax({
@@ -45,23 +30,9 @@ $(document).ready(function () {
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
 						$("textarea[name='description']").val('');
+                        
+	                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
 
-                        Swal.fire({
-                            icon: "success",
-                            title: 'Presupuesto solicitado correctamente.',
-                            text: '¿Agregar otra solicitud?',
-                            showCancelButton: true,
-                            cancelButtonColor: '#026f35',
-                            confirmButtonColor: '#d33',
-                            confirmButtonText: 'Cancelar',
-                            cancelButtonText: 'Aceptar',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = 'requestBudget';
-                            } else {
-                                window.location.href = 'registerRequestBudget';
-                            }
-                        });
 					} else {
 						Swal.fire({
 						  icon: 'error',
@@ -86,21 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	cancelButton.addEventListener('click', function (event) {
 
 		event.preventDefault();
+		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'requestBudget');
 
-		Swal.fire({
-			title: '¿Seguro que deseas cancelar?',
-			icon: 'warning',
-			showCancelButton: true,
-			cancelButtonColor: '#d33',
-			confirmButtonColor: '#026f35',
-			cancelButtonText: 'Cancelar',
-			confirmButtonText: 'Aceptar',
-			reverseButtons: true,
-		}).then((result) => {
-			if (result.isConfirmed) {
-				window.location.href = "requestBudget";
-			}
-		});
 	});
 });
 
@@ -245,16 +203,10 @@ function openAddProviderModal() {
 
 function confirmExit(event, destination) {
     event.preventDefault();
-    $('#modalLabel').text('¿Estás seguro?');
-    $('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
-    $('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
-    $('#alertModal').modal('show');
+    
+	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
+    
 }
-
-// $(document).on('click', '.cancel-provider', function () {
-//     $('#addProviderModal').modal('hide');
-//     $('select[name="provider"]').val('');
-// });
 
 
 $(document).ready(function () {

@@ -53,40 +53,17 @@ $(document).ready(function () {
     });
 });
 
-var modalFooter = $('.modal-footer');
-
-// Show Bootstrap Modal with a custom message
-function showAlertBootstrap(title, message) {
-    $('#modalLabel').text(title); // Set the title of the modal
-    $('.modal-body').text(message); // Set the message of the modal
-        modalFooter.html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
-    $('#alertModal').modal('show'); // Show the modal
-}
-
-// Initialize Bootstrap tooltips
-$(function () {
-    $('[data-bs-toggle="tooltip"]').tooltip();
-});
-
 document.addEventListener('DOMContentLoaded', function () {
     var cancelButton = document.getElementById('cancelButton');
 
     cancelButton.addEventListener('click', function (event) {
         event.preventDefault();
-
-        $('#modalLabel').text('Cancelar registro');
-        $('.modal-body').text('¿Seguro que deseas cancelar?');
-        modalFooter.html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'registers\'">Aceptar</button>');
-        $('#alertModal').modal('show');
+		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'registers');
     });
 });
 
 
 function confirmExit(event, destination) {
-    event.preventDefault();
-    
-    $('#modalLabel').text('¿Estás seguro?');
-    $('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
-    $('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
-    $('#alertModal').modal('show');
+	event.preventDefault();
+	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
 }

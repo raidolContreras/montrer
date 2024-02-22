@@ -109,13 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function confirmExit(event, destination) {
-        event.preventDefault();
-	$('#modalLabel').text('¿Estás seguro?');
-    $('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
-    $('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
-    $('#alertModal').modal('show');
+	event.preventDefault();
+	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
 }
-
-$(function () {
-	$('[data-bs-toggle="tooltip"]').tooltip();
-});

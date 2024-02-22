@@ -8,17 +8,6 @@ $(document).ready(function () {
 		var areaDescription = $("input[name='areaDescription']").val();
 		var user = $("select[name='user']").val();
 
-		const Toast = Swal.mixin({
-			toast: true,
-			position: "center",
-			showConfirmButton: false,
-			timerProgressBar: false,
-			didOpen: (toast) => {
-				toast.onmouseenter = Swal.stopTimer;
-				toast.onmouseleave = Swal.resumeTimer;
-			}
-		});
-
 		if (areaName !== '' && user !== null) {
 			// Realiza la solicitud Ajax
 			$.ajax({
@@ -36,19 +25,12 @@ $(document).ready(function () {
 						$("input[name='areaDescription']").val('');
 						$("select[name='user']").val('');
 
-						Swal.fire({
-							icon: "success",
-							title: 'Departamento registrado',
-							confirmButtonColor: '#026f35',
-							confirmButtonText: 'Aceptar'
-						});
+						showAlertBootstrap('Exito', 'Departamento registrado.');
+
 					} else {
-						Swal.fire({
-							icon: 'error',
-							title: 'Error al registrar el departamento',
-							confirmButtonColor: '#026f35',
-							confirmButtonText: 'Aceptar'
-						});
+						
+						showAlertBootstrap('Error', 'Error al registrar el departamento.');
+
 					}
 				},
 				error: function (error) {
@@ -57,13 +39,7 @@ $(document).ready(function () {
 			});
 		} else {
 
-			Swal.fire({
-				icon: 'warning',
-				title: 'Error',
-				text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-				confirmButtonColor: '#026f35',
-				confirmButtonText: 'Aceptar'
-			});
+            showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 			
 		}
 	});
@@ -78,34 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	cancelButton.addEventListener('click', function (event) {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
+		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'areas');
 
-		// Mostrar un modal de confirmación con SweetAlert2
-		// Mostrar un modal de confirmación con SweetAlert2
-		Swal.fire({
-			title: '¿Seguro que deseas cancelar?',
-			icon: 'warning',
-			showCancelButton: true,
-			cancelButtonColor: '#d33',
-			confirmButtonColor: '#026f35',
-			cancelButtonText: 'Cancelar',
-			confirmButtonText: 'Aceptar',
-			reverseButtons: true, // Esto coloca el botón de confirmación a la derecha
-		}).then((result) => {
-			if (result.isConfirmed) {
-				window.location.href = "areas";
-			}
-		});
 	});
 });
 
-	function confirmExit(event, destination) {
-		event.preventDefault();
-		$('#modalLabel').text('¿Estás seguro?');
-		$('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
-		$('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
-		$('#alertModal').modal('show');
-	}
-
-	$(function () {
-		$('[data-bs-toggle="tooltip"]').tooltip();
-	});
+function confirmExit(event, destination) {
+	event.preventDefault();
+	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
+}
