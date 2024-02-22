@@ -184,7 +184,15 @@ function updateMaxRequestedAmount(datos) {
     
         // Suma los valores de budget_month hasta el mes actual
         var sumaBudgetMonth = datosHastaMesActual.reduce(function (total, dato) {
-            return total + dato.budget_month - dato.budget_used;
+            var budgetMonth = parseFloat(dato.budget_month);
+            var budgetUsed = parseFloat(dato.budget_used);
+            
+            // Verificar si los valores son números válidos
+            if (!isNaN(budgetMonth) && !isNaN(budgetUsed)) {
+                return total + (budgetMonth - budgetUsed);
+            } else {
+                return total; // No agregar nada si alguno de los valores no es un número válido
+            }
         }, 0);
 
         // Obtiene el idBudget del primer elemento del array (puedes ajustar esto según tus necesidades)
