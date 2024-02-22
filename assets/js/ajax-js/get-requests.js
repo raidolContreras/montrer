@@ -83,52 +83,75 @@ $(document).ready(function () {
 
 });
 
-// Mueve la asignación de eventos fuera de $(document).ready()
-$('#requests').on('click', '.delete-button', function () {
+// Manejar el clic del botón de edición
+$('#requests').on('click', '.edit-button', function() {
     var idRequest = $(this).data('id');
-    var RequestName = $(this).closest('tr').find('td:eq(1) a').text();
-
-    $('#deleteRequestName').text(RequestName);
-    $('#confirmDeleteRequest').data('id', idRequest);
-    $('#deleteModal').modal('show');
+    sendForm('editRequest', idRequest);
 });
 
-$('#confirmDeleteRequest').on('click', function () {
-    var idRequest = $(this).data('id');
+function sendForm(action, idRequest) {
+    // Crear un formulario oculto y agregar el idRequest como un campo oculto
+    var form = $('<form action="' + action + '" method="post"></form>');
+    form.append('<input type="hidden" name="register" value="' + idRequest + '">');
 
-    $.ajax({
-        type: 'POST',
-        url: 'controller/ajax/ajax.form.php',
-        data: { 'deleteRequest': idRequest },
-        success: function (response) {
-            if (response === 'ok') {
-                Swal.fire({
-                    icon: "success",
-                    title: 'Solicitud eliminada con éxito',
-                    confirmButtonColor: '#026f35',
-                    confirmButtonText: 'Aceptar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
+    // Adjuntar el formulario al cuerpo del documento y enviarlo
+    $('body').append(form);
+    form.submit();
+}
 
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: 'Error',
-                    text: 'No se pudo eliminar la solicitud',
-                    confirmButtonColor: '#026f35',
-                    confirmButtonText: 'Aceptar'
-                });
-            }
-        },
-        complete: function () {
-            idRequest = 0;
-            $('#deleteModal').modal('hide');
-        }
+showModalAndSetData('deleteModal', 'deleteRequestName', 'confirmDeleteRequest', 'delete', 'Presupuesto eliminado con éxito', 'eliminar');
+
+function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, successMessage, errorMessage) {
+    $('#requests').on('click', `.${actionType}-button`, function () {
+        var idRequest = $(this).data('id');
+        var RequestName = $(this).closest('tr').find('td:eq(1)').text();
+
+        $(`#${nameId}`).text(RequestName);
+        $(`#${confirmButtonId}`).data('id', idRequest);
+
+        $(`#${modalId}`).modal('show');
     });
-});
+
+    $(`#${confirmButtonId}`).off('click').on('click', function () {
+        var idRequest = $(this).data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/ajax.form.php',
+            data: { [`${actionType}Request`]: idRequest },
+            success: function (response) {
+                handleResponse(response, successMessage, errorMessage);
+            },
+            complete: function () {
+                idRequest = 0;
+                $(`#${modalId}`).modal('hide');
+            }
+        });
+    });
+}
+
+function handleResponse(response, successMessage, errorMessage) {
+    if (response === 'ok') {
+        Swal.fire({
+            icon: "success",
+            title: successMessage,
+            confirmButtonColor: '#026f35',
+            confirmButtonText: 'Aceptar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
+        });
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: 'Error',
+            text: `No se pudo ${errorMessage.toLowerCase()} el Presupuesto`,
+            confirmButtonColor: '#026f35',
+            confirmButtonText: 'Aceptar',
+        });
+    }
+}
 
 function renderActionButtons(idRequest, status, userRequest, user, level) {
 

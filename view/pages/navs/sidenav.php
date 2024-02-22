@@ -15,7 +15,7 @@
             
             <?php 
                 // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-                $activeRegisters = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registers' || $_GET['pagina'] == 'register' || $_GET['pagina'] == 'editRegister')) ? 'active' : '';
+                $activeRegisters = (($_GET['pagina'] == 'registers' || $_GET['pagina'] == 'register' || $_GET['pagina'] == 'editRegister')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeRegisters; ?>">
                 <a href="registers" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Usuarios" onclick="confirmExit(event, 'registers')">
@@ -25,7 +25,7 @@
             
             <?php 
                 // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-                $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea' || $_GET['pagina'] == 'areas' || $_GET['pagina'] == 'editArea')) ? 'active' : '';
+                $activeAreas = (($_GET['pagina'] == 'registerArea' || $_GET['pagina'] == 'areas' || $_GET['pagina'] == 'editArea')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
                 <a href="areas" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Departamentos" onclick="confirmExit(event, 'areas')">
@@ -35,7 +35,7 @@
 
             <?php 
                 // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-                $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'exercise' || $_GET['pagina'] == 'registerExercise' || $_GET['pagina'] == 'editExercise')) ? 'active' : '';
+                $activeExercise = (($_GET['pagina'] == 'exercise' || $_GET['pagina'] == 'registerExercise' || $_GET['pagina'] == 'editExercise')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
                 <a href="exercise" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Ejercicios" onclick="confirmExit(event, 'exercise')">
@@ -45,7 +45,7 @@
 
             <?php 
                 // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-                $activeBudget = (isset($_GET['pagina']) && ($_GET['pagina'] == 'budgets' || $_GET['pagina'] == 'registerBudgets' || $_GET['pagina'] == 'editBudgets')) ? 'active' : '';
+                $activeBudget = (($_GET['pagina'] == 'budgets' || $_GET['pagina'] == 'registerBudgets' || $_GET['pagina'] == 'editBudgets')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeBudget; ?>">
                 <a href="budgets" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Asignación de presupuestos" onclick="confirmExit(event, 'budgets')">
@@ -57,7 +57,7 @@
         
         <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-            $activeProvider = (isset($_GET['pagina']) && ($_GET['pagina'] == 'provider' || $_GET['pagina'] == 'registerProvider' || $_GET['pagina'] == 'editProvider')) ? 'active' : '';
+            $activeProvider = (($_GET['pagina'] == 'provider' || $_GET['pagina'] == 'registerProvider' || $_GET['pagina'] == 'editProvider')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeProvider; ?>">
             <a href="provider" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Proveedores" onclick="confirmExit(event, 'provider')">
@@ -67,7 +67,7 @@
         
         <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-            $activeRequest = (isset($_GET['pagina']) && ($_GET['pagina'] == 'requestBudget' || $_GET['pagina'] == 'registerRequestBudget')) ? 'active' : '';
+            $activeRequest = (($_GET['pagina'] == 'requestBudget' || $_GET['pagina'] == 'registerRequestBudget')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeRequest; ?>">
             <a href="requestBudget" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Solicitudes de presupuestos" onclick="confirmExit(event, 'requestBudget')">
@@ -76,7 +76,7 @@
         </li>
         <?php 
             // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-            $activeRequest = (isset($_GET['pagina']) && ($_GET['pagina'] == 'solicitudSendBudget')) ? 'active' : '';
+            $activeRequest = (($_GET['pagina'] == 'solicitudSendBudget')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeRequest; ?>">
             <a href="solicitudSendBudget" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Justificar de presupuestos" onclick="confirmExit(event, 'requestBudget')">

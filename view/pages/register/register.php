@@ -39,7 +39,7 @@
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon3">
-								<button type="button" class="btn btn-danger btn-circle question-btn" id="questionBtn">!</button>
+								<button type="button" class="btn btn-danger btn-circle question-btn" id="questionBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Si el departamento no está listado, deje el campo vacío.">!</button>
 							</span>
 							<select class="form-select form-control" name="area">
 								<option value="">Seleccione el departamento</option>
@@ -62,14 +62,11 @@
 	</div>
 </div>
 </main>
-<!-- End Main Content Area -->
-</div>
-<!-- End Account Area -->
+
 <script src="assets/js/ajax-js/add-users.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
 
 <?php else: ?>
-	<script>
-		window.location.href = 'inicio';
-	</script>
+<script>
+    window.location.href = 'inicio';
+</script>
 <?php endif ?>

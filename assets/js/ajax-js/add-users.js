@@ -1,36 +1,18 @@
 $(document).ready(function () {
-	$("form.account-wrap").submit(function (event) {
-		// Evitar el envío del formulario por defecto
-		event.preventDefault();
+	
+    $("form.account-wrap").submit(function (event) {
+        event.preventDefault();
 
-		// Recoge los valores del formulario
-		var firstname = $("input[name='firstname']").val();
-		var lastname = $("input[name='lastname']").val();
-		var email = $("input[name='email']").val();
-		var level = $("select[name='level']").val();
-		var area = $("select[name='area']").val();
-		
-		const Toast = Swal.mixin({
-			toast: true,
-			position: "center",
-			showConfirmButton: false,
-			timerProgressBar: false,
-			didOpen: (toast) => {
-			  toast.onmouseenter = Swal.stopTimer;
-			  toast.onmouseleave = Swal.resumeTimer;
-			}
-		  });
+        // Collect form values
+        var firstname = $("input[name='firstname']").val();
+        var lastname = $("input[name='lastname']").val();
+        var email = $("input[name='email']").val();
+        var level = $("select[name='level']").val();
+        var area = $("select[name='area']").val();
 
-		  if (firstname == '' || lastname == '' || email == ''){
-			Swal.fire({
-			  icon: 'warning',
-			  title: 'Error',
-			  text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-              confirmButtonColor: '#026f35',
-              confirmButtonText: 'Aceptar'
-			});
-		} else {
-			// Realiza la solicitud Ajax
+        if (firstname == '' || lastname == '' || email == '') {
+            showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+        } else {
 			$.ajax({
 				type: "POST",
 				url: "controller/ajax/ajax.form.php",
@@ -41,106 +23,70 @@ $(document).ready(function () {
 					level: level,
 					area: area
 				},
-				success: function (response) {				  
+				success: function (response) {				
 	
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
-						
+
 						$("input[name='firstname']").val('');
 						$("input[name='lastname']").val('');
 						$("input[name='email']").val('');
 						$("select[name='level']").val('2');
 						$("select[name='area']").val('');
-						Swal.fire({
-						  icon: "success",
-						  title: 'Usuario',
-						  text: response+' creado exitosamente',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+						
+						showAlertBootstrap('Exito', response+' creado exitosamente');
+
 					} else if (response === 'Error: Email duplicado') {
-						Swal.fire({
-						  icon: 'error',
-						  title: response,
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+
+						showAlertBootstrap('Error', response);
+
 					} else {
-						Swal.fire({
-						  icon: 'error',
-						  title: 'Error al crear el usuario',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+
+						showAlertBootstrap('Error', 'Error al crear el usuario');
+						
 					}
 				},
 				error: function (error) {
 					console.log("Error en la solicitud Ajax:", error);
 				}
 			});
-
-		}
-	});
+        }
+    });
 });
 
-document.getElementById('questionBtn').addEventListener('click', function () {
-	Swal.fire({
-		icon: 'warning',
-		title: 'Seleccione el departamento',
-		text: 'Si el departamento no está listado, deje el campo vacío.',
-		confirmButtonColor: '#026f35',
-		confirmButtonText: 'Aceptar'
-	});
-});
+var modalFooter = $('.modal-footer');
 
-// Esperar a que el documento esté listo
-document.addEventListener('DOMContentLoaded', function () {
-	// Obtener el botón de cancelar por su ID
-	var cancelButton = document.getElementById('cancelButton');
-
-	// Agregar un evento de clic al botón de cancelar
-	cancelButton.addEventListener('click', function (event) {
-		// Prevenir el comportamiento predeterminado del enlace
-		event.preventDefault();
-
-		// Mostrar un modal de confirmación con SweetAlert2
-		Swal.fire({
-			title: '¿Seguro que deseas cancelar?',
-			icon: 'warning',
-			showCancelButton: true,
-			cancelButtonColor: '#d33',
-			confirmButtonColor: '#026f35',
-			cancelButtonText: 'Cancelar',
-			confirmButtonText: 'Aceptar',
-			reverseButtons: true,
-		}).then((result) => {
-			// Si hacen clic en "Sí, cancelar", redirigir a "registers"
-			if (result.isConfirmed) {
-				window.location.href = "registers";
-			}
-			// Si hacen clic en "No, seguir aquí", no hacer nada
-		});
-	});
-});
-
-function confirmExit(event, destination) {
-        event.preventDefault();
-	Swal.fire({
-		title: '¿Estás seguro?',
-		text: 'Si sales del formulario, perderás los cambios no guardados.',
-		icon: 'warning',
-		showCancelButton: true,
-		cancelButtonColor: '#d33',
-		confirmButtonColor: '#026f35',
-		cancelButtonText: 'Cancelar',
-		confirmButtonText: 'Aceptar',
-		reverseButtons: true,
-	}).then((result) => {
-		if (result.isConfirmed) {
-			window.location.href = destination;
-		}
-	});
+// Show Bootstrap Modal with a custom message
+function showAlertBootstrap(title, message) {
+    $('#modalLabel').text(title); // Set the title of the modal
+    $('.modal-body').text(message); // Set the message of the modal
+        modalFooter.html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
+    $('#alertModal').modal('show'); // Show the modal
 }
 
+// Initialize Bootstrap tooltips
 $(function () {
-	$('[data-bs-toggle="tooltip"]').tooltip();
+    $('[data-bs-toggle="tooltip"]').tooltip();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    var cancelButton = document.getElementById('cancelButton');
+
+    cancelButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        $('#modalLabel').text('Cancelar registro');
+        $('.modal-body').text('¿Seguro que deseas cancelar?');
+        modalFooter.html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'registers\'">Aceptar</button>');
+        $('#alertModal').modal('show');
+    });
+});
+
+
+function confirmExit(event, destination) {
+    event.preventDefault();
+    
+    $('#modalLabel').text('¿Estás seguro?');
+    $('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
+    $('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
+    $('#alertModal').modal('show');
+}

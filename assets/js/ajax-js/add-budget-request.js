@@ -45,12 +45,23 @@ $(document).ready(function () {
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
 						$("textarea[name='description']").val('');
-						Swal.fire({
-						  icon: "success",
-						  title: 'Solicitud creada con exito',
-                          confirmButtonColor: '#026f35',
-                          confirmButtonText: 'Aceptar'
-						});
+
+                        Swal.fire({
+                            icon: "success",
+                            title: 'Presupuesto solicitado correctamente.',
+                            text: '¿Agregar otra solicitud?',
+                            showCancelButton: true,
+                            cancelButtonColor: '#026f35',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'Cancelar',
+                            cancelButtonText: 'Aceptar',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = 'requestBudget';
+                            } else {
+                                window.location.href = 'registerRequestBudget';
+                            }
+                        });
 					} else {
 						Swal.fire({
 						  icon: 'error',
@@ -234,21 +245,10 @@ function openAddProviderModal() {
 
 function confirmExit(event, destination) {
     event.preventDefault();
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: 'Si sales del formulario, perderás los cambios no guardados.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#026f35',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar',
-        reverseButtons: true,
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = destination;
-        }
-    });
+    $('#modalLabel').text('¿Estás seguro?');
+    $('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
+    $('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
+    $('#alertModal').modal('show');
 }
 
 // $(document).on('click', '.cancel-provider', function () {

@@ -39,8 +39,8 @@ $(document).ready(function () {
                 exerciseSelect.innerHTML = '';
 
                 var option = document.createElement('option');
-                option.value = parsedResponse.idExercise; // Ajusta esto según tu estructura de datos
-                option.text = parsedResponse.exerciseName; // Ajusta esto según tu estructura de datos
+                option.value = parsedResponse.idExercise;
+                option.text = parsedResponse.exerciseName;
 
                 // Establece la opción como seleccionada
                 option.selected = true;

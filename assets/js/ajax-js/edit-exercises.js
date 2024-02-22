@@ -105,21 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function confirmExit(event, destination) {
         event.preventDefault();
-	Swal.fire({
-		title: '¿Estás seguro?',
-		text: 'Si sales del formulario, perderás los cambios no guardados.',
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#026f35',
-		cancelButtonColor: '#d33',
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar',
-        reverseButtons: true,
-	}).then((result) => {
-		if (result.isConfirmed) {
-			window.location.href = destination;
-		}
-	});
+	$('#modalLabel').text('¿Estás seguro?');
+    $('.modal-body').text('Si sales del formulario, perderás los cambios no guardados.');
+    $('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\'' + destination + '\'">Aceptar</button>');
+    $('#alertModal').modal('show');
 }
 
 $(function () {
