@@ -52,7 +52,7 @@
 </main>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-exercises.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+
 <script>
     $j(document).ready(function() {
         // Inicializa la máscara para el input con la clase 'inputmask'

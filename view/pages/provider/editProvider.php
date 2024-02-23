@@ -106,4 +106,3 @@
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/get-provider.js"></script>
 <script src="assets/js/ajax-js/edit-provider.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>

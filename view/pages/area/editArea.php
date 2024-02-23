@@ -51,7 +51,7 @@
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/get-area.js"></script>
 <script src="assets/js/ajax-js/edit-area.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+
 <?php else: ?>
 	<script>
 		window.location.href = 'inicio';

@@ -81,4 +81,4 @@
 </div>
 <input type="hidden" name="level" value="<?php echo $_SESSION['level'] ?>">
 <script src="assets/js/ajax-js/get-providers.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+

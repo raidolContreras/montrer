@@ -231,7 +231,7 @@
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+
 
 <script>
 	$j(document).ready(function() {

@@ -37,4 +37,3 @@
 </div>
 <!-- End Account Area -->
 <script src="assets/js/ajax-js/login.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>

@@ -40,8 +40,8 @@
                 <p>¿Está seguro de que desea deshabilitar el departamento de <strong id="disableAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-warning" id="confirmDisableArea">Deshabilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmDisableArea">Aceptar</button>
             </div>
         </div>
     </div>
@@ -59,8 +59,8 @@
                 <p>¿Está seguro de que desea habilitar el departamento de <strong id="enableAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmEnableArea">Habilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmEnableArea">Aceptar</button>
             </div>
         </div>
     </div>
@@ -78,15 +78,15 @@
                 <p>¿Está seguro de que desea eliminar el departamento de <strong id="deleteAreaName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteArea">Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmDeleteArea">Aceptar</button>
             </div>
         </div>
     </div>
 </div>
 
 <script src="assets/js/ajax-js/get-areas.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+
 <?php else: ?>
 	<script>
 		window.location.href = 'inicio';

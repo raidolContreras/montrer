@@ -130,7 +130,7 @@ $(document).ready(function () {
     
     function handleResponse(response, actionType, successMessage) {
         if (response === 'ok') {
-            showAlertBootstrap2('Éxito', `Departamento ${successMessage} con éxito`, location.reload());
+            showAlertBootstrap4('Éxito', `Departamento ${successMessage} con éxito`);
         } else {
             showAlertBootstrap('Error', `No se pudo ${actionType.toLowerCase()} el departamento`);
         }

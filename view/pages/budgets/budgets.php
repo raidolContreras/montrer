@@ -90,12 +90,12 @@
 
         <script src="assets/js/ajax-js/get-budgets.js"></script>
 
-        <script src="assets/js/sweetalert2.all.min.js"></script>
+        
         
     <?php else: ?>
 
         <script src="assets/js/ajax-js/exercises-budgets.js"></script>
-        <script src="assets/js/sweetalert2.all.min.js"></script>
+        
         
     <?php endif ?>
 

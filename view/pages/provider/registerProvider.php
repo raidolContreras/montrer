@@ -105,4 +105,3 @@
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-provider.js"></script>
 <script src="assets/js/ajax-js/get-nextIdProvider.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>

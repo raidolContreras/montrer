@@ -63,7 +63,7 @@
 
 <script src="assets/js/ajax-js/get-budget.js"></script>
 <script src="assets/js/ajax-js/edit-budgets.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+
 <script>
     $j(document).ready(function() {
         // Inicializa la máscara para el input con la clase 'inputmask'

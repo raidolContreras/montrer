@@ -49,7 +49,7 @@
 <script src="assets/js/ajax-js/add-budgets.js"></script>
 <script src="assets/js/ajax-js/active-exercise.js"></script>
 <script src="assets/js/ajax-js/areas.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+
 <script>
     $j(document).ready(function() {
         // Inicializa la máscara para el input con la clase 'inputmask'
