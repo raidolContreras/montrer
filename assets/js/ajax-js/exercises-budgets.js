@@ -1,14 +1,4 @@
     $(document).ready(function () {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "center",
-            showConfirmButton: false,
-            timerProgressBar: false,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
 
         // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
         $.ajax({
@@ -25,26 +15,7 @@
                 });
                 
                 buttonsHtml += '<div class="col-12 mb-3"><button class="exercise-btn" data-value="all">Vista general</button></div></div>';
-
-                // Muestra un modal con los botones personalizados
-                Swal.fire({
-                    title: 'Selecciona un ejercicio',
-                    html: buttonsHtml,
-                    showCancelButton: true,
-                    showCloseButton: false,
-                    focusConfirm: false,
-                    cancelButtonText: 'Cancelar',
-                    cancelButtonColor: '#d33',
-                    showConfirmButton: false,
-                    allowOutsideClick: false, // Evita que se cierre haciendo clic fuera del marco
-                    customClass: {
-                        container: 'exercise-modal-container',
-                    }
-                }).then((result) => {
-                    if (result.dismiss === Swal.DismissReason.cancel) {
-                        window.location.href = 'inicio'; // Redirige a la página de inicio
-                    }
-                });
+                showAlertBootstrap4('', 'Selecciona un ejercicio', 'inicio', buttonsHtml);
 
                 // Agrega un evento de clic a los botones personalizados
                 $('.exercise-btn').on('click', function() {

@@ -35,23 +35,11 @@ $(document).ready(function () {
                 if (response === "Error: Inexistente") {
                     
                     showAlertBootstrap('Error', 'Error al actualizar la contraseña.');
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: '',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    
                 } else if (response === "Error: Password") {
                     
                     showAlertBootstrap('Error', 'La contraseña actual no es correcta.');
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: '',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    
                 } else {
                     
                     showAlertBootstrap2('Error', 'Contraseña actualizada correctamente.', 'inicio');

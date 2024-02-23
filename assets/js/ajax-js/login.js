@@ -16,35 +16,12 @@ $(document).ready(function () {
 			},
 			success: function (response) {
 
-		    	const Toast = Swal.mixin({
-				  toast: true,
-				  position: "top-end",
-				  showConfirmButton: false,
-				  timerProgressBar: false,
-				  didOpen: (toast) => {
-				    toast.onmouseenter = Swal.stopTimer;
-				    toast.onmouseleave = Swal.resumeTimer;
-				  }
-				});
-
 			    if (response === 'ok') {
                     window.location.href = 'inicio';
 			    }else if (response === 'status off') {
-					Swal.fire({
-						title: "Usuario deshabilitado",
-						icon: "warning",
-						text: 'Comuníquese con el administrador de la plataforma, para cualquier aclaración.',
-						confirmButtonColor: '#026f35',
-						confirmButtonText: 'Aceptar'
-					});
+					showAlertBootstrap('Usuario deshabilitado', 'Comuníquese con el administrador de la plataforma, para cualquier aclaración.');
 			    }else {
-					Swal.fire({
-			          icon: 'error',
-					  title: 'Error al iniciar sesión, verifique su correo o contraseña',
-					  icon: "error",
-					  confirmButtonColor: '#026f35',
-					  confirmButtonText: 'Aceptar'
-					});
+					showAlertBootstrap('Error', 'Error al iniciar sesión, verifique su correo o contraseña');
 			    }
 			},
 			error: function (error) {

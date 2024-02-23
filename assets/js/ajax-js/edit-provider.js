@@ -22,27 +22,10 @@ $(document).ready(function () {
             updateclabe: $("input[name='clabe']").val(),
         };
 
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "center",
-            showConfirmButton: false,
-            timerProgressBar: false,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-
         // Función de validación
         function validateField(fieldName) {
             if (!fields[fieldName]) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Advertencia',
-                    text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-                    confirmButtonColor: '#026f35',
-                    confirmButtonText: 'Aceptar'
-                });
+                showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
                 return false;
             }
             return true;
@@ -76,25 +59,9 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response === 'ok') {
-
-                    Swal.fire({
-                        icon: "success",
-                        title: 'Proveedor actualizado exitosamente',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = 'provider';
-                        }
-                    });
+                    showAlertBootstrap2('Éxito', 'Proveedor actualizado exitosamente', 'provider');
                 } else {
-                    // Mostrar mensaje de error
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error al actualizar el proveedor',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    showAlertBootstrap('Error', 'Error al actualizar el proveedor');
                 }
             },
             error: function (error) {

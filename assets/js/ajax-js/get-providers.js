@@ -1,16 +1,6 @@
 $(document).ready(function () {
     level = $("input[name='level']").val();
-    
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "center",
-        showConfirmButton: false,
-        timerProgressBar: false,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
+
 
     $('#provider').DataTable({
         ajax: {
@@ -139,25 +129,9 @@ $(document).ready(function () {
             data: { 'enableProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    Swal.fire({
-                        icon: "success",
-                        title: 'Proveedor deshabilitado con éxito',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-
+                    showAlertBootstrap2('Éxito', 'Proveedor deshabilitado con éxito', location.reload());
                 } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: 'Error',
-                        text: 'No se pudo deshabilitar el proveedor',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    showAlertBootstrap('Error', 'No se pudo deshabilitar el proveedor');
                 }
             },
             complete: function () {
@@ -193,25 +167,9 @@ $(document).ready(function () {
             data: { 'disableProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    Swal.fire({
-                        icon: "success",
-                        title: 'Proveedor deshabilitado con éxito',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
-
+                    showAlertBootstrap2('Éxito', 'Proveedor deshabilitado con éxito', location.reload());
                 } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: 'Error',
-                        text: 'No se pudo deshabilitar el proveedor',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    showAlertBootstrap('Error', 'No se pudo deshabilitar el proveedor');
                 }
             },
             complete: function () {
@@ -248,25 +206,10 @@ $(document).ready(function () {
             data: { 'deleteProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    Swal.fire({
-                        icon: "success",
-                        title: 'Proveedor deshabilitado con éxito',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
+                    showAlertBootstrap2('Éxito', 'Proveedor deshabilitado con éxito', location.reload());
 
                 } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: 'Error',
-                        text: 'No se pudo deshabilitar el proveedor',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    showAlertBootstrap('Error', 'No se pudo deshabilitar el proveedor');
                 }
             },
             complete: function () {

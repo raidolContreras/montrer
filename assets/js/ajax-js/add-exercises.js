@@ -11,13 +11,9 @@ $(document).ready(function () {
 		var user = $("input[name='user']").val();
 
 		if (exerciseName == '' || initialDate == ''|| finalDate == '' || budget == ''){
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-				confirmButtonColor: '#026f35',
-				confirmButtonText: 'Aceptar'
-			});
+			
+			showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+
 		} else {
 			// Realiza la solicitud Ajax
 			$.ajax({
@@ -39,19 +35,10 @@ $(document).ready(function () {
 						$("input[name='finalDate']").val('');
 						$("input[name='budget']").val('');
 	
-						Swal.fire({
-						  icon: "success",
-						  title: 'Ejercicio creado exitosamente',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+						showAlertBootstrap('', 'Ejercicio creado exitosamente');
 					} else {
-						Swal.fire({
-						  icon: 'error',
-						  title: 'Error al crear el ejercicio',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+						
+						showAlertBootstrap('Error', 'Error al crear el ejercicio');
 					}
 				},
 				error: function (error) {

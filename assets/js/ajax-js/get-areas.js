@@ -130,24 +130,9 @@ $(document).ready(function () {
     
     function handleResponse(response, actionType, successMessage) {
         if (response === 'ok') {
-            Swal.fire({
-                icon: "success",
-                title: `Departamento ${successMessage} con éxito`,
-                confirmButtonColor: '#026f35',
-                confirmButtonText: 'Aceptar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    location.reload();
-                }
-            });
+            showAlertBootstrap2('Éxito', `Departamento ${successMessage} con éxito`, location.reload());
         } else {
-            Swal.fire({
-                icon: "error",
-                title: 'Error',
-                text: `No se pudo ${actionType.toLowerCase()} el departamento`,
-                confirmButtonColor: '#026f35',
-                confirmButtonText: 'Aceptar'
-            });
+            showAlertBootstrap('Error', `No se pudo ${actionType.toLowerCase()} el departamento`);
         }
     }
     

@@ -48,25 +48,9 @@ $(document).ready(function () {
             },
             success: function (response) {
 
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timerProgressBar: false,
-                    didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-
                 if (response !== 'Error') {
                     
-					Swal.fire({
-                        icon: "success",
-                        title: 'Empresa '+companyName+' creada exitosamente',
-                        confirmButtonColor: '#026f35',
-                        confirmButtonText: 'Aceptar'
-                    });
+                    showAlertBootstrap('', 'Empresa '+companyName+' creada exitosamente.');
 
                     idCompany = response;
                     myDropzone.processQueue();
@@ -86,12 +70,9 @@ $(document).ready(function () {
                     }, 1000);
 
                 } else {
-					Swal.fire({
-			          icon: 'error',
-					  title: response,
-                      confirmButtonColor: '#026f35',
-                      confirmButtonText: 'Aceptar'
-					});
+                    
+                    showAlertBootstrap('Error', response);
+                    
                 }
             },
             error: function (error) {

@@ -3,17 +3,6 @@ $(document).ready(function () {
 		// Evitar el envío del formulario por defecto
 		event.preventDefault();
 
-		const Toast = Swal.mixin({
-			toast: true,
-			position: "center",
-			showConfirmButton: false,
-			timerProgressBar: false,
-			didOpen: (toast) => {
-			  toast.onmouseenter = Swal.stopTimer;
-			  toast.onmouseleave = Swal.resumeTimer;
-			}
-		});	
-		
 		// Recoge los valores del formulario
 		var exerciseName = $("input[name='exerciseName']").val();
 		var initialDate = $("input[name='initialDate']").val();
@@ -24,13 +13,7 @@ $(document).ready(function () {
 
 		
 		if (exerciseName == '' || initialDate == ''|| finalDate == '' || budget == ''){
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-				confirmButtonColor: '#026f35',
-				confirmButtonText: 'Aceptar'
-			});
+			showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 		} else {
 			// Realiza la solicitud Ajax
 			$.ajax({
@@ -47,22 +30,9 @@ $(document).ready(function () {
 				success: function (response) {			  
 	
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
-						Swal.fire({
-						  icon: "success",
-						  title: 'Ejercicio actualizado exitosamente',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
-						setTimeout(function () {
-							window.location.href = 'exercise';
-						}, 1000);
+						showAlertBootstrap2('Éxito', 'Ejercicio actualizado exitosamente', 'exercise');
 					} else {
-						Swal.fire({
-						  icon: 'error',
-						  title: 'Error al crear el ejercicio',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+						showAlertBootstrap('Error', 'Error al actualizar el ejercicio');
 					}
 				},
 				error: function (error) {

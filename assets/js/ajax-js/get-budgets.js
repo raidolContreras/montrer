@@ -1,18 +1,6 @@
 $(document).ready(function () {
 
-    exercise = $("input[name='exercise']").val();
-
-	const Toast = Swal.mixin({
-		toast: true,
-		position: "center",
-		showConfirmButton: false,
-		timerProgressBar: false,
-		didOpen: (toast) => {
-			toast.onmouseenter = Swal.stopTimer;
-			toast.onmouseleave = Swal.resumeTimer;
-		}
-	});
-	
+    exercise = $("input[name='exercise']").val();	
 
 	var budgetsData = $('#budgets').DataTable({
 		ajax: {
@@ -170,24 +158,9 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 
 function handleResponse(response, actionType, successMessage) {
     if (response === 'ok') {
-        Swal.fire({
-            icon: "success",
-            title: `Presupuesto ${successMessage} con éxito`,
-			confirmButtonColor: '#026f35',
-			confirmButtonText: 'Aceptar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                location.reload();
-            }
-        });
+		showAlertBootstrap2('Éxito', `Presupuesto ${successMessage} con éxito`, location.reload());
     } else {
-        Swal.fire({
-            icon: "error",
-            title: 'Error',
-            text: `No se pudo ${actionType.toLowerCase()} el presupuesto`,
-			confirmButtonColor: '#026f35',
-			confirmButtonText: 'Aceptar'
-        });
+		showAlertBootstrap('Error', `No se pudo ${actionType.toLowerCase()} el presupuesto`);
     }
 }
 

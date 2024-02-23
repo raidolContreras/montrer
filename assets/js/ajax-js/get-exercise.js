@@ -1,16 +1,5 @@
 $(document).ready(function () {
 	
-	const Toast = Swal.mixin({
-		toast: true,
-		position: "center",
-		showConfirmButton: false,
-		timerProgressBar: false,
-		didOpen: (toast) => {
-			toast.onmouseenter = Swal.stopTimer;
-			toast.onmouseleave = Swal.resumeTimer;
-		}
-	});
-	
 	moment.locale('es');
 	var exerciseTable = $('#exercise').DataTable({
 		ajax: {
@@ -104,16 +93,7 @@ $(document).ready(function () {
 			url: "controller/ajax/exerciseOn.php",
 			data: { idExercise: idExercise },
 			success: function (response) {
-				Swal.fire({
-					icon: 'success',
-					title: 'Se activo de ejercicio exitosamente',
-					confirmButtonColor: '#026f35',
-					confirmButtonText: 'Aceptar'
-				}).then((result) => {
-					if (result.isConfirmed) {
-						location.reload();
-					}
-				});
+				showAlertBootstrap2('Éxito', 'Se activo de ejercicio exitosamente', location.reload());
 			},
 			error: function (error) {
 				console.log("Error en la solicitud Ajax:", error);
@@ -235,24 +215,9 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, messa
 
 function handleResponse(response, actionType, message) {
     if (response === 'ok') {
-        Swal.fire({
-            icon: "success",
-            title: `Ejercicio ${message} con éxito`,
-			confirmButtonColor: '#026f35',
-			confirmButtonText: 'Aceptar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                location.reload();
-            }
-        });
+		showAlertBootstrap2('Éxito', `Ejercicio ${message} con éxito`, location.reload());
     } else {
-        Swal.fire({
-            icon: "error",
-            title: 'Error',
-            text: `No se pudo ${actionType.toLowerCase()} el ejercicio`,
-			confirmButtonColor: '#026f35',
-			confirmButtonText: 'Aceptar'
-        });
+		showAlertBootstrap('Error', `No se pudo ${actionType.toLowerCase()} el ejercicio`);
     }
 }
 

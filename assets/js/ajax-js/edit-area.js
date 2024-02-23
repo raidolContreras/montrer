@@ -10,13 +10,7 @@ $(document).ready(function () {
 		var area = $('#register-value').data('register');
 
         if (areaName == '' || user == null) {
-            Swal.fire({
-				icon: 'warning',
-				title: 'Error',
-				text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-				confirmButtonColor: '#026f35',
-				confirmButtonText: 'Aceptar'
-			});
+			showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
         } else {
 			
 			// Realiza la solicitud Ajax
@@ -29,37 +23,16 @@ $(document).ready(function () {
 					updateUser: user,
 					updateArea: area
 				},
-				success: function (response) {
-					
-					const Toast = Swal.mixin({
-						toast: true,
-						position: "center",
-						showConfirmButton: false,
-						timerProgressBar: false,
-						didOpen: (toast) => {
-						  toast.onmouseenter = Swal.stopTimer;
-						  toast.onmouseleave = Swal.resumeTimer;
-						}
-					  });				  
+				success: function (response) {			  
 	
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
-						Swal.fire({
-						  icon: "success",
-						  title: 'Departamento actualizado exitosamente',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						}).then((result) => {
-							if (result.isConfirmed) {
-								window.location.href = 'areas';
-							}
-						});
+						
+						showAlertBootstrap2('Éxito', 'Departamento actualizado exitosamente', 'areas');
+
 					} else {
-						Swal.fire({
-						  icon: 'error',
-						  title: 'Error al crear el departamento',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+						
+						showAlertBootstrap('Error', 'Error al actualizar el departamento');
+
 					}
 				},
 				error: function (error) {

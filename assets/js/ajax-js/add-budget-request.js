@@ -34,12 +34,9 @@ $(document).ready(function () {
 	                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
 
 					} else {
-						Swal.fire({
-						  icon: 'error',
-						  title: 'Error al crear la solicitud',
-                          confirmButtonColor: '#026f35',
-                          confirmButtonText: 'Aceptar'
-						});
+                        
+	                    showAlertBootstrap('Error', 'Error al crear la solicitud.');
+                        
 					}
 				},
 				error: function (error) {
@@ -215,12 +212,8 @@ $(document).ready(function () {
     var today = new Date();
     if (today.getDay() >= 1 && today.getDay() <= 3) {
     } else {
-        Swal.fire({
-            title: 'Atención',
-            text: 'Las solicitudes recibidas después del miércoles se tramitarán la semana siguiente. Agradecemos su comprensión.',
-            icon: 'warning',
-            confirmButtonText: 'Aceptar'
-        });
+        
+	showAlertBootstrap('Atención', 'Las solicitudes recibidas después del miércoles se tramitarán la semana siguiente. Agradecemos su comprensión.');
     }
 
 });

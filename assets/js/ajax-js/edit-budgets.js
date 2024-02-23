@@ -9,25 +9,8 @@ $(document).ready(function () {
 		var exercise = $("select[name='exercise']").val();
 		var budget = $('#register-value').data('register');
 
-				const Toast = Swal.mixin({
-					toast: true,
-					position: "center",
-					showConfirmButton: false,
-					timerProgressBar: false,
-					didOpen: (toast) => {
-					  toast.onmouseenter = Swal.stopTimer;
-					  toast.onmouseleave = Swal.resumeTimer;
-					}
-				});
-
 		if (area == '' || AuthorizedAmount == '' || exercise == ''){
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).',
-				confirmButtonColor: '#026f35',
-				confirmButtonText: 'Aceptar'
-			});
+			showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 		} else {
 			// Realiza la solicitud Ajax
 			$.ajax({
@@ -42,23 +25,11 @@ $(document).ready(function () {
 				success: function (response) {
 	
 					if (response === 'ok') {
-						Swal.fire({
-						  icon: "success",
-						  title: 'Presupuesto actualizado exitosamente',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						}).then((result) => {
-							if (result.isConfirmed) {
-								window.location.href = 'budgets';
-							}
-						});
+						showAlertBootstrap2('Éxito', 'Presupuesto actualizado exitosamente' , 'budgets');
 					} else {
-						Swal.fire({
-						  icon: 'error',
-						  title: 'Error al actualizar el presupuesto',
-						  confirmButtonColor: '#026f35',
-						  confirmButtonText: 'Aceptar'
-						});
+						
+						showAlertBootstrap('Error', 'Error al actualizar el presupuesto');
+						
 					}
 				},
 				error: function (error) {

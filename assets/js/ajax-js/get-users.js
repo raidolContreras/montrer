@@ -155,24 +155,9 @@ $(document).ready(function () {
     
     function handleResponse(response, successMessage, errorMessage) {
         if (response === 'ok') {
-            Swal.fire({
-                icon: "success",
-                title: successMessage,
-                confirmButtonColor: '#026f35',
-                confirmButtonText: 'Aceptar',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    location.reload();
-                }
-            });
+            showAlertBootstrap2('Éxito', successMessage, location.reload());
         } else {
-            Swal.fire({
-                icon: "error",
-                title: 'Error',
-                text: `No se pudo ${errorMessage.toLowerCase()} el usuario`,
-                confirmButtonColor: '#026f35',
-                confirmButtonText: 'Aceptar',
-            });
+            showAlertBootstrap('Error', `No se pudo ${errorMessage.toLowerCase()} el usuario`);
         }
     }
     
@@ -223,27 +208,12 @@ $(document).ready(function () {
     }
     
     function showError(message) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: message,
-            confirmButtonColor: '#026f35',
-            confirmButtonText: 'Aceptar',
-        });
+        showAlertBootstrap('Error', message);
     }
     
     function handleResponse(response, successMessage) {
         if (response === 'ok') {
-            Swal.fire({
-                icon: "success",
-                title: successMessage,
-                confirmButtonColor: '#026f35',
-                confirmButtonText: 'Aceptar',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    location.reload();
-                }
-            });
+            showAlertBootstrap2('Éxito', successMessage, location.reload());
         } else {
             showError('No se pudo actualizar la contraseña');
         }

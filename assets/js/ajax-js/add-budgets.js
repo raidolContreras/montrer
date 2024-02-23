@@ -8,25 +8,10 @@ $(document).ready(function () {
         var AuthorizedAmount = $("input[name='AuthorizedAmount']").val();
         var exercise = $("select[name='exercise']").val();
 
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "center",
-            showConfirmButton: false,
-            timerProgressBar: false,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-
         if (area == '' || AuthorizedAmount == '' || exercise == ''){
-			Swal.fire({
-				icon: 'warning',
-				title: 'Advertencia',
-				text: 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*)',
-                confirmButtonColor: '#026f35',
-                confirmButtonText: 'Aceptar'
-			});
+            
+            showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+
 		} else {
             // Realiza la solicitud Ajax
             $.ajax({
@@ -43,39 +28,15 @@ $(document).ready(function () {
                         $("select[name='area']").val('');
                         $("input[name='AuthorizedAmount']").val('');
                         $("select[name='exercise']").val('');
+                        
+	                    showAlertBootstrap3('Presupuesto asignado correctamente.', '¿Agregar otro presupuesto?', 'registerBudgets' , 'budgets');
 
-                        Swal.fire({
-                            icon: "success",
-                            title: 'Presupuesto asignado correctamente.',
-                            text: '¿Agregar otro presupuesto?',
-                            showCancelButton: true,
-                            cancelButtonColor: '#026f35',
-                            confirmButtonColor: '#d33',
-                            confirmButtonText: 'Cancelar',
-                            cancelButtonText: 'Aceptar',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = 'budgets';
-                            } else {
-                                window.location.href = 'registerBudgets';
-                            }
-                        });
                     } else if (response === 'Error: Presupuesto ya asignado') {
-                        Swal.fire({
-                            icon: "error",
-                            title: 'Error',
-                            text: 'Presupuesto ya asignado a esta área.',
-                            confirmButtonColor: '#026f35',
-                            confirmButtonText: 'Aceptar'
-                        });
+                        
+	                    showAlertBootstrap3('Error', 'Presupuesto ya asignado a esta área.');
+
                     } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Error al asignar el presupuesto.',
-                            confirmButtonColor: '#026f35',
-                            confirmButtonText: 'Aceptar'
-                        });
+	                    showAlertBootstrap3('Error', 'Error al asignar el presupuesto.');
                     }
                 },
                 error: function (error) {

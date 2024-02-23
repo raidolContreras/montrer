@@ -7,27 +7,8 @@ $(document).ready(function () {
             var parsedResponse = JSON.parse(response);
 
             if (parsedResponse === 'false') {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timerProgressBar: false,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
 
-                Toast.fire({
-                    icon: 'error',
-                    title: 'No se ha activado ningún ejercicio',
-                    confirmButtonColor: '#d33',
-                    confirmButtonText: 'Aceptar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'exercise';
-                    }
-                });
+                showAlertBootstrap2('error', 'No se ha activado ningún ejercicio.', 'exercise');
 
             } else {
                 var exerciseSelect = document.getElementById('exercise');
