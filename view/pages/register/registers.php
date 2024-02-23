@@ -40,8 +40,8 @@
         <p id="userInfo">¿Está seguro de que desea deshabilitar al usuario <strong id="userName"></strong>?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-warning" id="confirmDisable">Deshabilitar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success" id="confirmDisable">Aceptar</button>
       </div>
     </div>
   </div>
@@ -59,8 +59,8 @@
                 <p>¿Está seguro de que desea habilitar al usuario <strong id="enableUserName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmEnable">Habilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmEnable">Aceptar</button>
             </div>
         </div>
     </div>
@@ -78,8 +78,8 @@
               <p>¿Está seguro de que desea eliminar de forma permanente al usuario <strong id="deleteUserName"></strong>?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-success" id="confirmDelete">Aceptar</button>
             </div>
         </div>
     </div>
@@ -104,16 +104,14 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmChangePassword">Cambiar Contraseña</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmChangePassword">Aceptar</button>
             </div>
         </div>
     </div>
 </div>
 
-
 <script src="assets/js/ajax-js/get-users.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
 <?php else: ?>
 	<script>
 		window.location.href = 'inicio';

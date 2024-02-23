@@ -24,26 +24,33 @@
 				$('[data-bs-toggle="tooltip"]').tooltip();
 			});
 			
-			var modalFooter = $('.modal-footer');
-			// Show Bootstrap Modal with a custom message
+			var modalFooter = $('.modal-footer-extra');
+			
 			function showAlertBootstrap(title, message) {
-				$('#modalLabel').text(title); // Set the title of the modal
-				$('.modal-body').text(message); // Set the message of the modal
+				$('#modalLabel').text(title);
+				$('.modal-body-extra').text(message);
 					modalFooter.html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
-				$('#alertModal').modal('show'); // Show the modal
+				$('#alertModal').modal('show');
 			}
 			
 			function showAlertBootstrap2(title, message, adress) {
 				$('#modalLabel').text(title);
-				$('.modal-body').text(message);
-				$('.modal-footer').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
+				$('.modal-body-extra').text(message);
+				$('.modal-footer-extra').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
 				$('#alertModal').modal('show');
 			}
 			
 			function showAlertBootstrap3(title, message, adress, cancel) {
 				$('#modalLabel').text(title);
-				$('.modal-body').text(message);
-				$('.modal-footer').html('<button type="button" class="btn btn-danger" onclick="window.location.href=\''+ cancel +'\'">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
+				$('.modal-body-extra').text(message);
+				$('.modal-footer-extra').html('<button type="button" class="btn btn-danger" onclick="window.location.href=\''+ cancel +'\'">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
+				$('#alertModal').modal('show');
+			}
+			
+			function showAlertBootstrap4(title, message, adress, cancel) {
+				$('#modalLabel').text(title);
+				$('.modal-body-extra').text(message);
+				$('.modal-footer-extra').html('<button type="button" class="btn btn-success" onclick="location.reload()">Aceptar</button>');
 				$('#alertModal').modal('show');
 			}
 

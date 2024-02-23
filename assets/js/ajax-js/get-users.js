@@ -143,27 +143,13 @@ $(document).ready(function () {
                 url: 'controller/ajax/ajax.form.php',
                 data: { [`${actionType}User`]: idUser },
                 success: function (response) {
-                    handleResponse(response, successMessage, errorMessage);
-                },
-                complete: function () {
                     idUser = 0;
                     $(`#${modalId}`).modal('hide');
+                    handleResponse(response, successMessage, errorMessage, modalId);
                 }
             });
         });
     }
-    
-    function handleResponse(response, successMessage, errorMessage) {
-        if (response === 'ok') {
-            showAlertBootstrap2('Éxito', successMessage, location.reload());
-        } else {
-            showAlertBootstrap('Error', `No se pudo ${errorMessage.toLowerCase()} el usuario`);
-        }
-    }
-    
-    showModalAndSetData('disableModal', 'disableUserName', 'confirmDisable', 'disable', 'Usuario deshabilitado con éxito', 'deshabilitar');
-    showModalAndSetData('enableModal', 'enableUserName', 'confirmEnable', 'enable', 'Usuario habilitado con éxito', 'habilitar');
-    showModalAndSetData('deleteModal', 'deleteUserName', 'confirmDelete', 'delete', 'Usuario eliminado con éxito', 'eliminar');
     
     function handlePasswordChange(idUser) {
         var newPassword = $("input[name='newPassword']").val();
@@ -173,9 +159,13 @@ $(document).ready(function () {
     
         if (!passwordRegex.test(newPassword)) {
             showError('La contraseña debe contener 10 caracteres, de los cuales obligatoriamente: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo.');
+            newPassword = $("input[name='newPassword']").val('');
+            newPassword = $("input[name='confirmPassword']").val('');
             return;
         } else if (newPassword !== confirmPassword) {
             showError('Las contraseñas no coinciden.');
+            newPassword = $("input[name='newPassword']").val('');
+            newPassword = $("input[name='confirmPassword']").val('');
             return;
         }
     
@@ -184,11 +174,13 @@ $(document).ready(function () {
             url: 'controller/ajax/ajax.form.php',
             data: { idUsers: idUser, newPassword: newPassword },
             success: function (response) {
-                handleResponse(response, 'Contraseña actualizada con éxito');
-            },
-            complete: function () {
                 idUser = 0;
                 $('#changePasswordModal').modal('hide');
+                
+                newPassword = $("input[name='newPassword']").val('');
+                newPassword = $("input[name='confirmPassword']").val('');
+                
+                handleResponse(response, 'Contraseña actualizada con éxito');
             }
         });
     }
@@ -211,15 +203,17 @@ $(document).ready(function () {
         showAlertBootstrap('Error', message);
     }
     
-    function handleResponse(response, successMessage) {
+    function handleResponse(response, successMessage, errorMessage) {
         if (response === 'ok') {
-            showAlertBootstrap2('Éxito', successMessage, location.reload());
+            showAlertBootstrap4('Éxito', successMessage);
         } else {
-            showError('No se pudo actualizar la contraseña');
+            showAlertBootstrap('Error', `No se pudo ${errorMessage.toLowerCase()} el usuario`);
         }
     }
     
+    showModalAndSetData('disableModal', 'disableUserName', 'confirmDisable', 'disable', 'Usuario deshabilitado con éxito', 'deshabilitar');
+    showModalAndSetData('enableModal', 'enableUserName', 'confirmEnable', 'enable', 'Usuario habilitado con éxito', 'habilitar');
+    showModalAndSetData('deleteModal', 'deleteUserName', 'confirmDelete', 'delete', 'Usuario eliminado con éxito', 'eliminar');
     showModalPass('changePasswordModal', 'changePasswordUserName', 'confirmChangePassword', 'change-password');
-    
     
 });
