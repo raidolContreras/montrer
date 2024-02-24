@@ -37,8 +37,8 @@
                 <p>¿Está seguro de que desea deshabilitar el proveedor <strong id="disableProviderName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="confirmDisableProvider">Deshabilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmDisableProvider">Aceptar</button>
             </div>
         </div>
     </div>
@@ -55,8 +55,8 @@
                 <p>¿Está seguro de que desea habilitar el proveedor <strong id="enableProviderName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmEnableProvider">Habilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmEnableProvider">Aceptar</button>
             </div>
         </div>
     </div>
@@ -73,8 +73,8 @@
                 <p>¿Está seguro de que desea eliminar el proveedor <strong id="deleteProviderName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteProvider">Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmDeleteProvider">Aceptar</button>
             </div>
         </div>
     </div>

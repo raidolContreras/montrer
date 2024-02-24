@@ -45,8 +45,8 @@
                 <p>¿Está seguro de que desea deshabilitar el ejercicio <strong id="disableExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="confirmDisableExercise">Deshabilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmDisableExercise">Aceptar</button>
             </div>
         </div>
     </div>
@@ -64,8 +64,8 @@
                 <p>¿Está seguro de que desea habilitar el ejercicio <strong id="enableExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmEnableExercise">Habilitar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmEnableExercise">Aceptar</button>
             </div>
         </div>
     </div>
@@ -83,8 +83,8 @@
                 <p>¿Está seguro de que desea eliminar el ejercicio <strong id="deleteExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmDeleteExercise">Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmDeleteExercise">Aceptar</button>
             </div>
         </div>
     </div>
@@ -102,8 +102,8 @@
                 <p>¿Está seguro de que desea activar el ejercicio <strong id="activateExerciseName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmActivateExercise">Activar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmActivateExercise">Aceptar</button>
             </div>
         </div>
     </div>
