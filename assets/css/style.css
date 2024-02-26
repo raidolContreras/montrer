@@ -6041,3 +6041,11 @@ Template Sidebar CSS
   overflow-y: auto;
   outline: 0;
 }
+
+.total-use span{
+  color: #d33 !important;
+}
+
+.rest span{
+  color: #d33 !important;
+}

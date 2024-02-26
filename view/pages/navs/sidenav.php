@@ -6,7 +6,7 @@
             $activeInicio = (!isset($_GET['pagina']) || $_GET['pagina'] == 'inicio') ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeInicio; ?>">
-            <a href="inicio" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Tablero" onclick="confirmExit(event, 'inicio')">
+            <a href="inicio" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Tablero" onclick="confirmExit(event, 'inicio')">
                 <img src="assets/img/svg/element.svg" alt="element">
             </a>
         </li>
@@ -18,8 +18,8 @@
                 $activeRegisters = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registers' || $_GET['pagina'] == 'register' || $_GET['pagina'] == 'editRegister')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeRegisters; ?>">
-                <a href="registers" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Usuarios" onclick="confirmExit(event, 'registers')">
-                    <img src="assets/img/png/registers.png" width='25px' alt="calendar">
+                <a href="registers" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Usuarios" onclick="confirmExit(event, 'registers')">
+                    <img src="assets/img/svg/registers.svg" width='25px' alt="calendar">
                 </a>
             </li>
             
@@ -28,8 +28,8 @@
                 $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea' || $_GET['pagina'] == 'areas' || $_GET['pagina'] == 'editArea')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
-                <a href="areas" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Departamentos" onclick="confirmExit(event, 'areas')">
-                <img src="assets/img/png/areas.png" width='25px' alt="calendar">
+                <a href="areas" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Departamentos" onclick="confirmExit(event, 'areas')">
+                <img src="assets/img/svg/areas.svg" width='25px' alt="calendar">
                 </a>
             </li>
 
@@ -38,8 +38,8 @@
                 $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'exercise' || $_GET['pagina'] == 'registerExercise' || $_GET['pagina'] == 'editExercise')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeExercise; ?>">
-                <a href="exercise" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Ejercicios" onclick="confirmExit(event, 'exercise')">
-                    <img src="assets/img/png/exercises.png" width='25px' alt="calendar">
+                <a href="exercise" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Ejercicios" onclick="confirmExit(event, 'exercise')">
+                    <img src="assets/img/svg/exercises.svg" width='25px' alt="calendar">
                 </a>
             </li>
 
@@ -48,8 +48,8 @@
                 $activeBudget = (isset($_GET['pagina']) && ($_GET['pagina'] == 'budgets' || $_GET['pagina'] == 'registerBudgets' || $_GET['pagina'] == 'editBudgets')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeBudget; ?>">
-                <a href="budgets" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Asignación de presupuestos" onclick="confirmExit(event, 'budgets')">
-                    <img src="assets/img/png/budgets.png" width='25px' alt="calendar">
+                <a href="budgets" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Asignación de presupuestos" onclick="confirmExit(event, 'budgets')">
+                    <img src="assets/img/svg/budgets.svg" width='25px' alt="calendar">
                 </a>
             </li>
         
@@ -60,8 +60,8 @@
             $activeProvider = (isset($_GET['pagina']) && ($_GET['pagina'] == 'provider' || $_GET['pagina'] == 'registerProvider' || $_GET['pagina'] == 'editProvider')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeProvider; ?>">
-            <a href="provider" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Proveedores" onclick="confirmExit(event, 'provider')">
-                <img src="assets/img/png/providers.png" width='25px' alt="calendar">
+            <a href="provider" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Proveedores" onclick="confirmExit(event, 'provider')">
+                <img src="assets/img/svg/providers.svg" width='25px' alt="calendar">
             </a>
         </li>
         
@@ -70,8 +70,8 @@
             $activeRequest = (isset($_GET['pagina']) && ($_GET['pagina'] == 'requestBudget' || $_GET['pagina'] == 'registerRequestBudget')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeRequest; ?>">
-            <a href="requestBudget" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Solicitudes de presupuestos" onclick="confirmExit(event, 'requestBudget')">
-                <img src="assets/img/png/justifyRequest.png" width='25px' alt="calendar">
+            <a href="requestBudget" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Solicitudes de presupuestos" onclick="confirmExit(event, 'requestBudget')">
+                <img src="assets/img/svg/justifyRequest.svg" width='25px' alt="calendar">
             </a>
         </li>
         <?php 
@@ -79,8 +79,8 @@
             $activeRequest = (isset($_GET['pagina']) && ($_GET['pagina'] == 'solicitudSendBudget')) ? 'active' : '';
         ?>
         <li class="list-group-item main-grid <?php echo $activeRequest; ?>">
-            <a href="solicitudSendBudget" class="icon" data-bs-toggle="tooltip" data-bs-placement="right" title="Justificar de presupuestos" onclick="confirmExit(event, 'requestBudget')">
-                <img src="assets/img/png/request.png" width='25px' alt="calendar">
+            <a href="solicitudSendBudget" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Justificar de presupuestos" onclick="confirmExit(event, 'requestBudget')">
+                <img src="assets/img/svg/request.svg" width='25px' alt="calendar">
             </a>
         </li>
     </ul>

@@ -1,15 +1,14 @@
 $(document).ready(function () {
 	
-    $("form.account-wrap").submit(function (event) {
-        event.preventDefault();
-
+	$("form.account-wrap").submit(function (event) {
+		event.preventDefault();
         // Collect form values
         var firstname = $("input[name='firstname']").val();
         var lastname = $("input[name='lastname']").val();
         var email = $("input[name='email']").val();
         var level = $("select[name='level']").val();
         var area = $("select[name='area']").val();
-
+		
         if (firstname == '' || lastname == '' || email == '') {
             showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
         } else {
@@ -24,15 +23,17 @@ $(document).ready(function () {
 					area: area
 				},
 				success: function (response) {				
-	
+					
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
-
+						
+						$('.sidenav').removeAttr('onclick');
 						$("input[name='firstname']").val('');
 						$("input[name='lastname']").val('');
 						$("input[name='email']").val('');
 						$("select[name='level']").val('2');
 						$("select[name='area']").val('');
-						
+
+
 						showAlertBootstrap('Exito', response+' creado exitosamente');
 
 					} else if (response === 'Error: Email duplicado') {

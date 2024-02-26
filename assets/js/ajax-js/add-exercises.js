@@ -35,7 +35,8 @@ $(document).ready(function () {
 						$("input[name='finalDate']").val('');
 						$("input[name='budget']").val('');
 	
-						showAlertBootstrap('', 'Ejercicio creado exitosamente');
+						$('.sidenav').removeAttr('onclick');
+						showAlertBootstrap('Exito', 'Ejercicio creado exitosamente');
 					} else {
 						
 						showAlertBootstrap('Error', 'Error al crear el ejercicio');

@@ -19,7 +19,7 @@
                     <input type="text" class="form-control" id="providerKey" name="providerKey" readonly>
                 </div>
                 <div class="col-md-6">
-                    <label for="representativeName" class="form-label">Nombre del representante del proveedor<span class="required"></span></label>
+                    <label for="representativeName" class="form-label">Nombre del representante<span class="required"></span></label>
                     <input type="text" class="form-control" id="representativeName" name="representativeName">
                 </div>
                 <div class="col-md-6">
@@ -35,7 +35,7 @@
                     <input type="url" class="form-control" id="website" name="website">
                 </div>
                 <div class="col-md-6">
-                    <label for="businessName" class="form-label">Razón social del proveedor<span class="required"></span></label>
+                    <label for="businessName" class="form-label">Razón social<span class="required"></span></label>
                     <input type="text" class="form-control" id="businessName" name="businessName">
                 </div>
                 <div class="col-md-6">

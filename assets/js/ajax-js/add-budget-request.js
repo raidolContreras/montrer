@@ -30,7 +30,8 @@ $(document).ready(function () {
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
 						$("textarea[name='description']").val('');
-                        
+                        $('.sidenav').removeAttr('onclick');
+
 	                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
 
 					} else {
@@ -74,7 +75,7 @@ function getArea(registerValue) {
         dataType: 'json',
         success: function (response) {
             $('select[name="area"]').val(response.nameArea);
-
+            
             // Obtén el valor de AuthorizedAmount desde la respuesta
             var authorizedAmount = response.AuthorizedAmount;
 

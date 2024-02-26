@@ -57,7 +57,7 @@
 			function showAlertBootstrap5(title, htmlText) {
 				$('#modalLabel').text(title);
 				$('.modal-body-extra').html(htmlText);
-				$('.modal-header').html('');
+				$('.modal-header').html('Asignación de presupuesto');
 				$('.modal-footer-extra').html(`
 					<button type="button" class="btn btn-danger" onclick="window.location.href=\'inicio\'">Cancelar</button>
 					<button class="btn btn-success"onclick="window.location.href=\'budgets&exercise=all\'">Vista general</button>

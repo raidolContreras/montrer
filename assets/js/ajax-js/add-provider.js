@@ -59,7 +59,7 @@ $(document).ready(function () {
 			success: function (response) {
 				if (response === 'ok') {
 					
-					showAlertBootstrap2('Proveedor creado exitosamente', '¿Seguro que deseas cancelar?', 'provider');
+					showAlertBootstrap3('Proveedor creado exitosamente.', '¿Agregar otro proveedor?', 'registerProvider' , 'provider');
 
 				} else {
 					

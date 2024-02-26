@@ -62,6 +62,7 @@
 	</div>
 </div>
 </main>
+<input type="hidden" name="register" id="register">
 
 <script src="assets/js/ajax-js/add-users.js"></script>
 

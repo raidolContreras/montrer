@@ -24,6 +24,7 @@ $(document).ready(function () {
 						$("input[name='areaName']").val('');
 						$("input[name='areaDescription']").val('');
 						$("select[name='user']").val('');
+						$('.sidenav').removeAttr('onclick');
 
 						showAlertBootstrap('Exito', 'Departamento registrado.');
 
