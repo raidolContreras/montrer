@@ -74,7 +74,7 @@ if ($is_mobile) {
 </head>
 
 <!-- Bootstrap Modal for Alerts -->
-<div class="modal fade modal2" id="alertModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade modal2" id="alertModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -85,8 +85,6 @@ if ($is_mobile) {
                 Alert message.
             </div>
             <div class="modal-footer modal-footer-extra">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">OK</button>
             </div>
         </div>
     </div>

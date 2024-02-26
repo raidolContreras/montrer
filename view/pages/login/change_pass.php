@@ -26,7 +26,7 @@
                             <input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
 						</div>
 						<div class="form-group mb-24">
-							<button type="submit" class="default-btn" id="register">Actualizar contraseña</button>
+							<button type="submit" class="btn btn-success" id="register">Aceptar</button>
 						</div>
 					</form>
                     
