@@ -53,10 +53,10 @@ $(document).ready(function () {
                     showAlertBootstrap('Error', 'No se pudo actualizar la contraseña, intentelo nuevamente.');
                     
                 } else if (response === "ok") {
-
+                    
                     bandera = 0;
                     
-                    showAlertBootstrap2('Operación realizada', 'Contraseña actualizada correctamente.', 'inicio');
+                    showAlertBootstrap2('Éxito', 'Contraseña actualizada correctamente.', 'inicio');
 
                 } else {
                     

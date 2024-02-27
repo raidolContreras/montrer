@@ -121,7 +121,7 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 
 function handleResponse(response, successMessage, errorMessage) {
     if (response === 'ok') {
-        showAlertBootstrap4('Operación realizada', successMessage);
+        showAlertBootstrap4('Éxito', successMessage);
     } else {
         showAlertBootstrap('Error', `No se pudo ${errorMessage.toLowerCase()} el Presupuesto`);
     }

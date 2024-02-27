@@ -10,7 +10,7 @@
 					<a class="btn btn-primary" href="register">Nuevo usuario</a>
 				</div>
 
-				<table class="table table-responsive" id="registers">
+				<table class="table" id="registers">
 					<thead>
 						<tr>
 							<th>#</th>
@@ -19,7 +19,7 @@
 							<th>Departamento</th>
 							<th>Fecha de creación</th>
 							<th>Última conexión</th>
-							<th width="30%"></th>
+							<th width="15%"></th>
 						</tr>
 					</thead>
 				</table>

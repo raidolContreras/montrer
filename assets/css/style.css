@@ -6,7 +6,7 @@ is the file you need to edit to change the look of the template.
 
 This files table contents are outlined below>>>>>
 
-******************************************* 
+*******************************************
 ** - DEFAULT AREA STYLE - **
 
 ** - Default Btn Area Style
@@ -4060,7 +4060,7 @@ FAQ Area Style
   text-align: center;
 }
 
-/* 
+/*
 Main Content Text Style
 =====================================================*/
 .main-content-text h1, .main-content-text h2, .main-content-text h3, .main-content-text h4, .main-content-text h5, .main-content-text h6 {
@@ -4148,7 +4148,7 @@ Main Content Text Style
   margin: auto;
 }
 
-/* 
+/*
 Pricing Area Style
 =====================================================*/
 .single-pricing {
@@ -5972,11 +5972,13 @@ Template Sidebar CSS
 .disable-button,
 .denegate-button,
 .delete-button{
-  font-size: 12px !important;
-  width: 100%;
-  white-space: nowrap;
-  padding-right: 5px;
-  padding-left: 5px;
+  /* font-size: 12px !important; */
+  /* width: 100%; */
+  /* white-space: nowrap; */
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
 
 .btn-group {
