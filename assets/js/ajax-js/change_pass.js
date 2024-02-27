@@ -10,14 +10,14 @@ $(document).ready(function () {
         // Validar que la nueva contraseña sea igual a la confirmación
         if (newPassword !== confirmPassword) {
             
-            showAlertBootstrap('Error', 'La nueva contraseña y la confirmación no coinciden.');
+            showAlertBootstrap('!Atención¡', 'La nueva contraseña y la confirmación no coinciden.');
             return;
         }
 
         // Validar los requisitos de la contraseña
         var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{10,}$/;
         if (!passwordRegex.test(newPassword)) {
-            showAlertBootstrap('Error', 'La contraseña debe contener 10 caracteres, de los cuáles obligatoriamente: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo.');
+            showAlertBootstrap('!Atención¡', 'La contraseña debe contener 10 caracteres, de los cuáles obligatoriamente: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo.');
             return;
         }
 
@@ -34,15 +34,15 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === "Error: Inexistente") {
                     
-                    showAlertBootstrap('Error', 'Error al actualizar la contraseña.');
+                    showAlertBootstrap('!Atención¡', 'Error al actualizar la contraseña.');
                     
                 } else if (response === "Error: Password") {
                     
-                    showAlertBootstrap('Error', 'La contraseña actual no es correcta.');
+                    showAlertBootstrap('!Atención¡', 'La contraseña actual no es correcta.');
                     
                 } else {
                     
-                    showAlertBootstrap2('Error', 'Contraseña actualizada correctamente.', 'inicio');
+                    showAlertBootstrap2('!Atención¡', 'Contraseña actualizada correctamente.', 'inicio');
                     
                 }
             },

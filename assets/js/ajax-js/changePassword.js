@@ -17,7 +17,7 @@ $(document).ready(function () {
         // Validar que la nueva contraseña sea igual a la confirmación
         if (newPassword !== confirmPassword) {
             
-            showAlertBootstrap('Error', 'La nueva contraseña y la confirmación no coinciden.');
+            showAlertBootstrap('!Atención¡', 'La nueva contraseña y la confirmación no coinciden.');
             
             return;
         }
@@ -25,7 +25,7 @@ $(document).ready(function () {
         // Validar los requisitos de la contraseña
         var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\w\W]{10,}$/;
         if (!passwordRegex.test(newPassword)) {
-            showAlertBootstrap('Error', 'La contraseña debe contener 10 caracteres, de los cuáles obligatoriamente: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo.');
+            showAlertBootstrap('!Atención¡', 'La contraseña debe contener 10 caracteres, de los cuáles obligatoriamente: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo.');
             return;
         }
 
@@ -42,25 +42,25 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === "Error: Contraseñas distintas") {
                     
-                    showAlertBootstrap('Error', 'Las contraseñas no son iguales.');
+                    showAlertBootstrap('!Atención¡', 'Las contraseñas no son iguales.');
                     
                 } else if (response === "Error: Password") {
                     
-                    showAlertBootstrap('Error', 'La contraseña actual no es correcta.');
+                    showAlertBootstrap('!Atención¡', 'La contraseña actual no es correcta.');
                     
                 } else if (response === "Error: Inexistente") {
 
-                    showAlertBootstrap('Error', 'No se pudo actualizar la contraseña, intentelo nuevamente.');
+                    showAlertBootstrap('!Atención¡', 'No se pudo actualizar la contraseña, intentelo nuevamente.');
                     
                 } else if (response === "ok") {
                     
                     bandera = 0;
                     
-                    showAlertBootstrap2('Éxito', 'Contraseña actualizada correctamente.', 'inicio');
+                    showAlertBootstrap2('Operación realizada', 'Contraseña actualizada correctamente.', 'inicio');
 
                 } else {
                     
-                    showAlertBootstrap('Error', 'La nueva contraseña no puede ser igual a la antigua.');
+                    showAlertBootstrap('!Atención¡', 'La nueva contraseña no puede ser igual a la antigua.');
 
                 }
             },

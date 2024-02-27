@@ -39,7 +39,7 @@ $(document).ready(function () {
 					} else if (response === 'Error: Email duplicado') {
 						showAlertBootstrap('', response);
 					} else {
-						showAlertBootstrap('Error', 'Error al crear el usuario');
+						showAlertBootstrap('!Atención¡', 'Error al crear el usuario');
 					}
 				},
 				error: function (error) {

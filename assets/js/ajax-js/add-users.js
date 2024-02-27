@@ -43,11 +43,11 @@ $(document).ready(function () {
 
 					} else if (response === 'Error: Email duplicado') {
 
-						showAlertBootstrap('Error', 'Dirección de correo electrónico ya registrada');
+						showAlertBootstrap('!Atención¡', 'Dirección de correo electrónico ya registrada');
 
 					} else {
 
-						showAlertBootstrap('Error', 'Error al crear el usuario');
+						showAlertBootstrap('!Atención¡', 'Error al crear el usuario');
 						
 					}
 				},

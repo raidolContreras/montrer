@@ -71,7 +71,7 @@ $(document).ready(function () {
 
 				} else {
 					
-					showAlertBootstrap('Error', 'Error al crear el proveedor.');
+					showAlertBootstrap('!Atención¡', 'Error al crear el proveedor.');
 
 				}
 			},

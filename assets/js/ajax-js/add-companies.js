@@ -71,7 +71,7 @@ $(document).ready(function () {
 
                 } else {
                     
-                    showAlertBootstrap('Error', response);
+                    showAlertBootstrap('!Atención¡', response);
                     
                 }
             },

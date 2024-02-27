@@ -141,9 +141,9 @@ $(document).ready(function () {
     
     function handleResponse(response, actionType, successMessage) {
         if (response === 'ok') {
-            showAlertBootstrap4('Éxito', `Departamento ${successMessage} con éxito`);
+            showAlertBootstrap4('Operación realizada', `Departamento ${successMessage} con éxito`);
         } else {
-            showAlertBootstrap('Error', `No se pudo ${actionType.toLowerCase()} el departamento`);
+            showAlertBootstrap('!Atención¡', `No se pudo ${actionType.toLowerCase()} el departamento`);
         }
     }
     

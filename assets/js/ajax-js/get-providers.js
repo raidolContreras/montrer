@@ -136,9 +136,9 @@ $(document).ready(function () {
             data: { 'enableProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    showAlertBootstrap4('Éxito', 'Proveedor deshabilitado con éxito');
+                    showAlertBootstrap4('Operación realizada', 'Proveedor deshabilitado con éxito');
                 } else {
-                    showAlertBootstrap('Error', 'No se pudo deshabilitar el proveedor');
+                    showAlertBootstrap('!Atención¡', 'No se pudo deshabilitar el proveedor');
                 }
             },
             complete: function () {
@@ -174,9 +174,9 @@ $(document).ready(function () {
             data: { 'disableProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    showAlertBootstrap4('Éxito', 'Proveedor deshabilitado con éxito');
+                    showAlertBootstrap4('Operación realizada', 'Proveedor deshabilitado con éxito');
                 } else {
-                    showAlertBootstrap('Error', 'No se pudo deshabilitar el proveedor');
+                    showAlertBootstrap('!Atención¡', 'No se pudo deshabilitar el proveedor');
                 }
             },
             complete: function () {
@@ -213,10 +213,10 @@ $(document).ready(function () {
             data: { 'deleteProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    showAlertBootstrap4('Éxito', 'Proveedor deshabilitado con éxito');
+                    showAlertBootstrap4('Operación realizada', 'Proveedor deshabilitado con éxito');
 
                 } else {
-                    showAlertBootstrap('Error', 'No se pudo deshabilitar el proveedor');
+                    showAlertBootstrap('!Atención¡', 'No se pudo deshabilitar el proveedor');
                 }
             },
             complete: function () {

@@ -38,7 +38,7 @@ $(document).ready(function () {
 
 					} else {
 						
-						showAlertBootstrap('Error', 'Error al registrar el departamento.');
+						showAlertBootstrap('!Atención¡', 'Error al registrar el departamento.');
 
 					}
 				},

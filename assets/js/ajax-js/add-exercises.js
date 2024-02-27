@@ -46,7 +46,7 @@ $(document).ready(function () {
 						showAlertBootstrap('Exito', 'Ejercicio creado exitosamente');
 					} else {
 						
-						showAlertBootstrap('Error', 'Error al crear el ejercicio');
+						showAlertBootstrap('!Atención¡', 'Error al crear el ejercicio');
 					}
 				},
 				error: function (error) {

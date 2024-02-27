@@ -204,7 +204,7 @@ $(document).ready(function () {
 		$('#registers').on('click', `.${action}-button`, function () {
 			var idUser = $(this).data('id');
 			var userName = $(this).closest('tr').find('td:eq(1)').text();
-	
+			
 			$(`#${nameId}`).text(userName);
 			$(`#${modalId}`).modal('show');
 	
@@ -215,14 +215,14 @@ $(document).ready(function () {
 	}
 	
 	function showError(message) {
-		showAlertBootstrap('Error', message);
+		showAlertBootstrap('!Atención¡', message);
 	}
 	
 	function handleResponse(response, successMessage, errorMessage) {
 		if (response === 'ok') {
-			showAlertBootstrap4('Éxito', successMessage);
+			showAlertBootstrap4('Operación realizada', successMessage);
 		} else {
-			showAlertBootstrap('Error', `No se pudo ${errorMessage.toLowerCase()} el usuario`);
+			showAlertBootstrap('!Atención¡', `No se pudo ${errorMessage.toLowerCase()} el usuario`);
 		}
 	}
 	

@@ -104,7 +104,7 @@ $(document).ready(function () {
 			url: "controller/ajax/exerciseOn.php",
 			data: { idExercise: idExercise },
 			success: function (response) {
-				showAlertBootstrap4('Éxito', 'Se activo de ejercicio exitosamente');
+				showAlertBootstrap4('Operación realizada', 'Se activo de ejercicio exitosamente');
 			},
 			error: function (error) {
 				console.log("Error en la solicitud Ajax:", error);
@@ -226,9 +226,9 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, messa
 
 function handleResponse(response, actionType, message) {
     if (response === 'ok') {
-		showAlertBootstrap4('Éxito', `Ejercicio ${message} con éxito`);
+		showAlertBootstrap4('Operación realizada', `Ejercicio ${message} con éxito`);
     } else {
-		showAlertBootstrap('Error', `No se pudo ${actionType.toLowerCase()} el ejercicio`);
+		showAlertBootstrap('!Atención¡', `No se pudo ${actionType.toLowerCase()} el ejercicio`);
     }
 }
 

@@ -42,10 +42,10 @@ $(document).ready(function () {
 
                     } else if (response === 'Error: Presupuesto ya asignado') {
                         
-	                    showAlertBootstrap3('Error', 'Presupuesto ya asignado a esta área.');
+	                    showAlertBootstrap3('!Atención¡', 'Presupuesto ya asignado a esta área.');
 
                     } else {
-	                    showAlertBootstrap3('Error', 'Error al asignar el presupuesto.');
+	                    showAlertBootstrap3('!Atención¡', 'Error al asignar el presupuesto.');
                     }
                 },
                 error: function (error) {

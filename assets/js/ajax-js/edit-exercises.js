@@ -38,9 +38,9 @@ $(document).ready(function () {
 	
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
 						bandera = 0;
-						showAlertBootstrap2('Éxito', 'Ejercicio actualizado exitosamente', 'exercise');
+						showAlertBootstrap2('Operación realizada', 'Ejercicio actualizado exitosamente', 'exercise');
 					} else {
-						showAlertBootstrap('Error', 'Error al actualizar el ejercicio');
+						showAlertBootstrap('!Atención¡', 'Error al actualizar el ejercicio');
 					}
 				},
 				error: function (error) {

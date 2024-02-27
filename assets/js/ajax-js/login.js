@@ -21,7 +21,7 @@ $(document).ready(function () {
 			    }else if (response === 'status off') {
 					showAlertBootstrap('Usuario deshabilitado', 'Comuníquese con el administrador de la plataforma, para cualquier aclaración.');
 			    }else {
-					showAlertBootstrap('Error', 'Error al iniciar sesión, verifique su correo o contraseña');
+					showAlertBootstrap('!Atención¡', 'Error al iniciar sesión, verifique su correo o contraseña');
 			    }
 			},
 			error: function (error) {

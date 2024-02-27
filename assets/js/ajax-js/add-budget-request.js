@@ -48,7 +48,7 @@ $(document).ready(function () {
 
 					} else {
                         
-	                    showAlertBootstrap('Error', 'Error al crear la solicitud.');
+	                    showAlertBootstrap('!Atención¡', 'Error al crear la solicitud.');
                         
 					}
 				},
@@ -176,13 +176,19 @@ function updateMaxRequestedAmount(datos) {
 
         // Obtiene el idBudget del primer elemento del array (puedes ajustar esto según tus necesidades)
         var idBudget = datos[0].idBudget;
+
+        let formattedSum = sumaBudgetMonth.toLocaleString('es-MX', {
+            style: 'currency',
+            currency: 'MXN',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
         
         if(datos[0].approvedAmount !== 0){
             
-            $("input[name='maxBudget']").val(sumaBudgetMonth.toFixed(2));
             $("input[name='budget']").val(idBudget);
             $('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
-            $('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + sumaBudgetMonth.toFixed(2));
+            $('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + formattedSum);
 
         } else {
             $('#requestedAmount').prop('disabled', true);
