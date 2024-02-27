@@ -135,8 +135,8 @@ $(document).ready(function () {
 				return `
 				<div class="container">
 					<div class="row" style="justify-content: space-evenly;">
-						<button type="button" class="btn btn-success activate-btn-disable disabled" disabled>
-							Activo
+						<button type="button" class="btn btn-success activate-btn-disable disabled col-2" disabled data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Activado">
+							<i class="ri-checkbox-circle-fill"></i>
 						</button>
 						<button class="btn btn-primary edit-button col-2" data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 							<i class="ri-edit-line"></i>
@@ -154,8 +154,8 @@ $(document).ready(function () {
 				return `
 				<div class="container">
 					<div class="row" style="justify-content: space-evenly;">
-						<button class="btn btn-success activate-btn" data-exercise="${idExercise}" data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-							Activar
+						<button class="btn btn-success activate-btn col-2" data-exercise="${idExercise}" data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Activar">
+							<i class="ri-checkbox-circle-line"></i>
 						</button>
 						<button class="btn btn-primary edit-button col-2" data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 							<i class="ri-edit-line"></i>
@@ -174,8 +174,8 @@ $(document).ready(function () {
 			return `
             <div class="container">
                 <div class="row" style="justify-content: space-evenly;">
-					<button class="btn btn-success activate-btn disabled" disabled>
-						Activar
+					<button class="btn btn-success activate-btn disabled col-2" disabled>
+						<i class="ri-checkbox-blank-circle-fill"></i>
 					</button>
 					<button class="btn btn-primary edit-button col-2" data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 						<i class="ri-edit-line"></i>
