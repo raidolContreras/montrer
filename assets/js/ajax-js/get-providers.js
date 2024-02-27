@@ -3,18 +3,20 @@ $(document).ready(function () {
 
 
     $('#provider').DataTable({
+		// tus otras opciones de configuración aquí...
+		initComplete: function(settings, json) {
+			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
+		drawCallback: function(settings) {
+			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
         ajax: {
             url: 'controller/ajax/getProviders.php', // Ajusta la URL según tu estructura
             dataSrc: ''
         },
         columns: [
-            {
-                data: null,
-                render: function (data, type, row, meta) {
-                    // Utilizando el contador proporcionado por DataTables
-                    return meta.row + 1;
-                }
-            },
             {
                 data: 'provider_key',
             },
@@ -77,6 +79,11 @@ $(document).ready(function () {
                     return renderActionButtons(data.idProvider, data.status);
                 }
             }
+        ],
+		responsive: true,
+        autoWidth: false, // Desactiva el ancho automático para permitir personalizaciones
+        columnDefs: [
+            { width: "150px", targets: -1 } // Asume que quieres 150px para la última columna
         ],
         scrollX: true,
         language: {
@@ -234,35 +241,35 @@ function renderActionButtons(idProvider, status) {
 
     if (status == 1) {
         return `
-            <center>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary edit-button" data-id="${idProvider}">
-                        <i class="ri-edit-line"></i> Editar
+            <div class="container">
+                <div class="row" style="justify-content: space-evenly; width: 200px">
+                    <button class="btn btn-primary edit-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                        <i class="ri-edit-line"></i>
                     </button>
-                    <button class="btn btn-warning disable-button" data-id="${idProvider}">
-                        <i class="ri-forbid-line"></i> Deshabilitar
+                    <button class="btn btn-warning disable-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Deshabilitar">
+                        <i class="ri-forbid-line"></i>
                     </button>
-                    <button class="btn btn-danger delete-button" data-id="${idProvider}">
-                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    <button class="btn btn-danger delete-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                        <i class="ri-delete-bin-6-line"></i>
                     </button>
                 </div>
-            </center>
+            </div>
         `;
     } else {
         return `
-            <center>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary edit-button" data-id="${idProvider}">
-                        <i class="ri-edit-line"></i> Editar
+            <div class="container">
+                <div class="row" style="justify-content: space-evenly; width: 200px">
+                    <button class="btn btn-primary edit-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                        <i class="ri-edit-line"></i>
                     </button>
-                    <button class="btn btn-success enable-button" data-id="${idProvider}">
-                        <i class="ri-forbid-line"></i> habilitar
+                    <button class="btn btn-success enable-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
+                        <i class="ri-forbid-line"></i>
                     </button>
-                    <button class="btn btn-danger delete-button" data-id="${idProvider}">
-                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    <button class="btn btn-danger delete-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                        <i class="ri-delete-bin-6-line"></i> 
                     </button>
                 </div>
-            </center>
+            </div>
         `;
     }
 

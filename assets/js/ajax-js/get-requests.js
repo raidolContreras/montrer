@@ -4,6 +4,15 @@ $(document).ready(function () {
 
     moment.locale('es');
     $('#requests').DataTable({
+		// tus otras opciones de configuración aquí...
+		initComplete: function(settings, json) {
+			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
+		drawCallback: function(settings) {
+			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
         ajax: {
             url: 'controller/ajax/getRequests.php', // Ajusta la URL según tu estructura
             dataSrc: ''
@@ -55,6 +64,8 @@ $(document).ready(function () {
                 }
             }
         ],
+		responsive: true,
+		autoWidth: false,
         language: {
             "paginate": {
                 "first": "<<",
@@ -131,29 +142,29 @@ function renderActionButtons(idRequest, status, userRequest, user, level) {
 
     if (status == 0 && userRequest == user){
         return `
-            <center>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary edit-button" data-id="${idRequest}">
-                        <i class="ri-edit-line"></i> Editar
+            <div class="container">
+                <div class="row" style="justify-content: space-evenly;">
+                    <button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                        <i class="ri-edit-line"></i>
                     </button>
-                    <button class="btn btn-danger delete-button" data-id="${idRequest}">
-                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    <button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                        <i class="ri-delete-bin-6-line"></i>
                     </button>
                 </div>
-            </center>
+            </div>
         `;
     } else if (status == 0 && level == 1 && userRequest != user) {
         return `
-            <center>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-success edit-button" data-id="${idRequest}">
+            <div class="container">
+                <div class="row" style="justify-content: space-evenly;">
+                    <button class="btn btn-success edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                         Aceptar
                     </button>
-                    <button class="btn btn-danger denegate-button" data-id="${idRequest}">
-                        <i class="ri-delete-bin-6-line"></i> Denegar
+                    <button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
+                        <i class="ri-delete-bin-6-line"></i>
                     </button>
                 </div>
-            </center>
+            </div>
         `;
     }
 }

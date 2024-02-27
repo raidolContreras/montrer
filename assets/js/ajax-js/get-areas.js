@@ -1,5 +1,14 @@
 $(document).ready(function () {
     var areasData = $('#areas').DataTable({
+		// tus otras opciones de configuración aquí...
+		initComplete: function(settings, json) {
+			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
+		drawCallback: function(settings) {
+			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
         ajax: {
             url: 'controller/ajax/getAreas.php',
             dataSrc: ''
@@ -32,6 +41,8 @@ $(document).ready(function () {
                 }
             }
         ],
+		responsive: true,
+		autoWidth: false,
         language: {
             "paginate": {
                 "first": "<<",
@@ -66,35 +77,35 @@ $(document).ready(function () {
     function renderAreaActionButtons(idArea, status) {
         if (status == 1) {
             return `
-            <center>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary edit-button" data-id="${idArea}">
-                        <i class="ri-edit-line"></i> Editar
+            <div class="container">
+                <div class="row" style="justify-content: space-evenly;">
+                    <button class="btn btn-primary edit-button col-2" data-id="${idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                        <i class="ri-edit-line"></i>
                     </button>
-                    <button class="btn btn-warning disable-button" data-id="${idArea}">
-                        <i class="ri-forbid-line"></i> Deshabilitar
+                    <button class="btn btn-warning disable-button col-2" data-id="${idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Deshabilitar">
+                        <i class="ri-forbid-line"></i>
                     </button>
-                    <button class="btn btn-danger delete-button" data-id="${idArea}">
-                        <i class="ri-delete-bin-6-line"></i> Eliminar
+                    <button class="btn btn-danger delete-button col-2" data-id="${idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                        <i class="ri-delete-bin-6-line"></i>
                     </button>
                 </div>
-            </center>
+            </div>
             `;
         } else {
             return `
-            <center>
-            <div class="btn-group" role="group">
-                <button class="btn btn-primary edit-button" data-id="${idArea}">
-                    <i class="ri-edit-line"></i> Editar
-                </button>
-                <button class="btn btn-success enable-button" data-id="${idArea}">
-                    <i class="ri-checkbox-circle-line"></i> Habilitar
-                </button>
-                <button class="btn btn-danger delete-button" data-id="${idArea}">
-                    <i class="ri-delete-bin-6-line"></i> Eliminar
-                </button>
+            <div class="container">
+                <div class="row" style="justify-content: space-evenly;">
+                    <button class="btn btn-primary edit-button col-2" data-id="${idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                        <i class="ri-edit-line"></i>
+                    </button>
+                    <button class="btn btn-success enable-button col-2" data-id="${idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
+                        <i class="ri-checkbox-circle-line"></i>
+                    </button>
+                    <button class="btn btn-danger delete-button col-2" data-id="${idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                        <i class="ri-delete-bin-6-line"></i>
+                    </button>
+                </div>
             </div>
-            </center>
             `;
         }
     }

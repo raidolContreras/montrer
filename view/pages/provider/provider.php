@@ -10,14 +10,13 @@
             <table class="table table-responsive" id="provider">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Clave del proveedor</th>
                         <th>Representante</th>
                         <th>Contacto</th>
                         <th>Razón Social</th>
                         <th>Dirección Fiscal</th>
                         <th>Datos bancarios</th>
-                        <th width="25%"></th>
+                        <th width="30%"></th>
                     </tr>
                 </thead>
             </table>

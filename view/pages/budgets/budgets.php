@@ -19,7 +19,7 @@
                                     <th>Presupuesto comprobado</th>
                                     <th>Presupuesto sin comprobar</th>
                                     <th>Ejercicio</th>
-                                    <th width="25%"></th>
+                                    <th width="15%"></th>
                                 </tr>
                             </thead>
                         </table>

@@ -14,11 +14,6 @@ $(document).ready(function () {
 			url: 'controller/ajax/getUsers.php',
 			dataSrc: ''
 		},
-		drawCallback: function(settings) {
-			// Inicializa los tooltips para los elementos dentro de la DataTable.
-			// Asegúrate de que este selector solo seleccione elementos dentro de la DataTable para evitar re-inicializaciones innecesarias.
-			$('[data-bs-toggle="tooltip"]', this.api().table().container()).tooltip();
-		},
 		columns: [
 			{ 
 				data: null,
@@ -71,9 +66,6 @@ $(document).ready(function () {
 		],
 		responsive: true,
 		autoWidth: false,
-		columnDefs: [
-			{ responsivePriority: 6}
-		],
 		language: {
 			"paginate": {
 				"first":      "<<",
