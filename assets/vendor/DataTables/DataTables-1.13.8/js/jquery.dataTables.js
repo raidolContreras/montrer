@@ -10640,7 +10640,7 @@
 		 *      } );
 		 *    } );
 		 */
-		"bAutoWidth": true,
+		"bAutoWidth": false,
 	
 	
 		/**

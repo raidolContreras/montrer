@@ -17,8 +17,8 @@
 							<th>Nombre colabolador</th>
 							<th>Email</th>
 							<th>Departamento</th>
-							<th>Fecha de creación</th>
-							<th>Última conexión</th>
+							<th width="15%">Fecha de creación</th>
+							<th width="15%">Última conexión</th>
 							<th width="15%"></th>
 						</tr>
 					</thead>

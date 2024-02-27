@@ -47,7 +47,7 @@ $(document).ready(function () {
 			{
 				data: 'createDate',
 				render: function (data) {
-					return moment(data).format('DD MMM YYYY, HH:mm');
+					return moment(data).format('DD/MM/YY, HH:mm');
 				}
 			},
 			{
@@ -56,7 +56,7 @@ $(document).ready(function () {
 					if ( data == '0000-00-00 00:00:00' ) {
 						return 'No ha accedido';
 					} else {
-						return moment(data).format('DD MMM YYYY, HH:mm');
+						return moment(data).format('DD/MM/YY, HH:mm');
 					}
 				}
 			},
@@ -70,6 +70,7 @@ $(document).ready(function () {
 			}
 		],
 		responsive: true,
+		autoWidth: false,
 		columnDefs: [
 			{ responsivePriority: 6}
 		],
