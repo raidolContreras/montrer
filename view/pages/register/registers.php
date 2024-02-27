@@ -32,83 +32,83 @@
 <!-- Disable Modal -->
 <div class="modal fade" id="disableModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="disableModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="disableModalLabel">Deshabilitar Usuario</h5>
-      </div>
-      <div class="modal-body">
-        <p id="userInfo">¿Está seguro de que desea deshabilitar al usuario <strong id="userName"></strong>?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success" id="confirmDisable">Aceptar</button>
-      </div>
-    </div>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title" id="disableModalLabel">Deshabilitar Usuario</h5>
+	  </div>
+	  <div class="modal-body">
+		<p id="userInfo">¿Está seguro de que desea deshabilitar al usuario <strong id="userName"></strong>?</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+		<button type="button" class="btn btn-success" id="confirmDisable">Aceptar</button>
+	  </div>
+	</div>
   </div>
 </div>
 
 <!-- Enable Modal -->
 <div class="modal fade" id="enableModal" tabindex="-1" aria-labelledby="enableModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="enableModalLabel">Habilitar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Está seguro de que desea habilitar al usuario <strong id="enableUserName"></strong>?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmEnable">Aceptar</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="enableModalLabel">Habilitar Usuario</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>¿Está seguro de que desea habilitar al usuario <strong id="enableUserName"></strong>?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-success" id="confirmEnable">Aceptar</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Eliminar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>¿Está seguro de que desea eliminar de forma permanente al usuario <strong id="deleteUserName"></strong>?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-success" id="confirmDelete">Aceptar</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteModalLabel">Eliminar Usuario</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+			  <p>¿Está seguro de que desea eliminar de forma permanente al usuario <strong id="deleteUserName"></strong>?</p>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+			  <button type="button" class="btn btn-success" id="confirmDelete">Aceptar</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Change Password Modal -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="changePasswordModalLabel">Cambiar Contraseña: <span id="changePasswordUserName"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group mb-24 icon">
-                    <input name="newPassword" type="password" class="form-control required-field" placeholder="Nueva Contraseña">
-                    <img src="assets/img/svg/lock.svg" alt="Icono de Contraseña">
-                </div>
-                <div class="form-group mb-24 icon">
-                    <input name="confirmPassword" type="password" class="form-control required-field" placeholder="Confirme la Contraseña">
-                    <img src="assets/img/svg/lock.svg" alt="Icono de Contraseña">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success" id="confirmChangePassword">Aceptar</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="changePasswordModalLabel">Cambiar Contraseña: <span id="changePasswordUserName"></span></h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group mb-24 icon">
+					<input name="newPassword" type="password" class="form-control required-field" placeholder="Nueva Contraseña">
+					<img src="assets/img/svg/lock.svg" alt="Icono de Contraseña">
+				</div>
+				<div class="form-group mb-24 icon">
+					<input name="confirmPassword" type="password" class="form-control required-field" placeholder="Confirme la Contraseña">
+					<img src="assets/img/svg/lock.svg" alt="Icono de Contraseña">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-success" id="confirmChangePassword">Aceptar</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="assets/js/ajax-js/get-users.js"></script>

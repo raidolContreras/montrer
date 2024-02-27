@@ -86,9 +86,3 @@
     </ul>
 </nav>
 <!-- End Sidebar Menu Area -->
-
-<script>
-    $(function () {
-        $('[data-bs-toggle="tooltip"]').tooltip()
-    })
-</script>

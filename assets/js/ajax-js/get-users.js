@@ -1,9 +1,23 @@
 $(document).ready(function () {
 	moment.locale('es');
 	$('#registers').DataTable({
+		// tus otras opciones de configuración aquí...
+		initComplete: function(settings, json) {
+			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
+		drawCallback: function(settings) {
+			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
+			$('[data-bs-toggle="tooltip"]').tooltip();
+		},
 		ajax: {
 			url: 'controller/ajax/getUsers.php',
 			dataSrc: ''
+		},
+		drawCallback: function(settings) {
+			// Inicializa los tooltips para los elementos dentro de la DataTable.
+			// Asegúrate de que este selector solo seleccione elementos dentro de la DataTable para evitar re-inicializaciones innecesarias.
+			$('[data-bs-toggle="tooltip"]', this.api().table().container()).tooltip();
 		},
 		columns: [
 			{ 
@@ -95,16 +109,16 @@ $(document).ready(function () {
 			return `
 				<div class="container">
 					<div class="row" style="justify-content: space-evenly;">
-						<button type="button" class="btn btn-primary edit-button col-2" data-id="${idUser}">
+						<button type="button" class="btn btn-primary edit-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 							<i class="ri-pencil-line"></i>
 						</button>
-						<button type="button" class="btn btn-warning disable-button col-2" data-id="${idUser}">
+						<button type="button" class="btn btn-warning disable-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Deshabilitar">
 							<i class="ri-forbid-line"></i>
 						</button>
-						<button type="button" class="btn btn-danger delete-button col-2" data-id="${idUser}">
+						<button type="button" class="btn btn-danger delete-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
 							<i class="ri-delete-bin-6-line"></i>
 						</button>
-						<button type="button" class="btn btn-secondary change-password-button col-2" data-id="${idUser}">
+						<button type="button" class="btn btn-secondary change-password-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Cambiar contraseña">
 							<i class="ri-lock-password-line"></i>
 						</button>
 					</div>
@@ -114,16 +128,16 @@ $(document).ready(function () {
 			return `
 				<div class="container">
 					<div class="row" style="justify-content: space-evenly;">
-						<button type="button" class="btn btn-primary edit-button col-2" data-id="${idUser}">
+					<button type="button" class="btn btn-primary edit-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 							<i class="ri-pencil-line"></i>
 						</button>
-						<button type="button" class="btn btn-success enable-button col-2" data-id="${idUser}">
+						<button type="button" class="btn btn-success enable-button col-2" data-id="${idUser}"data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
 							<i class="ri-checkbox-circle-line"></i>
 						</button>
-						<button type="button" class="btn btn-danger delete-button col-2" data-id="${idUser}">
+						<button type="button" class="btn btn-danger delete-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
 							<i class="ri-delete-bin-6-line"></i>
 						</button>
-						<button type="button" class="btn btn-secondary change-password-button col-2" data-id="${idUser}">
+						<button type="button" class="btn btn-secondary change-password-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Cambiar contraseña">
 							<i class="ri-lock-password-line"></i>
 						</button>
 					</div>
