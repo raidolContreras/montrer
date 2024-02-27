@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
 		// Evitar el envío del formulario por defecto
 		event.preventDefault();
@@ -21,6 +28,7 @@ $(document).ready(function () {
 				success: function (response) {
 
 					if (response === 'ok') {
+						bandera = 0;
 						$("input[name='areaName']").val('');
 						$("input[name='areaDescription']").val('');
 						$("select[name='user']").val('');
@@ -40,7 +48,7 @@ $(document).ready(function () {
 			});
 		} else {
 
-            showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 			
 		}
 	});
@@ -55,12 +63,14 @@ document.addEventListener('DOMContentLoaded', function () {
 	cancelButton.addEventListener('click', function (event) {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'areas');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'areas');
 
 	});
 });
 
 function confirmExit(event, destination) {
-	event.preventDefault();
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }

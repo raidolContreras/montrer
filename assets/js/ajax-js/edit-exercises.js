@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
 		// Evitar el envío del formulario por defecto
 		event.preventDefault();
@@ -13,7 +20,7 @@ $(document).ready(function () {
 
 		
 		if (exerciseName == '' || initialDate == ''|| finalDate == '' || budget == ''){
-			showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+			showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 		} else {
 			// Realiza la solicitud Ajax
 			$.ajax({
@@ -30,7 +37,8 @@ $(document).ready(function () {
 				success: function (response) {			  
 	
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
-						showAlertBootstrap2('Éxito', 'Ejercicio actualizado exitosamente', 'exercise');
+						bandera = 0;
+						showAlertBootstrap2('Operación realizada', 'Ejercicio actualizado exitosamente', 'exercise');
 					} else {
 						showAlertBootstrap('Error', 'Error al actualizar el ejercicio');
 					}
@@ -53,12 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
 		
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'exercise');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'exercise');
 
 	});
 });
 
 function confirmExit(event, destination) {
-	event.preventDefault();
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }

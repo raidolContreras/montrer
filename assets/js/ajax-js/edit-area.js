@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
 		// Evitar el envío del formulario por defecto
 		event.preventDefault();
@@ -10,7 +17,7 @@ $(document).ready(function () {
 		var area = $('#register-value').data('register');
 
         if (areaName == '' || user == null) {
-			showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+			showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
         } else {
 			
 			// Realiza la solicitud Ajax
@@ -26,8 +33,10 @@ $(document).ready(function () {
 				success: function (response) {			  
 	
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
+
+						bandera = 0;
 						
-						showAlertBootstrap2('Éxito', 'Departamento actualizado exitosamente', 'areas');
+						showAlertBootstrap2('Operación realizada', 'Departamento actualizado exitosamente', 'areas');
 
 					} else {
 						
@@ -53,12 +62,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
 
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'areas');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'areas');
 		
 	});
 });
 
 function confirmExit(event, destination) {
-	event.preventDefault();
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }

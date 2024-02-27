@@ -32,7 +32,7 @@ $(document).ready(function () {
 		function validateField(fieldName) {
 			if (!fields[fieldName]) {
 				
-				showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+				showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 				return false;
 			}
 			return true;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	cancelButton.addEventListener('click', function (event) {
 
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'provider');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'provider');
 
 	});
 });

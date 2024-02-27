@@ -150,28 +150,35 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['ema
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
 
-	$data = array(
-		'email' => $_POST['email'],
-		'password' => $_POST['password']
-	);
+    // Configurar el tiempo de vida de la sesión
+    ini_set('session.gc_maxlifetime', 3600); // Tiempo de vida de la sesión en el servidor
+    session_set_cookie_params(3600); // Tiempo de vida de la cookie de sesión en el cliente
 
-	$loginUser = AjaxForm::LoginUser($data);
+    // Iniciar la sesión
+    session_start();
 
-	if (!isset($loginUser['sesion'])) {
-		print_r( $loginUser);
-	} else {
-		if ($loginUser['sesion'] == 'ok'){
-			$_SESSION['sesion'] = $loginUser['sesion'];
-			$_SESSION['idUser'] = $loginUser['idUsers'];
-			$_SESSION['firstname'] = $loginUser['firstname'];
-			$_SESSION['lastname'] = $loginUser['lastname'];
-			$_SESSION['email'] = $loginUser['email'];
-			$_SESSION['level'] = $loginUser['level'];
-			$_SESSION['changedPass'] = $loginUser['changedPass'];
-		}
+    $data = array(
+        'email' => $_POST['email'],
+        'password' => $_POST['password']
+    );
 
-		echo $loginUser['sesion'];
-	}
+    $loginUser = AjaxForm::LoginUser($data);
+
+    if (!isset($loginUser['sesion'])) {
+        print_r($loginUser);
+    } else {
+        if ($loginUser['sesion'] == 'ok'){
+            $_SESSION['sesion'] = $loginUser['sesion'];
+            $_SESSION['idUser'] = $loginUser['idUsers'];
+            $_SESSION['firstname'] = $loginUser['firstname'];
+            $_SESSION['lastname'] = $loginUser['lastname'];
+            $_SESSION['email'] = $loginUser['email'];
+            $_SESSION['level'] = $loginUser['level'];
+            $_SESSION['changedPass'] = $loginUser['changedPass'];
+        }
+
+        echo $loginUser['sesion'];
+    }
 
 }
 

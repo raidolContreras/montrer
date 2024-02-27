@@ -205,7 +205,7 @@ $(document).ready(function () {
     
     function handleResponse(response, successMessage, errorMessage) {
         if (response === 'ok') {
-            showAlertBootstrap4('Éxito', successMessage);
+            showAlertBootstrap4('Operación realizada', successMessage);
         } else {
             showAlertBootstrap('Error', `No se pudo ${errorMessage.toLowerCase()} el usuario`);
         }

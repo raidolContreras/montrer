@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 		if (exerciseName == '' || initialDate == ''|| finalDate == '' || budget == ''){
 			
-			showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+			showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 
 		} else {
 			// Realiza la solicitud Ajax
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
 
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'exercise');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'exercise');
 		
 	});
 });

@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
     $("form.account-wrap").submit(function (event) {
         // Evitar el envío del formulario por defecto
         event.preventDefault();
@@ -10,7 +17,7 @@ $(document).ready(function () {
 
         if (area == '' || AuthorizedAmount == '' || exercise == ''){
             
-            showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 
 		} else {
             // Realiza la solicitud Ajax
@@ -25,6 +32,8 @@ $(document).ready(function () {
                 success: function (response) {
 
                     if (response === 'ok') {
+                        
+						bandera = 0;
                         $("select[name='area']").val('');
                         $("input[name='AuthorizedAmount']").val('');
                         $("select[name='exercise']").val('');
@@ -57,14 +66,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
 
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'budgets');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'budgets');
         
 	});
 });
 
 function confirmExit(event, destination) {
-    event.preventDefault();
-    
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
-    
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }

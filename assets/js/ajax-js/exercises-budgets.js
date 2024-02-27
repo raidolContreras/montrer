@@ -7,12 +7,13 @@ $(document).ready(function () {
         success: function (response) {
             // Parsea la respuesta JSON
             var exercises = JSON.parse(response);
-            var selectOptionsHtml = `<option>Selecciona un ejercicio</option>`;
+            var selectOptionsHtml = `<option>Seleccione un ejercicio</option>`;
 
             // Crea las opciones para el select
             exercises.forEach(function(exercise) {
                 selectOptionsHtml += `<option value="${exercise.idExercise}">${exercise.exerciseName}</option>`;
             });
+            selectOptionsHtml += `<option value="all">Vista general</option>`;
             
             var html = `<select class="form-select" id="exerciseSelect">${selectOptionsHtml}</select>`;
             showAlertBootstrap5('Selecciona un ejercicio', html);

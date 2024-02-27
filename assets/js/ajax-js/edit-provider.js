@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
     $("form.account-wrap").submit(function (event) {
         event.preventDefault();
 
@@ -25,7 +32,7 @@ $(document).ready(function () {
         // Función de validación
         function validateField(fieldName) {
             if (!fields[fieldName]) {
-                showAlertBootstrap('Advertencia', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+                showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
                 return false;
             }
             return true;
@@ -59,7 +66,9 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response === 'ok') {
-                    showAlertBootstrap2('Éxito', 'Proveedor actualizado exitosamente', 'provider');
+                    
+					bandera = 0;
+                    showAlertBootstrap2('Operación realizada', 'Proveedor actualizado exitosamente', 'provider');
                 } else {
                     showAlertBootstrap('Error', 'Error al actualizar el proveedor');
                 }
@@ -81,12 +90,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Prevenir el comportamiento predeterminado del enlace
 		event.preventDefault();
 
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'provider');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'provider');
         
 	});
 });
 
+
 function confirmExit(event, destination) {
-	event.preventDefault();
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }

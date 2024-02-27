@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
 
 		event.preventDefault();
@@ -14,7 +21,7 @@ $(document).ready(function () {
 
 		if (area == '' || requestedAmount == '' || description == ''){
             
-            showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
             
 		} else if (maxBudget >= requestedAmount) {
 
@@ -31,6 +38,7 @@ $(document).ready(function () {
 	
 					if (response === 'ok') {
 						
+						bandera = 0;
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
 						$("textarea[name='description']").val('');
@@ -50,7 +58,7 @@ $(document).ready(function () {
 			});
 
 		} else {
-            showAlertBootstrap('Atención', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
+            showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
         }
 	});
 });
@@ -61,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	cancelButton.addEventListener('click', function (event) {
 
 		event.preventDefault();
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'requestBudget');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'requestBudget');
 
 	});
 });
@@ -204,12 +212,11 @@ function openAddProviderModal() {
 }
 
 function confirmExit(event, destination) {
-    event.preventDefault();
-    
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
-    
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }
-
 
 $(document).ready(function () {
 

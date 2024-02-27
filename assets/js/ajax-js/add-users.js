@@ -16,7 +16,7 @@ $(document).ready(function () {
         var area = $("select[name='area']").val();
 		
         if (firstname == '' || lastname == '' || email == '') {
-            showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
         } else {
 			$.ajax({
 				type: "POST",
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     cancelButton.addEventListener('click', function (event) {
         event.preventDefault();
-		showAlertBootstrap2('Cancelar', '¿Seguro que deseas cancelar?', 'registers');
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'registers');
     });
 });
 

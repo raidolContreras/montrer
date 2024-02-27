@@ -8,7 +8,7 @@ $(document).ready(function () {
 
             if (parsedResponse === 'false') {
 
-                showAlertBootstrap2('error', 'No se ha activado ningún ejercicio.', 'exercise');
+                showAlertBootstrap2('¡Atención!', 'No se ha activado ningún ejercicio.', 'exercise');
 
             } else {
                 var exerciseSelect = document.getElementById('exercise');
