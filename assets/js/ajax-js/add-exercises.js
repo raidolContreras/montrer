@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
 		// Evitar el envío del formulario por defecto
 		event.preventDefault();
@@ -66,7 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function confirmExit(event, destination) {
-	event.preventDefault();
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
-
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }
