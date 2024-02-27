@@ -1,5 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
-	
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
 		event.preventDefault();
         // Collect form values
@@ -25,8 +31,8 @@ $(document).ready(function () {
 				success: function (response) {				
 					
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
-						
-						$('.sidenav').removeAttr('onclick');
+
+						bandera = 0;
 						$("input[name='firstname']").val('');
 						$("input[name='lastname']").val('');
 						$("input[name='email']").val('');
@@ -37,7 +43,7 @@ $(document).ready(function () {
 
 					} else if (response === 'Error: Email duplicado') {
 
-						showAlertBootstrap('Error', 'Correo electronico duplicado');
+						showAlertBootstrap('Error', 'Dirección de correo electrónico ya registrada');
 
 					} else {
 
@@ -64,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function confirmExit(event, destination) {
-	event.preventDefault();
-	showAlertBootstrap2('¿Estás seguro?', 'Si sales del formulario, perderás los cambios no guardados.', destination);
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
 }
