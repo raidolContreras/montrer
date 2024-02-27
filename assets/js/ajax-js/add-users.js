@@ -33,12 +33,11 @@ $(document).ready(function () {
 						$("select[name='level']").val('2');
 						$("select[name='area']").val('');
 
-
 						showAlertBootstrap('Exito', response+' creado exitosamente');
 
 					} else if (response === 'Error: Email duplicado') {
 
-						showAlertBootstrap('Error', response);
+						showAlertBootstrap('Error', 'Correo electronico duplicado');
 
 					} else {
 

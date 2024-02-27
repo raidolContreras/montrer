@@ -5,14 +5,18 @@ $(document).ready(function () {
 
 		var area = $("select[name='area']").val();
 		var budget = $("input[name='budget']").val();
-		var requestedAmount = $("input[name='requestedAmount']").val();
+		var maxBudget = parseFloat($("input[name='maxBudget']").val());
+        var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
 		var description = $("textarea[name='description']").val();
 
-		  if (area == '' || requestedAmount == ''){
+        console.log('MaxBudget: '+ maxBudget);
+        console.log('Budget: '+ requestedAmount);
+
+		if (area == '' || requestedAmount == '' || description == ''){
             
             showAlertBootstrap('Error', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
             
-		} else {
+		} else if (maxBudget >= requestedAmount) {
 
 			$.ajax({
 				type: "POST",
@@ -45,7 +49,9 @@ $(document).ready(function () {
 				}
 			});
 
-		}
+		} else {
+            showAlertBootstrap('Atención', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
+        }
 	});
 });
 
@@ -75,9 +81,6 @@ function getArea(registerValue) {
         dataType: 'json',
         success: function (response) {
             $('select[name="area"]').val(response.nameArea);
-            
-            // Obtén el valor de AuthorizedAmount desde la respuesta
-            var authorizedAmount = response.AuthorizedAmount;
 
             // Llena el select de áreas
             fillAreaSelect('area', response, 'departamento');
@@ -125,6 +128,7 @@ $('#area').on('change', function() {
         data: { areaId: selectedAreaId },
         dataType: 'json',
         success: function (response) {
+            
             updateMaxRequestedAmount(response);
         },
         error: function (error) {
@@ -167,7 +171,7 @@ function updateMaxRequestedAmount(datos) {
         
         if(datos[0].approvedAmount !== 0){
             
-            // Muestra la suma y el idBudget en los lugares deseados
+            $("input[name='maxBudget']").val(sumaBudgetMonth.toFixed(2));
             $("input[name='budget']").val(idBudget);
             $('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
             $('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + sumaBudgetMonth.toFixed(2));
