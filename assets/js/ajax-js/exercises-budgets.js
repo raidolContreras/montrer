@@ -15,17 +15,17 @@ $(document).ready(function () {
             });
             selectOptionsHtml += `<option value="all">Vista general</option>`;
             
-            var html = `<select class="form-select" id="exerciseSelect">${selectOptionsHtml}</select>`;
+            var html = `<select class="form-select" name="exerciseSelect">${selectOptionsHtml}</select>`;
             showAlertBootstrap5('Selecciona un ejercicio', html);
 
-            // Agrega un evento de cambio al select
-            $('#exerciseSelect').on('change', function() {
-                var selectedExerciseId = $(this).val();
-                window.location.href = `budgets&exercise=${selectedExerciseId}`;
-            });
         },
         error: function (error) {
             console.log("Error en la solicitud Ajax:", error);
         }
     });
+    
 });
+function selectedExercise(){
+    excercise = $("select[name='exerciseSelect']").val();
+        window.location.href = `budgets&exercise=${excercise}`;
+}

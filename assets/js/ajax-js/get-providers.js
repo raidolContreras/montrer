@@ -43,7 +43,15 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'rfc'
+                data: null,
+                render: function (data) {
+                    return `
+                    <div style="white-space: nowrap;">
+                        Razón social: ${data.business_name}<br>
+                        RFC: ${data.rfc}
+                    </div>
+                `;
+                }
             },
             {
                 data: null,
