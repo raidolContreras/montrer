@@ -23,5 +23,7 @@
 
 		<!-- Datatable -->
 		<link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet">
+		<link href="assets\vendor\DataTables\Buttons-2.4.2\css\buttons.bootstrap5.min.css" rel="stylesheet">
+
 		<!-- Dropzone -->
 		<link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">

@@ -6051,3 +6051,8 @@ Template Sidebar CSS
 .rest span{
   color: #d33 !important;
 }
+@media print {
+  @page {
+      size: landscape;
+  }
+}

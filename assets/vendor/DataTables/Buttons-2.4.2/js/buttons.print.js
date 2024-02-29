@@ -96,7 +96,7 @@ var _relToAbs = function (href) {
 };
 
 DataTable.ext.buttons.print = {
-	className: 'buttons-print',
+	className: 'btn-warning buttons-print',
 
 	text: function (dt) {
 		return dt.i18n('buttons.print', 'Print');
