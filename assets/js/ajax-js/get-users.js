@@ -115,7 +115,7 @@ $(document).ready(function () {
 						'<h1 style="text-align: center; font-size: 8pt; padding-top: 10px;">Usuarios</h1>'
 					);
 
-					$(win.document.body).css('font-size', '5pt');
+					$(win.document.body).css('font-size', '8pt');
 					$(win.document.body).css('margin', '10mm');
 			
 					$(win.document.body).find('table')
