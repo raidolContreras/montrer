@@ -79,15 +79,9 @@ $(document).ready(function () {
 			{
 				extend: 'pdfHtml5',
 				text: 'Exportar a PDF',
+                title: 'Usuarios',
 				titleAttr: 'PDF',
 				customize: function(doc) {
-					// Configuración del título
-					doc.content.splice(0, 0, {
-						text: 'Usuarios', // Título personalizado
-						fontSize: 14, // Tamaño del título
-						alignment: 'center', // Alineación del título
-						margin: [0, 0, 0, 20] // Margen del título [izquierda, superior, derecha, inferior]
-					});
 			
 					// Añadir el logo en la parte superior
 					doc.content.splice(1, 0, {
