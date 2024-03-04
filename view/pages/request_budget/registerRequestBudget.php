@@ -48,19 +48,19 @@
                     <textarea class="form-control" id="description" name="description"></textarea>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="provider" class="form-label">Porveedor<span class="required"></span></label>
                     <select name="provider" id="provider" class="form-select form-control">
                         <option value="">Seleccionar proveedor</option>
                     </select>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="event" class="form-label">Evento</label>
                     <input class="form-control" type="text" name="event" id="event">
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="eventDate" class="form-label">Fecha del evento<span class="required"></span></label>
                     <input class="form-control" type="date" id="eventDate" name="eventDate">
                 </div>
