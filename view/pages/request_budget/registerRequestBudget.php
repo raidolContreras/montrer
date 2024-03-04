@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="provider" class="form-label">Porveedor<span class="required"></span></label>
+                    <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
                     <select name="provider" id="provider" class="form-select form-control">
                         <option value="">Seleccionar proveedor</option>
                     </select>
