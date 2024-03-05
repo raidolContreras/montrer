@@ -39,12 +39,14 @@ $(document).ready(function () {
             }
         ],
 		responsive: true,
-		autoWidth: false,
+		dom: 'Bfrtip', // Define la estructura del DOM para incluir botones
         buttons: [
 			{
 				extend: 'excelHtml5',
 				text: 'Exportar a Excel',
+				title: 'Departamentos', // Título personalizado para el archivo Excel
 				exportOptions: {
+					columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
 				}
 			},
 			{
@@ -54,12 +56,23 @@ $(document).ready(function () {
 				titleAttr: 'PDF',
 				customize: function(doc) {
 			
+					// Añadir el logo en la parte superior
 					doc.content.splice(1, 0, {
+						image: logo64(), // Imagen en Base64
+						width: 100, // Ancho del logo
+						alignment: 'center' // Alineación del logo
 					});
 			
+					// Eliminar cabeceras y pies de página por defecto
+					delete doc['header']; // Eliminar la cabecera si existe
+					delete doc['footer']; // Eliminar el pie de página si existe
 			
+					// Personalizaciones adicionales aquí
 				},
+				orientation: 'landscape', // Orientación del PDF
+				pageSize: 'A4', // Tamaño de la página
 				exportOptions: {
+					columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
 				}
 			},			
             {
@@ -67,6 +80,7 @@ $(document).ready(function () {
 				text: 'Imprimir',
 				title: '',
 				customize: function(win) {
+					// Añadir el logo
 					$(win.document.body).prepend(
 						'<img src="assets/img/logo.png" style="position:absolute; top:10px; left:10px; height:50px;" />'
 					);
