@@ -42,8 +42,8 @@
                 <p>¿Está seguro de que desea eliminar de forma permanente la solicitud <strong id="deleteRequestName"></strong>?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteRequest">Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmDeleteRequest">Aceptar</button>
             </div>
         </div>
     </div>

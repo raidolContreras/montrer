@@ -51,8 +51,8 @@
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-success">Actualizar presupuesto</button>
                     <a class="btn btn-danger" id="cancelButton">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Aceptar</button>
                 </div>
             </div>
         </form>

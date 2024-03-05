@@ -51,8 +51,8 @@
 							</select>
 						</div>
 						<div class="d-grid gap-2 mb-3">
-							<button type="submit" class="btn btn-success" id="register">Registrar</button>
 							<a class="btn btn-danger" id="cancelButton">Cancelar</a>
+							<button type="submit" class="btn btn-success" id="register">Aceptar</button>
 						</div>
 					</form>
 
