@@ -79,8 +79,6 @@
 					<input type="text" class="form-control" id="entidadBancaria" name="entidadBancaria">
 				</div>
 
-				<!-- Agregar más campos según tus necesidades -->
-
 				<div class="col-md-6 mb-3">
 					<label for="conceptoPago" class="form-label">CONCEPTO DEL PAGO</label>
 					<input type="text" class="form-control" id="conceptoPago" name="conceptoPago">

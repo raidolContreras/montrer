@@ -11,15 +11,15 @@ $(document).ready(function () {
 		event.preventDefault();
 
 		var area = $("select[name='area']").val();
-		var budget = $("input[name='budget']").val();
-		var maxBudget = parseFloat($("input[name='maxBudget']").val());
         var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
 		var description = $("textarea[name='description']").val();
+		var provider = $("select[name='provider']").val();
+        var event = $("input[name='event']").val();
+        var eventDate = $("input[name='eventDate']").val();
+		var maxBudget = parseFloat($("input[name='maxBudget']").val());
+		var budget = $("input[name='budget']").val();
 
-        console.log('MaxBudget: '+ maxBudget);
-        console.log('Budget: '+ requestedAmount);
-
-		if (area == '' || requestedAmount == '' || description == ''){
+		if (area == '' || requestedAmount == '' || description == '' || event == '' || eventDate == '' || provider == ''){
             
             showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
             
@@ -30,9 +30,12 @@ $(document).ready(function () {
 				url: "controller/ajax/ajax.form.php",
 				data: {
 					area: area,
-					budget: budget,
 					requestedAmount: requestedAmount,
-					description: description
+					description: description,
+                    event: event,
+                    eventDate: eventDate,
+					budget: budget,
+                    provider: provider
 				},
 				success: function (response) {				  
 	
@@ -42,6 +45,8 @@ $(document).ready(function () {
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
 						$("textarea[name='description']").val('');
+                        $("input[name='event']").val('');
+                        $("input[name='eventDate']").val('');
                         $('.sidenav').removeAttr('onclick');
 
 	                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');

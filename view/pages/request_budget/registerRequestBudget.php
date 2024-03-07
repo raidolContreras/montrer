@@ -51,12 +51,11 @@
                 <div class="col-md-4">
                     <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
                     <select name="provider" id="provider" class="form-select form-control">
-                        <option value="">Seleccionar proveedor</option>
                     </select>
                 </div>
                 
                 <div class="col-md-4">
-                    <label for="event" class="form-label">Evento</label>
+                    <label for="event" class="form-label">Evento<span class="required"></span></label>
                     <input class="form-control" type="text" name="event" id="event">
                 </div>
 
@@ -70,15 +69,16 @@
                     <button type="submit" class="btn btn-success">Aceptar</button>
                 </div>
             </div>
+            <input type="hidden" name="maxBudget">
+            <input type="hidden" class="form-control" id="idBudget" name="idBudget" >
+            <input type="hidden" name="budget">
         </form>
     </div>
-    <input type="hidden" name="maxBudget">
-    <input type="hidden" class="form-control" id="idBudget" name="idBudget" >
 </main>
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
-<input type="hidden" name="budget">
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
+<script src="assets/js/ajax-js/request_provider.js"></script>
 
 
 <script>
@@ -86,3 +86,23 @@
         $j('.inputmask').inputmask();
     });
 </script>
+
+<div class="modal fade" id="modalAgregarProveedor" tabindex="-1" role="dialog" aria-labelledby="modalAgregarProveedorLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAgregarProveedorLabel">Añadir proveedor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Contenido del modal para añadir proveedor...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
