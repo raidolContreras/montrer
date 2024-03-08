@@ -3,6 +3,7 @@
     var $j = jQuery.noConflict();
 </script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 
@@ -14,14 +15,16 @@
         <form class="account-wrap" id="budgetRequestForm">
             <div class="row">
 
-                <div class="col-md-3"></div>
-
                 <div class="col-md-6">
                     <label for="fecha" class="form-label">Fecha de petición<span class="required"></span></label>
                     <input class="form-control" type="date" id="fecha" name="fecha" value="<?php echo date('Y-m-d'); ?>" readonly>
                 </div>
 
-                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
+                    <select name="provider" id="provider" class="form-select form-control">
+                    </select>
+                </div>
 
                 <div class="col-md-6">
                     <label for="name" class="form-label">Nombre completo del solicitante</label>
@@ -47,19 +50,13 @@
                     <label for="description" class="form-label">Descripción<span class="required"></span></label>
                     <textarea class="form-control" id="description" name="description"></textarea>
                 </div>
-
-                <div class="col-md-4">
-                    <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
-                    <select name="provider" id="provider" class="form-select form-control">
-                    </select>
-                </div>
                 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="event" class="form-label">Evento<span class="required"></span></label>
                     <input class="form-control" type="text" name="event" id="event">
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="eventDate" class="form-label">Fecha del evento<span class="required"></span></label>
                     <input class="form-control" type="date" id="eventDate" name="eventDate">
                 </div>
@@ -84,25 +81,8 @@
 <script>
     $j(document).ready(function() {
         $j('.inputmask').inputmask();
+        $j('#provider').select2();
     });
 </script>
-
-<div class="modal fade" id="modalAgregarProveedor" tabindex="-1" role="dialog" aria-labelledby="modalAgregarProveedorLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalAgregarProveedorLabel">Añadir proveedor</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Contenido del modal para añadir proveedor...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<?php
+include 'view/pages/request_budget/modalProvider.php';

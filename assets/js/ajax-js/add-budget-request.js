@@ -63,6 +63,8 @@ $(document).ready(function () {
 			});
 
 		} else {
+            console.log('max: '+maxBudget)
+            console.log('requestedAmount: '+requestedAmount)
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
         }
 	});
@@ -192,6 +194,7 @@ function updateMaxRequestedAmount(datos) {
         if(datos[0].approvedAmount !== 0){
             
             $("input[name='budget']").val(idBudget);
+            $("input[name='maxBudget']").val(sumaBudgetMonth.toFixed(2));
             $('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
             $('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + formattedSum);
 

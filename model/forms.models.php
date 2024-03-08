@@ -1125,17 +1125,21 @@ class FormsModels {
 
 	static public function mdlRequestBudget($data){
 		$pdo = Conexion::conectar();
+
 		$sql = "INSERT INTO montrer_budget_requests
-				(idArea, idBudget, requestedAmount, description, requestDate, idUser)
-				VALUES
-				(:idArea ,:idBudget ,:requestedAmount ,:description, DATE_ADD(NOW(), INTERVAL -6 HOUR), :idUser)";
+					(idArea, idBudget, idProvider, requestedAmount, description, idUser, event, eventDate, requestDate) 
+				VALUES 
+					(:idArea, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :event, :eventDate, DATE_ADD(NOW(), INTERVAL -6 HOUR) )";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $data['area'], PDO::PARAM_INT);
 		$stmt->bindParam(':idBudget', $data['budget'], PDO::PARAM_INT);
+		$stmt->bindParam(':idProvider', $data['provider'], PDO::PARAM_INT);
 		$stmt->bindParam(':requestedAmount', $data['requestedAmount'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
 		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
+		$stmt->bindParam(':event', $data['event'], PDO::PARAM_STR);
+		$stmt->bindParam(':eventDate', $data['eventDate'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 			return 'ok';

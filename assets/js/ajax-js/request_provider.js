@@ -1,4 +1,16 @@
 $(document).ready(function () {
+    restartSelectProvider();
+    // Manejador de eventos para el cambio en el select
+    $('#provider').on('change', function() {
+        // Verifica si la opción seleccionada es "Añadir proveedor"
+        if ($(this).val() === "add_provider") {
+            $('#modalAgregarProveedor').modal('show');
+        }
+    });
+});
+
+function restartSelectProvider() {
+
     // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
     $.ajax({
         type: "POST",
@@ -24,13 +36,12 @@ $(document).ready(function () {
         }
     });
 
-    // Manejador de eventos para el cambio en el select
-    $('#provider').on('change', function() {
-        // Verifica si la opción seleccionada es "Añadir proveedor"
-        if ($(this).val() === "add_provider") {
-            // Abre el modal aquí
-            // Por ejemplo, si estás utilizando Bootstrap, podrías hacer algo como:
-            $('#modalAgregarProveedor').modal('show');
-        }
-    });
-});
+}
+
+// Manejar la selección de "add_provider"
+$('#provider').on('select2:select', function (e) {
+    const selectedValue = e.params.data.id;
+    if (selectedValue === 'add_provider') {
+        $('#modalAgregarProveedor').modal('show');
+    }
+  });

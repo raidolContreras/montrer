@@ -541,11 +541,14 @@ if (isset($_POST['deleteRequest'])){
 
 if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['description']) && isset($_POST['budget'])){
 	$data =  array(
+		'idUser' => $_SESSION['idUser'],
 		'area' => $_POST['area'],
 		'requestedAmount' => $_POST['requestedAmount'],
 		'description' => $_POST['description'],
-		'budget' => $_POST['budget'],
-		'idUser' => $_SESSION['idUser']
+		'provider' => $_POST['provider'],
+		'event' => $_POST['event'],
+		'eventDate' => $_POST['eventDate'],
+		'budget' => $_POST['budget']
 	);
 	echo FormsController::ctrRequestBudget($data);
 }
