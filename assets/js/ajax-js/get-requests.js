@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    var level = $("input[name='level']").val();
-    var user = $("input[name='user']").val();
+	var level = $("input[name='level']").val();
+	var user = $("input[name='user']").val();
 
-    moment.locale('es');
-    $('#requests').DataTable({
+	moment.locale('es');
+	$('#requests').DataTable({
 		// tus otras opciones de configuración aquí...
 		initComplete: function(settings, json) {
 			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
@@ -13,61 +13,61 @@ $(document).ready(function () {
 			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
 			$('[data-bs-toggle="tooltip"]').tooltip();
 		},
-        ajax: {
-            url: 'controller/ajax/getRequests.php', // Ajusta la URL según tu estructura
-            dataSrc: ''
-        },
-        columns: [
-            {
-                data: null,
-                render: function (data, type, row, meta) {
-                    // Utilizando el contador proporcionado por DataTables
-                    return meta.row + 1;
-                }
-            },
-            {
-                data: 'nameArea',
-            },
-            {
-                data: 'requestedAmount',
-                render: function (data, type, row) {
-                    if (type === 'display' || type === 'filter') {
-                        // Formatear como pesos
-                        var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
-                            style: 'currency',
-                            currency: 'MXN'
-                        });
-                        return formattedBudget;
-                    }
-                    return data;
-                }
-            },
-            {
-                data: null,
-                render: function (data) {
-                    return data.firstname + ' ' + data.lastname;
-                }
-            },
-            {
-                data: 'description'
-            },
-            {
-                data: 'requestDate',
-                render: function (data, type, row) {
-                    return moment(data).format('DD-MMM-YYYY hh:mm A');
-                }
-            },
-            {
-                data: null,
-                render: function (data) {
-                    return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level);
-                }
-            }
-        ],
+		ajax: {
+			url: 'controller/ajax/getRequests.php', // Ajusta la URL según tu estructura
+			dataSrc: ''
+		},
+		columns: [
+			{
+				data: null,
+				render: function (data, type, row, meta) {
+					// Utilizando el contador proporcionado por DataTables
+					return meta.row + 1;
+				}
+			},
+			{
+				data: 'nameArea',
+			},
+			{
+				data: 'requestedAmount',
+				render: function (data, type, row) {
+					if (type === 'display' || type === 'filter') {
+						// Formatear como pesos
+						var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
+							style: 'currency',
+							currency: 'MXN'
+						});
+						return formattedBudget;
+					}
+					return data;
+				}
+			},
+			{
+				data: null,
+				render: function (data) {
+					return data.firstname + ' ' + data.lastname;
+				}
+			},
+			{
+				data: 'description'
+			},
+			{
+				data: 'requestDate',
+				render: function (data, type, row) {
+					return moment(data).format('DD-MMM-YYYY hh:mm A');
+				}
+			},
+			{
+				data: null,
+				render: function (data) {
+					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level);
+				}
+			}
+		],
 		responsive: true,
 		autoWidth: false,
 		dom: 'Bfrtip', // Define la estructura del DOM para incluir botones
-        buttons: [
+		buttons: [
 			{
 				extend: 'excelHtml5',
 				text: 'Exportar a Excel',
@@ -79,7 +79,7 @@ $(document).ready(function () {
 			{
 				extend: 'pdfHtml5',
 				text: 'Exportar a PDF',
-                title: 'Presupuestos',
+				title: 'Presupuestos',
 				titleAttr: 'PDF',
 				customize: function(doc) {
 			
@@ -102,7 +102,7 @@ $(document).ready(function () {
 					columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
 				}
 			},			
-            {
+			{
 				extend: 'print',
 				text: 'Imprimir',
 				title: '',
@@ -143,106 +143,223 @@ $(document).ready(function () {
 				}
 			},
 			
-        ],
-        language: {
-            "paginate": {
-                "first": "<<",
-                "last": ">>",
-                "next": ">",
-                "previous": "<"
-            },
-            "search": "Buscar:",
-            "lengthMenu": "Ver _MENU_ resultados",
-            "loadingRecords": "Cargando...",
-            "info": "Mostrando _START_ de _END_ en _TOTAL_ resultados",
-            "infoEmpty": "Mostrando 0 resultados",
-        }
-    });
+		],
+		language: {
+			"paginate": {
+				"first": "<<",
+				"last": ">>",
+				"next": ">",
+				"previous": "<"
+			},
+			"search": "Buscar:",
+			"lengthMenu": "Ver _MENU_ resultados",
+			"loadingRecords": "Cargando...",
+			"info": "Mostrando _START_ de _END_ en _TOTAL_ resultados",
+			"infoEmpty": "Mostrando 0 resultados",
+		}
+	});
 
 });
 
 // Manejar el clic del botón de edición
 $('#requests').on('click', '.edit-button', function() {
-    var idRequest = $(this).data('id');
-    sendForm('editRequest', idRequest);
+	var idRequest = $(this).data('id');
+	sendForm('editRequest', idRequest);
 });
 
 function sendForm(action, idRequest) {
-    // Crear un formulario oculto y agregar el idRequest como un campo oculto
-    var form = $('<form action="' + action + '" method="post"></form>');
-    form.append('<input type="hidden" name="register" value="' + idRequest + '">');
+	// Crear un formulario oculto y agregar el idRequest como un campo oculto
+	var form = $('<form action="' + action + '" method="post"></form>');
+	form.append('<input type="hidden" name="register" value="' + idRequest + '">');
 
-    // Adjuntar el formulario al cuerpo del documento y enviarlo
-    $('body').append(form);
-    form.submit();
+	// Adjuntar el formulario al cuerpo del documento y enviarlo
+	$('body').append(form);
+	form.submit();
 }
 
 showModalAndSetData('deleteModal', 'deleteRequestName', 'confirmDeleteRequest', 'delete', 'Presupuesto eliminado con éxito', 'eliminar');
+showModalAndSetData('enableModal', 'enableRequestName', 'confirmEnableRequest', 'enable', 'Presupuesto aceptado con éxito', 'aceptar');
+showModalAndSetData('denegateModal', 'denegateRequestName', 'confirmDenegateRequest', 'denegate', 'Presupuesto rechazado', 'rechazar');
 
 function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, successMessage, errorMessage) {
-    $('#requests').on('click', `.${actionType}-button`, function () {
-        var idRequest = $(this).data('id');
-        var RequestName = $(this).closest('tr').find('td:eq(1)').text();
+	$('#requests').on('click', `.${actionType}-button`, function () {
+		var idRequest = $(this).data('id');
+		var RequestName = $(this).closest('tr').find('td:eq(1)').text();
 
-        $(`#${nameId}`).text(RequestName);
-        $(`#${confirmButtonId}`).data('id', idRequest);
+		$(`#${nameId}`).text(RequestName);
+		$(`#${confirmButtonId}`).data('id', idRequest);
+		
+		if(modalId == 'enableModal'){
+			$.ajax({
+				type: 'POST',
+				url: 'controller/ajax/getRequest.php',
+				data: { idRequest: idRequest },
+				dataType: 'json',
+				success: function (response) {
+					$("input[name='approvedAmount']").val(response.requestedAmount);
+					$.ajax({
+						type: 'POST',
+						url: 'controller/ajax/getAuthorizedAmount.php',
+						data: { areaId: response.idArea },
+						dataType: 'json',
+						success: function (response) {
+							
+							updateMaxRequestedAmount(response);
+						},
+						error: function (error) {
+							console.log('Error en la solicitud AJAX:', error);
+						}
+					});
+				},
+				error: function (error) {
+					console.log('Error en la solicitud AJAX:', error);
+				}
+			});
+		}
 
-        $(`#${modalId}`).modal('show');
-    });
+		$(`#${modalId}`).modal('show');
+	});
 
-    $(`#${confirmButtonId}`).off('click').on('click', function () {
-        var idRequest = $(this).data('id');
-
-        $.ajax({
-            type: 'POST',
-            url: 'controller/ajax/ajax.form.php',
-            data: { [`${actionType}Request`]: idRequest },
-            success: function (response) {
-                handleResponse(response, successMessage, errorMessage);
-            },
-            complete: function () {
-                idRequest = 0;
-                $(`#${modalId}`).modal('hide');
-            }
-        });
-    });
+	$(`#${confirmButtonId}`).off('click').on('click', function () {
+		var idRequest = $(this).data('id');
+		var user = $("input[name='user']").val();
+		if(modalId != 'enableModal'){
+			$.ajax({
+				type: 'POST',
+				url: 'controller/ajax/ajax.form.php',
+				data: { [`${actionType}Request`]: idRequest },
+				success: function (response) {
+					handleResponse(response, successMessage, errorMessage);
+				},
+				complete: function () {
+					idRequest = 0;
+					$(`#${modalId}`).modal('hide');
+				}
+			});
+		} else if(modalId == 'denegateModal') {
+			$.ajax({
+				type: 'POST',
+				url: 'controller/ajax/ajax.form.php',
+				data: { 
+					denegateRequest: idRequest,
+					idAdmin: user
+				},
+				success: function (response) {
+					handleResponse(response, successMessage, errorMessage);
+				},
+				complete: function () {
+					idRequest = 0;
+					$(`#${modalId}`).modal('hide');
+				}
+			});
+		} else {
+			var approvedAmount = $('input[name="approvedAmount"]').val();
+			var maxBudget = $('input[name="maxBudget"]').val();
+			if(maxBudget > approvedAmount){
+				$.ajax({
+					type: 'POST',
+					url: 'controller/ajax/ajax.form.php',
+					data: { 
+						enableRequest: idRequest,
+						approvedAmount: approvedAmount,
+						idAdmin: user
+					},
+					success: function (response) {
+						handleResponse(response, successMessage, errorMessage);
+					},
+					complete: function () {
+						idRequest = 0;
+						$(`#${modalId}`).modal('hide');
+					}
+				});
+			} else {
+				showAlertBootstrap('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.');
+			}
+		}
+	});
 }
 
 function handleResponse(response, successMessage, errorMessage) {
-    if (response === 'ok') {
-        showAlertBootstrap4('Operación realizada', successMessage);
-    } else {
-        showAlertBootstrap('!Atención¡', `No se pudo ${errorMessage.toLowerCase()} el Presupuesto`);
-    }
+	if (response === 'ok') {
+		showAlertBootstrap4('Operación realizada', successMessage);
+	} else {
+		showAlertBootstrap('!Atención¡', `No se pudo ${errorMessage.toLowerCase()} el Presupuesto`);
+	}
 }
 
 function renderActionButtons(idRequest, status, userRequest, user, level) {
 
-    if (status == 0 && userRequest == user){
-        return `
-            <div class="container">
-                <div class="row" style="justify-content: space-evenly;">
-                    <button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                        <i class="ri-edit-line"></i>
-                    </button>
-                    <button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                        <i class="ri-delete-bin-6-line"></i>
-                    </button>
-                </div>
-            </div>
-        `;
-    } else if (status == 0 && level == 1 && userRequest != user) {
-        return `
-            <div class="container">
-                <div class="row" style="justify-content: space-evenly;">
-                    <button class="btn btn-success edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                        Aceptar
-                    </button>
-                    <button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
-                        <i class="ri-delete-bin-6-line"></i>
-                    </button>
-                </div>
-            </div>
-        `;
-    }
+	if (status == 0 && userRequest == user){
+		return `
+			<div class="container">
+				<div class="row" style="justify-content: space-evenly;">
+					<button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+						<i class="ri-edit-line"></i>
+					</button>
+					<button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+						<i class="ri-delete-bin-6-line"></i>
+					</button>
+				</div>
+			</div>
+		`;
+	} else if (status == 0 && level == 1 && userRequest != user) {
+		return `
+			<div class="container">
+				<div class="row" style="justify-content: space-evenly;">
+					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
+						<i class="ri-check-line"></i>
+					</button>
+					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
+						<i class="ri-close-line"></i>
+					</button>
+				</div>
+			</div>
+		`;
+	}
+}
+
+function updateMaxRequestedAmount(datos) {
+		// Obtén el mes actual
+		var today = new Date();
+		var currentMonth = today.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que sumamos 1.
+	
+		// Filtra los datos hasta el mes actual
+		var datosHastaMesActual = datos.filter(function (dato) {
+			return dato.month <= currentMonth;
+		});
+	
+		// Suma los valores de budget_month hasta el mes actual
+		var sumaBudgetMonth = datosHastaMesActual.reduce(function (total, dato) {
+			var budgetMonth = parseFloat(dato.budget_month);
+			var budgetUsed = parseFloat(dato.budget_used);
+			
+			// Verificar si los valores son números válidos
+			if (!isNaN(budgetMonth) && !isNaN(budgetUsed)) {
+				return total + (budgetMonth - budgetUsed);
+			} else {
+				return total; // No agregar nada si alguno de los valores no es un número válido
+			}
+		}, 0);
+
+		// Obtiene el idBudget del primer elemento del array (puedes ajustar esto según tus necesidades)
+		var idBudget = datos[0].idBudget;
+
+		let formattedSum = sumaBudgetMonth.toLocaleString('es-MX', {
+			style: 'currency',
+			currency: 'MXN',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		});
+		
+		if(datos[0].approvedAmount !== 0){
+			
+			$("input[name='budget']").val(idBudget);
+			$("input[name='maxBudget']").val(sumaBudgetMonth.toFixed(2));
+			$('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
+			$('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + formattedSum);
+
+		} else {
+			$('#requestedAmount').prop('disabled', true);
+			$('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
+		}
 }

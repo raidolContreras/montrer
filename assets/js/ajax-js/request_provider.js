@@ -8,7 +8,6 @@ $(document).ready(function () {
         }
     });
 });
-
 function restartSelectProvider() {
 
     // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
@@ -25,17 +24,15 @@ function restartSelectProvider() {
                 selectOptionsHtml += `<option value="${provider.idProvider}">${provider.representative_name}</option>`;
             });
 
-            // Agrega la opción "Añadir proveedor"
-            selectOptionsHtml += `<option value="add_provider">Añadir proveedor</option>`;
+            // Agrega la opción "Añadir proveedor" con un ícono de +
+            selectOptionsHtml += `<option value="add_provider" class="add-provider-option">&#43; Añadir proveedor</option>`;
             
-			$('#provider').html(selectOptionsHtml);
-
+            $('#provider').html(selectOptionsHtml);
         },
         error: function (error) {
             console.log("Error en la solicitud Ajax:", error);
         }
     });
-
 }
 
 // Manejar la selección de "add_provider"

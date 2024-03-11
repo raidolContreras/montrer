@@ -3,7 +3,6 @@
 require_once "../forms.controller.php";
 require_once "../../model/forms.models.php";
 
-session_start();
 	class AjaxForm {
 
 		static function CreateUser($data){
@@ -184,6 +183,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
 if (isset($_POST['actualPassword']) && isset($_POST['newPassword']) && isset($_POST['user'])) {
 
+    session_start();
 	$data = array(
 		'actualPassword' => crypt($_POST['actualPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
 		'newPassword' => crypt($_POST['newPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
@@ -540,6 +540,8 @@ if (isset($_POST['deleteRequest'])){
 }
 
 if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['description']) && isset($_POST['budget'])){
+	
+    session_start();
 	$data =  array(
 		'idUser' => $_SESSION['idUser'],
 		'area' => $_POST['area'],
@@ -551,4 +553,9 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 		'budget' => $_POST['budget']
 	);
 	echo FormsController::ctrRequestBudget($data);
+}
+
+if (isset($_POST['denegateRequest'])){
+	$denegateRequest = FormsController::ctrDenegateRequest($_POST['denegateRequest'], $_POST['idAdmin']);
+	echo $denegateRequest;
 }

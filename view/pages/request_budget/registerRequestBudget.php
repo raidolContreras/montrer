@@ -3,7 +3,12 @@
     var $j = jQuery.noConflict();
 </script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<style>
+    option { background-color: white; }
+    /* Intentar cambiar el color de una opción específica (limitado en compatibilidad) */
+    .add-provider-option { background-color: #f0f0f0 !important; } /* Gris claro para la opción de añadir */
+</style>
+
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 
@@ -76,12 +81,12 @@
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
 <script src="assets/js/ajax-js/request_provider.js"></script>
+<script src="assets/js/ajax-js/add-provider2.js"></script>
 
 
 <script>
     $j(document).ready(function() {
         $j('.inputmask').inputmask();
-        $j('#provider').select2();
     });
 </script>
 <?php

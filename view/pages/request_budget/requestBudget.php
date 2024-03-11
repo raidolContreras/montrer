@@ -1,5 +1,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/es.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var $j = jQuery.noConflict();
+</script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <!-- Start Main Content Area -->
 	<main class="main-content-wrap">
 		<div class="col-xl-12">
@@ -48,5 +53,53 @@
         </div>
     </div>
 </div>
+<?php if($_SESSION['level'] == 1): ?>
+<!-- enable Modal -->
+<div class="modal fade" id="enableModal" tabindex="-1" aria-labelledby="enableModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enableModalLabel">Eliminar solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+				<div>
+                    <label for="approvedAmount" class="form-label">Monto Solicitado ($)<span class="required"></span></label>
+                    <input type="text" id="approvedAmount" name="approvedAmount" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true"> 
+                    <label class="requestMax"></label>
+                    <input type="hidden" name="maxBudget">
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmEnableRequest">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- denegate Modal -->
+<div class="modal fade" id="denegateModal" tabindex="-1" aria-labelledby="denegateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="denegateModalLabel">Eliminar solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea denegar el presupuesto?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="confirmDenegateRequest">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif ?>
 
+<script>
+    $j(document).ready(function() {
+        $j('.inputmask').inputmask();
+    });
+</script>
 <script src="assets/js/ajax-js/get-requests.js"></script>

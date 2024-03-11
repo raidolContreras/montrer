@@ -114,6 +114,16 @@ class FormsController {
     	return $UpdateProvider;
 	}
 
+	static public function ctrDenegateRequest($idRequest, $idAdmin){
+		$result = FormsModels::mdlDenegateRequest($idRequest, $idAdmin);
+    	return $result;
+	}
+
+	static public function ctrGetRequest($idRequest){
+		$result = FormsModels::mdlGetRequest($idRequest);
+    	return $result;
+	}
+
 	static public function ctrAddBudgets($data){
 		$getBudgets = FormsModels::mdlGetBudgets('all');
 		$value = true;

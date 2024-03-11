@@ -99,8 +99,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="restartSelectProvider()">Cancelar</button>
-        <button type="button" class="btn btn-success">Aceptar</button>
+        <button type="button" class="btn btn-success" id="addProvider" onclick="sendForm()" >Aceptar</button>
       </div>
     </div>
   </div>
 </div>
+<script src="assets/js/ajax-js/get-nextIdProvider.js"></script>

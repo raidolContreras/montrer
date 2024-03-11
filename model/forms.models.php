@@ -28,9 +28,10 @@ class FormsModels {
 				FROM montrer_budgets b LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise WHERE e.status = 1 AND b.status = 1), 0)) AS remaining;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	// Fin de Contadores
 
@@ -268,10 +269,11 @@ class FormsModels {
 		
 		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlSelectPasswordUser($idUsers){
@@ -281,10 +283,11 @@ class FormsModels {
 		
 		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_STR);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlFirstLoginUser($idUsers){
@@ -294,10 +297,11 @@ class FormsModels {
 		
 		$stmt->bindParam(':User_idUser', $idUsers, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlUpdateLog($idUsers){
@@ -414,7 +418,7 @@ class FormsModels {
 			print_r($pdo->errorInfo());
 		}
 		 $stmt->closeCursor();
-		 $stmt = null;  
+		 $stmt = null;
 	}
 	
 	static public function mdlAddLogo($data){
@@ -437,9 +441,10 @@ class FormsModels {
 		$sql = "SELECT * FROM montrer_exercise";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
-		return $stmt->fetchAll();
+		$result = $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlGetExercises($idExercise){
@@ -448,9 +453,10 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlAddExercise($data){
@@ -463,13 +469,14 @@ class FormsModels {
 		$stmt->bindParam(':budget', $data['budget'], PDO::PARAM_STR);
 		$stmt->bindParam(':idRoot', $data['user'], PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
-			return 'Error';
+			$result = 'Error';
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
-		$stmt = null;  
+		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlGetBudgets($idExercise){
@@ -492,9 +499,10 @@ class FormsModels {
 			$stmt = $pdo->prepare($sql);
 		}
 		$stmt->execute();
-		return $stmt->fetchAll();
+		$result = $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlGetBudget($idBudget){
@@ -507,9 +515,10 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlActiveExercise(){
@@ -544,13 +553,14 @@ class FormsModels {
 		$stmt->bindParam(':exercise', $data['exercise'], PDO::PARAM_INT);
 		if($stmt->execute()){
 			$idBudget = $pdo -> lastInsertId();
-			return $idBudget;
+			$result = $idBudget;
 		} else {
-			return 'Error';
+			$result = 'Error';
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
-		$stmt = null;  
+		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlAddBudgetsMonths($month, $data){
@@ -561,13 +571,14 @@ class FormsModels {
 		$stmt->bindParam(':budget_month', $data['budget_month'], PDO::PARAM_STR);
 		$stmt->bindParam(':idBudget', $data['idBudget'], PDO::PARAM_INT);
 		if($stmt->execute()){
-			return 'ok';
+			$result = 'ok';
 		} else {
-			return 'Error';
+			$result = 'Error';
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
-		$stmt = null;  
+		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetUser($register){
@@ -578,9 +589,10 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUsers', $register, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetArea($register){
@@ -589,9 +601,10 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $register, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlUpdateUser($data){
@@ -802,9 +815,10 @@ class FormsModels {
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->bindParam(':idUser', $idUsers, PDO::PARAM_INT);
 	   $stmt->execute();
-	   return $stmt->fetchAll();
+	   $result = $stmt->fetchAll();
 	   $stmt->closeCursor();
 	   $stmt = null;
+	   return $result;
 	}
 
 	static public function mdlNullAreaUser($idArea){
@@ -917,9 +931,10 @@ class FormsModels {
 	   $sql = "SELECT * FROM montrer_providers";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->execute();
-	   return $stmt->fetchAll();
+	   $result = $stmt->fetchAll();
 	   $stmt->closeCursor();
 	   $stmt = null;
+	   return $result;
 	}
 
 	static public function mdlGetProviderON(){
@@ -927,9 +942,10 @@ class FormsModels {
 	   $sql = "SELECT idProvider, CONCAT(representative_name,'(',provider_key,')') FROM montrer_providers WHERE status = 1;";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->execute();
-	   return $stmt->fetchAll();
+	   $result = $stmt->fetchAll();
 	   $stmt->closeCursor();
 	   $stmt = null;
+	   return $result;
 	}
 
 	static public function mdlRegisterProvider($data){
@@ -962,13 +978,14 @@ class FormsModels {
 		$stmt->bindParam(':clabe', $data['clabe'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
-			return 'ok';
+			$result = 'ok';
 		} else {
-			return 'Error';
+			$result = 'Error';
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
-		$stmt = null;  
+		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlUpdateProvider($data){
@@ -994,13 +1011,14 @@ class FormsModels {
 		$stmt->bindParam(':providerKey', $data['providerKey'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
-			return 'ok';
+			$result = 'ok';
 		} else {
-			return 'Error';
+			$result = 'Error';
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
-		$stmt = null;  
+		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlNextIdProvider(){
@@ -1008,9 +1026,10 @@ class FormsModels {
 		$sql = "SELECT LPAD(IFNULL(MAX(idProvider), 0) + 1, 3, '0') AS nextIdProvider FROM montrer_providers;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
-		$stmt = null;  
+		$stmt = null; 
+		return $result; 
 	}
 
 	static public function mdlDisableProvider($idProvider){
@@ -1072,9 +1091,10 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetch();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlGetAreaManager($idUser){
@@ -1086,9 +1106,10 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetchAll();
+		$result = $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlGetAuthorizedAmount($idArea){
@@ -1102,9 +1123,10 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		$stmt->execute();
-		return $stmt->fetchAll();
+		$result = $stmt->fetchAll();
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetRequests(){
@@ -1118,9 +1140,10 @@ class FormsModels {
 				WHERE a.status = 1;";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->execute();
-	   return $stmt->fetchAll();
+	   $result = $stmt->fetchAll();
 	   $stmt->closeCursor();
 	   $stmt = null;
+	   return $result;
 	}
 
 	static public function mdlRequestBudget($data){
@@ -1142,13 +1165,14 @@ class FormsModels {
 		$stmt->bindParam(':eventDate', $data['eventDate'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
-			return 'ok';
+			$result = 'ok';
 		} else {
-			return 'Error';
 			print_r($pdo->errorInfo());
+			$result = 'Error';
 		}
 		$stmt->closeCursor();
-		$stmt = null;  
+		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlDeleteRequest($idRequest){
@@ -1166,6 +1190,35 @@ class FormsModels {
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+	}
+	
+	static public function mdlGetRequest($idRequest){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_budget_requests WHERE idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlDenegateRequest($idRequest, $idAdmin){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 2 where idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idAdmin', $idAdmin, PDO::PARAM_INT);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
 	}
 	
 }
