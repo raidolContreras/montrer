@@ -78,11 +78,11 @@
     </div>
 </main>
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
+
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
 <script src="assets/js/ajax-js/request_provider.js"></script>
 <script src="assets/js/ajax-js/add-provider2.js"></script>
-
 
 <script>
     $j(document).ready(function() {
