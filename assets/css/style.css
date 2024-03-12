@@ -5982,6 +5982,15 @@ Template Sidebar CSS
   padding-bottom: 5px !important;
 }
 
+.pendiente-button{
+  font-size: 12px !important;
+  width: 100%;
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
 .btn-group {
   width: 100%;
 }

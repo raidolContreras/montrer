@@ -347,7 +347,11 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 				</button>
 			</center>`;
 		} else {
-			html += `Aprobado`;
+			html += `
+				<button class="btn btn-warning btn-block pendiente-button col-2" data-id="${idRequest}">
+					Pendiente de comprobación
+				</button>
+				`;
 		}
 		return html + `
 			</div>
