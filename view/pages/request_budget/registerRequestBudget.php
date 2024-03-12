@@ -4,8 +4,12 @@
 </script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <style>
-    option { background-color: white; }
-    .add-provider-option { background-color: #f0f0f0 !important; }
+    option {
+        background-color: white; 
+    }
+    .add-provider-option {
+        background-color: #f0f0f0 !important; 
+    }
 </style>
 
 <!-- Start Main Content Area -->
