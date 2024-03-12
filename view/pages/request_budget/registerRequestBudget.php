@@ -5,8 +5,7 @@
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <style>
     option { background-color: white; }
-    /* Intentar cambiar el color de una opción específica (limitado en compatibilidad) */
-    .add-provider-option { background-color: #f0f0f0 !important; } /* Gris claro para la opción de añadir */
+    .add-provider-option { background-color: #f0f0f0 !important; }
 </style>
 
 <!-- Start Main Content Area -->
