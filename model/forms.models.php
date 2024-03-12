@@ -1114,7 +1114,7 @@ class FormsModels {
 	
 	static public function mdlGetAuthorizedAmount($idArea){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.idBudget, a.idArea, m.month, m.budget_month, m.budget_used, m.total_used, r.requestedAmount, r.approvedAmount FROM montrer_budgets b
+		$sql = "SELECT b.idBudget, a.idArea, m.month, m.budget_month, m.budget_used, m.total_used, m.idMensualBudget,r.requestedAmount, r.approvedAmount FROM montrer_budgets b
 				LEFT JOIN montrer_month_budget m ON m.idBudget = b.idBudget
 				LEFT JOIN montrer_budget_requests r ON r.idBudget = b.idBudget
 				LEFT JOIN montrer_area a ON a.idArea = b.idArea
@@ -1131,7 +1131,7 @@ class FormsModels {
 
 	static public function mdlGetRequests(){
 	   $pdo = Conexion::conectar();
-	   $sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount,
+	   $sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
 					r.description, r.requestDate, r.responseDate, r.status,
 					a.nameArea, u.idUsers, u.firstname, u.lastname
 				FROM montrer_budget_requests r
@@ -1220,5 +1220,51 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+
+	static public function mdlEnableRequest($idRequest, $idAdmin, $approvedAmount){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 1, approvedAmount = :approvedAmount where idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idAdmin', $idAdmin, PDO::PARAM_INT);
+		$stmt->bindParam(':approvedAmount', $approvedAmount, PDO::PARAM_STR);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
 	
+	static public function mdlGetMonthBudget($idBudget){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_month_budget WHERE idBudget = :idBudget";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+	
+	static public function mdlFillBudgetMouth($idMensualBudget, $budget_used)	{
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_month_budget SET budget_used=:budget_used WHERE idMensualBudget = :idMensualBudget";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':budget_used', $budget_used, PDO::PARAM_STR);
+		$stmt->bindParam(':idMensualBudget', $idMensualBudget, PDO::PARAM_INT);
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
 }

@@ -119,6 +119,11 @@ class FormsController {
     	return $result;
 	}
 
+	static public function ctrEnableRequest($idRequest, $idAdmin, $approvedAmount){
+		$result = FormsModels::mdlEnableRequest($idRequest, $idAdmin, $approvedAmount);
+    	return $result;
+	}
+
 	static public function ctrGetRequest($idRequest){
 		$result = FormsModels::mdlGetRequest($idRequest);
     	return $result;
@@ -389,4 +394,37 @@ class FormsController {
 		$deleteRequest = FormsModels::mdlDeleteRequest($idRequests);
 		return $deleteRequest;
 	}
+
+	static public function ctrMonthBudget($idArea, $idBudget, $approvedAmount){
+		// Obtén el mes actual
+		$currentMonth = date('n'); // n devuelve el número del mes sin ceros iniciales
+	
+		// Obtiene los datos de la base de datos
+		$month_budgets = FormsModels::mdlGetMonthBudget($idBudget);
+	
+		// Inicializa la suma de los presupuestos hasta el mes actual
+		$sumaBudgetMonth = 0;
+		
+		// Recorre los datos para calcular la suma de los presupuestos hasta el mes actual
+		foreach ($month_budgets as $month_budget) {
+			if ($month_budget['month'] <= $currentMonth) {
+				$budgetMonth = floatval($month_budget['budget_month']);
+				$budgetUsed = floatval($month_budget['budget_used']);
+				
+				$sumaBudgetMonth = ($budgetMonth - $budgetUsed);
+				if($approvedAmount >= $sumaBudgetMonth) {
+					$budget = FormsModels::mdlFillBudgetMouth($month_budget['idMensualBudget'], $month_budget['budget_month']);
+					if($budget == 'ok') {
+						$approvedAmount = $approvedAmount - $sumaBudgetMonth;
+					}
+				} elseif($approvedAmount < $sumaBudgetMonth) {
+					$budget = FormsModels::mdlFillBudgetMouth($month_budget['idMensualBudget'], $approvedAmount);
+					if($budget == 'ok') {
+						$approvedAmount = 0;
+					}
+				}
+			}
+		}
+	}
+	
 }

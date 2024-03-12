@@ -68,6 +68,8 @@
                     <input type="text" id="approvedAmount" name="approvedAmount" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true"> 
                     <label class="requestMax"></label>
                     <input type="hidden" name="maxBudget">
+                    <input type="hidden" name="area">
+                    <input type="hidden" name="budget">
 				</div>
             </div>
             <div class="modal-footer">

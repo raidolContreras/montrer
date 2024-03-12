@@ -29,19 +29,33 @@ $(document).ready(function () {
 				data: 'nameArea',
 			},
 			{
-				data: 'requestedAmount',
+				data: null,
 				render: function (data, type, row) {
 					if (type === 'display' || type === 'filter') {
+						var dataAmount;
+						var color;
+			
+						if (data.approvedAmount != null) {
+							dataAmount = data.approvedAmount;
+							color = 'green';
+						} else {
+							dataAmount = data.requestedAmount;
+							color = 'orange';
+						}
+			
 						// Formatear como pesos
-						var formattedBudget = parseFloat(data).toLocaleString('es-MX', {
+						var formattedBudget = parseFloat(dataAmount).toLocaleString('es-MX', {
 							style: 'currency',
 							currency: 'MXN'
 						});
-						return formattedBudget;
+			
+						// Construir el HTML con el texto y el color
+						var html = '<span style="color: ' + color + ';">' + formattedBudget + '</span>';
+						return html;
 					}
 					return data;
 				}
-			},
+			},			
 			{
 				data: null,
 				render: function (data) {
@@ -60,7 +74,7 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function (data) {
-					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level);
+					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget);
 				}
 			}
 		],
@@ -185,11 +199,13 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 	$('#requests').on('click', `.${actionType}-button`, function () {
 		var idRequest = $(this).data('id');
 		var RequestName = $(this).closest('tr').find('td:eq(1)').text();
-
+		
 		$(`#${nameId}`).text(RequestName);
 		$(`#${confirmButtonId}`).data('id', idRequest);
 		
 		if(modalId == 'enableModal'){
+			var idBudget = $(this).data('budget');
+			$("input[name='budget']").val(idBudget);
 			$.ajax({
 				type: 'POST',
 				url: 'controller/ajax/getRequest.php',
@@ -197,13 +213,13 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 				dataType: 'json',
 				success: function (response) {
 					$("input[name='approvedAmount']").val(response.requestedAmount);
+					$("input[name='area']").val(response.idArea);
 					$.ajax({
 						type: 'POST',
 						url: 'controller/ajax/getAuthorizedAmount.php',
 						data: { areaId: response.idArea },
 						dataType: 'json',
 						success: function (response) {
-							
 							updateMaxRequestedAmount(response);
 						},
 						error: function (error) {
@@ -226,13 +242,17 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 		if(modalId == 'enableModal'){
 			var approvedAmount = $('input[name="approvedAmount"]').val();
 			var maxBudget = $('input[name="maxBudget"]').val();
-			if(maxBudget > approvedAmount){
+			var idBudget = $('input[name="budget"]').val();
+			var idArea = $('input[name="area"]').val();
+			if(maxBudget >= approvedAmount){
 				$.ajax({
 					type: 'POST',
 					url: 'controller/ajax/ajax.form.php',
-					data: { 
+					data: {
 						enableRequest: idRequest,
 						approvedAmount: approvedAmount,
+						idArea: idArea,
+						idBudget: idBudget,
 						idAdmin: user
 					},
 					success: function (response) {
@@ -287,7 +307,7 @@ function handleResponse(response, successMessage, errorMessage) {
 	}
 }
 
-function renderActionButtons(idRequest, status, userRequest, user, level) {
+function renderActionButtons(idRequest, status, userRequest, user, level, idBudget) {
 
 	if (status == 0 && userRequest == user){
 		return `
@@ -306,13 +326,30 @@ function renderActionButtons(idRequest, status, userRequest, user, level) {
 		return `
 			<div class="container">
 				<div class="row" style="justify-content: space-evenly;">
-					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
+					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
 						<i class="ri-check-line"></i>
 					</button>
 					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
 						<i class="ri-close-line"></i>
 					</button>
 				</div>
+			</div>
+		`;
+	} else if (status == 1) {
+		html = `
+			<div class="container">
+		`;
+		if(userRequest == user){
+			html += `
+			<center>
+				<button class="btn btn-success btn-block check-budget-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobar presupuesto">
+					<i class="ri-refund-2-line"></i>
+				</button>
+			</center>`;
+		} else {
+			html += `Aprobado`;
+		}
+		return html + `
 			</div>
 		`;
 	} else {
