@@ -223,36 +223,7 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 	$(`#${confirmButtonId}`).off('click').on('click', function () {
 		var idRequest = $(this).data('id');
 		var user = $("input[name='user']").val();
-		if(modalId != 'enableModal'){
-			$.ajax({
-				type: 'POST',
-				url: 'controller/ajax/ajax.form.php',
-				data: { [`${actionType}Request`]: idRequest },
-				success: function (response) {
-					handleResponse(response, successMessage, errorMessage);
-				},
-				complete: function () {
-					idRequest = 0;
-					$(`#${modalId}`).modal('hide');
-				}
-			});
-		} else if(modalId == 'denegateModal') {
-			$.ajax({
-				type: 'POST',
-				url: 'controller/ajax/ajax.form.php',
-				data: { 
-					denegateRequest: idRequest,
-					idAdmin: user
-				},
-				success: function (response) {
-					handleResponse(response, successMessage, errorMessage);
-				},
-				complete: function () {
-					idRequest = 0;
-					$(`#${modalId}`).modal('hide');
-				}
-			});
-		} else {
+		if(modalId == 'enableModal'){
 			var approvedAmount = $('input[name="approvedAmount"]').val();
 			var maxBudget = $('input[name="maxBudget"]').val();
 			if(maxBudget > approvedAmount){
@@ -275,6 +246,35 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 			} else {
 				showAlertBootstrap('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.');
 			}
+		} else if(modalId == 'denegateModal') {
+			$.ajax({
+				type: 'POST',
+				url: 'controller/ajax/ajax.form.php',
+				data: { 
+					denegateRequest: idRequest,
+					idAdmin: user
+				},
+				success: function (response) {
+					handleResponse(response, successMessage, errorMessage);
+				},
+				complete: function () {
+					idRequest = 0;
+					$(`#${modalId}`).modal('hide');
+				}
+			});
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: 'controller/ajax/ajax.form.php',
+				data: { [`${actionType}Request`]: idRequest },
+				success: function (response) {
+					handleResponse(response, successMessage, errorMessage);
+				},
+				complete: function () {
+					idRequest = 0;
+					$(`#${modalId}`).modal('hide');
+				}
+			});
 		}
 	});
 }
@@ -312,6 +312,14 @@ function renderActionButtons(idRequest, status, userRequest, user, level) {
 					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
 						<i class="ri-close-line"></i>
 					</button>
+				</div>
+			</div>
+		`;
+	} else {
+		return `
+			<div class="container">
+				<div class="row" style="justify-content: space-evenly;">
+					Rechazado
 				</div>
 			</div>
 		`;
