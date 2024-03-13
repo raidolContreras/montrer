@@ -1,4 +1,23 @@
 $(document).ready(function () {
+	$("input[name='metodoDePago']").change(function(){
+        // Si el radio button seleccionado es 'cheque', habilita el input
+        if($("#cheque").is(":checked")) {
+            $("#chequeNombre").removeAttr("disabled");
+        } else {
+            // Si se selecciona cualquier otro método de pago, deshabilita el input
+            $("#chequeNombre").attr("disabled", true);
+        }
+    });
+    var myDropzone = new Dropzone("#documentDropzone", {
+		parallelUploads: 10,
+		maxFiles: 10,
+        url: "controller/ajax/ajax.form.php",
+        maxFilesize: 10,
+        acceptedFiles: "image/jpeg, image/png, application/pdf",
+        dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .png, .jpg, .jpeg (Tamaño máximo 10 MB)</p>',
+        autoProcessQueue: false,
+    });
+
 	var level = $("input[name='level']").val();
 	var user = $("input[name='user']").val();
 
@@ -413,23 +432,31 @@ function updateMaxRequestedAmount(datos) {
 		}
 }
 
-function modalComprobar(idRequest){
-	$.ajax({
-		type: 'POST',
-		url: 'controller/ajax/ajax.form.php',
-		data: { searchRequest: idRequest },
-		dataType: 'json',
-		success: function (response) {
-			console.log(response.requestDate);
-			var registerValue = $('#register-value').data('register');
-			getArea(registerValue);
+function modalComprobar(idRequest) {
+    writtenNumber.defaults.lang = 'es';
+
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: { searchRequest: idRequest },
+        dataType: 'json',
+        success: function (response) {
+            console.log(response.requestDate);
+            var registerValue = $('#register-value').data('register');
+            getArea(registerValue);
             $('#fechaSolicitud').val(response.responseDate.split(' ')[0]);
-			$("input[name='importeSolicitado']").val(response.approvedAmount);
-			$("input[name='provider']").val(response.business_name);
-			$('#comprobarModal').modal('show');
-		}
-	});
+            $("input[name='importeSolicitado']").val(response.approvedAmount);
+
+            // Usa writtenNumber para convertir el monto aprobado a palabras.
+            var amountInWords = writtenNumber(response.approvedAmount, { lang: 'es' });
+            $("input[name='importeLetra']").val(amountInWords);
+
+            $("input[name='provider']").val(response.idProvider);
+            $('#comprobarModal').modal('show');
+        }
+    });
 }
+
 function getArea(registerValue) {
     $.ajax({
         type: 'POST',
@@ -439,8 +466,7 @@ function getArea(registerValue) {
         success: function (response) {
             $('select[name="area"]').val(response.nameArea);
 
-            // Llena el select de áreas
-            fillAreaSelect('area', response, 'departamento');
+            fillAreaSelect('area', response);
 
         },
         error: function (error) {
@@ -449,7 +475,7 @@ function getArea(registerValue) {
     });
 }
 
-function fillAreaSelect(select, datas, message) {
+function fillAreaSelect(select, datas) {
     var selectOption = $('#' + select);
 
     selectOption.empty();
@@ -457,4 +483,21 @@ function fillAreaSelect(select, datas, message) {
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
     });
+}
+function enviarComprobante() {
+	event.preventDefault()
+	// Enviar el formulario usando AJAX
+	$.ajax({
+		type: "POST",
+		url: "guardar_datos.php", // Aquí debes especificar la URL de tu script PHP para guardar los datos del formulario
+		data: $("#budgetRequestForm").serialize(), // Serializar el formulario para enviarlo por AJAX
+		success: function (response) {
+			console.log("Datos guardados correctamente.");
+			// Aquí puedes realizar alguna acción adicional después de guardar los datos, como mostrar un mensaje de éxito o redirigir a otra página
+		},
+		error: function (xhr, status, error) {
+			console.error("Error al guardar los datos:", error);
+			// Aquí puedes manejar el error de alguna manera, como mostrar un mensaje de error al usuario
+		}
+	});
 }

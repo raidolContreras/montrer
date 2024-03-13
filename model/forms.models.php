@@ -1271,7 +1271,7 @@ class FormsModels {
 	static public function mdlGetRequestComprobar($idRequest){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT br.idRequest, br.requestedAmount, br.description, br.approvedAmount, br.responseDate, br.requestDate, br.event, br.eventDate,
-		a.nameArea, p.business_name
+		a.nameArea, p.business_name, br.idProvider
 		FROM montrer_budget_requests br
 			LEFT JOIN montrer_budgets b ON b.idBudget = br.idBudget
 			LEFT JOIN montrer_area a ON a.idArea = br.idArea

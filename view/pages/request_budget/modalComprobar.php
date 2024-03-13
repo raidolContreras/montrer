@@ -20,88 +20,78 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="provider" class="form-label">PROVEEDOR</label>
+                            <label for="provider" class="form-label">Proveedor</label>
                             <select class="form-select" id="provider" name="provider">
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="area" class="form-label">AREA DE CARGO</label>
+                            <label for="area" class="form-label">Area de cargo</label>
                             <select class="form-select" id="area" name="area">
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="importeSolicitado" class="form-label">IMPORTE SOLICITADO</label>
-                            <input type="text" id="importeSolicitado" name="importeSolicitado" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
+                            <label for="importeSolicitado" class="form-label">Importe solicitado</label>
+                            <input type="text" id="importeSolicitado" name="importeSolicitado" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" readonly>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="importeLetra" class="form-label">IMPORTE CON LETRA</label>
+                            <label for="importeLetra" class="form-label">Importe con letra</label>
                             <input type="text" class="form-control" id="importeLetra" name="importeLetra" required>
                         </div>
 
-                        <div class="col-12 mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="cheque" name="cheque">
-                            <label class="form-check-label" for="cheque">CHEQUE</label>
-                        </div>
+                        <div class="row mx-2">
+                            <div class="col mb-3 form-check">
+                                <input type="radio" class="form-check-input" id="cheque" name="metodoDePago" value="cheque">
+                                <label class="form-check-label" for="cheque">Cheque</label>
+                            </div>
 
-                        <div class="col-12 mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="transferencia" name="transferencia">
-                            <label class="form-check-label" for="transferencia">TRANSFERENCIA</label>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="chequeNombre" class="form-label">CHEQUE A NOMBRE DE</label>
-                            <input type="text" class="form-control" id="chequeNombre" name="chequeNombre">
+                            <div class="col mb-3 form-check">
+                                <input type="radio" class="form-check-input" id="transferencia" name="metodoDePago" value="transferencia">
+                                <label class="form-check-label" for="transferencia">Transferencia</label>
+                            </div>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="titularCuenta" class="form-label">TITULAR DE LA CUENTA</label>
+                            <label for="chequeNombre" class="form-label">Cheque a nombre de</label>
+                            <input type="text" class="form-control" id="chequeNombre" name="chequeNombre" disabled>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="titularCuenta" class="form-label">Titular de la cuenta</label>
                             <input type="text" class="form-control" id="titularCuenta" name="titularCuenta">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="entidadBancaria" class="form-label">ENTIDAD BANCARIA</label>
+                            <label for="entidadBancaria" class="form-label">Entidad bancaria</label>
                             <input type="text" class="form-control" id="entidadBancaria" name="entidadBancaria">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="conceptoPago" class="form-label">CONCEPTO DEL PAGO</label>
+                            <label for="conceptoPago" class="form-label">Concepto del pago</label>
                             <input type="text" class="form-control" id="conceptoPago" name="conceptoPago">
                         </div>
 
-                        <div class="col-12 mb-3 form-check">
-                            <input type="radio" class="form-check-input" id="anexaComprobanteSI" name="anexaComprobante" value="SI">
-                            <label class="form-check-label" for="anexaComprobanteSI">ANEXA COMPROBANTE FISCAL</label>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="enviarSolicitud" class="form-label">ENVIAR SOLICITUD:</label>
-                            <select class="form-select" id="enviarSolicitud" name="enviarSolicitud">
-                                <option value="SE ENVIO">SE ENVIO</option>
-                                <option value="NO ENVIADO">NO ENVIADO</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="fechaEnvio" class="form-label">FECHA DE ENVIO</label>
-                            <input type="date" class="form-control" id="fechaEnvio" name="fechaEnvio">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="folioConfirmacion" class="form-label">FOLIO DE CONFIRMACION DE ENVIO DE LA SOLICITUD</label>
-                            <input type="text" class="form-control" id="folioConfirmacion" name="folioConfirmacion">
+                        <div class="col-12 my-3">
+                            <label for="comprobanteDropzone" class="form-label">Anexar comprobante fiscal</label>
+                            <div id="documentDropzone" class="dropzone"></div>
                         </div>
 
                         <div class="col-12 mt-2 text-end">
                             <a class="btn btn-danger" id="cancelButton">Cancelar</a>
-                            <button type="submit" class="btn btn-success">Aceptar</button>
+                            <button type="submit" class="btn btn-success" onclick="enviarComprobante()">Aceptar</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    
+</div>
+
 <script src="assets/js/ajax-js/request_provider.js"></script>
+<script src="assets/vendor/written-number/written-number.min.js"></script>
+
+<!-- Incluye Dropzone -->
+<link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">
+<script src="assets/vendor/dropzone/dropzone-min.js"></script>

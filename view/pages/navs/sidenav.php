@@ -74,15 +74,6 @@
                 <img src="assets/img/svg/justifyRequest.svg" width='25px' alt="calendar">
             </a>
         </li>
-        <?php 
-            // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'
-            $activeRequest = (isset($_GET['pagina']) && ($_GET['pagina'] == 'solicitudSendBudget')) ? 'active' : '';
-        ?>
-        <li class="list-group-item main-grid <?php echo $activeRequest; ?>">
-            <a href="solicitudSendBudget" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Comprobación de solicitudes" onclick="confirmExit(event, 'requestBudget')">
-                <img src="assets/img/svg/request.svg" width='25px' alt="calendar">
-            </a>
-        </li>
     </ul>
 </nav>
 <!-- End Sidebar Menu Area -->
