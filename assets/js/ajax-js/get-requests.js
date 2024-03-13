@@ -342,7 +342,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 		if(userRequest == user){
 			html += `
 			<center>
-				<button class="btn btn-success btn-block check-budget-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobar presupuesto">
+				<button class="btn btn-success check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobar presupuesto">
 					<i class="ri-refund-2-line"></i>
 				</button>
 			</center>`;
@@ -411,4 +411,50 @@ function updateMaxRequestedAmount(datos) {
 			$('#requestedAmount').prop('disabled', true);
 			$('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
 		}
+}
+
+function modalComprobar(idRequest){
+	$.ajax({
+		type: 'POST',
+		url: 'controller/ajax/ajax.form.php',
+		data: { searchRequest: idRequest },
+		dataType: 'json',
+		success: function (response) {
+			console.log(response.requestDate);
+			var registerValue = $('#register-value').data('register');
+			getArea(registerValue);
+            $('#fechaSolicitud').val(response.responseDate.split(' ')[0]);
+			$("input[name='importeSolicitado']").val(response.approvedAmount);
+			$("input[name='provider']").val(response.business_name);
+			$('#comprobarModal').modal('show');
+		}
+	});
+}
+function getArea(registerValue) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getAreasManager.php',
+        data: {user: registerValue},
+        dataType: 'json',
+        success: function (response) {
+            $('select[name="area"]').val(response.nameArea);
+
+            // Llena el select de áreas
+            fillAreaSelect('area', response, 'departamento');
+
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+function fillAreaSelect(select, datas, message) {
+    var selectOption = $('#' + select);
+
+    selectOption.empty();
+    datas.forEach(function (data) {
+        var option = $('<option>').val(data[0]).text(data[1]);
+        selectOption.append(option);
+    });
 }

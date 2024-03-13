@@ -567,3 +567,7 @@ if (isset($_POST['enableRequest'])){
 	}
 	echo $response;
 }
+
+if (isset($_POST['searchRequest'])){
+	echo json_encode(FormsController::ctrGetRequestComprobar($_POST['searchRequest']));
+}

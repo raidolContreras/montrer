@@ -93,6 +93,11 @@ class FormsController {
 		$getRequests = FormsModels::mdlGetRequests();
     	return $getRequests;
 	}
+	
+	static public function ctrGetRequestComprobar($idRequest){
+		$getRequests = FormsModels::mdlGetRequestComprobar($idRequest);
+    	return $getRequests;
+	}
 
 	static public function ctrGetProviderON(){
 		$getProvider = FormsModels::mdlGetProviderON();

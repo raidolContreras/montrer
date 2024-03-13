@@ -97,6 +97,7 @@
         </div>
     </div>
 </div>
+<div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 <?php endif ?>
 
 <script>
@@ -105,3 +106,7 @@
     });
 </script>
 <script src="assets/js/ajax-js/get-requests.js"></script>
+<?php 
+    include "view/pages/request_budget/modalComprobar.php";
+    include 'view/pages/request_budget/modalProvider.php';
+?>

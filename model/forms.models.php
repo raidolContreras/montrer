@@ -1267,4 +1267,22 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+	
+	static public function mdlGetRequestComprobar($idRequest){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT br.idRequest, br.requestedAmount, br.description, br.approvedAmount, br.responseDate, br.requestDate, br.event, br.eventDate,
+		a.nameArea, p.business_name
+		FROM montrer_budget_requests br
+			LEFT JOIN montrer_budgets b ON b.idBudget = br.idBudget
+			LEFT JOIN montrer_area a ON a.idArea = br.idArea
+			LEFT JOIN montrer_providers p ON p.idProvider = br.idProvider
+		WHERE idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
 }
