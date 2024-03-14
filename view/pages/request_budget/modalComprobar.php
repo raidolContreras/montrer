@@ -10,46 +10,47 @@
                     <div class="row p-3">
 
                         <div class="col-md-6 mb-3">
-                            <label for="nombreCompleto" class="form-label">Nombre completo solicitante</label>
+                            <label for="nombreCompleto" class="form-label">Nombre completo solicitante<span class="required"></span></label>
                             <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" value="<?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] ?>" readonly>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="fechaSolicitud" class="form-label">Fecha de solicitud</label>
+                            <label for="fechaSolicitud" class="form-label">Fecha de solicitud<span class="required"></span></label>
                             <input type="date" class="form-control" id="fechaSolicitud" name="fechaSolicitud" readonly>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="provider" class="form-label">Proveedor</label>
+                            <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
                             <select class="form-select" id="provider" name="provider">
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="area" class="form-label">Area de cargo</label>
+                            <label for="area" class="form-label">Area de cargo<span class="required"></span></label>
                             <select class="form-select" id="area" name="area">
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="importeSolicitado" class="form-label">Importe solicitado</label>
+                            <label for="importeSolicitado" class="form-label">Importe solicitado<span class="required"></span></label>
                             <input type="text" id="importeSolicitado" name="importeSolicitado" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" readonly>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="importeLetra" class="form-label">Importe con letra</label>
+                            <label for="importeLetra" class="form-label">Importe con letra<span class="required"></span></label>
                             <input type="text" class="form-control" id="importeLetra" name="importeLetra" required>
                         </div>
-
-                        <div class="row mx-2">
-                            <div class="col mb-3 form-check">
-                                <input type="radio" class="form-check-input" id="cheque" name="metodoDePago" value="cheque">
-                                <label class="form-check-label" for="cheque">Cheque</label>
-                            </div>
-
-                            <div class="col mb-3 form-check">
-                                <input type="radio" class="form-check-input" id="transferencia" name="metodoDePago" value="transferencia">
-                                <label class="form-check-label" for="transferencia">Transferencia</label>
+                        <div class="card">
+                            <label>Metodo de pago<span class="required"></span></label>
+                            <div class="row mx-2 card-body">
+                                <div class="col mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="cheque" name="metodoDePago" value="cheque">
+                                    <label class="form-check-label" for="cheque">Cheque</label>
+                                </div>
+                                <div class="col mb-3 form-check">
+                                    <input type="radio" class="form-check-input" id="transferencia" name="metodoDePago" value="transferencia">
+                                    <label class="form-check-label" for="transferencia">Transferencia</label>
+                                </div>
                             </div>
                         </div>
 
@@ -59,17 +60,17 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="titularCuenta" class="form-label">Titular de la cuenta</label>
+                            <label for="titularCuenta" class="form-label">Titular de la cuenta<span class="required"></span></label>
                             <input type="text" class="form-control" id="titularCuenta" name="titularCuenta">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="entidadBancaria" class="form-label">Entidad bancaria</label>
+                            <label for="entidadBancaria" class="form-label">Entidad bancaria<span class="required"></span></label>
                             <input type="text" class="form-control" id="entidadBancaria" name="entidadBancaria">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="conceptoPago" class="form-label">Concepto del pago</label>
+                            <label for="conceptoPago" class="form-label">Concepto del pago<span class="required"></span></label>
                             <input type="text" class="form-control" id="conceptoPago" name="conceptoPago">
                         </div>
 
@@ -95,3 +96,4 @@
 <!-- Incluye Dropzone -->
 <link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">
 <script src="assets/vendor/dropzone/dropzone-min.js"></script>
+<script src="assets/js/ajax-js/add-comprovation.js"></script>

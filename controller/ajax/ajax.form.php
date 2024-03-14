@@ -571,3 +571,17 @@ if (isset($_POST['enableRequest'])){
 if (isset($_POST['searchRequest'])){
 	echo json_encode(FormsController::ctrGetRequestComprobar($_POST['searchRequest']));
 }
+
+if (
+	isset($_POST['nombreCompleto']) &&
+	isset($_POST['fechaSolicitud']) &&
+	isset($_POST['provider']) &&
+	isset($_POST['area']) &&
+	isset($_POST['importeSolicitado']) &&
+	isset($_POST['importeLetra']) &&
+	isset($_POST['titularCuenta']) &&
+	isset($_POST['entidadBancaria']) &&
+	isset($_POST['conceptoPago'])
+) {
+	echo 'ok';
+}

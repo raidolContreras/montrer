@@ -8,15 +8,6 @@ $(document).ready(function () {
             $("#chequeNombre").attr("disabled", true);
         }
     });
-    var myDropzone = new Dropzone("#documentDropzone", {
-		parallelUploads: 10,
-		maxFiles: 10,
-        url: "controller/ajax/ajax.form.php",
-        maxFilesize: 10,
-        acceptedFiles: "image/jpeg, image/png, application/pdf",
-        dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .png, .jpg, .jpeg (Tamaño máximo 10 MB)</p>',
-        autoProcessQueue: false,
-    });
 
 	var level = $("input[name='level']").val();
 	var user = $("input[name='user']").val();
@@ -483,21 +474,4 @@ function fillAreaSelect(select, datas) {
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
     });
-}
-function enviarComprobante() {
-	event.preventDefault()
-	// Enviar el formulario usando AJAX
-	$.ajax({
-		type: "POST",
-		url: "guardar_datos.php", // Aquí debes especificar la URL de tu script PHP para guardar los datos del formulario
-		data: $("#budgetRequestForm").serialize(), // Serializar el formulario para enviarlo por AJAX
-		success: function (response) {
-			console.log("Datos guardados correctamente.");
-			// Aquí puedes realizar alguna acción adicional después de guardar los datos, como mostrar un mensaje de éxito o redirigir a otra página
-		},
-		error: function (xhr, status, error) {
-			console.error("Error al guardar los datos:", error);
-			// Aquí puedes manejar el error de alguna manera, como mostrar un mensaje de error al usuario
-		}
-	});
 }
