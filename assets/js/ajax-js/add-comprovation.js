@@ -38,7 +38,7 @@ function enviarComprobante() {
     } else {
         $.ajax({
             type: "POST",
-            url: "controller/ajax/ajax.form.php", // Aquí debes especificar la URL de tu script PHP para guardar los datos del formulario
+            url: "controller/ajax/ajax.form.php",
             data: {
                 nombreCompleto: nombreCompleto,
                 fechaSolicitud: fechaSolicitud,
@@ -54,6 +54,7 @@ function enviarComprobante() {
             },
             success: function (response) {
                 idPaymentRequest = response;
+                showAlert('Exito', 'Comprobante enviado');
                 myDropzone.processQueue();
             },
             error: function (xhr, status, error) {
@@ -67,6 +68,7 @@ function enviarComprobante() {
     myDropzone.on("sending", function(file, xhr, formData) {
         formData.append("idPaymentRequest", idPaymentRequest);
     });
+    console.log(myDropzone);
 }
 
 // Esperar a que el documento esté listo

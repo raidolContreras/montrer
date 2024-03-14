@@ -606,20 +606,17 @@ if (isset($_POST['idPaymentRequest'])) {
         'idPaymentRequest' => $_POST['idPaymentRequest'],
         'file' => $_FILES['file']['name']
     );
-	$targetDir = "../../view/documents/" . $_POST['idPaymentRequest'] . "/"; // Reemplaza con la ruta adecuada
+	$targetDir = "../../view/documents/" . $_POST['idPaymentRequest'] . "/";
 	$fileName = basename($_FILES["file"]["name"]);
 	$targetFilePath = $targetDir . $fileName;
 	$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
-	// Verifica si la carpeta existe, si no, la crea
 	if (!file_exists($targetDir)) {
 		mkdir($targetDir, 0777, true);
 	}
 
-	// Verificar si el archivo es una imagen
 	$allowTypes = array('jpg', 'jpeg', 'png', 'pdf');
 	if (in_array($fileType, $allowTypes)) {
-		// Mover el archivo al directorio de destino
 		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
 			echo 'ok';
 		} else {

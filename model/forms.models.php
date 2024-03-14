@@ -1298,7 +1298,8 @@ class FormsModels {
 
 	static public function mdlSendComprobation($data){
 		$pdo = Conexion::conectar();
-		$sql = "INSERT INTO montrer_payment_requests(nombreCompleto, fechaSolicitud, idProvider, idArea, importeSolicitado, importeLetra, titularCuenta, entidadBancaria, conceptoPago, idRequest, idUser) VALUES (:nombreCompleto,:fechaSolicitud,:provider,:area,:importeSolicitado,:importeLetra,:titularCuenta,:entidadBancaria,:conceptoPago,:idRequest,:idUser)";
+		$sql = "INSERT INTO montrer_payment_requests(nombreCompleto, fechaSolicitud, idProvider, idArea, importeSolicitado, importeLetra, titularCuenta, entidadBancaria, conceptoPago, idRequest, idUser) VALUES (:nombreCompleto,:fechaSolicitud,:provider,:area,:importeSolicitado,:importeLetra,:titularCuenta,:entidadBancaria,:conceptoPago,:idRequest,:idUser);";
+		$sql .= "UPDATE montrer_budget_requests set status = 2 WHERE idRequest = :idRequest;";
 		
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':nombreCompleto', $data['nombreCompleto'], PDO::PARAM_STR);
