@@ -20,6 +20,8 @@ function enviarComprobante() {
     var titularCuenta = $("input[name='titularCuenta']").val();
     var entidadBancaria = $("input[name='entidadBancaria']").val();
     var conceptoPago = $("input[name='conceptoPago']").val();
+    var idUser = $("input[name='user']").val();
+    var idRequest = $("input[name='request']").val();
 
     if (
         nombreCompleto === '' ||
@@ -46,10 +48,13 @@ function enviarComprobante() {
                 importeLetra: importeLetra,
                 titularCuenta: titularCuenta,
                 entidadBancaria: entidadBancaria,
-                conceptoPago: conceptoPago
+                conceptoPago: conceptoPago,
+                idRequest: idRequest,
+                idUser: idUser
             },
             success: function (response) {
-                if (response === 'ok') return console.log("Datos guardados correctamente.");
+                idPaymentRequest = response;
+                myDropzone.processQueue();
             },
             error: function (xhr, status, error) {
                 console.error("Error al guardar los datos:", error);
@@ -57,6 +62,11 @@ function enviarComprobante() {
             }
         });
     }
+    
+    // Configuración del evento 'sending' del Dropzone
+    myDropzone.on("sending", function(file, xhr, formData) {
+        formData.append("idPaymentRequest", idPaymentRequest);
+    });
 }
 
 // Esperar a que el documento esté listo

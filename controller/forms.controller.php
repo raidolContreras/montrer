@@ -431,5 +431,10 @@ class FormsController {
 			}
 		}
 	}
+
+	static public function ctrSendComprobation($data){
+        $sendComprobation = FormsModels::mdlSendComprobation($data);
+        return $sendComprobation;
+    }
 	
 }

@@ -83,6 +83,9 @@
                             <a class="btn btn-danger" id="cancelButton">Cancelar</a>
                             <button type="submit" class="btn btn-success" onclick="enviarComprobante()">Aceptar</button>
                         </div>
+
+                        <input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
+                        <input type="hidden" name="request">
                     </div>
                 </form>
             </div>

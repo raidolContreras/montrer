@@ -1270,17 +1270,54 @@ class FormsModels {
 	
 	static public function mdlGetRequestComprobar($idRequest){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT br.idRequest, br.requestedAmount, br.description, br.approvedAmount, br.responseDate, br.requestDate, br.event, br.eventDate,
-		a.nameArea, p.business_name, br.idProvider
-		FROM montrer_budget_requests br
-			LEFT JOIN montrer_budgets b ON b.idBudget = br.idBudget
-			LEFT JOIN montrer_area a ON a.idArea = br.idArea
-			LEFT JOIN montrer_providers p ON p.idProvider = br.idProvider
-		WHERE idRequest = :idRequest";
+		$sql = "SELECT 
+					br.idRequest,
+					br.requestedAmount,
+					br.description,
+					br.approvedAmount,
+					br.responseDate,
+					br.requestDate,
+					br.event,
+					br.eventDate,
+					a.nameArea,
+					p.business_name,
+					br.idProvider
+				FROM montrer_budget_requests br
+					LEFT JOIN montrer_budgets b ON b.idBudget = br.idBudget
+					LEFT JOIN montrer_area a ON a.idArea = br.idArea
+					LEFT JOIN montrer_providers p ON p.idProvider = br.idProvider
+				WHERE idRequest = :idRequest";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlSendComprobation($data){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_payment_requests(nombreCompleto, fechaSolicitud, idProvider, idArea, importeSolicitado, importeLetra, titularCuenta, entidadBancaria, conceptoPago, idRequest, idUser) VALUES (:nombreCompleto,:fechaSolicitud,:provider,:area,:importeSolicitado,:importeLetra,:titularCuenta,:entidadBancaria,:conceptoPago,:idRequest,:idUser)";
+		
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':nombreCompleto', $data['nombreCompleto'], PDO::PARAM_STR);
+		$stmt->bindParam(':fechaSolicitud', $data['fechaSolicitud'], PDO::PARAM_STR);
+		$stmt->bindParam(':provider', $data['provider'], PDO::PARAM_INT);
+		$stmt->bindParam(':area', $data['area'], PDO::PARAM_INT);
+		$stmt->bindParam(':importeSolicitado', $data['importeSolicitado'], PDO::PARAM_STR);
+		$stmt->bindParam(':importeLetra', $data['importeLetra'], PDO::PARAM_STR);
+		$stmt->bindParam(':titularCuenta', $data['titularCuenta'], PDO::PARAM_STR);
+		$stmt->bindParam(':entidadBancaria', $data['entidadBancaria'], PDO::PARAM_STR);
+		$stmt->bindParam(':conceptoPago', $data['conceptoPago'], PDO::PARAM_STR);
+		$stmt->bindParam(':idRequest', $data['idRequest'], PDO::PARAM_INT);
+		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
+		if($stmt->execute()){
+			$result = $pdo->lastInsertId();
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;

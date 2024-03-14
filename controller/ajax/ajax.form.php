@@ -581,7 +581,52 @@ if (
 	isset($_POST['importeLetra']) &&
 	isset($_POST['titularCuenta']) &&
 	isset($_POST['entidadBancaria']) &&
-	isset($_POST['conceptoPago'])
+	isset($_POST['conceptoPago']) &&
+	isset($_POST['idRequest']) &&
+	isset($_POST['idUser'])
 ) {
-	echo 'ok';
+	$data = array(
+		'nombreCompleto' => $_POST['nombreCompleto'],
+		'fechaSolicitud' => $_POST['fechaSolicitud'],
+		'provider' => $_POST['provider'],
+		'area' => $_POST['area'],
+		'importeSolicitado' => $_POST['importeSolicitado'],
+		'importeLetra' => $_POST['importeLetra'],
+		'titularCuenta' => $_POST['titularCuenta'],
+		'entidadBancaria' => $_POST['entidadBancaria'],
+		'conceptoPago' => $_POST['conceptoPago'],
+		'idRequest' => $_POST['idRequest'],
+		'idUser' => $_POST['idUser'],
+	);
+	echo FormsController::ctrSendComprobation($data);
+}
+
+if (isset($_POST['idPaymentRequest'])) {
+    $data = array(
+        'idPaymentRequest' => $_POST['idPaymentRequest'],
+        'file' => $_FILES['file']['name']
+    );
+	$targetDir = "../../view/documents/" . $_POST['idPaymentRequest'] . "/"; // Reemplaza con la ruta adecuada
+	$fileName = basename($_FILES["file"]["name"]);
+	$targetFilePath = $targetDir . $fileName;
+	$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+	// Verifica si la carpeta existe, si no, la crea
+	if (!file_exists($targetDir)) {
+		mkdir($targetDir, 0777, true);
+	}
+
+	// Verificar si el archivo es una imagen
+	$allowTypes = array('jpg', 'jpeg', 'png', 'pdf');
+	if (in_array($fileType, $allowTypes)) {
+		// Mover el archivo al directorio de destino
+		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+			echo 'ok';
+		} else {
+			echo 'Error';
+		}
+	} else {
+		echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, jpg, jpeg, png).'));
+	}
+
 }

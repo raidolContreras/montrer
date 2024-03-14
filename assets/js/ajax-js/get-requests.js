@@ -443,6 +443,7 @@ function modalComprobar(idRequest) {
             $("input[name='importeLetra']").val(amountInWords);
 
             $("input[name='provider']").val(response.idProvider);
+            $("input[name='request']").val(idRequest);
             $('#comprobarModal').modal('show');
         }
     });
