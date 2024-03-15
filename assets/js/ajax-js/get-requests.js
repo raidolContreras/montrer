@@ -366,6 +366,23 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 		return html + `
 			</div>
 		`;
+	} else if (status == 2) {
+		if (level == 1 && userRequest != user){
+			return `
+                <div class="container">
+                    <div class="row" style="justify-content: space-evenly;">
+                        <button class="btn btn-success ver-button col-2" onclick="verComprobacion(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver envio">
+                            <i class="ri-eye-line"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+		}
+		return `
+			<button class="btn btn-warning btn-block pendiente-button col-2" onclick="pendienteAprovacion(${idRequest})">
+				Pendiente de aprobación
+			</button>
+		`;
 	} else {
 		return `
 			<div class="container">

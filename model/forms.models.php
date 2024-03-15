@@ -1323,4 +1323,18 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+	static public function mdlGetComprobante($idRequest){
+		$pdo = Conexion::conectar();
+        $sql = "SELECT r.*, a.nameArea, p.business_name FROM montrer_payment_requests r
+					LEFT JOIN montrer_area a ON a.idArea = r.idArea
+					LEFT JOIN montrer_providers p ON p.idProvider = r.idProvider
+				WHERE idRequest = :idRequest";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
 }

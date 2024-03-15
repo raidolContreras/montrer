@@ -436,5 +436,10 @@ class FormsController {
         $sendComprobation = FormsModels::mdlSendComprobation($data);
         return $sendComprobation;
     }
+
+	static public function ctrGetComprobante($idRequest){
+        $getComprobante = FormsModels::mdlGetComprobante($idRequest);
+        return $getComprobante;
+    }
 	
 }

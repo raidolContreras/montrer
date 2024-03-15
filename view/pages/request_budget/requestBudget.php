@@ -107,6 +107,7 @@
 </script>
 <script src="assets/js/ajax-js/get-requests.js"></script>
 <?php 
-    include "view/pages/request_budget/modalComprobar.php";
-    include 'view/pages/request_budget/modalProvider.php';
+    include "modalComprobar.php";
+    include 'modalProvider.php';
+    include 'verComprobacion.php';
 ?>

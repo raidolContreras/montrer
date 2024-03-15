@@ -627,3 +627,27 @@ if (isset($_POST['idPaymentRequest'])) {
 	}
 
 }
+if (isset($_POST['searchComprobante'])){
+	echo json_encode(FormsController::ctrGetComprobante($_POST['searchComprobante']));
+}
+
+if (isset($_POST['getDocuments'])){
+	$idRequest = $_POST['getDocuments'];
+    $directoryPath = "../../view/documents/" . $idRequest . "/";
+    $files = [];
+
+    // Comprobar si la carpeta existe
+    if(file_exists($directoryPath)) {
+        foreach (new DirectoryIterator($directoryPath) as $file) {
+            if ($file->isFile()) {
+                $files[] = $file->getFilename();
+            }
+        }
+        
+        // Devolver los nombres de los archivos en formato JSON
+        echo json_encode($files);
+    } else {
+        // Carpeta no existe
+        echo json_encode([]);
+    }
+}

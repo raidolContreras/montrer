@@ -808,6 +808,7 @@
 .ri-file-paper-line:before { content: "\ecfb"; }
 .ri-file-pdf-fill:before { content: "\ecfc"; }
 .ri-file-pdf-line:before { content: "\ecfd"; }
+.ri-file-pdf-2-line:before { content: "\ecfd"; }
 .ri-file-ppt-2-fill:before { content: "\ecfe"; }
 .ri-file-ppt-2-line:before { content: "\ecff"; }
 .ri-file-ppt-fill:before { content: "\ed00"; }

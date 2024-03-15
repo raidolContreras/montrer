@@ -5990,6 +5990,13 @@ Template Sidebar CSS
   padding-top: 5px !important;
   padding-bottom: 5px !important;
 }
+.ver-button{
+  font-size: 12px !important;
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
 
 .btn-group {
   width: 100%;
@@ -6065,4 +6072,47 @@ Template Sidebar CSS
   @page {
       size: landscape;
   }
+}
+
+.document-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.doc-pdf {
+  background-color: #e74c3c; /* Rojo */
+}
+
+.doc-image {
+  background: linear-gradient(45deg, #3498db, #9b59b6); /* Degradado para imágenes */
+}
+
+.doc-other {
+  background-color: #7f8c8d; /* Gris para otros tipos */
+}
+
+.list-group-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word; /* Para que los nombres largos de archivos se ajusten correctamente */
+}
+
+.list-group-item a {
+  text-align: center; /* Asegura que el texto esté centrado debajo del icono */
+}
+
+.list-group-ul {
+  display: flex;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-radius: var(--bs-list-group-border-radius);
+  justify-content: flex-start;
 }
