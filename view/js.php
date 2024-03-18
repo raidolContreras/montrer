@@ -39,7 +39,7 @@
 			
 			function showAlertBootstrap(title, message) {
 				$('#modalLabel').text(title);
-				$('.modal-body-extra').text(message);
+				$('.modal-body-extra').html(message);
 					modalFooter.html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
 				$('#alertModal').modal('show');
 			}

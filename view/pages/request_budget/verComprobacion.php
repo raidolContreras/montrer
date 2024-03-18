@@ -45,6 +45,8 @@
                             <label for="conceptoPagoGet" class="form-label">Concepto de Pago</label>
                             <input type="text" class="form-control" id="conceptoPagoGet" readonly>
                         </div>
+                        <div class="comment">
+                        </div>
                         <!-- Apartado para documentos -->
                         <div class="col-12 mt-4">
                             <h5>Lista de documentos</h5>
@@ -55,9 +57,10 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer botones-modal">
                 <a class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
-                <button type="submit" class="btn btn-success">Aceptar</button>
+                <button type="button" class="btn btn-warning denegar">Denegar</button>
+                <button type="button" class="btn btn-success aceptar">Aceptar</button>
             </div>
         </div>
     </div>

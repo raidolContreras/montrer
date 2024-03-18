@@ -6116,3 +6116,7 @@ Template Sidebar CSS
   border-radius: var(--bs-list-group-border-radius);
   justify-content: flex-start;
 }
+
+.denegate {
+  Cursor : not-allowed;
+}

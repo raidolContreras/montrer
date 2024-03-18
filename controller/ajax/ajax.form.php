@@ -651,3 +651,23 @@ if (isset($_POST['getDocuments'])){
         echo json_encode([]);
     }
 }
+
+if (isset($_POST['denegateComprobante'])) {
+	echo FormsController::ctrResponceRequest($_POST['denegateComprobante'], 4, $_POST['comentario']);
+}
+
+if (isset($_POST['aceptComprobante'])) {
+	echo FormsController::ctrResponceRequest($_POST['aceptComprobante'], 5, $_POST['comentario']);
+}
+
+if (isset($_POST['comments'])) {
+	echo FormsController::ctrCommentsRequest($_POST['comments']);
+}
+
+if (isset($_POST['verificacion'])) {
+	echo FormsController::ctrVerificacionArea($_POST['verificacion']);
+}
+
+if (isset($_POST['verificacion2'])) {
+	echo FormsController::ctrVerificacionDeudas($_POST['verificacion2']);
+}

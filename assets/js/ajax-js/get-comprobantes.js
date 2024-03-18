@@ -61,6 +61,17 @@ function verComprobacion(idRequest){
                     } else {
                         $('#listaDocumentos').append(`<li class="list-group-item">No hay documentos asignados.</li>`);
                     }
+
+                    comments(idRequest);
+                    
+                    $('.denegar').click(function(e){
+                        denegate(idRequest);
+                    });
+                    
+                    $('.aceptar').click(function(e){
+                        acept(idRequest);
+                    });
+
                 },
                 error: function() {
                     $('#listaDocumentos').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
@@ -69,7 +80,62 @@ function verComprobacion(idRequest){
         },
         error: function(xhr, status, error) {
             console.error("Error al obtener los datos:", error);
-            // Manejo de errores, por ejemplo, mostrar un mensaje al usuario.
+        }
+    });
+
+}
+
+function denegate(idRequest){
+    var comentario = $('#comentario').val();
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {
+            denegateComprobante: idRequest,
+            comentario: comentario
+        },
+        success: function(response) {
+            showAlertBootstrap4('Operación realizada', 'Comprobante denegado con éxito.');
+        },
+        error: function(xhr, status, error) {
+            // Aquí manejas errores de la solicitud
+            console.error("Error en la solicitud: ", error);
+            alert('Ocurrió un error al denegar el elemento.');
+        }
+    });
+}
+
+function acept(idRequest){
+    var comentario = $('#comentario').val();
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {
+            aceptComprobante: idRequest,
+            comentario: comentario
+        },
+        success: function(response) {
+            showAlertBootstrap4('Operación realizada', 'Comprobante aprobado con éxito.');
+        },
+        error: function(xhr, status, error) {
+            // Aquí manejas errores de la solicitud
+            console.error("Error en la solicitud: ", error);
+            alert('Ocurrió un error al denegar el elemento.');
+        }
+    });
+}
+
+function comments(idRequest) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {comments: idRequest},
+        dataType: 'json',
+        success: function (response) {
+            $('input[id="comentario"]').val(response.comentarios);
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
         }
     });
 }

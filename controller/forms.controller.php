@@ -441,5 +441,19 @@ class FormsController {
         $getComprobante = FormsModels::mdlGetComprobante($idRequest);
         return $getComprobante;
     }
+
+	static public function ctrResponceRequest($idRequest, $responce, $comentario){
+        return FormsModels::mdlResponceRequest($idRequest, $responce, $comentario);
+    }
+	static public function ctrCommentsRequest($idRequest){
+        return json_encode(FormsModels::mdlCommentsRequest($idRequest));
+    }
 	
+	static public function ctrVerificacionArea($idUser){
+        return json_encode(FormsModels::mdlVerificacionArea($idUser));
+    }
+	
+	static public function ctrVerificacionDeudas($idUser){
+        return json_encode(FormsModels::mdlVerificacionDeudas($idUser));
+    }
 }

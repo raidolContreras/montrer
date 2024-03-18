@@ -1206,7 +1206,7 @@ class FormsModels {
 
 	static public function mdlDenegateRequest($idRequest, $idAdmin){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 2 where idRequest = :idRequest";
+		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 3 where idRequest = :idRequest";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idAdmin', $idAdmin, PDO::PARAM_INT);
 		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
@@ -1223,7 +1223,7 @@ class FormsModels {
 
 	static public function mdlEnableRequest($idRequest, $idAdmin, $approvedAmount){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 1, approvedAmount = :approvedAmount where idRequest = :idRequest";
+		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 1, active = 1, approvedAmount = :approvedAmount where idRequest = :idRequest";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idAdmin', $idAdmin, PDO::PARAM_INT);
 		$stmt->bindParam(':approvedAmount', $approvedAmount, PDO::PARAM_STR);
@@ -1336,5 +1336,66 @@ class FormsModels {
         $stmt->closeCursor();
         $stmt = null;
         return $result;
+	}
+	
+	static public function mdlResponceRequest($idRequest, $responce, $comentario){
+		$active = ($responce == 5) ? ",active = 0": "";
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budget_requests SET status = :status, comentarios = :comentario $active where idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		$stmt->bindParam(':status', $responce, PDO::PARAM_INT);
+		$stmt->bindParam(':comentario', $comentario, PDO::PARAM_STR);
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlCommentsRequest($idRequest){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT comentarios
+				FROM montrer_budget_requests
+				WHERE idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlVerificacionArea($idUser){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT *
+				FROM montrer_area
+				WHERE idUser = :idUser";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlVerificacionDeudas($idUser){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT *
+				FROM montrer_budget_requests
+				WHERE idUser = :idUser and active = 1";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
 	}
 }

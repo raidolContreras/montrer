@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
 	$("input[name='metodoDePago']").change(function(){
         // Si el radio button seleccionado es 'cheque', habilita el input
         if($("#cheque").is(":checked")) {
@@ -12,6 +13,8 @@ $(document).ready(function () {
 	var level = $("input[name='level']").val();
 	var user = $("input[name='user']").val();
 
+	verificacion(user);
+	
 	moment.locale('es');
 	$('#requests').DataTable({
 		// tus otras opciones de configuración aquí...
@@ -368,6 +371,19 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 		`;
 	} else if (status == 2) {
 		if (level == 1 && userRequest != user){
+
+			$('.botones-modal').html(`
+				<a class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
+				<button type="button" class="btn btn-warning denegar">Denegar</button>
+				<button type="button" class="btn btn-success aceptar">Aceptar</button>
+			`);
+			$('.comment').html(`
+				<div class="col-12">
+					<label for="comentario" class="form-label">Realizar comentario</label>
+					<input type="text" class="form-control" id="comentario">
+				</div>
+			`);
+
 			return `
                 <div class="container">
                     <div class="row" style="justify-content: space-evenly;">
@@ -383,6 +399,48 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 				Pendiente de aprobación
 			</button>
 		`;
+	} else if (status == 4) {
+		html = `
+			<div class="container">
+		`;
+		if(userRequest == user){
+			html += `
+				<center>
+					<button class="btn btn-danger check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobante rechazado, por favor vuelva a enviarlo.">
+						<i class="ri-refund-2-line"></i>
+					</button>
+				</center>
+			`;
+		} else {
+			html += `
+				<button class="btn btn-warning btn-block pendiente-button col-2" data-id="${idRequest}">
+					Pendiente de comprobación
+				</button>
+			`;
+		}
+		return html + `
+			</div>
+		`;
+	} else if (status == 5) {
+		$('.botones-modal').html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
+		
+		$('.comment').html(`
+			<div class="col-12">
+				<label for="comentario" class="form-label">Comentarios</label>
+				<input type="text" class="form-control" id="comentario" readonly>
+			</div>
+		`);
+
+		return `
+			<div class="container">
+				<div class="row" style="justify-content: space-evenly;">
+					<button class="btn btn-success ver-button col-2" onclick="verComprobacion(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobante aceptado, verifique el envío.">
+						<i class="ri-check-line"></i>
+					</button>
+				</div>
+			</div>
+		`;
+
 	} else {
 		return `
 			<div class="container">
@@ -491,5 +549,62 @@ function fillAreaSelect(select, datas) {
     datas.forEach(function (data) {
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
+    });
+}
+
+function verificacion(idUser) {
+	$.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {verificacion: idUser},
+        dataType: 'json',
+        success: function (response) {
+			if (response == false) {
+				$('.solicitud').html(`
+					<h3>Solicitudes de presupuesto</h3>
+					<a class="btn btn-primary denegate" disabled>Nueva solicitud</a>
+				`)
+			} else {
+				$.ajax({
+					type: 'POST',
+					url: 'controller/ajax/ajax.form.php',
+					data: {verificacion2: idUser},
+					dataType: 'json',
+					success: function (response) {
+						response.forEach(function(item) {
+							var responseDate = new Date(item.responseDate);
+							var today = new Date();
+				
+							var timeDifference = today.getTime() - responseDate.getTime();
+							var daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+				
+							console.log("Días transcurridos desde la respuesta:", daysDifference);
+				
+							if (daysDifference >= 8) {
+								// Formatear como pesos
+								var formattedBudget = parseFloat(item.approvedAmount).toLocaleString('es-MX', {
+									style: 'currency',
+									currency: 'MXN'
+								});
+				
+								showAlertBootstrap('¡Atención!', `Queremos informarte que tu préstamo anterior, valuado en ${formattedBudget}, lleva más de 8 días sin ser comprobado. Te instamos a que lo revises lo antes posible antes de realizar cualquier otra solicitud de presupuesto. Es crucial mantener un seguimiento oportuno de nuestras transacciones financieras para garantizar una gestión eficiente de los recursos. <br> <br> Por favor, ten en cuenta que una vez enviado, debes esperar a que nuestro equipo administrativo lo revise.`);
+								
+								$('.solicitud').html(`
+									<h3>Solicitudes de presupuesto</h3>
+									<a class="btn btn-primary denegate" disabled>Nueva solicitud</a>
+								`)
+							}
+						});
+					},
+					error: function (error) {
+						console.log('Error en la solicitud AJAX:', error);
+					}
+				});
+				
+			}
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
     });
 }
