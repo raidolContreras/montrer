@@ -587,12 +587,14 @@ function verificacion(idUser) {
 									currency: 'MXN'
 								});
 				
-								showAlertBootstrap('¡Atención!', `Queremos informarte que tu préstamo anterior, valuado en ${formattedBudget}, lleva más de 8 días sin ser comprobado. Te instamos a que lo revises lo antes posible antes de realizar cualquier otra solicitud de presupuesto. Es crucial mantener un seguimiento oportuno de nuestras transacciones financieras para garantizar una gestión eficiente de los recursos. <br> <br> Por favor, ten en cuenta que una vez enviado, debes esperar a que nuestro equipo administrativo lo revise.`);
+								showAlertBootstrap('¡Atención!', `Deseamos informarle que su préstamo anterior, valuado en ${formattedBudget}, lleva más de 8 días sin ser comprobado. Le instamos a que lo revise lo antes posible antes de realizar cualquier otra solicitud de presupuesto. Es crucial mantener un seguimiento oportuno de sus transacciones financieras para garantizar una gestión eficiente de los recursos. <br><br>Por favor, tenga en cuenta que su cuenta no puede solicitar más presupuestos hasta que compruebe los que ya tiene vencidos.`);
 								
 								$('.solicitud').html(`
 									<h3>Solicitudes de presupuesto</h3>
 									<a class="btn btn-primary denegate" disabled>Nueva solicitud</a>
 								`)
+							} else if( daysDifference > 1 ) {
+								showAlertBootstrap('¡Atención!', `Queremos informarle que su préstamo anterior, valuado en ${formattedBudget}, lleva ${daysDifference} días sin ser comprobado. Le instamos a que lo revise lo antes posible antes de realizar cualquier otra solicitud de presupuesto. Es crucial mantener un seguimiento oportuno de sus transacciones financieras para garantizar una gestión eficiente de los recursos. <br><br>Por favor, tenga en cuenta que una vez enviado, debe esperar a que nuestro equipo administrativo lo revise.`);
 							}
 						});
 					},
