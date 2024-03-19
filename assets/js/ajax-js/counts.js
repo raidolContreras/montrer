@@ -7,6 +7,7 @@ function getAreas() {
     $.ajax({
         type: 'GET',
         url: 'controller/ajax/countAreas.php',
+        data: {},
         dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
         success: function (response) {
             // Verifica que la respuesta sea válida y tenga datos
@@ -20,7 +21,18 @@ function getAreas() {
                     style: 'currency',
                     currency: 'MXN'
                 });
+
                 var formattedRest = parseFloat(response.remaining).toLocaleString('es-MX', {
+                    style: 'currency',
+                    currency: 'MXN'
+                });
+
+                var comp = parseFloat(response.comp).toLocaleString('es-MX', {
+                    style: 'currency',
+                    currency: 'MXN'
+                });
+
+                var nocomp = parseFloat(response.nocomp).toLocaleString('es-MX', {
                     style: 'currency',
                     currency: 'MXN'
                 });
@@ -33,6 +45,10 @@ function getAreas() {
                 });
 
                 $('.budget').text(formattedBudget);
+
+                $('.comp').text(comp);
+
+                $('.nocomp').text(nocomp);
                 
                 $('.rest').html(formattedRest + ' <span>' + (100 - formattedPercentageUsed).toFixed(2) + '%</span>');
 

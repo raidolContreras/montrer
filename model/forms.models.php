@@ -14,6 +14,25 @@ function generarPassword() {
 }
 
 class FormsModels {
+	
+	// Action Logs
+	static public function mdlLog($idUser, $action, $ip){
+
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_logs(idUser, actionType, ipAddress) VALUES (:idUser,:action,:ip)";
+		$stmt = $pdo->prepare($sql);
+		
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		$stmt->bindParam(':action', $action, PDO::PARAM_STR);
+		$stmt->bindParam(':ip', $ip, PDO::PARAM_STR);
+		
+		if ($stmt->execute()){
+			return 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+		}
+
+	}
 
 	// Inicio de Contadores
 	static public function mdlCountAreas(){
@@ -23,10 +42,27 @@ class FormsModels {
 				(SELECT COUNT(*) FROM montrer_users u LEFT JOIN montrer_settings s ON s.idUser = u.idUsers WHERE s.status = 1) AS users,
 				(SELECT exerciseName FROM montrer_exercise WHERE status = 1) AS name,
 				COALESCE((SELECT SUM(AuthorizedAmount) FROM montrer_budgets b LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise WHERE e.status = 1 AND b.status = 1), 0) AS used,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 ), 0) AS comp,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 ), 0) AS nocomp,
 				(SELECT budget FROM montrer_exercise WHERE status = 1) AS budget,
 				((SELECT budget FROM montrer_exercise WHERE status = 1) - COALESCE((SELECT SUM(AuthorizedAmount)
 				FROM montrer_budgets b LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise WHERE e.status = 1 AND b.status = 1), 0)) AS remaining;";
 		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlCountArea($idUser){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT 
+				(SELECT exerciseName FROM montrer_exercise WHERE status = 1) AS name,
+                COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 AND idUser = :idUser), 0) AS comp,
+                COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp;";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		$stmt->closeCursor();
@@ -1129,16 +1165,28 @@ class FormsModels {
 		return $result;
 	}
 
-	static public function mdlGetRequests(){
-	   $pdo = Conexion::conectar();
-	   $sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-					r.description, r.requestDate, r.responseDate, r.status,
-					a.nameArea, u.idUsers, u.firstname, u.lastname
-				FROM montrer_budget_requests r
-					LEFT JOIN montrer_area a ON a.idArea = r.idArea
-					LEFT JOIN montrer_users u ON u.idUsers = a.idUser
-				WHERE a.status = 1;";
-	   $stmt = $pdo->prepare($sql);
+	static public function mdlGetRequests($idUser, $selection){
+			$pdo = Conexion::conectar();
+			if ($selection == 1){
+				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
+						r.description, r.requestDate, r.responseDate, r.status,
+						a.nameArea, u.idUsers, u.firstname, u.lastname
+					FROM montrer_budget_requests r
+						LEFT JOIN montrer_area a ON a.idArea = r.idArea
+						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
+					WHERE a.status = 1";
+				$stmt = $pdo->prepare($sql);
+			} else {
+				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
+						r.description, r.requestDate, r.responseDate, r.status,
+						a.nameArea, u.idUsers, u.firstname, u.lastname
+					FROM montrer_budget_requests r
+						LEFT JOIN montrer_area a ON a.idArea = r.idArea
+						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
+					WHERE a.status = 1 AND u.idUsers = :idUser;";
+				$stmt = $pdo->prepare($sql);
+				$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+			}
 	   $stmt->execute();
 	   $result = $stmt->fetchAll();
 	   $stmt->closeCursor();

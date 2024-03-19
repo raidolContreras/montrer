@@ -27,8 +27,12 @@ $(document).ready(function () {
 			$('[data-bs-toggle="tooltip"]').tooltip();
 		},
 		ajax: {
+			type: 'POST',
 			url: 'controller/ajax/getRequests.php', // Ajusta la URL según tu estructura
-			dataSrc: ''
+			dataSrc: '',
+			data: {
+				user: user
+			}
 		},
 		columns: [
 			{

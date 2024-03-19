@@ -43,7 +43,7 @@
 														<div class="info text-center">
 																<span class="profile-name-drop"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></span>
 																<p class="mb-3 email">
-																		<a href="mailto:<?php echo $_SESSION['email'] ?>"><?php echo $_SESSION['email'] ?></a>
+																		<?php echo $_SESSION['email'] ?>
 																</p>
 														</div>
 												</div>

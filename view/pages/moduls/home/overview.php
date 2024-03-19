@@ -11,57 +11,101 @@
 								<h3>Datos generales</h3>
 							</div>
 						</div>
-
-						<div class="audience-content-wrap">
-							<div class="row justify-content-center">
-								<div class="col-lg-4 col-sm-6">
-								<a href="registers" data-bs-toggle="tooltip" data-bs-placement="top" title="Registros">
-									<div class="single-audience d-flex justify-content-between align-items-center">
-										<div class="audience-content">
-											<h5>Usuarios</h5>
-											<h4 class="count-user"></h4>
+						<?php if ($_SESSION['level'] == 1): ?>
+							<div class="audience-content-wrap">
+								<div class="row justify-content-center">
+									<div class="col-lg-4 col-sm-6">
+									<a href="registers" data-bs-toggle="tooltip" data-bs-placement="top" title="Registros">
+										<div class="single-audience d-flex justify-content-between align-items-center">
+											<div class="audience-content">
+												<h5>Usuarios</h5>
+												<h4 class="count-user"></h4>
+											</div>
+											<div class="icon">
+												<img src="assets/img/svg/white-profile-2user.svg" alt="white-profile-2user">
+											</div>
 										</div>
-										<div class="icon">
-											<img src="assets/img/svg/white-profile-2user.svg" alt="white-profile-2user">
-										</div>
+									</a>
 									</div>
-								</a>
+
+									<div class="col-lg-4 col-sm-6">
+									<a href="areas" data-bs-toggle="tooltip" data-bs-placement="top" title="Departamentos">
+										<div class="single-audience d-flex justify-content-between align-items-center">
+											<div class="audience-content">
+												<h5>Departamentos</h5>
+												<h4 class="count-area"></h4>
+											</div>
+											<div class="icon">
+												<img src="assets/img/svg/area.svg" alt="eye" style="filter: brightness(100)">
+											</div>
+										</div>
+									</a>
+									</div>
+
+									<div class="col-lg-4 col-sm-6">
+									<a href="exercise" data-bs-toggle="tooltip" data-bs-placement="top" title="Ejercicios">
+										<div class="single-audience d-flex justify-content-between align-items-center">
+											<div class="audience-content color-style-fe5957">
+												<h5>Ejercicio actual</h5>
+												<h4 class="exercise"></h4>
+											</div>
+											<div class="icon">
+												<img src="assets/img/svg/mask.svg" alt="mask">
+											</div>
+										</div>
+									</a>
+									</div>
 								</div>
 
-								<div class="col-lg-4 col-sm-6">
-								<a href="areas" data-bs-toggle="tooltip" data-bs-placement="top" title="Departamentos">
-									<div class="single-audience d-flex justify-content-between align-items-center">
-										<div class="audience-content">
-											<h5>Departamentos</h5>
-											<h4 class="count-area"></h4>
-										</div>
-										<div class="icon">
-											<img src="assets/img/svg/area.svg" alt="eye" style="filter: brightness(100)">
-										</div>
-									</div>
-								</a>
-								</div>
-
-								<div class="col-lg-4 col-sm-6">
-								<a href="exercise" data-bs-toggle="tooltip" data-bs-placement="top" title="Ejercicios">
-									<div class="single-audience d-flex justify-content-between align-items-center">
-										<div class="audience-content color-style-fe5957">
-											<h5>Ejercicio actual</h5>
-											<h4 class="exercise"></h4>
-										</div>
-										<div class="icon">
-											<img src="assets/img/svg/mask.svg" alt="mask">
-										</div>
-									</div>
-								</a>
+								<div class="audience-chart">
+									<div id="overview_chart"></div>
 								</div>
 							</div>
+						<?php else: ?>
+						<div class="features-area">
+							<div class="container-fluid">
+								<div class="row justify-content-center">
+									<div class="col-lg-6 col-md-6">
+										<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Solicitud de presupuestos">
+										<div class="single-features">
+											<div class="row align-items-center">
+												<div class="col-xl-12">
+													<div class="single-click-content">
+														<span class="features-title">Presupuesto comprobado</span>
+														<h3 class="comp"></h3>
+														<p class="budget-message-compr"></p>
+													</div>
+												</div>
+											</div>
+										</div>
+										</a>
+									</div>
 
-							<div class="audience-chart">
-								<div id="overview_chart"></div>
+									<div class="col-lg-6 col-md-6">
+										<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Solicitud de presupuestos">
+										<div class="single-features">
+											<div class="row align-items-center">
+												<div class="col-xl-12">
+													<div class="single-click-content">
+														<span class="features-title">Presupuesto sin comprobar</span>
+														<h3 class="nocomp"></h3>
+														<p class="budget-message-no-compr"></p>
+													</div>
+												</div>
+											</div>
+										</div>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
+						<?php endif ?>
 					</div>
 				</div>
 				
-<script src="assets/js/ajax-js/counts.js"></script>
+<?php if ($_SESSION['level'] == 1): ?>
+	<script src="assets/js/ajax-js/counts.js"></script>
+<?php else: ?>
+	<input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
+	<script src="assets/js/ajax-js/count.js"></script>
+<?php endif ?>

@@ -5,6 +5,10 @@ class FormsController {
 	static public function ctrCountAreas(){
 		return FormsModels::mdlCountAreas();
 	}
+
+	static public function ctrCountArea($idUser){
+		return FormsModels::mdlCountArea($idUser);
+	}
 	// Fin de Contadores
 
 	static public function ctrActiveExercise(){
@@ -89,8 +93,14 @@ class FormsController {
     	return $getProvider;
 	}
 
-	static public function ctrGetRequests(){
-		$getRequests = FormsModels::mdlGetRequests();
+	static public function ctrGetRequests($idUser){
+		$user = FormsModels::mdlGetUser($idUser);
+		if($user['level'] == 1) {
+			$selection = 1;
+		} else {
+			$selection = 2;
+		}
+		$getRequests = FormsModels::mdlGetRequests($idUser, $selection);
     	return $getRequests;
 	}
 	
@@ -279,7 +289,7 @@ class FormsController {
 
 	static public function ctrUpdateUser($data){
 		$updateUser = FormsModels::mdlUpdateUser($data);
-		$updateLevelUser = FormsModels::mdlUpdateLevelUser($data);
+		FormsModels::mdlUpdateLevelUser($data);
 		
 		return $updateUser;
 	}

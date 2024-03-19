@@ -7,31 +7,60 @@ require_once "../../model/forms.models.php";
 
 		static function CreateUser($data){
 			$createUser = FormsController::ctrCreateUser($data);
+			if ($createUser != 'Error'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Create User: '.$createUser, $ip);
+			}
 			return $createUser;
-		}
+		}		
 
 		static function LoginUser($data){
 			$loginUser = FormsController::ctrLoginUser($data);
+			if ($loginUser['sesion'] == 'ok'){
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Login', $ip);
+			}
 			return $loginUser;
 		}
 
 		static function ChangePassword($data){
 			$changePassword = FormsController::ctrChangePassword($data);
+			if ($changePassword == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
+			}
 			return $changePassword;
 		}
 
 		static function ChangeNewPassword($data){
 			$changePassword = FormsController::ctrChangeNewPassword($data);
+			if ($changePassword == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
+			}
 			return $changePassword;
 		}
 
 		static function AddArea($data){
 			$addArea = FormsController::ctrAddArea($data);
+			if ($addArea == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Add Departament', $ip);
+			}
 			return $addArea;
 		}
 
 		static function AddCompany($data){
 			$addCompany = FormsController::ctrAddCompany($data);
+			if ($addCompany == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Add Company', $ip);
+			}
 			return $addCompany;
 		}
 
@@ -42,26 +71,51 @@ require_once "../../model/forms.models.php";
 
 		static public function AddExercise($data){
 			$addExercise = FormsController::ctrAddExercise($data);
+			if ($addExercise == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Add Exercise', $ip);
+			}
 			return $addExercise;
 		}
 
 		static public function AddBudgets($data){
 			$addBudgets = FormsController::ctrAddBudgets($data);
+			if ($addBudgets == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Add Budget', $ip);
+			}
 			return $addBudgets;
 		}
 
 		static public function UpdateUser($data){
 			$updateUser = FormsController::ctrUpdateUser($data);
+			if ($updateUser == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Update User: '.$data['email'], $ip);
+			}
 			return $updateUser;
 		}
 
 		static public function DeleteRegister($idUsers){
 			$deleteRegister = FormsController::ctrDeleteRegister($idUsers);
+			if ($deleteRegister == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Disable User: '.$idUsers, $ip);
+			}
 			return $deleteRegister;
 		}
 
 		static public function EnableRegister($idUsers){
 			$enableRegister = FormsController::ctrEnableRegister($idUsers);
+			if ($enableRegister == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Enable User: '.$idUsers, $ip);
+			}
 			return $enableRegister;
 		}
 
