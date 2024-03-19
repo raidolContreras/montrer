@@ -1,190 +1,276 @@
-<?php 
+<?php
 
 require_once "../forms.controller.php";
 require_once "../../model/forms.models.php";
 
-	class AjaxForm {
+class AjaxForm
+{
 
-		static function CreateUser($data){
-			$createUser = FormsController::ctrCreateUser($data);
-			if ($createUser != 'Error'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Create User: '.$createUser, $ip);
-			}
-			return $createUser;
-		}		
-
-		static function LoginUser($data){
-			$loginUser = FormsController::ctrLoginUser($data);
-			if ($loginUser['sesion'] == 'ok'){
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Login', $ip);
-			}
-			return $loginUser;
+	static function CreateUser($data)
+	{
+		$createUser = FormsController::ctrCreateUser($data);
+		if ($createUser != 'Error') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Create User: ' . $createUser, $ip);
 		}
-
-		static function ChangePassword($data){
-			$changePassword = FormsController::ctrChangePassword($data);
-			if ($changePassword == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
-			}
-			return $changePassword;
-		}
-
-		static function ChangeNewPassword($data){
-			$changePassword = FormsController::ctrChangeNewPassword($data);
-			if ($changePassword == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
-			}
-			return $changePassword;
-		}
-
-		static function AddArea($data){
-			$addArea = FormsController::ctrAddArea($data);
-			if ($addArea == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Add Departament', $ip);
-			}
-			return $addArea;
-		}
-
-		static function AddCompany($data){
-			$addCompany = FormsController::ctrAddCompany($data);
-			if ($addCompany == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Add Company', $ip);
-			}
-			return $addCompany;
-		}
-
-		static public function AddLogo($data){
-			$addLogo = FormsController::ctrAddLogo($data);
-			return $addLogo;
-		}
-
-		static public function AddExercise($data){
-			$addExercise = FormsController::ctrAddExercise($data);
-			if ($addExercise == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Add Exercise', $ip);
-			}
-			return $addExercise;
-		}
-
-		static public function AddBudgets($data){
-			$addBudgets = FormsController::ctrAddBudgets($data);
-			if ($addBudgets == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Add Budget', $ip);
-			}
-			return $addBudgets;
-		}
-
-		static public function UpdateUser($data){
-			$updateUser = FormsController::ctrUpdateUser($data);
-			if ($updateUser == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Update User: '.$data['email'], $ip);
-			}
-			return $updateUser;
-		}
-
-		static public function DeleteRegister($idUsers){
-			$deleteRegister = FormsController::ctrDeleteRegister($idUsers);
-			if ($deleteRegister == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Disable User: '.$idUsers, $ip);
-			}
-			return $deleteRegister;
-		}
-
-		static public function EnableRegister($idUsers){
-			$enableRegister = FormsController::ctrEnableRegister($idUsers);
-			if ($enableRegister == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Enable User: '.$idUsers, $ip);
-			}
-			return $enableRegister;
-		}
-
-		static public function DisableArea($idArea){
-			$disableArea = FormsController::ctrDisableArea($idArea);
-			return $disableArea;
-		}
-
-		static public function EnableArea($idArea){
-			$enableArea = FormsController::ctrEnableArea($idArea);
-			return $enableArea;
-		}
-
-		static public function UpdateArea($data){
-			$updateArea = FormsController::ctrUpdateArea($data);
-			return $updateArea;
-		}
-
-		static public function UpdateExercise($data){
-			$updateExercise = FormsController::ctrUpdateExercise($data);
-			return $updateExercise;
-		}
-
-		static public function disableExercise($idExercise){
-			$disableExercise = FormsController::ctrDisableExercise($idExercise);
-			return $disableExercise;
-		}
-
-		static public function enableExercise($idExercise){
-			$enableExercise = FormsController::ctrEnableExercise($idExercise);
-			return $enableExercise;
-		}
-
-		static public function deleteExercise($idExercise){
-			$deleteExercise = FormsController::ctrDeleteExercise($idExercise);
-			return $deleteExercise;
-		}
-
-		static public function deleteUser($idUsers){
-			$deleteUser = FormsController::ctrDeleteUser($idUsers);
-			return $deleteUser;
-		}
-
-		static public function deleteArea($idArea){
-			$deleteArea = FormsController::ctrDeleteArea($idArea);
-			return $deleteArea;
-		}
-
-		static public function deleteBudget($idBudget){
-			$deleteBudget = FormsController::ctrDeleteBudget($idBudget);
-			return $deleteBudget;
-		}
-
-		static public function enableBudget($idBudget){
-			$enableBudget = FormsController::ctrEnableBudget($idBudget);
-			return $enableBudget;
-		}
-
-		static public function disableBudget($idBudget){
-			$disableBudget = FormsController::ctrDisableBudget($idBudget);
-			return $disableBudget;
-		}
-
-		static public function UpdateBudget($data){
-			$updateBudget = FormsController::ctrUpdateBudget($data);
-			return $updateBudget;
-		}
-
+		return $createUser;
 	}
+
+	static function LoginUser($data)
+	{
+		$loginUser = FormsController::ctrLoginUser($data);
+		return $loginUser;
+	}
+
+	static function ChangePassword($data)
+	{
+		$changePassword = FormsController::ctrChangePassword($data);
+		if ($changePassword == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
+		}
+		return $changePassword;
+	}
+
+	static function ChangeNewPassword($data)
+	{
+		$changePassword = FormsController::ctrChangeNewPassword($data);
+		if ($changePassword == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
+		}
+		return $changePassword;
+	}
+
+	static function AddArea($data)
+	{
+		$addArea = FormsController::ctrAddArea($data);
+		if ($addArea == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add Departament', $ip);
+		}
+		return $addArea;
+	}
+
+	static function AddCompany($data)
+	{
+		$addCompany = FormsController::ctrAddCompany($data);
+		if ($addCompany == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add Company', $ip);
+		}
+		return $addCompany;
+	}
+
+	static public function AddLogo($data)
+	{
+		$addLogo = FormsController::ctrAddLogo($data);
+		return $addLogo;
+	}
+
+	static public function AddExercise($data)
+	{
+		$addExercise = FormsController::ctrAddExercise($data);
+		if ($addExercise == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add Exercise', $ip);
+		}
+		return $addExercise;
+	}
+
+	static public function AddBudgets($data)
+	{
+		$addBudgets = FormsController::ctrAddBudgets($data);
+		if ($addBudgets == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add Budget', $ip);
+		}
+		return $addBudgets;
+	}
+
+	static public function UpdateUser($data)
+	{
+		$updateUser = FormsController::ctrUpdateUser($data);
+		if ($updateUser == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update User: ' . $data['email'], $ip);
+		}
+		return $updateUser;
+	}
+
+	static public function DeleteRegister($idUsers)
+	{
+		$deleteRegister = FormsController::ctrDeleteRegister($idUsers);
+		if ($deleteRegister == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Disable User: ' . $idUsers, $ip);
+		}
+		return $deleteRegister;
+	}
+
+	static public function EnableRegister($idUsers)
+	{
+		$enableRegister = FormsController::ctrEnableRegister($idUsers);
+		if ($enableRegister == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Enable User: ' . $idUsers, $ip);
+		}
+		return $enableRegister;
+	}
+
+	static public function DisableArea($idArea)
+	{
+		$disableArea = FormsController::ctrDisableArea($idArea);
+		if ($disableArea == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Disable departament: ' . $idArea, $ip);
+		}
+		return $disableArea;
+	}
+
+	static public function EnableArea($idArea)
+	{
+		$enableArea = FormsController::ctrEnableArea($idArea);
+		if ($enableArea == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Enable departament: ' . $idArea, $ip);
+		}
+		return $enableArea;
+	}
+
+	static public function UpdateArea($data)
+	{
+		$updateArea = FormsController::ctrUpdateArea($data);
+		if ($updateArea == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update departament: ' . $data['idArea'], $ip);
+		}
+		return $updateArea;
+	}
+
+	static public function UpdateExercise($data)
+	{
+		$updateExercise = FormsController::ctrUpdateExercise($data);
+		if ($updateExercise == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update Exercise: ' . $data['idExercise'], $ip);
+		}
+		return $updateExercise;
+	}
+
+	static public function disableExercise($idExercise)
+	{
+		$disableExercise = FormsController::ctrDisableExercise($idExercise);
+		if ($disableExercise == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Diseble Exercise: ' . $idExercise, $ip);
+		}
+		return $disableExercise;
+	}
+
+	static public function enableExercise($idExercise)
+	{
+		$enableExercise = FormsController::ctrEnableExercise($idExercise);
+		if ($enableExercise == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Enable Exercise: ' . $idExercise, $ip);
+		}
+		return $enableExercise;
+	}
+
+	static public function deleteExercise($idExercise)
+	{
+		$deleteExercise = FormsController::ctrDeleteExercise($idExercise);
+		if ($deleteExercise == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Delete Exercise: ' . $idExercise, $ip);
+		}
+		return $deleteExercise;
+	}
+
+	static public function deleteUser($idUsers)
+	{
+		$deleteUser = FormsController::ctrDeleteUser($idUsers);
+		if ($deleteUser == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Delete User: ' . $idUsers, $ip);
+		}
+		return $deleteUser;
+	}
+
+	static public function deleteArea($idArea)
+	{
+		$deleteArea = FormsController::ctrDeleteArea($idArea);
+		if ($deleteArea == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Delete departament: ' . $idArea, $ip);
+		}
+		return $deleteArea;
+	}
+
+	static public function deleteBudget($idBudget)
+	{
+		$deleteBudget = FormsController::ctrDeleteBudget($idBudget);
+		if ($deleteBudget == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Delete budget: ' . $idBudget, $ip);
+		}
+		return $deleteBudget;
+	}
+
+	static public function enableBudget($idBudget)
+	{
+		$enableBudget = FormsController::ctrEnableBudget($idBudget);
+		if ($enableBudget == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Enable budget: ' . $idBudget, $ip);
+		}
+		return $enableBudget;
+	}
+
+	static public function disableBudget($idBudget)
+	{
+		$disableBudget = FormsController::ctrDisableBudget($idBudget);
+		if ($disableBudget == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Disable budget: ' . $idBudget, $ip);
+		}
+		return $disableBudget;
+	}
+
+	static public function UpdateBudget($data)
+	{
+		$updateBudget = FormsController::ctrUpdateBudget($data);
+		if ($updateBudget == 'ok') {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update budget: ' . $data['idBudget'], $ip);
+		}
+		return $updateBudget;
+	}
+}
 
 if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['email']) && isset($_POST['level'])) {
 
@@ -198,46 +284,44 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['ema
 
 	$createUser = AjaxForm::CreateUser($data);
 	echo $createUser;
-
 }
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
 
-    // Configurar el tiempo de vida de la sesión
-    ini_set('session.gc_maxlifetime', 3600); // Tiempo de vida de la sesión en el servidor
-    session_set_cookie_params(3600); // Tiempo de vida de la cookie de sesión en el cliente
+	// Configurar el tiempo de vida de la sesión
+	ini_set('session.gc_maxlifetime', 3600); // Tiempo de vida de la sesión en el servidor
+	session_set_cookie_params(3600); // Tiempo de vida de la cookie de sesión en el cliente
 
-    // Iniciar la sesión
-    session_start();
+	// Iniciar la sesión
+	session_start();
 
-    $data = array(
-        'email' => $_POST['email'],
-        'password' => $_POST['password']
-    );
+	$data = array(
+		'email' => $_POST['email'],
+		'password' => $_POST['password']
+	);
 
-    $loginUser = AjaxForm::LoginUser($data);
+	$loginUser = AjaxForm::LoginUser($data);
 
-    if (!isset($loginUser['sesion'])) {
-        print_r($loginUser);
-    } else {
-        if ($loginUser['sesion'] == 'ok'){
-            $_SESSION['sesion'] = $loginUser['sesion'];
-            $_SESSION['idUser'] = $loginUser['idUsers'];
-            $_SESSION['firstname'] = $loginUser['firstname'];
-            $_SESSION['lastname'] = $loginUser['lastname'];
-            $_SESSION['email'] = $loginUser['email'];
-            $_SESSION['level'] = $loginUser['level'];
-            $_SESSION['changedPass'] = $loginUser['changedPass'];
-        }
+	if (!isset($loginUser['sesion'])) {
+		print_r($loginUser);
+	} else {
+		if ($loginUser['sesion'] == 'ok') {
+			$_SESSION['sesion'] = $loginUser['sesion'];
+			$_SESSION['idUser'] = $loginUser['idUsers'];
+			$_SESSION['firstname'] = $loginUser['firstname'];
+			$_SESSION['lastname'] = $loginUser['lastname'];
+			$_SESSION['email'] = $loginUser['email'];
+			$_SESSION['level'] = $loginUser['level'];
+			$_SESSION['changedPass'] = $loginUser['changedPass'];
+		}
 
-        echo $loginUser['sesion'];
-    }
-
+		echo $loginUser['sesion'];
+	}
 }
 
 if (isset($_POST['actualPassword']) && isset($_POST['newPassword']) && isset($_POST['user'])) {
 
-    session_start();
+	session_start();
 	$data = array(
 		'actualPassword' => crypt($_POST['actualPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
 		'newPassword' => crypt($_POST['newPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
@@ -246,7 +330,7 @@ if (isset($_POST['actualPassword']) && isset($_POST['newPassword']) && isset($_P
 
 	$changePassword = AjaxForm::ChangePassword($data);
 
-	if ($changePassword == 'ok'){
+	if ($changePassword == 'ok') {
 		$_SESSION['changedPass'] = 0;
 	}
 	echo $changePassword;
@@ -254,31 +338,29 @@ if (isset($_POST['actualPassword']) && isset($_POST['newPassword']) && isset($_P
 
 if (isset($_POST['updateActualPassword']) && isset($_POST['updateNewPassword']) && isset($_POST['updateConfirmPassword']) && isset($_POST['user'])) {
 
-	if ( $_POST['updateNewPassword'] != $_POST['updateConfirmPassword']) {
+	if ($_POST['updateNewPassword'] != $_POST['updateConfirmPassword']) {
 		echo 'Error: Contraseñas distintas';
 	} else {
 
-		if ( $_POST['updateActualPassword'] != $_POST['updateNewPassword']) {
+		if ($_POST['updateActualPassword'] != $_POST['updateNewPassword']) {
 
 			$data = array(
 				'ActualPassword' => crypt($_POST['updateActualPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
 				'newPassword' => crypt($_POST['updateNewPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
 				'user' => $_POST['user']
 			);
-		
-			$changePassword = AjaxForm::ChangeNewPassword($data);
-	
-			echo $changePassword;
 
+			$changePassword = AjaxForm::ChangeNewPassword($data);
+
+			echo $changePassword;
 		} else {
 			echo 'Error: contraseñas';
 		}
-
 	}
 }
 
 if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POST['user'])) {
-	
+
 	$data = array(
 		'nameArea' =>  $_POST['areaName'],
 		'areaDescription' =>  $_POST['areaDescription'],
@@ -299,42 +381,41 @@ if (isset($_POST['companyName']) && isset($_POST['colors']) && isset($_POST['com
 }
 
 if (isset($_POST['idCompany']) && isset($_FILES['logo'])) {
-    $data = array(
-        'idCompany' => $_POST['idCompany'],
-        'logo' => $_FILES['logo']['name']
-    );
+	$data = array(
+		'idCompany' => $_POST['idCompany'],
+		'logo' => $_FILES['logo']['name']
+	);
 
-    $addLogo = AjaxForm::AddLogo($data);
+	$addLogo = AjaxForm::AddLogo($data);
 
-    if ($addLogo == 'ok') {
-        $targetDir = "../../assets/img/companies/" . $_POST['idCompany'] . "/"; // Reemplaza con la ruta adecuada
-        $fileName = basename($_FILES["logo"]["name"]);
-        $targetFilePath = $targetDir . $fileName;
-        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+	if ($addLogo == 'ok') {
+		$targetDir = "../../assets/img/companies/" . $_POST['idCompany'] . "/"; // Reemplaza con la ruta adecuada
+		$fileName = basename($_FILES["logo"]["name"]);
+		$targetFilePath = $targetDir . $fileName;
+		$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
-        // Verifica si la carpeta existe, si no, la crea
-        if (!file_exists($targetDir)) {
-            mkdir($targetDir, 0777, true);
-        }
+		// Verifica si la carpeta existe, si no, la crea
+		if (!file_exists($targetDir)) {
+			mkdir($targetDir, 0777, true);
+		}
 
-        // Verificar si el archivo es una imagen
-        $allowTypes = array('jpg', 'jpeg', 'png');
-        if (in_array($fileType, $allowTypes)) {
-            // Mover el archivo al directorio de destino
-            if (move_uploaded_file($_FILES["logo"]["tmp_name"], $targetFilePath)) {
-                echo json_encode(array('status' => 'success', 'logoUrl' => $targetFilePath));
-            } else {
-                echo json_encode(array('status' => 'error', 'message' => 'Error al cargar el archivo.'));
-            }
-        } else {
-            echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (jpg, jpeg, png).'));
-        }
-    }
-
+		// Verificar si el archivo es una imagen
+		$allowTypes = array('jpg', 'jpeg', 'png');
+		if (in_array($fileType, $allowTypes)) {
+			// Mover el archivo al directorio de destino
+			if (move_uploaded_file($_FILES["logo"]["tmp_name"], $targetFilePath)) {
+				echo json_encode(array('status' => 'success', 'logoUrl' => $targetFilePath));
+			} else {
+				echo json_encode(array('status' => 'error', 'message' => 'Error al cargar el archivo.'));
+			}
+		} else {
+			echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (jpg, jpeg, png).'));
+		}
+	}
 }
 
 if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POST['finalDate']) && isset($_POST['user']) && isset($_POST['budget'])) {
-	
+
 	$data = array(
 		'exerciseName' =>  $_POST['exerciseName'],
 		'initialDate' =>  $_POST['initialDate'],
@@ -344,11 +425,10 @@ if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POS
 	);
 	$addExercise = AjaxForm::AddExercise($data);
 	echo $addExercise;
-
 }
 
 if (isset($_POST['area']) && isset($_POST['AuthorizedAmount']) && isset($_POST['exercise'])) {
-	
+
 	$data = array(
 		'area' =>  $_POST['area'],
 		'AuthorizedAmount' =>  $_POST['AuthorizedAmount'],
@@ -356,11 +436,10 @@ if (isset($_POST['area']) && isset($_POST['AuthorizedAmount']) && isset($_POST['
 	);
 	$addBudgets = AjaxForm::AddBudgets($data);
 	echo $addBudgets;
-
 }
 
 if (isset($_POST['updateFirstname']) && isset($_POST['updateLastname']) && isset($_POST['updateEmail']) && isset($_POST['updateLevel']) && isset($_POST['updateUser'])) {
-	$data = array (
+	$data = array(
 		'firstname' => $_POST['updateFirstname'],
 		'lastname' => $_POST['updateLastname'],
 		'email' => $_POST['updateEmail'],
@@ -392,7 +471,7 @@ if (isset($_POST['enableArea'])) {
 }
 
 if (isset($_POST['updateAreaName']) && isset($_POST['updateAreaDescription']) && isset($_POST['updateUser']) && isset($_POST['updateArea'])) {
-	$data = array (
+	$data = array(
 		'nameArea' => $_POST['updateAreaName'],
 		'description' => $_POST['updateAreaDescription'],
 		'idUser' => $_POST['updateUser'],
@@ -422,42 +501,42 @@ if (
 	echo $updateExercise;
 }
 
-if (isset($_POST['enableExercise'])){
+if (isset($_POST['enableExercise'])) {
 	$enableExercise = AjaxForm::enableExercise($_POST['enableExercise']);
 	echo $enableExercise;
 }
 
-if (isset($_POST['disableExercise'])){
+if (isset($_POST['disableExercise'])) {
 	$disableExercise = AjaxForm::disableExercise($_POST['disableExercise']);
 	echo $disableExercise;
 }
 
-if (isset($_POST['deleteExercise'])){
+if (isset($_POST['deleteExercise'])) {
 	$deleteExercise = AjaxForm::deleteExercise($_POST['deleteExercise']);
 	echo $deleteExercise;
 }
 
-if (isset($_POST['deleteUser'])){
+if (isset($_POST['deleteUser'])) {
 	$deleteUser = AjaxForm::deleteUser($_POST['deleteUser']);
 	echo $deleteUser;
 }
 
-if (isset($_POST['deleteArea'])){
+if (isset($_POST['deleteArea'])) {
 	$deleteArea = AjaxForm::deleteArea($_POST['deleteArea']);
 	echo $deleteArea;
 }
 
-if (isset($_POST['deleteBudget'])){
+if (isset($_POST['deleteBudget'])) {
 	$deleteBudget = AjaxForm::deleteBudget($_POST['deleteBudget']);
 	echo $deleteBudget;
 }
 
-if (isset($_POST['enableBudget'])){
+if (isset($_POST['enableBudget'])) {
 	$enableBudget = AjaxForm::enableBudget($_POST['enableBudget']);
 	echo $enableBudget;
 }
 
-if (isset($_POST['disableBudget'])){
+if (isset($_POST['disableBudget'])) {
 	$disableBudget = AjaxForm::disableBudget($_POST['disableBudget']);
 	echo $disableBudget;
 }
@@ -479,7 +558,7 @@ if (
 }
 
 if (isset($_POST['idUsers']) && isset($_POST['newPassword'])) {
-	
+
 	$data = array(
 		'newPassword' => crypt($_POST['newPassword'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'),
 		'user' => $_POST['idUsers']
@@ -508,7 +587,7 @@ if (
 	isset($_POST['accountNumber']) &&
 	isset($_POST['clabe'])
 ) {
-	
+
 	$data = array(
 		'providerKey' => $_POST['providerKey'],
 		'representativeName' => $_POST['representativeName'],
@@ -529,6 +608,12 @@ if (
 	);
 
 	$registerProvider = FormsController::ctrRegisterProvider($data);
+	
+	if ($registerProvider == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Register provider: '.$_POST['providerKey'], $ip);
+	}
 
 	echo $registerProvider;
 }
@@ -551,7 +636,7 @@ if (
 	isset($_POST['updateaccountNumber']) &&
 	isset($_POST['updateclabe'])
 ) {
-	
+
 	$data = array(
 		'providerKey' => $_POST['providerKey'],
 		'representativeName' => $_POST['updaterepresentativeName'],
@@ -572,30 +657,65 @@ if (
 	);
 
 	$registerProvider = FormsController::ctrUpdateProvider($data);
+	
+	if ($registerProvider == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Update provider: '.$_POST['providerKey'], $ip);
+	}
 
 	echo $registerProvider;
 }
 
-if (isset($_POST['disableProvider'])){
+if (isset($_POST['disableProvider'])) {
 	$disableProvider = FormsController::ctrDisableProvider($_POST['disableProvider']);
+	
+	if ($disableProvider == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Disable provider: '.$_POST['disableProvider'], $ip);
+	}
+
 	echo $disableProvider;
 }
-if (isset($_POST['enableProvider'])){
+if (isset($_POST['enableProvider'])) {
 	$enableProvider = FormsController::ctrEnableProvider($_POST['enableProvider']);
+	
+	if ($enableProvider == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Enable provider: '.$_POST['enableProvider'], $ip);
+	}
+
 	echo $enableProvider;
 }
-if (isset($_POST['deleteProvider'])){
+if (isset($_POST['deleteProvider'])) {
 	$deleteProvider = FormsController::ctrDeleteProvider($_POST['deleteProvider']);
+	
+	if ($deleteProvider == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Delete provider: '.$_POST['deleteProvider'], $ip);
+	}
+
 	echo $deleteProvider;
 }
-if (isset($_POST['deleteRequest'])){
+
+if (isset($_POST['deleteRequest'])) {
 	$deleteRequest = FormsController::ctrDeleteRequest($_POST['deleteRequest']);
+	
+	if ($deleteProvider == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Delete request: '.$_POST['deleteRequest'], $ip);
+	}
+
 	echo $deleteRequest;
 }
 
-if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['description']) && isset($_POST['budget'])){
-	
-    session_start();
+if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['description']) && isset($_POST['budget'])) {
+
+	session_start();
 	$data =  array(
 		'idUser' => $_SESSION['idUser'],
 		'area' => $_POST['area'],
@@ -606,23 +726,41 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 		'eventDate' => $_POST['eventDate'],
 		'budget' => $_POST['budget']
 	);
-	echo FormsController::ctrRequestBudget($data);
+	$response = FormsController::ctrRequestBudget($data);
+	
+	if ($response == 'ok'){
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Create request: '.$_POST['requestedAmount'], $ip);
+	}
+
+	echo $response;
 }
 
-if (isset($_POST['denegateRequest'])){
+if (isset($_POST['denegateRequest'])) {
 	$denegateRequest = FormsController::ctrDenegateRequest($_POST['denegateRequest'], $_POST['idAdmin']);
+	
+	if ($denegateRequest == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Denegate request: '.$_POST['denegateRequest'], $ip);
+	}
+
 	echo $denegateRequest;
 }
 
-if (isset($_POST['enableRequest'])){
+if (isset($_POST['enableRequest'])) {
 	$response = FormsController::ctrEnableRequest($_POST['enableRequest'], $_POST['idAdmin'], $_POST['approvedAmount']);
-	if($response == 'ok'){
+	if ($response == 'ok') {
 		FormsController::ctrMonthBudget($_POST['idArea'], $_POST['idBudget'], $_POST['approvedAmount']);
+
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Enable request: '.$_POST['enableRequest'], $ip);
 	}
 	echo $response;
 }
 
-if (isset($_POST['searchRequest'])){
+if (isset($_POST['searchRequest'])) {
 	echo json_encode(FormsController::ctrGetRequestComprobar($_POST['searchRequest']));
 }
 
@@ -652,14 +790,20 @@ if (
 		'idRequest' => $_POST['idRequest'],
 		'idUser' => $_POST['idUser'],
 	);
-	echo FormsController::ctrSendComprobation($data);
+	$response = FormsController::ctrSendComprobation($data);
+	if ($response == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Send comprobation: '.$_POST['idRequest'], $ip);
+	}
+	echo $response;
 }
 
 if (isset($_POST['idPaymentRequest'])) {
-    $data = array(
-        'idPaymentRequest' => $_POST['idPaymentRequest'],
-        'file' => $_FILES['file']['name']
-    );
+	$data = array(
+		'idPaymentRequest' => $_POST['idPaymentRequest'],
+		'file' => $_FILES['file']['name']
+	);
 	$targetDir = "../../view/documents/" . $_POST['idPaymentRequest'] . "/";
 	$fileName = basename($_FILES["file"]["name"]);
 	$targetFilePath = $targetDir . $fileName;
@@ -672,6 +816,13 @@ if (isset($_POST['idPaymentRequest'])) {
 	$allowTypes = array('jpg', 'jpeg', 'png', 'pdf');
 	if (in_array($fileType, $allowTypes)) {
 		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+
+			if ($response == 'ok'){
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: '.$fileName, $ip);
+			}
+
 			echo 'ok';
 		} else {
 			echo 'Error';
@@ -679,49 +830,72 @@ if (isset($_POST['idPaymentRequest'])) {
 	} else {
 		echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, jpg, jpeg, png).'));
 	}
-
 }
-if (isset($_POST['searchComprobante'])){
+if (isset($_POST['searchComprobante'])) {
 	echo json_encode(FormsController::ctrGetComprobante($_POST['searchComprobante']));
 }
 
-if (isset($_POST['getDocuments'])){
+if (isset($_POST['getDocuments'])) {
 	$idRequest = $_POST['getDocuments'];
-    $directoryPath = "../../view/documents/" . $idRequest . "/";
-    $files = [];
+	$directoryPath = "../../view/documents/" . $idRequest . "/";
+	$files = [];
 
-    // Comprobar si la carpeta existe
-    if(file_exists($directoryPath)) {
-        foreach (new DirectoryIterator($directoryPath) as $file) {
-            if ($file->isFile()) {
-                $files[] = $file->getFilename();
-            }
-        }
-        
-        // Devolver los nombres de los archivos en formato JSON
-        echo json_encode($files);
-    } else {
-        // Carpeta no existe
-        echo json_encode([]);
-    }
+	// Comprobar si la carpeta existe
+	if (file_exists($directoryPath)) {
+		foreach (new DirectoryIterator($directoryPath) as $file) {
+			if ($file->isFile()) {
+				$files[] = $file->getFilename();
+			}
+		}
+
+		// Devolver los nombres de los archivos en formato JSON
+		echo json_encode($files);
+	} else {
+		// Carpeta no existe
+		echo json_encode([]);
+	}
 }
 
 if (isset($_POST['denegateComprobante'])) {
-	echo FormsController::ctrResponceRequest($_POST['denegateComprobante'], 4, $_POST['comentario']);
+	$response = FormsController::ctrResponceRequest($_POST['denegateComprobante'], 4, $_POST['comentario']);
+	
+	if ($response == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Denegate comprobation: '.$_POST['denegateComprobante'], $ip);
+	}
+
+	echo $response;
 }
 
 if (isset($_POST['aceptComprobante'])) {
-	echo FormsController::ctrResponceRequest($_POST['aceptComprobante'], 5, $_POST['comentario']);
+	$response = FormsController::ctrResponceRequest($_POST['aceptComprobante'], 5, $_POST['comentario']);
+	
+	if ($response == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Acept comprobation: '.$_POST['aceptComprobante'], $ip);
+	}
+	echo $response;
 }
 
 if (isset($_POST['comments'])) {
-	echo FormsController::ctrCommentsRequest($_POST['comments']);
+	$response = FormsController::ctrCommentsRequest($_POST['comments']);
+	
+	if ($response == 'ok'){
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Comment comprobation: '.$_POST['comments'], $ip);
+	}
+	echo $response;
 }
 
 if (isset($_POST['verificacion'])) {
-	echo FormsController::ctrVerificacionArea($_POST['verificacion']);
+	$response = FormsController::ctrVerificacionArea($_POST['verificacion']);
+	echo $response;
 }
 
 if (isset($_POST['verificacion2'])) {
-	echo FormsController::ctrVerificacionDeudas($_POST['verificacion2']);
+	$response = FormsController::ctrVerificacionDeudas($_POST['verificacion2']);
+	echo $response;
 }
