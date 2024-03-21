@@ -20,15 +20,15 @@ $(document).ready(function () {
             { 
                 data: 'actionType'
             },
+            {
+                data: 'timestamp',
+                render: function (data) {
+                    return moment(data).format('DD/MM/YY, HH:mm');
+                }
+            },
             { 
                 data: 'ipAddress'
             },
-            {
-                data: 'timestamp',
-				render: function (data) {
-					return moment(data).format('DD/MM/YY, HH:mm');
-				}
-            }
         ],
         language: {
             "paginate": {

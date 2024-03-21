@@ -13,8 +13,8 @@
 						<tr>
 							<th>#</th>
 							<th>Acción</th>
-							<th>Dirección IP</th>
 							<th>Hora</th>
+							<th>Dirección IP</th>
 						</tr>
 					</thead>
 				</table>
