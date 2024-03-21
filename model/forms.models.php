@@ -1446,4 +1446,18 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+
+	static public function mdlGetLogs($idUser){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT l.*, u.firstname, u.lastname FROM montrer_logs l
+				LEFT JOIN montrer_users u ON u.idUsers = l.idUser
+				WHERE idUser = :idUser";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
 }

@@ -7,7 +7,7 @@
 						<a href="inicio">
 							<img src="assets/img/logo.png" alt="main-logo">
 						</a>
-						<h3>Registro de nuevos usuarios</h3>
+						<h3>Error</h3>
 					</div>
 					<h1>404</h1>
 					<h3>¡Ups! Página no encontrada</h3>

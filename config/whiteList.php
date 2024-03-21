@@ -26,6 +26,7 @@
 		'registerRequestBudget',
 		'solicitudSendBudget',
 		'editRequest',
+		'logs',
 	];
 
 
@@ -53,6 +54,8 @@
 			include "view/pages/provider/$pagina.php";
 		} elseif ($pagina == 'requestBudget' || $pagina == 'registerRequestBudget' || $pagina == 'editRequest' || $pagina == 'solicitudSendBudget') {
 			include "view/pages/request_budget/$pagina.php";
+		} elseif ($pagina == 'logs') {
+			include "view/pages/logs/$pagina.php";
 		} else {
 			include "view/pages/404.php";
 		}

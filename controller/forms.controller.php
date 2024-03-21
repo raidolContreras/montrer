@@ -466,4 +466,8 @@ class FormsController {
 	static public function ctrVerificacionDeudas($idUser){
         return json_encode(FormsModels::mdlVerificacionDeudas($idUser));
     }
+	
+	static public function ctrGetLogs($idUser){
+        return FormsModels::mdlGetLogs($idUser);
+    }
 }

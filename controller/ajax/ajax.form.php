@@ -12,7 +12,7 @@ class AjaxForm
 		if ($createUser != 'Error') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Create User: ' . $createUser, $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Create user: ' . $createUser, $ip);
 		}
 		return $createUser;
 	}
@@ -29,7 +29,7 @@ class AjaxForm
 		if ($changePassword == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Change password', $ip);
 		}
 		return $changePassword;
 	}
@@ -40,7 +40,7 @@ class AjaxForm
 		if ($changePassword == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Change Password', $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Change password', $ip);
 		}
 		return $changePassword;
 	}
@@ -51,7 +51,7 @@ class AjaxForm
 		if ($addArea == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Add Departament', $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add departament', $ip);
 		}
 		return $addArea;
 	}
@@ -62,7 +62,7 @@ class AjaxForm
 		if ($addCompany == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Add Company', $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add company', $ip);
 		}
 		return $addCompany;
 	}
@@ -79,7 +79,7 @@ class AjaxForm
 		if ($addExercise == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Add Exercise', $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add exercise', $ip);
 		}
 		return $addExercise;
 	}
@@ -90,7 +90,7 @@ class AjaxForm
 		if ($addBudgets == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Add Budget', $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Add budget', $ip);
 		}
 		return $addBudgets;
 	}
@@ -101,7 +101,7 @@ class AjaxForm
 		if ($updateUser == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Update User: ' . $data['email'], $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update user: ' . $data['email'], $ip);
 		}
 		return $updateUser;
 	}
@@ -112,7 +112,7 @@ class AjaxForm
 		if ($deleteRegister == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Disable User: ' . $idUsers, $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Disable user: ' . $idUsers, $ip);
 		}
 		return $deleteRegister;
 	}
@@ -123,7 +123,7 @@ class AjaxForm
 		if ($enableRegister == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Enable User: ' . $idUsers, $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Enable user: ' . $idUsers, $ip);
 		}
 		return $enableRegister;
 	}
@@ -167,7 +167,7 @@ class AjaxForm
 		if ($updateExercise == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Update Exercise: ' . $data['idExercise'], $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update exercise: ' . $data['idExercise'], $ip);
 		}
 		return $updateExercise;
 	}
@@ -178,7 +178,7 @@ class AjaxForm
 		if ($disableExercise == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Diseble Exercise: ' . $idExercise, $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Disable exercise: ' . $idExercise, $ip);
 		}
 		return $disableExercise;
 	}
@@ -189,7 +189,7 @@ class AjaxForm
 		if ($enableExercise == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Enable Exercise: ' . $idExercise, $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Enable exercise: ' . $idExercise, $ip);
 		}
 		return $enableExercise;
 	}
@@ -200,7 +200,7 @@ class AjaxForm
 		if ($deleteExercise == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Delete Exercise: ' . $idExercise, $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Delete exercise: ' . $idExercise, $ip);
 		}
 		return $deleteExercise;
 	}
@@ -211,7 +211,7 @@ class AjaxForm
 		if ($deleteUser == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Delete User: ' . $idUsers, $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Delete user: ' . $idUsers, $ip);
 		}
 		return $deleteUser;
 	}

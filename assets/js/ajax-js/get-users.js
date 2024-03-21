@@ -25,7 +25,11 @@ $(document).ready(function () {
 			{ 
 				data: null,
 				render: function(data) {
-					return data.firstname + ' ' + data.lastname;
+					return `
+						<a href="logs&user=${data.idUsers}" >
+						${data.firstname} ${data.lastname}
+						</a>
+					`;
 				}
 			},
 			{ data: 'email' },
