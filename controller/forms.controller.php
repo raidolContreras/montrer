@@ -474,4 +474,8 @@ class FormsController {
 	static public function ctrGetLogs($idUser){
         return FormsModels::mdlGetLogs($idUser);
     }
+	
+	static public function ctrMarcarPago($idRequest,$idUser){
+        return FormsModels::mdlMarcarPago($idRequest,$idUser);
+    }
 }

@@ -11,15 +11,9 @@ function getAreas() {
         data: {idUser: idUser},
         dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
         success: function (response) {
-            var comp = parseFloat(response.comp).toLocaleString('es-MX', {
-                style: 'currency',
-                currency: 'MXN'
-            });
-
-            var nocomp = parseFloat(response.nocomp).toLocaleString('es-MX', {
-                style: 'currency',
-                currency: 'MXN'
-            });
+            
+            var comp = formatNumber(response.comp);
+            var nocomp = formatNumber(response.nocomp);
 
             $('.comp').text(comp);
 
@@ -41,11 +35,11 @@ function getAreas() {
                 var budgetMessage = 'Sin presupuesto asignado en el ejercicio';
                 if (!isNaN(parseFloat(budgetsObj[key]))) {
                     budgetMessage = 'Presupuesto asignado en el ejercicio ' + response.name;
-                    budget = parseFloat(budgetsObj[key]).toLocaleString('es-MX', {
-                        style: 'currency',
-                        currency: 'MXN'
-                    });
+                    
+                    budget = formatNumber(budgetsObj[key]);
+
                 }
+                usedBudgets(key, budgetsObj[key], response.name);
 
                 // Construir el HTML para la nueva área
                 var areaHtml = `
@@ -66,14 +60,14 @@ function getAreas() {
                     </div>
 
 					<div class="col-lg-4 col-md-6">
-						<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto utilizado del departamento ${areaName}">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto utilizado del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
 										<span class="features-title">Presupuesto utilizado</span>
 										<h3 class="total-use-${areaName}"></h3>
-										<p class="budget-message-uses"></p>
+										<p class="budget-message-uses-${areaName}"></p>
 									</div>
 								</div>
 							</div>
@@ -82,14 +76,14 @@ function getAreas() {
 					</div>
 
 					<div class="col-lg-4 col-md-6">
-						<a href="exercise" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto restante del departamento ${areaName}">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto restante del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
 										<span class="features-title">Presupuesto restante</span>
 										<h3 class="rest-${areaName}"></h3>
-										<p class="budget-message-rest"></p>
+										<p class="budget-message-rest-${areaName}"></p>
 									</div>
 								</div>
 							</div>
@@ -109,11 +103,39 @@ function getAreas() {
     });
 }
 
-function usedBudgets(idArea) {
+function usedBudgets(idArea, budgetActive, exercise) {
     $.ajax({
         type: 'POST',
             url: 'controller/ajax/countAreaId.php',
         data: {idArea: idArea},
         dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
+        success: function (response) {
+
+            var budgetTotal = budgetActive - response.comp;
+
+            var used = formatNumber(response.comp);
+            
+            if (!isNaN(parseFloat(budgetTotal))) {
+                budgetTotal = formatNumber(budgetTotal);
+            } else {
+                budgetTotal = '$0.00';
+            }
+            
+            budgetUsedMessage = 'Presupuesto utilizado en el ejercicio ' + exercise;
+            budgetRestMessage = 'Presupuesto restante en el ejercicio ' + exercise;
+            $('.total-use-'+ response.nameArea).append(used);
+            $('.rest-'+ response.nameArea).append(budgetTotal);
+            $('.budget-message-uses-'+ response.nameArea).append(budgetUsedMessage);
+            $('.budget-message-rest-'+ response.nameArea).append(budgetRestMessage);
+        }
     });
+    
+}
+
+function formatNumber(number) {
+    var numberFormatted = parseFloat(number).toLocaleString('es-MX', {
+        style: 'currency',
+        currency: 'MXN'
+    });
+    return numberFormatted;
 }

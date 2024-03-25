@@ -23,6 +23,7 @@
 							<th>Solicitante</th>
 							<th>Descripción</th>
 							<th>Fecha de la solicitud</th>
+							<th>Status del pago</th>
 							<th width="15%"></th>
 						</tr>
 					</thead>
@@ -93,6 +94,21 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success" id="confirmDenegateRequest">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="marcarModal" tabindex="-1" aria-labelledby="marcarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="marcarModalLabel">Marcar como pagado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea marcar como pagado el presupuesto?</p>
+            </div>
+            <div class="modal-footer marcar-footer">
             </div>
         </div>
     </div>

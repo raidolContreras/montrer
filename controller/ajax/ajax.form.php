@@ -899,3 +899,8 @@ if (isset($_POST['verificacion2'])) {
 	$response = FormsController::ctrVerificacionDeudas($_POST['verificacion2']);
 	echo $response;
 }
+
+if (isset($_POST['marcarPago'])) {
+	$response = FormsController::ctrMarcarPago($_POST['marcarPago'], $_POST['idUser']);
+	echo $response;
+}

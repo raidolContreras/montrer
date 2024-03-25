@@ -79,7 +79,23 @@ class FormsModels {
 	}
 
 	static public function mdlCountAreaId($idArea){
-
+		$pdo = Conexion::conectar();
+		$sql = "SELECT nameArea,
+            COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
+						LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
+						LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+					WHERE e.status = 1 AND r.idArea = :idArea), 0) AS comp
+        FROM 
+            montrer_area 
+        WHERE 
+            idArea = :idArea;";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
 	}
 
 	// Fin de Contadores
@@ -1183,7 +1199,7 @@ class FormsModels {
 			if ($selection == 1){
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
 						r.description, r.requestDate, r.responseDate, r.status,
-						a.nameArea, u.idUsers, u.firstname, u.lastname
+						a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado
 					FROM montrer_budget_requests r
 						LEFT JOIN montrer_area a ON a.idArea = r.idArea
 						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
@@ -1469,6 +1485,23 @@ class FormsModels {
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+	
+	static public function mdlMarcarPago($idRequest, $idAdmin){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), pagado = 1 where idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idAdmin', $idAdmin, PDO::PARAM_INT);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;
