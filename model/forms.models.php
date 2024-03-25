@@ -58,9 +58,17 @@ class FormsModels {
 	static public function mdlCountArea($idUser){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT 
-				(SELECT exerciseName FROM montrer_exercise WHERE status = 1) AS name,
-                COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 AND idUser = :idUser), 0) AS comp,
-                COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp;";
+				JSON_OBJECTAGG(a.idArea, a.nameArea) AS areas,
+				JSON_OBJECTAGG(b.idArea, b.AuthorizedAmount) AS budgets,
+				(SELECT exerciseName FROM montrer_exercise WHERE status = 1 LIMIT 1) AS name,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 AND idUser = :idUser), 0) AS comp,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE idArea = a.idArea AND status <> 0 AND status <> 3), 0) AS amountUsed,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp
+			FROM 
+				montrer_area a
+			LEFT JOIN montrer_budgets b ON b.idArea = a.idArea
+			WHERE 
+				idUser = :idUser;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
@@ -69,6 +77,11 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+
+	static public function mdlCountAreaId($idArea){
+
+	}
+
 	// Fin de Contadores
 
 	static public function mdlCreateUser($data){

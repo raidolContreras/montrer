@@ -83,6 +83,25 @@
 						</a>
 					</div>
 				<?php else: ?>
+					<div class="overview-area">
+						<div class="container-fluid">
+							<div class="overview-content-wrap card-box-style">
+								<div class="row justify-content-center">
+									<div class="overview-content d-flex justify-content-between align-items-center">
+									<div class="overview-title">
+										<h3>Departamentos asignados</h3>
+									</div>
+									</div>
+								</div>
+								<div class="features-area">
+									<div class="container-fluid">
+										<div class="row justify-content-center dashboard">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				<?php endif ?>
 			</div>
 		</div>

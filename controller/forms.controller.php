@@ -9,6 +9,10 @@ class FormsController {
 	static public function ctrCountArea($idUser){
 		return FormsModels::mdlCountArea($idUser);
 	}
+
+	static public function ctrCountAreaId($idArea){
+		return FormsModels::mdlCountAreaId($idArea);
+	}
 	// Fin de Contadores
 
 	static public function ctrActiveExercise(){
