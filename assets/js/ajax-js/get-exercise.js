@@ -153,6 +153,7 @@ $(document).ready(function () {
 			"loadingRecords": "Cargando...",
 			"info":           "Mostrando _START_ de _END_ en _TOTAL_ resultados",
 			"infoEmpty":      "Mostrando 0 resultados",
+			"emptyTable":	  "Ningún dato disponible en esta tabla"
 		}
 	});
 
