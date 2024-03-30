@@ -113,8 +113,9 @@
         </div>
     </div>
 </div>
-<div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
+
 <?php endif ?>
+<div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 
 <script>
     $j(document).ready(function() {

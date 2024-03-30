@@ -704,7 +704,7 @@ if (isset($_POST['deleteProvider'])) {
 if (isset($_POST['deleteRequest'])) {
 	$deleteRequest = FormsController::ctrDeleteRequest($_POST['deleteRequest']);
 	
-	if ($deleteProvider == 'ok'){
+	if ($deleteRequest == 'ok'){
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
 		FormsModels::mdlLog($_SESSION['idUser'], 'Delete request: '.$_POST['deleteRequest'], $ip);
@@ -817,12 +817,10 @@ if (isset($_POST['idPaymentRequest'])) {
 	if (in_array($fileType, $allowTypes)) {
 		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
 
-			if ($response == 'ok'){
-				session_start();
-				$ip = $_SERVER['REMOTE_ADDR'];
-				FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: '.$fileName, $ip);
-			}
-
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: '.$fileName, $ip);
+			
 			echo 'ok';
 		} else {
 			echo 'Error';

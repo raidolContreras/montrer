@@ -89,7 +89,7 @@ class FormsModels {
 		COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
 					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-				WHERE e.status = 1 AND r.idArea = :idArea AND r.status <> 5 AND r.active = 1), 0) AS compActive
+				WHERE e.status = 1 AND r.idArea = :idArea AND r.status = 5 AND r.active = 0), 0) AS compActive
         FROM 
             montrer_area 
         WHERE 
@@ -1185,12 +1185,26 @@ class FormsModels {
 	
 	static public function mdlGetAuthorizedAmount($idArea){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.idBudget, a.idArea, m.month, m.budget_month, m.budget_used, m.total_used, m.idMensualBudget,r.requestedAmount, r.approvedAmount FROM montrer_budgets b
-				LEFT JOIN montrer_month_budget m ON m.idBudget = b.idBudget
-				LEFT JOIN montrer_budget_requests r ON r.idBudget = b.idBudget
-				LEFT JOIN montrer_area a ON a.idArea = b.idArea
-				RIGHT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+		$sql = "SELECT b.idBudget, a.idArea, m.month, m.budget_month, m.budget_used, m.total_used, m.idMensualBudget FROM montrer_budgets b
+					RIGHT JOIN montrer_month_budget m ON m.idBudget = b.idBudget
+					RIGHT JOIN montrer_area a ON a.idArea = b.idArea
+					RIGHT JOIN montrer_exercise e ON e.idExercise = b.idExercise
 				WHERE a.idArea = :idArea AND e.status = 1;";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+	
+	static public function mdlGetAmountPendient($idArea){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT r.requestedAmount, r.idRequest FROM montrer_budget_requests r
+					LEFT JOIN montrer_budgets b ON b.idArea = r.idArea
+					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+				WHERE e.status = 1 AND r.status = 0 AND r.idArea = :idArea;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		$stmt->execute();
@@ -1214,7 +1228,7 @@ class FormsModels {
 			} else {
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
 						r.description, r.requestDate, r.responseDate, r.status,
-						a.nameArea, u.idUsers, u.firstname, u.lastname
+						a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado
 					FROM montrer_budget_requests r
 						LEFT JOIN montrer_area a ON a.idArea = r.idArea
 						LEFT JOIN montrer_users u ON u.idUsers = a.idUser

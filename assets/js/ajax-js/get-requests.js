@@ -275,7 +275,7 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 			var maxBudget = $('input[name="maxBudget"]').val();
 			var idBudget = $('input[name="budget"]').val();
 			var idArea = $('input[name="area"]').val();
-			if(maxBudget >= approvedAmount){
+			if(parseFloat(maxBudget) >= parseFloat(approvedAmount)){
 				$.ajax({
 					type: 'POST',
 					url: 'controller/ajax/ajax.form.php',
@@ -295,6 +295,9 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 					}
 				});
 			} else {
+				console.log(maxBudget);
+				console.log(approvedAmount);
+
 				showAlertBootstrap('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.');
 			}
 		} else if(modalId == 'denegateModal') {
@@ -343,8 +346,8 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 	if (status == 0 && userRequest == user){
 		return `
 			<div class="container">
-				<div class="row" style="justify-content: space-evenly;">
-					<button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+				<div class="row" style="justify-content: center;">
+					<button style="margin-right: 5px;" class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 						<i class="ri-edit-line"></i>
 					</button>
 					<button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
@@ -356,8 +359,8 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 	} else if (status == 0 && level == 1 && userRequest != user) {
 		return `
 			<div class="container">
-				<div class="row" style="justify-content: space-evenly;">
-					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
+				<div class="row" style="justify-content: center;">
+					<button style="margin-right: 5px;" class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
 						<i class="ri-check-line"></i>
 					</button>
 					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
@@ -533,8 +536,10 @@ function modalComprobar(idRequest) {
         data: { searchRequest: idRequest },
         dataType: 'json',
         success: function (response) {
-            console.log(response.requestDate);
-            var registerValue = $('#register-value').data('register');
+			
+			var registerValue = $('#register-value').data('register');
+            console.log(registerValue);
+
             getArea(registerValue);
             $('#fechaSolicitud').val(response.responseDate.split(' ')[0]);
             $("input[name='importeSolicitado']").val(response.approvedAmount);

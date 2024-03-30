@@ -96,4 +96,5 @@ function showAlert(title, message) {
 function closeModals() {
     $('#alertModal').modal('hide');
     $('#comprobarModal').modal('hide');
+    location.reload();
 }
