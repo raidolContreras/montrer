@@ -43,7 +43,7 @@ function getAreas() {
 
                 // Construir el HTML para la nueva área
                 var areaHtml = `
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto total del departamento ${areaName}">
                             <div class="single-features">
                                 <div class="row align-items-center">
@@ -59,13 +59,13 @@ function getAreas() {
                         </a>
                     </div>
 
-					<div class="col-lg-4 col-md-6">
-						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto utilizado del departamento ${areaName}">
+					<div class="col-lg-3 col-md-6">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto solicitado del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
-										<span class="features-title">Presupuesto utilizado</span>
+										<span class="features-title">Presupuesto solicitado</span>
 										<h3 class="total-use-${areaName}"></h3>
 										<p class="budget-message-uses-${areaName}"></p>
 									</div>
@@ -75,7 +75,23 @@ function getAreas() {
 						</a>
 					</div>
 
-					<div class="col-lg-4 col-md-6">
+					<div class="col-lg-3 col-md-6">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto Comprobado del departamento ${areaName}">
+						<div class="single-features">
+							<div class="row align-items-center">
+								<div class="col-xl-12">
+									<div class="single-click-content">
+										<span class="features-title">Presupuesto comprobado</span>
+										<h3 class="total-comp-${areaName}"></h3>
+										<p class="budget-message-comp-${areaName}"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						</a>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
 						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto restante del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
@@ -114,6 +130,7 @@ function usedBudgets(idArea, budgetActive, exercise) {
             var budgetTotal = budgetActive - response.comp;
 
             var used = formatNumber(response.comp);
+            var compActive = formatNumber(response.compActive);
             
             if (!isNaN(parseFloat(budgetTotal))) {
                 budgetTotal = formatNumber(budgetTotal);
@@ -121,11 +138,14 @@ function usedBudgets(idArea, budgetActive, exercise) {
                 budgetTotal = '$0.00';
             }
             
-            budgetUsedMessage = 'Presupuesto utilizado en el ejercicio ' + exercise;
+            budgetUsedMessage = 'Presupuesto solicitado en el ejercicio ' + exercise;
+            budgetCompMessage = 'Presupuesto comprobado en el ejercicio ' + exercise;
             budgetRestMessage = 'Presupuesto restante en el ejercicio ' + exercise;
             $('.total-use-'+ response.nameArea).append(used);
+            $('.total-comp-'+ response.nameArea).append(compActive);
             $('.rest-'+ response.nameArea).append(budgetTotal);
             $('.budget-message-uses-'+ response.nameArea).append(budgetUsedMessage);
+            $('.budget-message-comp-'+ response.nameArea).append(budgetCompMessage);
             $('.budget-message-rest-'+ response.nameArea).append(budgetRestMessage);
         }
     });
