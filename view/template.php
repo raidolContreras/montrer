@@ -56,9 +56,6 @@ if ($is_mobile) {
             font-size: 12px;
             line-height: 1.42857;
         }
-        
-        /* .required-field {
-        } */
 
         .required-field:focus {
             border: 1px solid #dc3545;
