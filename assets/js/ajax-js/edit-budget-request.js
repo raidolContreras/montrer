@@ -193,9 +193,14 @@ function updateMaxRequestedAmount(datos) {
             data: { areaId: datos[0].idArea },
             dataType: 'json',
             success: function (response) {
+                var request = $('#request').val();
                 for (var i = 0; i < response.length; i++) {
                     // Obtenemos la cantidad de cada objeto y la sumamos al total
-                    totalAmountBudget += parseFloat(response[i].requestedAmount);
+                    if (request == response[i].idRequest) {
+                        $('#requestedAmount').val(response[i].requestedAmount);
+                    } else {
+                        totalAmountBudget += parseFloat(response[i].requestedAmount);
+                    }
                 }
                 
                 // Mostramos la suma total
@@ -212,7 +217,6 @@ function updateMaxRequestedAmount(datos) {
                 if(datos[0].approvedAmount !== 0){
                     $("input[name='budget']").val(idBudget);
                     $("input[name='maxBudget']").val(sumaBudgetMonth.toFixed(2));
-                    // $('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
                     $('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + formattedSum);
                 } else {
                     $('#requestedAmount').prop('disabled', true);
@@ -226,22 +230,6 @@ function updateMaxRequestedAmount(datos) {
     }
 }
 
-function fillSelect(select, datas, message) {
-
-    var selectOption = $('#' + select);
-
-    selectOption.empty();
-
-    var option = $('<option>').val('').text('Seleccionar ' + message);
-    selectOption.append(option);
-
-    datas.forEach(function (data) {
-        var option = $('<option>').val(data[0]).text(data[1]);
-        selectOption.append(option);
-    });
-
-}
-
 function openAddProviderModal() {
     $('#addProviderModal').modal('show');
 }
@@ -252,15 +240,3 @@ function confirmExit(event, destination) {
 		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
 	}
 }
-
-$(document).ready(function () {
-
-    // Verificar si el día actual es de lunes a miércoles (días 1 a 3)
-    var today = new Date();
-    if (today.getDay() >= 1 && today.getDay() <= 3) {
-    } else {
-        
-	showAlertBootstrap('Atención', 'Las solicitudes recibidas después del miércoles se tramitarán la semana siguiente. Agradecemos su comprensión.');
-    }
-
-});

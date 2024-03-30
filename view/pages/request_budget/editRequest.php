@@ -34,7 +34,7 @@
 
                 <div class="col-md-6">
                     <label for="Area" class="form-label">Departamento<span class="required"></span></label>
-                    <select name="area" id="area" class="form-select form-control">
+                    <select name="area" id="area" class="form-select form-control" disabled>
                         <option value="">Seleccionar departamento</option>
                     </select>
                 </div>
@@ -73,9 +73,12 @@
 </main>
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 
-<input type="hidden" name="request" value="<?php echo $_POST['register'] ?>">
+<input type="hidden" name="request" id="request" value="<?php echo $_POST['register'] ?>">
 
 <input type="hidden" name="budget">
+
+<script src="assets/js/ajax-js/request_provider.js"></script>
+<script src="assets/js/ajax-js/add-provider2.js"></script>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/edit-budget-request.js"></script>
 
