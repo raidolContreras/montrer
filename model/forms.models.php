@@ -58,9 +58,17 @@ class FormsModels {
 	static public function mdlCountArea($idUser){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT 
-				(SELECT exerciseName FROM montrer_exercise WHERE status = 1) AS name,
-                COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 AND idUser = :idUser), 0) AS comp,
-                COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp;";
+				JSON_OBJECTAGG(a.idArea, a.nameArea) AS areas,
+				JSON_OBJECTAGG(b.idArea, b.AuthorizedAmount) AS budgets,
+				(SELECT exerciseName FROM montrer_exercise WHERE status = 1 LIMIT 1) AS name,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 AND idUser = :idUser), 0) AS comp,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE idArea = a.idArea AND status <> 0 AND status <> 3), 0) AS amountUsed,
+				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp
+			FROM 
+				montrer_area a
+			LEFT JOIN montrer_budgets b ON b.idArea = a.idArea
+			WHERE 
+				idUser = :idUser;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
@@ -69,6 +77,33 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+
+	static public function mdlCountAreaId($idArea){
+		$pdo = Conexion::conectar();
+
+		$sql = "SELECT nameArea,
+		COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
+					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
+					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+				WHERE e.status = 1 AND r.idArea = :idArea), 0) AS comp,
+		COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
+					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
+					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+				WHERE e.status = 1 AND r.idArea = :idArea AND r.status <> 5 AND r.active = 1), 0) AS compActive
+        FROM 
+            montrer_area 
+        WHERE 
+            idArea = :idArea;";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
 	// Fin de Contadores
 
 	static public function mdlCreateUser($data){
@@ -1170,7 +1205,7 @@ class FormsModels {
 			if ($selection == 1){
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
 						r.description, r.requestDate, r.responseDate, r.status,
-						a.nameArea, u.idUsers, u.firstname, u.lastname
+						a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado
 					FROM montrer_budget_requests r
 						LEFT JOIN montrer_area a ON a.idArea = r.idArea
 						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
@@ -1442,6 +1477,37 @@ class FormsModels {
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlGetLogs($idUser){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT l.*, u.firstname, u.lastname FROM montrer_logs l
+				LEFT JOIN montrer_users u ON u.idUsers = l.idUser
+				WHERE idUser = :idUser";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+	
+	static public function mdlMarcarPago($idRequest, $idAdmin){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), pagado = 1 where idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idAdmin', $idAdmin, PDO::PARAM_INT);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;

@@ -9,6 +9,10 @@ class FormsController {
 	static public function ctrCountArea($idUser){
 		return FormsModels::mdlCountArea($idUser);
 	}
+
+	static public function ctrCountAreaId($idArea){
+		return FormsModels::mdlCountAreaId($idArea);
+	}
 	// Fin de Contadores
 
 	static public function ctrActiveExercise(){
@@ -465,5 +469,13 @@ class FormsController {
 	
 	static public function ctrVerificacionDeudas($idUser){
         return json_encode(FormsModels::mdlVerificacionDeudas($idUser));
+    }
+	
+	static public function ctrGetLogs($idUser){
+        return FormsModels::mdlGetLogs($idUser);
+    }
+	
+	static public function ctrMarcarPago($idRequest,$idUser){
+        return FormsModels::mdlMarcarPago($idRequest,$idUser);
     }
 }

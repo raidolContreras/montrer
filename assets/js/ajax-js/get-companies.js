@@ -54,7 +54,7 @@ $(document).ready(function () {
             "loadingRecords": "Cargando...",
             "info":           "Mostrando _START_ de _END_ en _TOTAL_ resultados",
             "infoEmpty":      "Sin resultados",
-            "emptyTable":     " "
+			"emptyTable":	  "Ningún dato disponible en esta tabla"
         }
     });
 });

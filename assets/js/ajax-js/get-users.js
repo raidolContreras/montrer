@@ -25,7 +25,11 @@ $(document).ready(function () {
 			{ 
 				data: null,
 				render: function(data) {
-					return data.firstname + ' ' + data.lastname;
+					return `
+						<a href="logs&user=${data.idUsers}" >
+						${data.firstname} ${data.lastname}
+						</a>
+					`;
 				}
 			},
 			{ data: 'email' },
@@ -156,6 +160,7 @@ $(document).ready(function () {
 			"loadingRecords": "Cargando...",
 			"info":           "Mostrando _START_ de _END_ en _TOTAL_ resultados",
 			"infoEmpty":      "Mostrando 0 resultados",
+			"emptyTable":	  "Ningún dato disponible en esta tabla"
 		}
 	});
 

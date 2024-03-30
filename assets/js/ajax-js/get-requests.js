@@ -91,7 +91,20 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function (data) {
-					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget);
+					if (data.pagado == 1) {
+                        return '<span style="color: green;">Pagado</span>';
+                    } else {
+						if (level == 1 && data.idUsers != user){
+							return `<button class="btn btn-success pendiente-button" onClick="marcarPago(${data.idRequest}, ${data.idUsers})">Marcar como pagado</button>`;
+						}
+                        return '<span style="color: red;">No Pagado</span>';
+                    }
+				}
+			},
+			{
+				data: null,
+				render: function (data) {
+					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado);
 				}
 			}
 		],
@@ -187,6 +200,7 @@ $(document).ready(function () {
 			"loadingRecords": "Cargando...",
 			"info": "Mostrando _START_ de _END_ en _TOTAL_ resultados",
 			"infoEmpty": "Mostrando 0 resultados",
+			"emptyTable":	  "Ningún dato disponible en esta tabla"
 		}
 	});
 
@@ -324,7 +338,7 @@ function handleResponse(response, successMessage, errorMessage) {
 	}
 }
 
-function renderActionButtons(idRequest, status, userRequest, user, level, idBudget) {
+function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado) {
 
 	if (status == 0 && userRequest == user){
 		return `
@@ -357,12 +371,20 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 			<div class="container">
 		`;
 		if(userRequest == user){
-			html += `
-			<center>
-				<button class="btn btn-success check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobar presupuesto">
-					<i class="ri-refund-2-line"></i>
-				</button>
-			</center>`;
+			if (pagado == 1) {
+				html += `
+				<center>
+					<button class="btn btn-success check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobar presupuesto">
+						<i class="ri-refund-2-line"></i>
+					</button>
+				</center>`;
+			} else {
+				html += `
+					<button class="btn btn-warning btn-block pendiente-button col-2">
+						Pendiente de pago
+					</button>
+				`;
+			}
 		} else {
 			html += `
 				<button class="btn btn-warning btn-block pendiente-button col-2" data-id="${idRequest}">
@@ -613,4 +635,32 @@ function verificacion(idUser) {
             console.log('Error en la solicitud AJAX:', error);
         }
     });
+}
+
+
+function marcarPago(idRequest, idUser) {
+
+    $('#marcarModal').modal('show');
+	var html =  `
+		<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+		<button type="button" class="btn btn-success" onclick="marcarAjax(${idRequest},${idUser})">Aceptar</button>
+	`;
+
+	$('.marcar-footer').html(html);
+
+};
+
+function marcarAjax(idRequest, idUser) {
+	$.ajax({
+		type: 'POST',
+		url: 'controller/ajax/ajax.form.php',
+		data: {marcarPago: idRequest, idUser: idUser},
+		dataSrc: '',
+		success: function (response) {
+			if(response == 'ok'){
+				$('#requests').DataTable().ajax.reload();
+				$('#marcarModal').modal('hide');
+			}
+		}
+	});
 }
