@@ -56,7 +56,7 @@ $(document).ready(function () {
                     
                     bandera = 0;
                     
-                    showAlertBootstrap2('Operación realizada', 'Contraseña actualizada correctamente.', 'inicio');
+                    showAlertBootstrap1('Operación realizada', 'Contraseña actualizada correctamente.', 'inicio');
 
                 } else {
                     

@@ -68,16 +68,15 @@
             <input type="hidden" name="maxBudget">
             <input type="hidden" class="form-control" id="idBudget" name="idBudget" >
             <input type="hidden" name="budget">
+            <input type="hidden" name="request" id="request" value="<?php echo $_POST['register'] ?>">
         </form>
     </div>
 </main>
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 
-<input type="hidden" name="request" id="request" value="<?php echo $_POST['register'] ?>">
 
 <input type="hidden" name="budget">
 
-<script src="assets/js/ajax-js/request_provider.js"></script>
 <script src="assets/js/ajax-js/add-provider2.js"></script>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/edit-budget-request.js"></script>
@@ -88,3 +87,6 @@
         $j('.inputmask').inputmask();
     });
 </script>
+
+<?php
+include 'view/pages/request_budget/modalProvider.php';

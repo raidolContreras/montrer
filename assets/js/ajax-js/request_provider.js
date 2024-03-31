@@ -8,6 +8,7 @@ $(document).ready(function () {
         }
     });
 });
+
 function restartSelectProvider() {
 
     // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
@@ -41,4 +42,4 @@ $('#provider').on('select2:select', function (e) {
     if (selectedValue === 'add_provider') {
         $('#modalAgregarProveedor').modal('show');
     }
-  });
+});

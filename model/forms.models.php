@@ -1526,4 +1526,49 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+	
+	static public function mdlSearchRequest($idRequest){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT *
+                FROM montrer_budget_requests
+                WHERE idRequest = :idRequest";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		if($stmt->execute()){
+			$result = $stmt->fetch();
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+	
+	static public function mdlUpdateRequest($datos){
+		$pdo = Conexion::conectar();
+
+		$sql = "UPDATE montrer_budget_requests SET idProvider = :idProvider, requestedAmount = :requestedAmount, description = :description, event = :event, eventDate = :eventDate where idRequest = :idRequest";
+
+		$stmt = $pdo->prepare($sql);
+
+		$stmt->bindParam(':idProvider', $datos['provider'], PDO::PARAM_INT);
+		$stmt->bindParam(':requestedAmount', $datos['requestedAmount'], PDO::PARAM_STR);
+		$stmt->bindParam(':description', $datos['description'], PDO::PARAM_STR);
+		$stmt->bindParam(':event', $datos['event'], PDO::PARAM_STR);
+		$stmt->bindParam(':eventDate', $datos['eventDate'], PDO::PARAM_STR);
+		$stmt->bindParam(':idRequest', $datos['idRequest'], PDO::PARAM_INT);
+
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
 }

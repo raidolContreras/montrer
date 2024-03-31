@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 						bandera = 0;
 						
-						showAlertBootstrap2('Operación realizada', 'Departamento actualizado exitosamente', 'areas');
+						showAlertBootstrap1('Operación realizada', 'Departamento actualizado exitosamente', 'areas');
 
 					} else {
 						

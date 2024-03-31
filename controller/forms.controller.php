@@ -483,4 +483,12 @@ class FormsController {
 	static public function ctrMarcarPago($idRequest,$idUser){
         return FormsModels::mdlMarcarPago($idRequest,$idUser);
     }
+	
+	static public function ctrSearchRequest($idRequest){
+        return FormsModels::mdlSearchRequest($idRequest);
+    }
+
+	static public function ctrUpdateRequest($datos){
+        return FormsModels::mdlUpdateRequest($datos);
+    }
 }

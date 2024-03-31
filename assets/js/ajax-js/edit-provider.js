@@ -68,7 +68,7 @@ $(document).ready(function () {
                 if (response === 'ok') {
                     
 					bandera = 0;
-                    showAlertBootstrap2('Operación realizada', 'Proveedor actualizado exitosamente', 'provider');
+                    showAlertBootstrap1('Operación realizada', 'Proveedor actualizado exitosamente', 'provider');
                 } else {
                     showAlertBootstrap('!Atención¡', 'Error al actualizar el proveedor');
                 }

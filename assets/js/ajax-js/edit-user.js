@@ -35,7 +35,7 @@ $(document).ready(function () {
 	
 					bandera = 0;
 					if (response !== 'Error' && response !== 'Error: Email duplicado') {
-						showAlertBootstrap2('Operación realizada', 'Datos del usuario actualizados exitosamente', 'registers');
+						showAlertBootstrap1('Operación realizada', 'Datos del usuario actualizados exitosamente', 'registers');
 					} else if (response === 'Error: Email duplicado') {
 						showAlertBootstrap('', response);
 					} else {

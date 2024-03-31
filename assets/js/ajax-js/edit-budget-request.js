@@ -1,6 +1,9 @@
 var bandera = 0;
 $(document).ready(function () {
 
+    var request = $('#request').val();
+    var registerValue = $('#register-value').data('register');
+
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {
         bandera = 1;
@@ -29,13 +32,14 @@ $(document).ready(function () {
 				type: "POST",
 				url: "controller/ajax/ajax.form.php",
 				data: {
-					area: area,
-					requestedAmount: requestedAmount,
-					description: description,
-                    event: event,
-                    eventDate: eventDate,
-					budget: budget,
-                    provider: provider
+					areaEdit: area,
+					requestedAmountEdit: requestedAmount,
+					descriptionEdit: description,
+                    eventEdit: event,
+                    eventDateEdit: eventDate,
+					budgetEdit: budget,
+                    providerEdit: provider,
+                    requestEdit: request
 				},
 				success: function (response) {				  
 	
@@ -49,7 +53,7 @@ $(document).ready(function () {
                         $("input[name='eventDate']").val('');
                         $('.sidenav').removeAttr('onclick');
 
-	                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
+	                    showAlertBootstrap1('Operación realizada', 'Presupuesto actualizado correctamente', 'requestBudget');
 
 					} else {
                         
@@ -68,6 +72,19 @@ $(document).ready(function () {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
         }
 	});
+
+    restartSelectProvider(request);
+
+    getArea(registerValue);
+    
+    // Manejador de eventos para el cambio en el select
+    $('#provider').on('change', function() {
+        // Verifica si la opción seleccionada es "Añadir proveedor"
+        if ($(this).val() === "add_provider") {
+            $('#modalAgregarProveedor').modal('show');
+        }
+    });
+
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -79,13 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'requestBudget');
 
 	});
-});
-
-$(document).ready(function () {
-    var registerValue = $('#register-value').data('register');
-
-    getArea(registerValue);
-
 });
 
 function getArea(registerValue) {
@@ -240,3 +250,68 @@ function confirmExit(event, destination) {
 		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
 	}
 }
+
+function searchRequest(idRequest) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/searchRequest.php',
+        data: { idRequest: idRequest },
+        dataType: 'json',
+        success: function (response) {
+
+            $('#provider').val(response.idProvider);
+            $('#area').val(response.idArea);
+            $('#description').val(response.description);
+            $('#event').val(response.event);
+            $('#eventDate').val(response.eventDate);
+            
+            var datetimeString = response.requestDate;
+            var parts = datetimeString.split(' ');
+            var dateString = parts[0];
+            $('#fecha').val(dateString);
+            
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+function restartSelectProvider(request) {
+
+    // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
+    $.ajax({
+        type: "POST",
+        url: "controller/ajax/getProviders.php",
+        success: function (response) {
+            // Parsea la respuesta JSON
+            var providers = JSON.parse(response);
+            var selectOptionsHtml = `<option value="">Seleccionar proveedor</option>`;
+
+            // Crea las opciones para el select
+            providers.forEach(function(provider) {
+                selectOptionsHtml += `<option value="${provider.idProvider}">${provider.representative_name}</option>`;
+            });
+
+            // Agrega la opción "Añadir proveedor" con un ícono de +
+            selectOptionsHtml += `<option value="add_provider" class="add-provider-option">&#43; Añadir proveedor</option>`;
+            
+            $('#provider').html(selectOptionsHtml);
+            
+            searchRequest(request);
+            
+        },
+        error: function (error) {
+            console.log("Error en la solicitud Ajax:", error);
+        }
+    });
+
+}
+
+// Manejar la selección de "add_provider"
+$('#provider').on('select2:select', function (e) {
+    const selectedValue = e.params.data.id;
+    if (selectedValue === 'add_provider') {
+        $('#modalAgregarProveedor').modal('show');
+    }
+});

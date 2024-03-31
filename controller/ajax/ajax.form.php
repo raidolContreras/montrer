@@ -902,3 +902,21 @@ if (isset($_POST['marcarPago'])) {
 	$response = FormsController::ctrMarcarPago($_POST['marcarPago'], $_POST['idUser']);
 	echo $response;
 }
+
+if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($_POST['descriptionEdit']) && isset($_POST['eventEdit']) && isset($_POST['eventDateEdit']) && isset($_POST['budgetEdit']) && isset($_POST['providerEdit'])) {
+
+	$datos = array(
+		'area' => $_POST['areaEdit'],
+        'requestedAmount' => $_POST['requestedAmountEdit'],
+        'description' => $_POST['descriptionEdit'],
+        'event' => $_POST['eventEdit'],
+        'eventDate' => $_POST['eventDateEdit'],
+        'budget' => $_POST['budgetEdit'],
+        'provider' => $_POST['providerEdit'],
+		'idRequest' => $_POST['requestEdit']
+	);
+
+    $response = FormsController::ctrUpdateRequest($datos);
+    echo $response;
+
+}

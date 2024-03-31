@@ -33,7 +33,7 @@ $(document).ready(function () {
 	
 					if (response === 'ok') {
 						bandera = 0;
-						showAlertBootstrap2('Operación realizada', 'Presupuesto actualizado exitosamente' , 'budgets');
+						showAlertBootstrap1('Operación realizada', 'Presupuesto actualizado exitosamente' , 'budgets');
 					} else {
 						
 						showAlertBootstrap('!Atención¡', 'Error al actualizar el presupuesto');

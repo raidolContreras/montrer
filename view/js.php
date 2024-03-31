@@ -44,6 +44,13 @@
 				$('#alertModal').modal('show');
 			}
 			
+			function showAlertBootstrap1(title, message, adress) {
+				$('#modalLabel').text(title);
+				$('.modal-body-extra').html(message);
+					modalFooter.html('<button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
+				$('#alertModal').modal('show');
+			}
+			
 			function showAlertBootstrap2(title, message, adress) {
 				$('#modalLabel').text(title);
 				$('.modal-body-extra').text(message);
