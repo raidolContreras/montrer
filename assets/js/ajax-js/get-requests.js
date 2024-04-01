@@ -555,9 +555,9 @@ function modalComprobar(idRequest) {
 }
 
 function numeroALetra(numero) {
-    var unidades = ['cero', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    var unidades = ['', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
     var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
-    var decenas = ['', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    var decenas = ['','diez','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
     var centenas = ['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
 
     var texto = '';
@@ -568,8 +568,14 @@ function numeroALetra(numero) {
     if (entero === 0) {
         texto = 'cero';
     } else {
+        // Parte entera
+        if (entero >= 1000000) {
+            texto += numeroALetra(Math.floor(entero / 1000000)) + ' millón ';
+            entero %= 1000000;
+        }
+
         if (entero >= 1000) {
-            texto += numeroALetra(entero / 1000) + ' mil ';
+            texto += numeroALetra(Math.floor(entero / 1000)) + ' mil ';
             entero %= 1000;
         }
 
@@ -591,10 +597,10 @@ function numeroALetra(numero) {
         }
     }
 
+    // Centavos
     if (decimal > 0) {
-        texto += (entero > 0 ? ' ' : '') + (decimal === 1 ? 'con un centavo' : 'con ' + numeroALetra(decimal) + ' centavos');
+        texto += (entero > 0 ? ' ' : '') + (decimal === 1 ? 'pesos con un centavo' : 'pesos con ' + numeroALetra(decimal) + ' centavos');
     } else if (entero > 0) {
-        texto += (entero === 1 ? ' peso' : ' pesos');
     }
 
     return texto.trim();

@@ -8,7 +8,7 @@ var myDropzone = new Dropzone("#documentDropzone", {
     autoProcessQueue: false,
     init: function() {
         this.on("addedfile", function(file) {
-            var removeButton = Dropzone.createElement('<button class="btn btn-danger btn-sm" style="margin-top: 10px;">Eliminar archivo</button>');
+            var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
             var _this = this;
             removeButton.addEventListener("click", function(e) {
                 e.preventDefault();

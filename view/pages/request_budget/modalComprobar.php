@@ -11,34 +11,34 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="nombreCompleto" class="form-label">Nombre completo solicitante<span class="required"></span></label>
-                            <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" value="<?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] ?>" readonly>
+                            <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" value="<?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname'] ?>" disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="fechaSolicitud" class="form-label">Fecha de solicitud<span class="required"></span></label>
-                            <input type="date" class="form-control" id="fechaSolicitud" name="fechaSolicitud" readonly>
+                            <input type="date" class="form-control" id="fechaSolicitud" name="fechaSolicitud" disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
-                            <select class="form-select" id="provider" name="provider" readonly>
+                            <select class="form-select" id="provider" name="provider" disabled>
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="area" class="form-label">Area de cargo<span class="required"></span></label>
-                            <select class="form-select" id="area" name="area" readonly>
+                            <select class="form-select" id="area" name="area" disabled>
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="importeSolicitado" class="form-label">Importe solicitado<span class="required"></span></label>
-                            <input type="text" id="importeSolicitado" name="importeSolicitado" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" readonly>
+                            <input type="text" id="importeSolicitado" name="importeSolicitado" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="importeLetra" class="form-label">Importe con letra<span class="required"></span></label>
-                            <input type="text" class="form-control" id="importeLetra" name="importeLetra" readonly>
+                            <input type="text" class="form-control" id="importeLetra" name="importeLetra" disabled>
                         </div>
 
                         <div class="col-12 my-3">
