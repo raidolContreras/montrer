@@ -36,11 +36,7 @@ $(document).ready(function () {
 		},
 		columns: [
 			{
-				data: null,
-				render: function (data, type, row, meta) {
-					// Utilizando el contador proporcionado por DataTables
-					return meta.row + 1;
-				}
+				data: 'folio',
 			},
 			{
 				data: 'nameArea',
@@ -346,8 +342,8 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 	if (status == 0 && userRequest == user){
 		return `
 			<div class="container">
-				<div class="row" style="justify-content: center;">
-					<button style="margin-right: 5px;" class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+				<div class="row btn-group" role="group" style="justify-content: center;">
+					<button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 						<i class="ri-edit-line"></i>
 					</button>
 					<button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
@@ -359,8 +355,8 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 	} else if (status == 0 && level == 1 && userRequest != user) {
 		return `
 			<div class="container">
-				<div class="row" style="justify-content: center;">
-					<button style="margin-right: 5px;" class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
+				<div class="row btn-group" role="group" style="justify-content: center;">
+					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
 						<i class="ri-check-line"></i>
 					</button>
 					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
@@ -376,24 +372,26 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 		if(userRequest == user){
 			if (pagado == 1) {
 				html += `
-				<center>
+				<div class="row btn-group" role="group" style="justify-content: center;">
 					<button class="btn btn-success check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobar presupuesto">
 						<i class="ri-refund-2-line"></i>
 					</button>
-				</center>`;
+				</div>`;
 			} else {
 				html += `
+				<div class="row btn-group" role="group" style="justify-content: center;">
 					<button class="btn btn-warning btn-block pendiente-button col-2">
 						Pendiente de pago
 					</button>
-				`;
+				</div>`;
 			}
 		} else {
 			html += `
+			<div class="row btn-group" role="group" style="justify-content: center;">
 				<button class="btn btn-warning btn-block pendiente-button col-2" data-id="${idRequest}">
 					Pendiente de comprobación
 				</button>
-				`;
+			</div>`;
 		}
 		return html + `
 			</div>
@@ -415,7 +413,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 
 			return `
                 <div class="container">
-                    <div class="row" style="justify-content: space-evenly;">
+                    <div class="row btn-group" role="group" style="justify-content: center;">
                         <button class="btn btn-success ver-button col-2" onclick="verComprobacion(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver envio">
                             <i class="ri-eye-line"></i>
                         </button>
@@ -424,9 +422,11 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
             `;
 		}
 		return `
-			<button class="btn btn-warning btn-block pendiente-button col-2" onclick="pendienteAprovacion(${idRequest})">
-				Pendiente de aprobación
-			</button>
+			<div class="row btn-group" role="group" style="justify-content: center;">
+				<button class="btn btn-warning btn-block pendiente-button col-2" onclick="pendienteAprovacion(${idRequest})">
+					Pendiente de aprobación
+				</button>
+			</div>
 		`;
 	} else if (status == 4) {
 		html = `
@@ -434,11 +434,11 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 		`;
 		if(userRequest == user){
 			html += `
-				<center>
+				<div class="row btn-group" role="group" style="justify-content: center;">
 					<button class="btn btn-danger check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobante rechazado, por favor vuelva a enviarlo.">
 						<i class="ri-refund-2-line"></i>
 					</button>
-				</center>
+				</div>
 			`;
 		} else {
 			html += `
@@ -462,7 +462,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 
 		return `
 			<div class="container">
-				<div class="row" style="justify-content: space-evenly;">
+				<div class="row btn-group" role="group" style="justify-content: center;">
 					<button class="btn btn-success ver-button col-2" onclick="verComprobacion(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobante aceptado, verifique el envío.">
 						<i class="ri-check-line"></i>
 					</button>
@@ -473,7 +473,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 	} else {
 		return `
 			<div class="container">
-				<div class="row" style="justify-content: space-evenly;">
+				<div class="row btn-group" role="group" style="justify-content: center;">
 					Rechazado
 				</div>
 			</div>
@@ -548,7 +548,7 @@ function modalComprobar(idRequest) {
             var amountInWords = writtenNumber(response.approvedAmount, { lang: 'es' });
             $("input[name='importeLetra']").val(amountInWords);
 
-            $("input[name='provider']").val(response.idProvider);
+            $("select[name='provider']").val(response.idProvider);
             $("input[name='request']").val(idRequest);
             $('#comprobarModal').modal('show');
         }

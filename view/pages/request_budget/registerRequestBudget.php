@@ -24,6 +24,11 @@
             <div class="row">
 
                 <div class="col-md-6">
+                    <label for="folio" class="form-label">Folio</label>
+                    <input class="form-control" type="text" id="folio" name="folio" readonly>
+                </div>
+
+                <div class="col-md-6">
                     <label for="fecha" class="form-label">Fecha de petición<span class="required"></span></label>
                     <input class="form-control" type="date" id="fecha" name="fecha" value="<?php echo date('Y-m-d'); ?>" readonly>
                 </div>

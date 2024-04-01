@@ -491,4 +491,8 @@ class FormsController {
 	static public function ctrUpdateRequest($datos){
         return FormsModels::mdlUpdateRequest($datos);
     }
+
+	static public function ctrMaxRequestBudgets(){
+        return FormsModels::mdlMaxRequestBudgets();
+    }
 }

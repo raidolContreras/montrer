@@ -18,6 +18,7 @@ $(document).ready(function () {
         var eventDate = $("input[name='eventDate']").val();
 		var maxBudget = parseFloat($("input[name='maxBudget']").val());
 		var budget = $("input[name='budget']").val();
+		var folio = $("input[name='folio']").val();
 
 		if (area == '' || requestedAmount == '' || description == '' || event == '' || eventDate == '' || provider == ''){
             
@@ -35,6 +36,7 @@ $(document).ready(function () {
                     event: event,
                     eventDate: eventDate,
 					budget: budget,
+					folio: folio,
                     provider: provider
 				},
 				success: function (response) {				  
@@ -112,9 +114,13 @@ function fillAreaSelect(select, datas, message) {
 
     selectOption.empty();
     var init = 1;
+
+    createFolio(datas[0][1]);
+
     datas.forEach(function (data) {
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
+
         if (init == 1) {
             $.ajax({
                 type: 'POST',
@@ -136,6 +142,9 @@ function fillAreaSelect(select, datas, message) {
 // Luego, agrega el evento change al select de áreas
 $('#area').on('change', function() {
     var selectedAreaId = $(this).val();
+    var selectedAreaText = $(this).find('option:selected').text();
+    
+    createFolio(selectedAreaText);
 
     $.ajax({
         type: 'POST',
@@ -264,3 +273,20 @@ $(document).ready(function () {
     }
 
 });
+
+function createFolio(nameArea) {
+    $.ajax({
+        url: 'controller/ajax/maxRequestBudgets.php',
+        dataType: 'json',
+        success: function (response) {
+            var folio = parseInt(response.maxRequest);
+            folio = folio + 1;
+            
+            var folioFin = folio + sustraerLetras(nameArea);
+
+            console.log(nameArea);
+
+            $('input[name="folio"]').val(folioFin);
+        }
+    });
+}

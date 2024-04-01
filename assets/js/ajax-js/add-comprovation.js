@@ -1,13 +1,25 @@
-
 var myDropzone = new Dropzone("#documentDropzone", {
     parallelUploads: 10,
     maxFiles: 10,
     url: "controller/ajax/ajax.form.php",
     maxFilesize: 10,
-    acceptedFiles: "image/jpeg, image/png, application/pdf",
-    dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .png, .jpg, .jpeg (Tamaño máximo 10 MB)</p>',
+    acceptedFiles: "application/pdf, application/xml",
+    dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
     autoProcessQueue: false,
+    init: function() {
+        this.on("addedfile", function(file) {
+            var removeButton = Dropzone.createElement('<button class="btn btn-danger btn-sm" style="margin-top: 10px;">Eliminar archivo</button>');
+            var _this = this;
+            removeButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                _this.removeFile(file);
+            });
+            file.previewElement.appendChild(removeButton);
+        });
+    }
 });
+
 
 function enviarComprobante() {
 	event.preventDefault();

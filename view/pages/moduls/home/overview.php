@@ -4,6 +4,7 @@
 	<div class="overview-area">
 		<div class="container-fluid">
 			<div class="row justify-content-center">
+				<?php if ($_SESSION['level'] == 1): ?>
 				<div class="col-lg-12">
 					<div class="overview-content-wrap card-box-style">
 						<div class="overview-content d-flex justify-content-between align-items-center">
@@ -11,7 +12,6 @@
 								<h3>Datos generales</h3>
 							</div>
 						</div>
-						<?php if ($_SESSION['level'] == 1): ?>
 							<div class="audience-content-wrap">
 								<div class="row justify-content-center">
 									<div class="col-lg-4 col-sm-6">
@@ -61,47 +61,9 @@
 									<div id="overview_chart"></div>
 								</div>
 							</div>
-						<?php else: ?>
-						<div class="features-area">
-							<div class="container-fluid">
-								<div class="row justify-content-center">
-									<div class="col-lg-6 col-md-6">
-										<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Solicitud de presupuestos">
-										<div class="single-features">
-											<div class="row align-items-center">
-												<div class="col-xl-12">
-													<div class="single-click-content">
-														<span class="features-title">Presupuesto comprobado</span>
-														<h3 class="comp"></h3>
-														<p class="budget-message-compr"></p>
-													</div>
-												</div>
-											</div>
-										</div>
-										</a>
-									</div>
-
-									<div class="col-lg-6 col-md-6">
-										<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Solicitud de presupuestos">
-										<div class="single-features">
-											<div class="row align-items-center">
-												<div class="col-xl-12">
-													<div class="single-click-content">
-														<span class="features-title">Presupuesto sin comprobar</span>
-														<h3 class="nocomp"></h3>
-														<p class="budget-message-no-compr"></p>
-													</div>
-												</div>
-											</div>
-										</div>
-										</a>
-									</div>
-								</div>
-							</div>
 						</div>
-						<?php endif ?>
 					</div>
-				</div>
+				<?php endif ?>
 				
 <?php if ($_SESSION['level'] == 1): ?>
 	<script src="assets/js/ajax-js/counts.js"></script>

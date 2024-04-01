@@ -21,6 +21,7 @@ $(document).ready(function () {
         var eventDate = $("input[name='eventDate']").val();
 		var maxBudget = parseFloat($("input[name='maxBudget']").val());
 		var budget = $("input[name='budget']").val();
+		var folio = $("input[name='folio']").val();
 
 		if (area == '' || requestedAmount == '' || description == '' || event == '' || eventDate == '' || provider == ''){
             
@@ -264,6 +265,7 @@ function searchRequest(idRequest) {
             $('#description').val(response.description);
             $('#event').val(response.event);
             $('#eventDate').val(response.eventDate);
+            $('#folio').val(response.folio);
             
             var datetimeString = response.requestDate;
             var parts = datetimeString.split(' ');

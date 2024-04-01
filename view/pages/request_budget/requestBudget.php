@@ -17,7 +17,7 @@
 				<table class="table table-responsive" id="requests">
 					<thead>
 						<tr>
-							<th>#</th>
+							<th>Folio</th>
 							<th>Departamento</th>
 							<th>Presupuesto</th>
 							<th>Solicitante</th>
@@ -60,7 +60,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="enableModalLabel">Eliminar solicitud</h5>
+                <h5 class="modal-title" id="enableModalLabel">Aprobar solicitud</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

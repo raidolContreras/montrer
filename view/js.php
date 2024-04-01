@@ -34,6 +34,29 @@
 			$(function () {
 				$('[data-bs-toggle="tooltip"]').tooltip();
 			});
+
+			function sustraerLetras(texto) {
+				let palabras = texto.split(' ');
+				let resultado = '';
+				
+				// Obtiene la fecha actual en formato 'dd/mm/yyyy'
+				let fecha = new Date();
+				let dia = ("0" + fecha.getDate()).slice(-2); // Agrega un cero inicial si es necesario
+				let mes = ("0" + (fecha.getMonth() + 1)).slice(-2); // Agrega un cero inicial si es necesario
+				let año = fecha.getFullYear().toString().substr(-2); // Obtiene los últimos dos dígitos del año
+				
+				let fechaActual = año + mes + dia;
+
+				if (palabras.length === 1) {
+					resultado = palabras[0].slice(0, 3).toUpperCase();
+				} else {
+					palabras.forEach(palabra => {
+						resultado += palabra[0].toUpperCase();
+					});
+				}
+
+				return resultado + fechaActual;
+			}
 			
 			var modalFooter = $('.modal-footer-extra');
 			

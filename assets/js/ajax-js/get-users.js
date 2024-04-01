@@ -184,7 +184,7 @@ $(document).ready(function () {
 		if (status == 1) {
 			return `
 				<div class="container">
-					<div class="row" style="justify-content: space-evenly;">
+					<div class="row btn-group" role="group" style="justify-content: center;">
 						<button type="button" class="btn btn-primary edit-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 							<i class="ri-pencil-line"></i>
 						</button>
@@ -203,7 +203,7 @@ $(document).ready(function () {
 		} else {
 			return `
 				<div class="container">
-					<div class="row" style="justify-content: space-evenly;">
+					<div class="row btn-group" role="group" style="justify-content: center;">
 					<button type="button" class="btn btn-primary edit-button col-2" data-id="${idUser}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 							<i class="ri-pencil-line"></i>
 						</button>

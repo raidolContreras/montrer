@@ -5985,8 +5985,8 @@ Template Sidebar CSS
 .pendiente-button{
   font-size: 12px !important;
   width: 100%;
-  padding-right: 5px !important;
-  padding-left: 5px !important;
+  margin-right: 10px !important;
+  margin-left: 10px !important;
   padding-top: 5px !important;
   padding-bottom: 5px !important;
 }

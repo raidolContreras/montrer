@@ -724,6 +724,7 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 		'provider' => $_POST['provider'],
 		'event' => $_POST['event'],
 		'eventDate' => $_POST['eventDate'],
+		'folio' => $_POST['folio'],
 		'budget' => $_POST['budget']
 	);
 	$response = FormsController::ctrRequestBudget($data);

@@ -1218,7 +1218,7 @@ class FormsModels {
 			$pdo = Conexion::conectar();
 			if ($selection == 1){
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-						r.description, r.requestDate, r.responseDate, r.status,
+						r.description, r.requestDate, r.responseDate, r.status, r.folio,
 						a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado
 					FROM montrer_budget_requests r
 						LEFT JOIN montrer_area a ON a.idArea = r.idArea
@@ -1227,7 +1227,7 @@ class FormsModels {
 				$stmt = $pdo->prepare($sql);
 			} else {
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-						r.description, r.requestDate, r.responseDate, r.status,
+						r.description, r.requestDate, r.responseDate, r.status, r.folio,
 						a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado
 					FROM montrer_budget_requests r
 						LEFT JOIN montrer_area a ON a.idArea = r.idArea
@@ -1247,12 +1247,13 @@ class FormsModels {
 		$pdo = Conexion::conectar();
 
 		$sql = "INSERT INTO montrer_budget_requests
-					(idArea, idBudget, idProvider, requestedAmount, description, idUser, event, eventDate, requestDate) 
+					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, event, eventDate, requestDate) 
 				VALUES 
-					(:idArea, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :event, :eventDate, DATE_ADD(NOW(), INTERVAL -6 HOUR) )";
+					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :event, :eventDate, DATE_ADD(NOW(), INTERVAL -6 HOUR) )";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $data['area'], PDO::PARAM_INT);
+		$stmt->bindParam(':folio', $data['folio'], PDO::PARAM_STR);
 		$stmt->bindParam(':idBudget', $data['budget'], PDO::PARAM_INT);
 		$stmt->bindParam(':idProvider', $data['provider'], PDO::PARAM_INT);
 		$stmt->bindParam(':requestedAmount', $data['requestedAmount'], PDO::PARAM_STR);
@@ -1566,6 +1567,17 @@ class FormsModels {
 			print_r($pdo->errorInfo());
 			$result = 'Error';
 		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlMaxRequestBudgets(){
+	    $pdo = Conexion::conectar();
+		$sql = "SELECT MAX(idRequest) as maxRequest FROM montrer_budget_requests";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetch();
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;

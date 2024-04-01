@@ -329,7 +329,7 @@ function renderActionButtons(idProvider, status) {
     if (status == 1) {
         return `
             <div class="container">
-                <div class="row" style="justify-content: space-evenly; width: 200px">
+                <div class="row btn-group" role="group" style="justify-content: center;">
                     <button class="btn btn-primary edit-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                         <i class="ri-edit-line"></i>
                     </button>
@@ -345,7 +345,7 @@ function renderActionButtons(idProvider, status) {
     } else {
         return `
             <div class="container">
-                <div class="row" style="justify-content: space-evenly; width: 200px">
+                <div class="row btn-group" role="group" style="justify-content: center;">
                     <button class="btn btn-primary edit-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                         <i class="ri-edit-line"></i>
                     </button>

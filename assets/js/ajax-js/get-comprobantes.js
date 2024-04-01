@@ -16,11 +16,12 @@ function verComprobacion(idRequest){
             $('#titularCuentaGet').val(response.titularCuenta);
             $('#entidadBancariaGet').val(response.entidadBancaria);
             $('#conceptoPagoGet').val(response.conceptoPago);
+            var idPaymentRequest = response.idPaymentRequest;
 
             $.ajax({
                 type: 'POST',
                 url: 'controller/ajax/ajax.form.php', // URL actualizada si es necesario
-                data: { getDocuments: idRequest },
+                data: { getDocuments: idPaymentRequest },
                 success: function(response) {
                     var documentos = JSON.parse(response);
                     $('#listaDocumentos').empty(); // Limpiar la lista actual
@@ -36,9 +37,7 @@ function verComprobacion(idRequest){
                                     colorClass = 'doc-pdf';
                                     iconClass = 'ri-file-pdf-line';
                                     break;
-                                case 'jpg':
-                                case 'jpeg':
-                                case 'png':
+                                case 'xml':
                                     colorClass = 'doc-image';
                                     iconClass = 'ri-image-line';
                                     break;
@@ -49,7 +48,7 @@ function verComprobacion(idRequest){
                             }
                         
                             $('#listaDocumentos').append(`
-                                <a href="view/documents/${idRequest}/${documento}" target="_blank" class="mt-2 text-wrap">
+                                <a href="view/documents/${idPaymentRequest}/${documento}" target="_blank" class="mt-2 text-wrap">
                                     <li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
                                         <div class="document-icon ${colorClass}"><i class="${iconClass}"></i></div>
                                         ${documento}

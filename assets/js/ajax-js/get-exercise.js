@@ -213,7 +213,7 @@ $(document).ready(function () {
 			if (status == 1) {
 				return `
 				<div class="container">
-					<div class="row" style="justify-content: space-evenly;">
+					<div class="row btn-group" role="group" style="justify-content: center;">
 						<button type="button" class="btn btn-success activate-btn-disable disabled col-2" disabled data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Activado">
 							<i class="ri-checkbox-circle-fill"></i>
 						</button>
@@ -232,7 +232,7 @@ $(document).ready(function () {
 			} else {
 				return `
 				<div class="container">
-					<div class="row" style="justify-content: space-evenly;">
+					<div class="row btn-group" role="group" style="justify-content: center;">
 						<button class="btn btn-success activate-btn col-2" data-exercise="${idExercise}" data-id="${idExercise}" data-bs-toggle="tooltip" data-bs-placement="top" title="Activar">
 							<i class="ri-checkbox-circle-line"></i>
 						</button>
@@ -252,7 +252,7 @@ $(document).ready(function () {
 		} else {
 			return `
             <div class="container">
-                <div class="row" style="justify-content: space-evenly;">
+                <div class="row btn-group" role="group" style="justify-content: center;">
 					<button class="btn btn-success activate-btn disabled col-2" disabled>
 						<i class="ri-checkbox-blank-circle-fill"></i>
 					</button>
