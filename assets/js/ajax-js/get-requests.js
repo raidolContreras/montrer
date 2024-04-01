@@ -528,7 +528,6 @@ function updateMaxRequestedAmount(datos) {
 }
 
 function modalComprobar(idRequest) {
-    writtenNumber.defaults.lang = 'es';
 
     $.ajax({
         type: 'POST',
@@ -538,14 +537,14 @@ function modalComprobar(idRequest) {
         success: function (response) {
 			
 			var registerValue = $('#register-value').data('register');
-            console.log(registerValue);
 
             getArea(registerValue);
             $('#fechaSolicitud').val(response.responseDate.split(' ')[0]);
             $("input[name='importeSolicitado']").val(response.approvedAmount);
 
             // Usa writtenNumber para convertir el monto aprobado a palabras.
-            var amountInWords = writtenNumber(response.approvedAmount, { lang: 'es' });
+            var amountInWords = numeroALetra(response.approvedAmount);
+			
             $("input[name='importeLetra']").val(amountInWords);
 
             $("select[name='provider']").val(response.idProvider);
@@ -553,6 +552,52 @@ function modalComprobar(idRequest) {
             $('#comprobarModal').modal('show');
         }
     });
+}
+
+function numeroALetra(numero) {
+    var unidades = ['cero', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+    var decenas = ['', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    var centenas = ['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
+
+    var texto = '';
+
+    var entero = Math.floor(numero);
+    var decimal = Math.round((numero - entero) * 100);
+
+    if (entero === 0) {
+        texto = 'cero';
+    } else {
+        if (entero >= 1000) {
+            texto += numeroALetra(entero / 1000) + ' mil ';
+            entero %= 1000;
+        }
+
+        if (entero >= 100) {
+            texto += centenas[Math.floor(entero / 100)] + ' ';
+            entero %= 100;
+        }
+
+        if (entero >= 20) {
+            texto += decenas[Math.floor(entero / 10)] + ' ';
+            entero %= 10;
+        }
+
+        if (entero >= 10) {
+            texto += especiales[entero - 10];
+            decimal = 0; // No hay centavos si el número es un número especial
+        } else if (entero > 0) {
+            texto += unidades[entero];
+        }
+    }
+
+    if (decimal > 0) {
+        texto += (entero > 0 ? ' ' : '') + (decimal === 1 ? 'con un centavo' : 'con ' + numeroALetra(decimal) + ' centavos');
+    } else if (entero > 0) {
+        texto += (entero === 1 ? ' peso' : ' pesos');
+    }
+
+    return texto.trim();
 }
 
 function getArea(registerValue) {
