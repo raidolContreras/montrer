@@ -541,6 +541,9 @@ function modalComprobar(idRequest) {
             getArea(registerValue);
             $('#fechaSolicitud').val(response.responseDate.split(' ')[0]);
             $("input[name='importeSolicitado']").val(response.approvedAmount);
+            $("input[name='titularCuenta']").val(response.representative_name);
+            $("input[name='entidadBancaria']").val(response.bank_name);
+            $("input[name='conceptoPago']").val(response.description);
 
             // Usa writtenNumber para convertir el monto aprobado a palabras.
             var amountInWords = numeroALetra(response.approvedAmount);
