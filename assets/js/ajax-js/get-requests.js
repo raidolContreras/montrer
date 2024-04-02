@@ -664,13 +664,13 @@ function verificacion(idUser) {
 							var daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 				
 							console.log("Días transcurridos desde la respuesta:", daysDifference);
+							// Formatear como pesos
+							var formattedBudget = parseFloat(item.approvedAmount).toLocaleString('es-MX', {
+								style: 'currency',
+								currency: 'MXN'
+							});
 				
 							if (daysDifference >= 8) {
-								// Formatear como pesos
-								var formattedBudget = parseFloat(item.approvedAmount).toLocaleString('es-MX', {
-									style: 'currency',
-									currency: 'MXN'
-								});
 				
 								showAlertBootstrap('¡Atención!', `Deseamos informarle que su préstamo anterior, valuado en ${formattedBudget}, lleva más de 8 días sin ser comprobado. Le instamos a que lo revise lo antes posible antes de realizar cualquier otra solicitud de presupuesto. Es crucial mantener un seguimiento oportuno de sus transacciones financieras para garantizar una gestión eficiente de los recursos. <br><br>Por favor, tenga en cuenta que su cuenta no puede solicitar más presupuestos hasta que compruebe los que ya tiene vencidos.`);
 								

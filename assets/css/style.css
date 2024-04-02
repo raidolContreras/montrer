@@ -6120,3 +6120,11 @@ Template Sidebar CSS
 .denegate {
   Cursor : not-allowed;
 }
+
+/* Estilo para posicionar el tooltip arriba del área de carga */
+.dz-error-message {
+  position: absolute !important;
+  top: -30px !important; /* Ajusta este valor según tu preferencia */
+  opacity: 0;
+  text-align: center !important;
+}
