@@ -65,9 +65,7 @@ $(document).ready(function () {
 			});
 
 		} else {
-            console.log('max: '+maxBudget)
-            console.log('requestedAmount: '+requestedAmount)
-            showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
+            showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible.');
         }
 	});
 });
@@ -168,72 +166,60 @@ function updateMaxRequestedAmount(datos) {
         $('#requestedAmount').val('');
         $('.requestMax').text('En el presente ejercicio, no se ha asignado un presupuesto para el departamento correspondiente');
     } else {
-
-        // Variables para almacenar la suma de cantidades
-        var totalAmountBudget = 0;
-        var sumaBudgetMonth = 0;
-        var formattedSum = "";
-
-        // Obtén el mes actual
-        var today = new Date();
-        var currentMonth = today.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que sumamos 1.
-    
-        // Filtra los datos hasta el mes actual
-        var datosHastaMesActual = datos.filter(function (dato) {
-            return dato.month <= currentMonth;
-        });
-        
-        // Suma los valores de budget_month hasta el mes actual
-        sumaBudgetMonth = datosHastaMesActual.reduce(function (total, dato) {
-            var budgetMonth = parseFloat(dato.budget_month);
-            var budgetUsed = parseFloat(dato.budget_used);
             
-            // Verificar si los valores son números válidos
-            if (!isNaN(budgetMonth) && !isNaN(budgetUsed)) {
-                return total + budgetMonth - budgetUsed;
-            } else {
-                return total; // No agregar nada si alguno de los valores no es un número válido
-            }
-        }, 0);
-
         $.ajax({
             type: 'POST',
-            url: 'controller/ajax/getAmountPendient.php',
-            data: { areaId: datos[0].idArea },
-            dataType: 'json',
+                url: 'controller/ajax/countAreaId.php',
+            data: {idArea: datos[0].idArea },
+            dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
             success: function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    // Obtenemos la cantidad de cada objeto y la sumamos al total
-                    totalAmountBudget += parseFloat(response[i].requestedAmount);
-                }
-                
-                // Mostramos la suma total
-                sumaBudgetMonth = sumaBudgetMonth - totalAmountBudget;
-                formattedSum = sumaBudgetMonth.toLocaleString('es-MX', {
-                    style: 'currency',
-                    currency: 'MXN',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
+
+                var totalBudgetPendient = 0;
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'controller/ajax/getAmountPendient.php',
+                    data: { areaId: datos[0].idArea },
+                    dataType: 'json',
+                    success: function (result) {
+                        for (var i = 0; i < result.length; i++) {
+                            // Obtenemos la cantidad de cada objeto y la sumamos al total
+                            totalBudgetPendient += parseFloat(result[i].requestedAmount);
+                        }
+                        
+                        // Mostramos la suma total
+                        totalAmountBudget = response.total - response.comp - totalBudgetPendient;
+
+                        formattedSum = totalAmountBudget.toLocaleString('es-MX', {
+                            style: 'currency',
+                            currency: 'MXN',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        });
+
+                        // Aquí puedes colocar el código que depende de totalAmountBudget
+                        var idBudget = datos[0].idBudget;
+                        if(datos[0].approvedAmount !== 0){
+                            $("input[name='budget']").val(idBudget);
+                            $("input[name='maxBudget']").val(totalAmountBudget.toFixed(2));
+                            // $('#requestedAmount').val(totalAmountBudget.toFixed(2));
+                            $('.requestMax').text('Presupuesto maximo a solicitar es de: ' + formattedSum);
+                        } else {
+                            $('#requestedAmount').prop('disabled', true);
+                            $('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
+                        }
+                        
+                    },
+                    error: function (error) {
+                        console.log('Error en la solicitud AJAX:', error);
+                    }
                 });
 
-                // Aquí puedes colocar el código que depende de sumaBudgetMonth
-                var idBudget = datos[0].idBudget;
-                if(datos[0].approvedAmount !== 0){
-                    $("input[name='budget']").val(idBudget);
-                    $("input[name='maxBudget']").val(sumaBudgetMonth.toFixed(2));
-                    // $('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
-                    $('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + formattedSum);
-                } else {
-                    $('#requestedAmount').prop('disabled', true);
-                    $('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
-                }
-            },
-            error: function (error) {
-                console.log('Error en la solicitud AJAX:', error);
             }
-        });        
+        });
     }
 }
+
 
 function fillSelect(select, datas, message) {
 

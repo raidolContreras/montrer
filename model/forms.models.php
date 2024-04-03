@@ -86,10 +86,16 @@ class FormsModels {
 					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
 				WHERE e.status = 1 AND r.idArea = :idArea), 0) AS comp,
+
 		COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
 					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-				WHERE e.status = 1 AND r.idArea = :idArea AND r.status = 5 AND r.active = 0), 0) AS compActive
+				WHERE e.status = 1 AND r.idArea = :idArea AND r.status = 5 AND r.active = 0), 0) AS compActive,
+
+		(SELECT b.AuthorizedAmount FROM montrer_budgets b
+					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+				WHERE e.status = 1 AND b.idArea = :idArea) AS total
+
         FROM 
             montrer_area 
         WHERE 
