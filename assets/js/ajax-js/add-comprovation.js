@@ -1,9 +1,12 @@
+var numPDF = 0; // Contador para archivos PDF
+var numXML = 0; // Contador para archivos XML
+
 var myDropzone = new Dropzone("#documentDropzone", {
     parallelUploads: 10,
     maxFiles: 10,
     url: "controller/ajax/ajax.form.php",
     maxFilesize: 10,
-    acceptedFiles: "application/pdf, application/xml",
+    acceptedFiles: "application/pdf, application/xml, text/xml", // Modificamos esta línea
     dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
     autoProcessQueue: false,
     dictInvalidFileType: "Archivo no está permitido. Por favor, sube archivos en formato PDF o XML.",
@@ -23,24 +26,48 @@ var myDropzone = new Dropzone("#documentDropzone", {
         removeButton.addEventListener("click", function(e) {
             e.preventDefault();
             e.stopPropagation();
-            myDropzone.removeAllFiles(); // Remover todos los archivos
+            myDropzone.removeFile(element);
         });
         $element.parent().append(removeButton); // Agregar el botón al contenedor del input
     },
     init: function() {
         this.on("addedfile", function(file) {
+            // Incrementar contadores de archivos PDF y XML
+            if (file.type === "application/pdf") {
+                numPDF++;
+            } else if (file.type === "application/xml" || file.type === "text/xml") { // Modificamos esta línea
+                numXML++;
+            }
+            toggleSubmitButton(); // Actualizar estado del botón de enviar
+
             var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
             var _this = this;
             removeButton.addEventListener("click", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                
+                if (file.type === "application/pdf") {
+                    numPDF--;
+                } else if (file.type === "application/xml" || file.type === "text/xml") { // Modificamos esta línea
+                    numXML--;
+                }
+
                 _this.removeFile(file);
+                toggleSubmitButton(); // Actualizar estado del botón de enviar
             });
             file.previewElement.appendChild(removeButton);
         });
     }
 });
 
+function toggleSubmitButton() {
+    var submitButton = document.querySelector('.send-comprobante');
+    if (numPDF >= 1 && numXML >= 1) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+}
 
 function enviarComprobante() {
 	event.preventDefault();

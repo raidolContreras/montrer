@@ -63,7 +63,7 @@
 
                         <div class="col-12 mt-2 text-end">
                             <a class="btn btn-danger" id="cancelButton">Cancelar</a>
-                            <button type="submit" class="btn btn-success" onclick="enviarComprobante()">Aceptar</button>
+                            <button type="submit" class="btn btn-success send-comprobante" onclick="enviarComprobante()" disabled>Aceptar</button>
                         </div>
 
                         <input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
