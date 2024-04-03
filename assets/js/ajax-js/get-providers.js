@@ -93,14 +93,6 @@ $(document).ready(function () {
 		dom: 'Bfrtip', // Define la estructura del DOM para incluir botones
         buttons: [
 			{
-				extend: 'excelHtml5',
-				text: 'Exportar a Excel',
-				title: 'Proveedores', // Título personalizado para el archivo Excel
-				exportOptions: {
-					columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
-				}
-			},
-			{
 				extend: 'pdfHtml5',
 				text: 'Exportar a PDF',
                 title: 'Proveedores',
@@ -187,6 +179,9 @@ $(document).ready(function () {
 			"emptyTable":	  "Ningún dato disponible en esta tabla"
         }
     });
+    $('.dt-buttons').prepend(`
+        <button type="button" class="btn btn-success buttons-excel buttons-html5" onClick="descargarExcel()">Exportar Excel</button>
+    `);
 
 });
 
@@ -360,4 +355,19 @@ function renderActionButtons(idProvider, status) {
         `;
     }
 
+}
+
+function descargarExcel() {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/downloadProviders.php',
+        dataSrc: '',
+        success: function (response) {
+            if (response !== 'Error') {
+                window.location.href = 'assets/documents/' + response;
+            } else {
+                showAlertBootstrap('!Atención¡', 'No se pudo generar el excel');
+            }
+        }
+    });
 }

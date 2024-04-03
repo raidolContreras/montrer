@@ -1,5 +1,23 @@
 <?php 
 
+require_once __DIR__ . '/../assets/vendor/PHP/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
+// the below code fragment can be found in:
+use PhpOffice\PhpSpreadsheet\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
+use PhpOffice\PhpSpreadsheet\Chart\PlotArea;
+use PhpOffice\PhpSpreadsheet\Chart\Legend;
+use PhpOffice\PhpSpreadsheet\Chart\Title;
+
 class FormsController {
 	// Inicio de Contadores
 	static public function ctrCountAreas(){
@@ -495,4 +513,159 @@ class FormsController {
 	static public function ctrMaxRequestBudgets(){
         return FormsModels::mdlMaxRequestBudgets();
     }
+
+    static public function ctrDownloadProviders() {
+		// Obtener los proveedores desde el modelo
+		$providers = FormsModels::mdlGetProviders();
+	
+		// Crear un nuevo objeto Spreadsheet
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+	
+		// Definir los encabezados de las columnas
+		$columnHeaders = ['Clave del proveedor', 'Representante', 'Teléfono', 'Email', 'Página web', 'Razón social', 'RFC', 'Dirección fiscal', 'Banco', 'Titular', 'N° cuenta', 'CLABE'];
+	
+		// Insertar los encabezados de las columnas y aplicar estilo
+		$columnIndex = 65; // ASCII para 'A'
+		foreach ($columnHeaders as $header) {
+			$sheet->setCellValue(chr($columnIndex) . '1', $header);
+			$sheet->getStyle(chr($columnIndex) . '1')->applyFromArray([
+				'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
+				'fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '336699']],
+			]);
+			$columnIndex++;
+		}
+	
+		// Iterar sobre los proveedores y agregar sus datos al archivo Excel
+		$row = 2; // Empezar en la segunda fila
+		foreach ($providers as $provider) {
+			// Construir la dirección fiscal
+			$fiscalAddress = "{$provider['fiscal_address_street']}, {$provider['fiscal_address_colonia']}, {$provider['fiscal_address_municipio']}, {$provider['fiscal_address_estado']}, {$provider['fiscal_address_cp']}";
+	
+			// Asignar valores a las celdas
+			$sheet->setCellValue("A{$row}", $provider['provider_key']);
+			$sheet->setCellValue("B{$row}", $provider['representative_name']);
+			$sheet->setCellValue("C{$row}", $provider['contact_phone']);
+			$sheet->setCellValue("D{$row}", $provider['email']);
+			$sheet->setCellValue("E{$row}", $provider['website']);
+			$sheet->setCellValue("F{$row}", $provider['business_name']);
+			$sheet->setCellValue("G{$row}", $provider['rfc']);
+			$sheet->setCellValue("H{$row}", $fiscalAddress);
+
+			// Datos bancarios: títulos y valores
+			$bankInfo = [
+				'Banco' => $provider['bank_name'],
+				'Titular' => $provider['account_holder'],
+				'N° cuenta' => $provider['account_number'],
+				'CLABE' => $provider['clabe']
+			];
+			$col = 'I';
+			foreach ($bankInfo as $data) {
+				$sheet->setCellValue($col . $row, $data); // Valores de los campos bancarios
+				$col++;
+			}
+
+			// Ajustar el ancho de las columnas
+			foreach (range('A', 'L') as $columnID) {
+				$sheet->getColumnDimension($columnID)->setAutoSize(true);
+			}
+	
+			$row++; // Moverse a la siguiente fila
+		}
+	
+		// Ajustar el alto de las filas que contienen datos bancarios
+		$highestRow = $sheet->getHighestRow();
+		for ($r = 2; $r <= $highestRow; $r++) {
+			$cellValue = $sheet->getCell("I{$r}")->getValue();
+			if (strpos($cellValue, PHP_EOL) !== false) {
+				$sheet->getRowDimension($r)->setRowHeight(-1);
+			}
+		}
+	
+		// Ajustar el ancho de las columnas
+		foreach (range('A', 'I') as $columnID) {
+			$sheet->getColumnDimension($columnID)->setAutoSize(true);
+		}
+	
+		// Definir la ruta y el nombre del archivo de destino
+		$directory = '../../assets/documents/';
+		$filename = 'proveedores.xlsx';
+	
+		// Guardar el archivo Excel en la ruta especificada
+		$writer = new Xlsx($spreadsheet);
+		$writer->save($directory . $filename);
+	
+		// Devolver el nombre del archivo para su descarga
+		return $filename;
+	}
+
+	static public function ctrDownloadProvidersPDF() {
+		// Obtener los proveedores desde el modelo
+		$providers = FormsModels::mdlGetProviders();
+	
+		// Crear un nuevo objeto TCPDF
+		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+	
+		// Establecer información del documento
+		$pdf->SetCreator(PDF_CREATOR);
+		$pdf->SetTitle('Proveedores');
+		$pdf->SetHeaderData('', 0, 'Proveedores', '');
+	
+		// Agregar una página
+		$pdf->AddPage();
+	
+		// Definir el contenido del PDF
+		$content = '<h1>Proveedores</h1><br>';
+	
+		// Construir la tabla de proveedores
+		$content .= '<table border="1">';
+		$content .= '<tr>';
+		$content .= '<th>Clave del proveedor</th>';
+		$content .= '<th>Representante</th>';
+		$content .= '<th>Teléfono</th>';
+		$content .= '<th>Email</th>';
+		$content .= '<th>Página web</th>';
+		$content .= '<th>Razón social</th>';
+		$content .= '<th>RFC</th>';
+		$content .= '<th>Dirección fiscal</th>';
+		$content .= '<th>Banco</th>';
+		$content .= '<th>Titular</th>';
+		$content .= '<th>N° cuenta</th>';
+		$content .= '<th>CLABE</th>';
+		$content .= '</tr>';
+	
+		foreach ($providers as $provider) {
+			$content .= '<tr>';
+			$content .= '<td>' . $provider['provider_key'] . '</td>';
+			$content .= '<td>' . $provider['representative_name'] . '</td>';
+			$content .= '<td>' . $provider['contact_phone'] . '</td>';
+			$content .= '<td>' . $provider['email'] . '</td>';
+			$content .= '<td>' . $provider['website'] . '</td>';
+			$content .= '<td>' . $provider['business_name'] . '</td>';
+			$content .= '<td>' . $provider['rfc'] . '</td>';
+			$content .= '<td>' . $provider['fiscal_address_street'] . ', ' . $provider['fiscal_address_colonia'] . ', ' . $provider['fiscal_address_municipio'] . ', ' . $provider['fiscal_address_estado'] . ', ' . $provider['fiscal_address_cp'] . '</td>';
+			$content .= '<td>' . $provider['bank_name'] . '</td>';
+			$content .= '<td>' . $provider['account_holder'] . '</td>';
+			$content .= '<td>' . $provider['account_number'] . '</td>';
+			$content .= '<td>' . $provider['clabe'] . '</td>';
+			$content .= '</tr>';
+		}
+	
+		$content .= '</table>';
+	
+		// Escribir el contenido en el PDF
+		$pdf->writeHTML($content, true, false, true, false, '');
+	
+		// Definir la ruta y el nombre del archivo de destino
+		$directory = '../../assets/documents/';
+		$filename = 'proveedores.pdf';
+	
+		// Guardar el archivo PDF en la ruta especificada
+		$pdf->Output($directory . $filename, 'F');
+	
+		// Devolver el nombre del archivo para su descarga
+		return $filename;
+	}
+	
+	
 }
