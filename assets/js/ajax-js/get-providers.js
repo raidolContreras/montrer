@@ -354,9 +354,13 @@ function descargarPDF() {
         dataSrc: '',
         success: function (response) {
             if (response !== 'Error') {
-                // window.location.href = 'assets/documents/' + response;
+                // Crear un enlace temporal
+                var link = document.createElement('a');
+                link.href = 'assets/documents/' + response;
+                link.download = 'proveedores.pdf'; // Nombre del archivo a descargar
+                link.click();
             } else {
-                showAlertBootstrap('!Atención¡', 'No se pudo generar el PDF');
+                showAlertBootstrap('¡Atención!', 'No se pudo generar el PDF');
             }
         }
     });

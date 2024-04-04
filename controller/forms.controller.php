@@ -604,35 +604,50 @@ class FormsController {
 		$providers = FormsModels::mdlGetProviders();
 	
 		// Crear un nuevo objeto TCPDF
-		$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
 	
 		// Establecer información del documento
 		$pdf->SetCreator(PDF_CREATOR);
 		$pdf->SetTitle('Proveedores');
-		$pdf->SetHeaderData('', 0, 'Proveedores', '');
+		$pdf->SetHeaderData('', 0, '', '');
 	
 		// Agregar una página
 		$pdf->AddPage();
 	
+		// Agregar logo en la parte superior
+		$logo = __DIR__ . '/../assets/img/logo300px.png';
+		$pdf->Image($logo, 10, 10, 30, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+	
 		// Definir el contenido del PDF
-		$content = '<h1>Proveedores</h1><br>';
+		$content = '<h1 style="text-align: center; font-size: 20px; margin-bottom: 20px;">Proveedores</h1>';
+	
+		// Aplicar estilos CSS a la tabla
+		$content .= '<style>';
+		$content .= '.table { width: 100%; border-collapse: collapse; }';
+		$content .= '.table th, .table td { padding: .75rem; vertical-align: top; border-top: 1px solid #dee2e6; }';
+		$content .= '.table th { background-color: #f2f2f2; }';
+		$content .= '.table tr { font-size:7px; }';
+		$content .= '</style>';
 	
 		// Construir la tabla de proveedores
-		$content .= '<table border="1">';
+		$content .= '<table class="table">';
+		$content .= '<thead>';
 		$content .= '<tr>';
-		$content .= '<th>Clave del proveedor</th>';
-		$content .= '<th>Representante</th>';
-		$content .= '<th>Teléfono</th>';
-		$content .= '<th>Email</th>';
-		$content .= '<th>Página web</th>';
-		$content .= '<th>Razón social</th>';
-		$content .= '<th>RFC</th>';
-		$content .= '<th>Dirección fiscal</th>';
-		$content .= '<th>Banco</th>';
-		$content .= '<th>Titular</th>';
-		$content .= '<th>N° cuenta</th>';
-		$content .= '<th>CLABE</th>';
+		$content .= '<th scope="col">Clave del proveedor</th>';
+		$content .= '<th scope="col">Representante</th>';
+		$content .= '<th scope="col">Teléfono</th>';
+		$content .= '<th scope="col">Email</th>';
+		$content .= '<th scope="col">Página web</th>';
+		$content .= '<th scope="col">Razón social</th>';
+		$content .= '<th scope="col">RFC</th>';
+		$content .= '<th scope="col">Dirección fiscal</th>';
+		$content .= '<th scope="col">Banco</th>';
+		$content .= '<th scope="col">Titular</th>';
+		$content .= '<th scope="col">N° cuenta</th>';
+		$content .= '<th scope="col">CLABE</th>';
 		$content .= '</tr>';
+		$content .= '</thead>';
+		$content .= '<tbody>';
 	
 		foreach ($providers as $provider) {
 			$content .= '<tr>';
@@ -651,13 +666,14 @@ class FormsController {
 			$content .= '</tr>';
 		}
 	
+		$content .= '</tbody>';
 		$content .= '</table>';
 	
 		// Escribir el contenido en el PDF
 		$pdf->writeHTML($content, true, false, true, false, '');
 	
 		// Definir la ruta y el nombre del archivo de destino
-		$directory = __DIR__ . '/' ;
+		$directory = __DIR__ . '/../assets/documents/';
 		$filename = 'proveedores.pdf';
 	
 		// Guardar el archivo PDF en la ruta especificada
@@ -666,6 +682,5 @@ class FormsController {
 		// Devolver el nombre del archivo para su descarga
 		return $filename;
 	}
-	
-	
+
 }
