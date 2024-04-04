@@ -91,33 +91,7 @@ $(document).ready(function () {
 		responsive: true,
 		autoWidth: false,
 		dom: 'Bfrtip', // Define la estructura del DOM para incluir botones
-        buttons: [
-			{
-				extend: 'pdfHtml5',
-				text: 'Exportar a PDF',
-                title: 'Proveedores',
-				titleAttr: 'PDF',
-				customize: function(doc) {
-			
-					// Añadir el logo en la parte superior
-					doc.content.splice(1, 0, {
-						image: logo64(), // Imagen en Base64
-						width: 100, // Ancho del logo
-						alignment: 'center' // Alineación del logo
-					});
-			
-					// Eliminar cabeceras y pies de página por defecto
-					delete doc['header']; // Eliminar la cabecera si existe
-					delete doc['footer']; // Eliminar el pie de página si existe
-			
-					// Personalizaciones adicionales aquí
-				},
-				orientation: 'landscape', // Orientación del PDF
-				pageSize: 'A4', // Tamaño de la página
-				exportOptions: {
-					columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
-				}
-			},			
+        buttons: [		
             {
 				extend: 'print',
 				text: 'Imprimir',
@@ -180,7 +154,8 @@ $(document).ready(function () {
         }
     });
     $('.dt-buttons').prepend(`
-        <button type="button" class="btn btn-success buttons-excel buttons-html5" onClick="descargarExcel()">Exportar Excel</button>
+        <button type="button" class="btn btn-success buttons-excel buttons-html5" onClick="descargarExcel()"><span>Exportar Excel</span></button>
+        <button class="btn btn-danger buttons-pdf buttons-html5" onClick="descargarPDF()"><span>Exportar a PDF</span></button>
     `);
 
 });
@@ -367,6 +342,21 @@ function descargarExcel() {
                 window.location.href = 'assets/documents/' + response;
             } else {
                 showAlertBootstrap('!Atención¡', 'No se pudo generar el excel');
+            }
+        }
+    });
+}
+
+function descargarPDF() {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/downloadProvidersPDF.php',
+        dataSrc: '',
+        success: function (response) {
+            if (response !== 'Error') {
+                // window.location.href = 'assets/documents/' + response;
+            } else {
+                showAlertBootstrap('!Atención¡', 'No se pudo generar el PDF');
             }
         }
     });

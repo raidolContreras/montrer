@@ -657,7 +657,7 @@ class FormsController {
 		$pdf->writeHTML($content, true, false, true, false, '');
 	
 		// Definir la ruta y el nombre del archivo de destino
-		$directory = '../../assets/documents/';
+		$directory = __DIR__ . '/' ;
 		$filename = 'proveedores.pdf';
 	
 		// Guardar el archivo PDF en la ruta especificada
