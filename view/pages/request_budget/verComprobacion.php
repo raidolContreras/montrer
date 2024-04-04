@@ -11,39 +11,39 @@
                         <!-- Campos de información -->
                         <div class="col-md-6">
                             <label for="nombreCompletoGet" class="form-label">Nombre Completo</label>
-                            <input type="text" class="form-control" id="nombreCompletoGet" readonly>
+                            <input type="text" class="form-control" id="nombreCompletoGet" disabled>
                         </div>
                         <div class="col-md-6">
                             <label for="fechaSolicitudGet" class="form-label">Fecha de Solicitud</label>
-                            <input type="text" class="form-control" id="fechaSolicitudGet" readonly>
+                            <input type="text" class="form-control" id="fechaSolicitudGet" disabled>
                         </div>
                         <div class="col-md-6">
                             <label for="providerGet" class="form-label">Proveedor</label>
-                            <input type="text" class="form-control" id="providerGet" readonly>
+                            <input type="text" class="form-control" id="providerGet" disabled>
                         </div>
                         <div class="col-md-6">
                             <label for="areaGet" class="form-label">Departamento</label>
-                            <input type="text" class="form-control" id="areaGet" readonly>
+                            <input type="text" class="form-control" id="areaGet" disabled>
                         </div>
                         <div class="col-md-6">
                             <label for="importeSolicitadoGet" class="form-label">Importe Solicitado</label>
-                            <input type="text" class="form-control" id="importeSolicitadoGet" readonly>
+                            <input type="text" class="form-control" id="importeSolicitadoGet" disabled>
                         </div>
                         <div class="col-md-6">
                             <label for="importeLetraGet" class="form-label">Importe en Letra</label>
-                            <input type="text" class="form-control" id="importeLetraGet" readonly>
+                            <input type="text" class="form-control" id="importeLetraGet" disabled>
                         </div>
                         <div class="col-md-6">
                             <label for="titularCuentaGet" class="form-label">Titular de la Cuenta</label>
-                            <input type="text" class="form-control" id="titularCuentaGet" readonly>
+                            <input type="text" class="form-control" id="titularCuentaGet" disabled>
                         </div>
                         <div class="col-md-6">
                             <label for="entidadBancariaGet" class="form-label">Entidad Bancaria</label>
-                            <input type="text" class="form-control" id="entidadBancariaGet" readonly>
+                            <input type="text" class="form-control" id="entidadBancariaGet" disabled>
                         </div>
                         <div class="col-12">
                             <label for="conceptoPagoGet" class="form-label">Concepto de Pago</label>
-                            <input type="text" class="form-control" id="conceptoPagoGet" readonly>
+                            <input type="text" class="form-control" id="conceptoPagoGet" disabled>
                         </div>
                         <div class="comment">
                         </div>
