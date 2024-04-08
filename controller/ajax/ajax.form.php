@@ -814,7 +814,7 @@ if (isset($_POST['idPaymentRequest'])) {
 		mkdir($targetDir, 0777, true);
 	}
 
-	$allowTypes = array('jpg', 'jpeg', 'png', 'pdf');
+	$allowTypes = array('xml', 'pdf');
 	if (in_array($fileType, $allowTypes)) {
 		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
 
@@ -827,9 +827,10 @@ if (isset($_POST['idPaymentRequest'])) {
 			echo 'Error';
 		}
 	} else {
-		echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, jpg, jpeg, png).'));
+		echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, xml).'));
 	}
 }
+
 if (isset($_POST['searchComprobante'])) {
 	echo json_encode(FormsController::ctrGetComprobante($_POST['searchComprobante']));
 }
