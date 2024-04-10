@@ -87,19 +87,6 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function (data) {
-					if (data.pagado == 1) {
-                        return '<span style="color: green;">Pagado</span>';
-                    } else {
-						if (level == 1 && data.idUsers != user){
-							return `<button class="btn btn-success pendiente-button" onClick="marcarPago(${data.idRequest}, ${data.idUsers})">Marcar como pagado</button>`;
-						}
-                        return '<span style="color: red;">No Pagado</span>';
-                    }
-				}
-			},
-			{
-				data: null,
-				render: function (data) {
 					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado);
 				}
 			}
@@ -291,10 +278,11 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 					}
 				});
 			} else {
-				console.log(maxBudget);
+				console.log('Max: '+maxBudget);
 				console.log(approvedAmount);
-
-				showAlertBootstrap('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.');
+				$(`#${modalId}`).modal('hide');
+				var idBudget = $('input[name="budget"]').val();
+				showAlertBootstrap6('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.', idRequest, idBudget);
 			}
 		} else if(modalId == 'denegateModal') {
 			$.ajax({
@@ -329,6 +317,23 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 	});
 }
 
+function closeModal() {	
+	$('#alertModal').modal('hide');
+	$('#enableModal').modal('show');
+}
+
+function showAlertBootstrap6(title, message, idRequest, idBudget) {
+	$('#modalLabel').text(title);
+	$('.modal-body-extra').html(message);
+		modalFooter.html(`
+		<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" onclick="closeModal()">
+			Aceptar
+		</button>
+		`);
+	$('#alertModal').modal('show');
+}
+
+
 function handleResponse(response, successMessage, errorMessage) {
 	if (response === 'ok') {
 		showAlertBootstrap4('Operación realizada', successMessage);
@@ -337,194 +342,66 @@ function handleResponse(response, successMessage, errorMessage) {
 	}
 }
 
-function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado) {
-
-	if (status == 0 && userRequest == user){
-		return `
-			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-						<i class="ri-edit-line"></i>
-					</button>
-					<button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-						<i class="ri-delete-bin-6-line"></i>
-					</button>
-				</div>
-			</div>
-		`;
-	} else if (status == 0 && level == 1 && userRequest != user) {
-		return `
-			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
-						<i class="ri-check-line"></i>
-					</button>
-					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
-						<i class="ri-close-line"></i>
-					</button>
-				</div>
-			</div>
-		`;
-	} else if (status == 1) {
-		html = `
-			<div class="container">
-		`;
-		if(userRequest == user){
-			if (pagado == 1) {
-				html += `
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-success check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobar presupuesto">
-						<i class="ri-refund-2-line"></i>
-					</button>
-				</div>`;
-			} else {
-				html += `
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-warning btn-block pendiente-button col-2">
-						Pendiente de pago
-					</button>
-				</div>`;
-			}
-		} else {
-			html += `
-			<div class="row btn-group" role="group" style="justify-content: center;">
-				<button class="btn btn-warning btn-block pendiente-button col-2" data-id="${idRequest}">
-					Pendiente de comprobación
-				</button>
-			</div>`;
-		}
-		return html + `
-			</div>
-		`;
-	} else if (status == 2) {
-		if (level == 1 && userRequest != user){
-
-			$('.botones-modal').html(`
-				<a class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
-				<button type="button" class="btn btn-warning denegar">Denegar</button>
-				<button type="button" class="btn btn-success aceptar">Aceptar</button>
-			`);
-			$('.comment').html(`
-				<div class="col-12">
-					<label for="comentario" class="form-label">Realizar comentario</label>
-					<input type="text" class="form-control" id="comentario">
-				</div>
-			`);
-
-			return `
-                <div class="container">
-                    <div class="row btn-group" role="group" style="justify-content: center;">
-                        <button class="btn btn-success ver-button col-2" onclick="verComprobacion(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver envio">
-                            <i class="ri-eye-line"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-		}
-		return `
-			<div class="row btn-group" role="group" style="justify-content: center;">
-				<button class="btn btn-warning btn-block pendiente-button col-2" onclick="pendienteAprovacion(${idRequest})">
-					Pendiente de aprobación
-				</button>
-			</div>
-		`;
-	} else if (status == 4) {
-		html = `
-			<div class="container">
-		`;
-		if(userRequest == user){
-			html += `
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-danger check-budget-button col-2" onclick="modalComprobar(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobante rechazado, por favor vuelva a enviarlo.">
-						<i class="ri-refund-2-line"></i>
-					</button>
-				</div>
-			`;
-		} else {
-			html += `
-				<button class="btn btn-warning btn-block pendiente-button col-2" data-id="${idRequest}">
-					Pendiente de comprobación
-				</button>
-			`;
-		}
-		return html + `
-			</div>
-		`;
-	} else if (status == 5) {
-		$('.botones-modal').html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
-		
-		$('.comment').html(`
-			<div class="col-12">
-				<label for="comentario" class="form-label">Comentarios</label>
-				<input type="text" class="form-control" id="comentario" readonly>
-			</div>
-		`);
-
-		return `
-			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-success ver-button col-2" onclick="verComprobacion(${idRequest})" data-bs-toggle="tooltip" data-bs-placement="top" title="Comprobante aceptado, verifique el envío.">
-						<i class="ri-check-line"></i>
-					</button>
-				</div>
-			</div>
-		`;
-
-	} else {
-		return `
-			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					Rechazado
-				</div>
-			</div>
-		`;
-	}
-}
 
 function updateMaxRequestedAmount(datos) {
-		// Obtén el mes actual
-		var today = new Date();
-		var currentMonth = today.getMonth() + 1; // Los meses en JavaScript van de 0 a 11, por lo que sumamos 1.
-	
-		// Filtra los datos hasta el mes actual
-		var datosHastaMesActual = datos.filter(function (dato) {
-			return dato.month <= currentMonth;
-		});
-	
-		// Suma los valores de budget_month hasta el mes actual
-		var sumaBudgetMonth = datosHastaMesActual.reduce(function (total, dato) {
-			var budgetMonth = parseFloat(dato.budget_month);
-			var budgetUsed = parseFloat(dato.budget_used);
-			
-			// Verificar si los valores son números válidos
-			if (!isNaN(budgetMonth) && !isNaN(budgetUsed)) {
-				return total + (budgetMonth - budgetUsed);
-			} else {
-				return total; // No agregar nada si alguno de los valores no es un número válido
-			}
-		}, 0);
+    if (!datos) {
+        // Si authorizedAmount es falso (undefined, null, 0, '', false), deshabilita el campo de entrada y reinicia los valores
+        $('#requestedAmount').prop('disabled', true);
+        $('#requestedAmount').val('');
+        $('.requestMax').text('En el presente ejercicio, no se ha asignado un presupuesto para el departamento correspondiente');
+    } else {
+            
+        $.ajax({
+            type: 'POST',
+                url: 'controller/ajax/countAreaId.php',
+            data: {idArea: datos[0].idArea },
+            dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
+            success: function (response) {
 
-		// Obtiene el idBudget del primer elemento del array (puedes ajustar esto según tus necesidades)
-		var idBudget = datos[0].idBudget;
+                var totalBudgetPendient = 0;
 
-		let formattedSum = sumaBudgetMonth.toLocaleString('es-MX', {
-			style: 'currency',
-			currency: 'MXN',
-			minimumFractionDigits: 2,
-			maximumFractionDigits: 2,
-		});
-		
-		if(datos[0].approvedAmount !== 0){
-			
-			$("input[name='budget']").val(idBudget);
-			$("input[name='maxBudget']").val(sumaBudgetMonth.toFixed(2));
-			$('#requestedAmount').val(sumaBudgetMonth.toFixed(2));
-			$('.requestMax').text('La suma de los presupuestos hasta el mes actual es: ' + formattedSum);
+                $.ajax({
+                    type: 'POST',
+                    url: 'controller/ajax/getAmountPendient.php',
+                    data: { areaId: datos[0].idArea },
+                    dataType: 'json',
+                    success: function (result) {
+                        for (var i = 0; i < result.length; i++) {
+                            // Obtenemos la cantidad de cada objeto y la sumamos al total
+                            totalBudgetPendient += parseFloat(result[i].requestedAmount);
+                        }
+                        
+                        // Mostramos la suma total
+                        totalAmountBudget = response.total - response.comp - totalBudgetPendient;
 
-		} else {
-			$('#requestedAmount').prop('disabled', true);
-			$('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
-		}
+                        formattedSum = totalAmountBudget.toLocaleString('es-MX', {
+                            style: 'currency',
+                            currency: 'MXN',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        });
+
+                        // Aquí puedes colocar el código que depende de totalAmountBudget
+                        var idBudget = datos[0].idBudget;
+                        if(datos[0].approvedAmount !== 0){
+                            $("input[name='budget']").val(idBudget);
+                            $("input[name='maxBudget']").val(totalAmountBudget.toFixed(2));
+                            // $('#requestedAmount').val(totalAmountBudget.toFixed(2));
+                            $('.requestMax').text('Presupuesto maximo a solicitar es de: ' + formattedSum);
+                        } else {
+                            $('#requestedAmount').prop('disabled', true);
+                            $('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
+                        }
+                        
+                    },
+                    error: function (error) {
+                        console.log('Error en la solicitud AJAX:', error);
+                    }
+                });
+
+            }
+        });
+    }
 }
 
 function modalComprobar(idRequest) {
@@ -722,4 +599,35 @@ function marcarAjax(idRequest, idUser) {
 			}
 		}
 	});
+}
+
+function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado) {
+
+	if (status == 0 && userRequest == user){
+		return `
+			<div class="container">
+				<div class="row btn-group" role="group" style="justify-content: center;">
+					<button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+						<i class="ri-edit-line"></i>
+					</button>
+					<button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+						<i class="ri-delete-bin-6-line"></i>
+					</button>
+				</div>
+			</div>
+		`;
+	} else if (status == 0 && level == 1 && userRequest != user) {
+		return `
+			<div class="container">
+				<div class="row btn-group" role="group" style="justify-content: center;">
+					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
+						<i class="ri-check-line"></i>
+					</button>
+					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
+						<i class="ri-close-line"></i>
+					</button>
+				</div>
+			</div>
+		`;
+	}
 }

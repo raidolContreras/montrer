@@ -40,7 +40,7 @@ if ($is_mobile) {
     <?php include "css.php"; ?>
 
     <!-- Title -->
-    <?php $title = isset($_GET['pagina']) ? "FinFlair - " . $_GET['pagina'] : "FinFlair - Presupuestos"; ?>
+    <?php $title = isset($_GET['pagina']) ? "UNIMO - " . $_GET['pagina'] : "UNIMO - Presupuestos"; ?>
     <title><?php echo $title; ?></title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/img/svg/favicon.svg">
