@@ -404,7 +404,7 @@ function updateMaxRequestedAmount(datos) {
     }
 }
 
-function modalComprobar(idRequest) {
+function modalComprobar(idRequest, status) {
 
     $.ajax({
         type: 'POST',
@@ -423,18 +423,25 @@ function modalComprobar(idRequest) {
             $("input[name='conceptoPago']").val(response.description);
 
             // Usa writtenNumber para convertir el monto aprobado a palabras.
-            var amountInWords = numeroALetra(response.approvedAmount);
+            var amountInWords = numeroALetra(response.approvedAmount, true);
 			
             $("input[name='importeLetra']").val(amountInWords);
 
             $("select[name='provider']").val(response.idProvider);
             $("input[name='request']").val(idRequest);
+			if(status == true){
+				$('.comentartio').html(`
+					<label for="comentario" class="form-label">Comentario</label>
+					<input type="text" class="form-control comentario-error" id="comentario" name="comentario" disabled>
+				`);
+				$('#comentario').val(response.comentarios);
+			}
             $('#comprobarModal').modal('show');
         }
     });
 }
 
-function numeroALetra(numero) {
+function numeroALetra(numero, status) {
     var unidades = ['', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
     var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
     var decenas = ['','diez','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
@@ -450,12 +457,12 @@ function numeroALetra(numero) {
     } else {
         // Parte entera
         if (entero >= 1000000) {
-            texto += numeroALetra(Math.floor(entero / 1000000)) + ' millón ';
+            texto += numeroALetra(Math.floor(entero / 1000000), false) + ' millón ';
             entero %= 1000000;
         }
 
         if (entero >= 1000) {
-            texto += numeroALetra(Math.floor(entero / 1000)) + ' mil ';
+            texto += numeroALetra(Math.floor(entero / 1000), false) + ' mil ';
             entero %= 1000;
         }
 
@@ -465,7 +472,17 @@ function numeroALetra(numero) {
         }
 
         if (entero >= 20) {
-            texto += decenas[Math.floor(entero / 10)] + ' ';
+			if (entero > 20 && entero < 30 && status == true) {
+				texto += 'veinti';
+			} else if (entero != 30 && entero != 40 && entero != 50 && entero != 60 && entero != 70 && entero != 80 && entero != 90 && status == true) {
+				texto += decenas[Math.floor(entero / 10)] + ' ';
+				texto += 'y ';
+			}else if (status == true) {
+				texto += decenas[Math.floor(entero / 10)] + '';
+				texto += '';
+			} else {
+				texto += decenas[Math.floor(entero / 10)] + ' ';
+			}
             entero %= 10;
         }
 
@@ -479,9 +496,12 @@ function numeroALetra(numero) {
 
     // Centavos
     if (decimal > 0) {
-        texto += (entero > 0 ? ' ' : '') + (decimal === 1 ? 'pesos con un centavo' : 'pesos con ' + numeroALetra(decimal) + ' centavos');
-    } else if (entero > 0) {
-    }
+        texto += (entero > 0 ? ' ' : '') + (decimal === 1 ? 'pesos con un centavo' : 'pesos con ' + numeroALetra(decimal, false) + ' centavos');
+    } else {
+		if (status == true) {	
+			texto += ' pesos'; 
+		}
+	}
 
     return texto.trim();
 }
@@ -606,13 +626,21 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 	if (status == 0 && userRequest == user){
 		return `
 			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
+				<div class="btn-group" role="group" style="justify-content: center;">
 					<button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 						<i class="ri-edit-line"></i>
 					</button>
 					<button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
 						<i class="ri-delete-bin-6-line"></i>
 					</button>
+				</div>
+			</div>
+		`;
+	} else if (status == 3) {
+		return `
+			<div class="container">
+				<div class="row btn-group" role="group" style="justify-content: center;">
+					Rechazado
 				</div>
 			</div>
 		`;
@@ -628,6 +656,95 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 					</button>
 				</div>
 			</div>
+		`;
+	} else if (status == 1 && level == 1 && pagado == 0 && userRequest != user) {
+		return `
+			<div class="container">
+				<div class="row btn-group" role="group" style="justify-content: center;">
+					<button class="btn btn-success pendiente-button col-2" onclick="marcarPago(${idRequest}, ${userRequest})">
+						Marcar como pagado
+					</button>
+				</div>
+			</div>
+		`;
+	} else if (status == 1 && userRequest == user) {
+		if (pagado == 0) {
+			return `
+				<div class="container">
+					<div class="row" style="justify-content: center;">
+						Presupuesto aprobado
+					</div>
+				</div>
+			`;
+		} else if(pagado == 1) {
+			return `
+				<div class="container">
+					<div class="row" style="justify-content: center;">
+						<button class="btn btn-success pendiente-button col-2" onclick="modalComprobar(${idRequest}, false)">
+							Enviar comprobante
+						</button>
+					</div>
+				</div>
+			`;
+
+		}
+	} else if (status == 1 && userRequest != user && pagado == 1) {
+		return `
+		<div class="container">
+			<div class="row" style="justify-content: center;">
+				Esperando comprobante
+			</div>
+		</div>
+	`;
+	} else if (status == 2) {
+		if ( userRequest != user && level == 1){
+			return `
+				<div class="container">
+					<div class="row" style="justify-content: center;">
+						<button class="btn btn-success pendiente-button col-2" onclick="verComprobacion(${idRequest}, true)">
+							Ver comprobante
+						</button>
+					</div>
+				</div>
+			`;
+		} else {
+			return `
+				<div class="container">
+					<div class="row" style="justify-content: center;">
+						Esperando respuesta
+					</div>
+				</div>
+			`;
+		}
+	} else if (status == 4) {
+		if ( userRequest != user && level == 1){
+			return `
+				<div class="container">
+					<div class="row" style="justify-content: center;">
+						Esperando comprobante
+					</div>
+				</div>
+			`;
+		} else {
+			return `
+				<div class="container">
+					<div class="row" style="justify-content: center;">
+						<button class="btn btn-danger pendiente-button col-2" onclick="modalComprobar(${idRequest}, true)">
+							Enviar comprobante
+						</button>
+					</div>
+				</div>
+			`;
+		}
+	} else if (status == 5) {
+		return `
+		<div class="container">
+			<div class="row" style="justify-content: center;">
+				<button class="btn btn-success pendiente-button col-2" onclick="verComprobacion(${idRequest}, false)">
+					Aprobado
+				</button>
+			</div>
+		</div>
 		`;
 	}
 }

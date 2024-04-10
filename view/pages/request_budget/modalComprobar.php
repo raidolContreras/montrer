@@ -56,6 +56,9 @@
                             <input type="text" class="form-control" id="conceptoPago" name="conceptoPago" disabled>
                         </div>
 
+                        <div class="col-md-6 mb-3 comentartio">
+                        </div>
+
                         <div class="col-12 my-3">
                             <label for="comprobanteDropzone" class="form-label">Anexar comprobante fiscal</label>
                             <div id="documentDropzone" class="dropzone"></div>

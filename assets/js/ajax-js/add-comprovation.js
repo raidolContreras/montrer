@@ -40,7 +40,7 @@ var myDropzone = new Dropzone("#documentDropzone", {
             }
             toggleSubmitButton(); // Actualizar estado del botón de enviar
 
-            var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
+            var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
             var _this = this;
             removeButton.addEventListener("click", function(e) {
                 e.preventDefault();
@@ -114,7 +114,7 @@ function enviarComprobante() {
             },
             success: function (response) {
                 idPaymentRequest = response;
-                showAlert('Exito', 'Comprobante enviado');
+                showAlert2('Exito', 'Comprobante enviado');
                 myDropzone.processQueue();
             },
             error: function (xhr, status, error) {
@@ -146,6 +146,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 });
 
+function showAlert2(title, message) {
+    $('#modalLabel').text(title);
+    $('.modal-body-extra').text(message);
+    $('.modal-footer-extra').html('<button type="button" class="btn btn-success" onclick="closeModals()">Aceptar</button>');
+    $('#alertModal').modal('show');
+}
 function showAlert(title, message) {
     $('#modalLabel').text(title);
     $('.modal-body-extra').text(message);

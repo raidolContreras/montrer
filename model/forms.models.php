@@ -1387,7 +1387,8 @@ class FormsModels {
 					p.business_name,
 					br.idProvider,
                     p.representative_name,
-                    p.bank_name
+                    p.bank_name,
+					br.comentarios
 				FROM montrer_budget_requests br
 					LEFT JOIN montrer_budgets b ON b.idBudget = br.idBudget
 					LEFT JOIN montrer_area a ON a.idArea = br.idArea

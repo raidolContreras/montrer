@@ -45,7 +45,7 @@
                             <label for="conceptoPagoGet" class="form-label">Concepto de Pago</label>
                             <input type="text" class="form-control" id="conceptoPagoGet" disabled>
                         </div>
-                        <div class="comment">
+                        <div class="comment mt-5">
                         </div>
                         <!-- Apartado para documentos -->
                         <div class="col-12 mt-4">

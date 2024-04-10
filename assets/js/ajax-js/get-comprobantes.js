@@ -1,4 +1,15 @@
-function verComprobacion(idRequest){
+function verComprobacion(idRequest, status){
+    
+    if(status == true){
+        $('.comment').html(`
+            <label for="comentario" class="form-label">Agrega un comentario</label>
+            <input type="text" class="form-control" id="comentario">
+        `);
+    } else {
+        $('.comment').html('');
+        $('.botones-modal').html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
+    }
+    
     $('#verComprobacion').modal('show');
     $.ajax({
         type: 'POST',
@@ -86,6 +97,7 @@ function verComprobacion(idRequest){
 
 function denegate(idRequest){
     var comentario = $('#comentario').val();
+    $('#verComprobacion').modal('hide');
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/ajax.form.php',
@@ -106,6 +118,7 @@ function denegate(idRequest){
 
 function acept(idRequest){
     var comentario = $('#comentario').val();
+    $('#verComprobacion').modal('hide');
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/ajax.form.php',
