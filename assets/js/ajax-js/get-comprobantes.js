@@ -59,7 +59,7 @@ function verComprobacion(idRequest, status){
                             }
                         
                             $('#listaDocumentos').append(`
-                                <a href="view/documents/${idPaymentRequest}/${documento}" target="_blank" class="mt-2 text-wrap">
+                                <a href="view/documents/${idPaymentRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
                                     <li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
                                         <div class="document-icon ${colorClass}"><i class="${iconClass}"></i></div>
                                         ${documento}
