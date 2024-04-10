@@ -1,4 +1,4 @@
-# FinFlair
+# Unimo budgets
 Aplication to budgets in Montrer
 
 ****
