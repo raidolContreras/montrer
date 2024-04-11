@@ -1,4 +1,5 @@
 		<!-- Link Of CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
 		<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -23,5 +24,7 @@
 
 		<!-- Datatable -->
 		<link href="assets/vendor/DataTables/datatables.min.css" rel="stylesheet">
+		<link href="assets\vendor\DataTables\Buttons-2.4.2\css\buttons.bootstrap5.min.css" rel="stylesheet">
+
 		<!-- Dropzone -->
 		<link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">

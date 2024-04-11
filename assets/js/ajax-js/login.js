@@ -16,34 +16,12 @@ $(document).ready(function () {
 			},
 			success: function (response) {
 
-		    	const Toast = Swal.mixin({
-				  toast: true,
-				  position: "top-end",
-				  showConfirmButton: false,
-				  timer: 1000,
-				  timerProgressBar: true,
-				  didOpen: (toast) => {
-				    toast.onmouseenter = Swal.stopTimer;
-				    toast.onmouseleave = Swal.resumeTimer;
-				  }
-				});
-
 			    if (response === 'ok') {
-					Swal.fire({
-					  icon: "success",
-					  title: 'Inicio de sesión exitoso',
-					  icon: "success"
-					});
-					// Redirigir a la página de inicio
-					setTimeout(function () {
-						window.location.href = 'inicio';
-					}, 1000);
+                    window.location.href = 'inicio';
+			    }else if (response === 'status off') {
+					showAlertBootstrap('Usuario deshabilitado', 'Comuníquese con el administrador de la plataforma, para cualquier aclaración.');
 			    }else {
-					Swal.fire({
-			          icon: 'error',
-					  title: 'Error al iniciar sesión, verifica tu correo o contraseña',
-					  icon: "error"
-					});
+					showAlertBootstrap('!Atención¡', 'Error al iniciar sesión, verifique su correo o contraseña');
 			    }
 			},
 			error: function (error) {

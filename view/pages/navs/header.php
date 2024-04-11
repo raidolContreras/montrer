@@ -7,6 +7,7 @@
 		header('Location: change_pass');
     	exit();
 	}
+	$level = ($_SESSION['level'] == 1) ? 'Administrador' : 'Responsable';
 
 ?>
 <!-- Start Header Area -->
@@ -33,7 +34,7 @@
 										<a class="dropdown-item dropdown-toggle avatar d-flex align-items-center show" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="true">
 												<div class="d-none d-lg-block d-md-block">
 														<h3 class="profile-name"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
-														<span class="profile-level">Super Admin</span>
+														<span class="profile-level"><?php echo $level ?></span>
 												</div>
 										</a>
 
@@ -42,28 +43,28 @@
 														<div class="info text-center">
 																<span class="profile-name-drop"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></span>
 																<p class="mb-3 email">
-																		<a href="mailto:<?php echo $_SESSION['email'] ?>"><?php echo $_SESSION['email'] ?></a>
+																		<?php echo $_SESSION['email'] ?>
 																</p>
 														</div>
 												</div>
 
-												<!-- <div class="dropdown-wrap">
+												<div class="dropdown-wrap">
 														<ul class="profile-nav p-0 pt-3">
 																<li class="nav-item">
-																		<a href="profile.html" class="nav-link">
-																				<i class="ri-user-line"></i> 
-																				<span>Perfil</span>
+																		<a href="changePassword" class="nav-link">
+																				<i class="ri-lock-2-line"></i> 
+																				<span>Cambiar contraseña</span>
 																		</a>
 																</li>
 
-																<li class="nav-item">
+																<!-- <li class="nav-item">
 																		<a href="inbox.html" class="nav-link">
 																				<i class="ri-mail-send-line"></i> 
 																				<span>Mis mensajes</span>
 																		</a>
-																</li> 
+																</li> -->
 														</ul>
-												</div> -->
+												</div> 
 
 												<div class="dropdown-footer">
 														<ul class="profile-nav">

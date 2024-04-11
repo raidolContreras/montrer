@@ -83,10 +83,6 @@
 		$('.close-btn').addClass('active');
 	});
 
-	$(document).ready(function(){
-		$('[data-toggle="tooltip"]').tooltip();   
-	});
-
 	// Performers Slider JS
 	$('.performers-slider').owlCarousel({
 		loop: true,

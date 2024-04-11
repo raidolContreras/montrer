@@ -14,7 +14,7 @@
 						<a href="inicio">
 							<img src="assets/img/logo.png" alt="main-logo">
 						</a>
-						<h3>Iniciar sesión</h3>
+						<h3>Bienvenido</h3>
 					</div>
 
 					<form class="account-wrap">
@@ -27,7 +27,7 @@
 							<img src="assets/img/svg/lock.svg">
 						</div>
 						<div class="form-group mb-24">
-							<button type="submit" class="default-btn" id="register">iniciar sesión</button>
+							<button type="submit" class="default-btn" id="register" style="background-image: linear-gradient(to bottom, #026f35, #4fcb8d);">iniciar sesión</button>
 						</div>
 					</form>
 				</div>
@@ -37,4 +37,3 @@
 </div>
 <!-- End Account Area -->
 <script src="assets/js/ajax-js/login.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>

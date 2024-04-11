@@ -1,61 +1,77 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
-		// Evitar el envío del formulario por defecto
 		event.preventDefault();
+        // Collect form values
+        var firstname = $("input[name='firstname']").val();
+        var lastname = $("input[name='lastname']").val();
+        var email = $("input[name='email']").val();
+        var level = $("select[name='level']").val();
+        var area = $("select[name='area']").val();
+		
+        if (firstname == '' || lastname == '' || email == '') {
+            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+        } else {
+			$.ajax({
+				type: "POST",
+				url: "controller/ajax/ajax.form.php",
+				data: {
+					firstname: firstname,
+					lastname: lastname,
+					email: email,
+					level: level,
+					area: area
+				},
+				success: function (response) {				
+					
+					if (response !== 'Error' && response !== 'Error: Email duplicado') {
 
-		// Recoge los valores del formulario
-		var firstname = $("input[name='firstname']").val();
-		var lastname = $("input[name='lastname']").val();
-		var email = $("input[name='email']").val();
-		var level = $("select[name='level']").val();
+						bandera = 0;
+						$("input[name='firstname']").val('');
+						$("input[name='lastname']").val('');
+						$("input[name='email']").val('');
+						$("select[name='level']").val('2');
+						$("select[name='area']").val('');
 
-		// Realiza la solicitud Ajax
-		$.ajax({
-			type: "POST",
-			url: "controller/ajax/ajax.form.php",
-			data: {
-				firstname: firstname,
-				lastname: lastname,
-				email: email,
-				level: level
-			},
-			success: function (response) {
-				
-				const Toast = Swal.mixin({
-					toast: true,
-					position: "center",
-					showConfirmButton: false,
-					timer: 3000,
-					timerProgressBar: true,
-					didOpen: (toast) => {
-					  toast.onmouseenter = Swal.stopTimer;
-					  toast.onmouseleave = Swal.resumeTimer;
+						showAlertBootstrap('Exito', response+' creado exitosamente');
+
+					} else if (response === 'Error: Email duplicado') {
+
+						showAlertBootstrap('!Atención¡', 'Dirección de correo electrónico ya registrada');
+
+					} else {
+
+						showAlertBootstrap('!Atención¡', 'Error al crear el usuario');
+						
 					}
-				  });				  
-
-			    if (response !== 'Error' && response !== 'Error: Email duplicado') {
-					Swal.fire({
-					  icon: "success",
-					  title: 'Usuario '+response+' creado exitosamente',
-					  icon: "success"
-					});
-			    } else if (response === 'Error: Email duplicado') {
-					Swal.fire({
-			          icon: 'error',
-					  title: response,
-					  icon: "error"
-					});
-			    } else {
-					Swal.fire({
-			          icon: 'error',
-					  title: 'Error al crear el usuario',
-					  icon: "error"
-					});
-			    }
-			},
-			error: function (error) {
-				console.log("Error en la solicitud Ajax:", error);
-			}
-		});
-	});
+				},
+				error: function (error) {
+					console.log("Error en la solicitud Ajax:", error);
+				}
+			});
+        }
+    });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    var cancelButton = document.getElementById('cancelButton');
+
+    cancelButton.addEventListener('click', function (event) {
+        event.preventDefault();
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'registers');
+    });
+});
+
+
+function confirmExit(event, destination) {
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
+}

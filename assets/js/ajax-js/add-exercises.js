@@ -1,4 +1,11 @@
+var bandera = 0;
 $(document).ready(function () {
+
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
+
 	$("form.account-wrap").submit(function (event) {
 		// Evitar el envío del formulario por defecto
 		event.preventDefault();
@@ -10,48 +17,64 @@ $(document).ready(function () {
 		var budget = $("input[name='budget']").val();
 		var user = $("input[name='user']").val();
 
-		// Realiza la solicitud Ajax
-		$.ajax({
-			type: "POST",
-			url: "controller/ajax/ajax.form.php",
-			data: {
-				exerciseName: exerciseName,
-				initialDate: initialDate,
-				finalDate: finalDate,
-				budget: budget,
-				user: user
-			},
-			success: function (response) {
+		if (exerciseName == '' || initialDate == ''|| finalDate == '' || budget == ''){
+			
+			showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
 
-		    	const Toast = Swal.mixin({
-				  toast: true,
-				  position: "top-end",
-				  showConfirmButton: false,
-				  timer: 3000,
-				  timerProgressBar: true,
-				  didOpen: (toast) => {
-				    toast.onmouseenter = Swal.stopTimer;
-				    toast.onmouseleave = Swal.resumeTimer;
-				  }
-				});
-
-			    if (response === 'ok') {
-					Swal.fire({
-					  icon: "success",
-					  title: 'Ejercicio creado exitosamente',
-					  icon: "success"
-					});
-			    } else {
-					Swal.fire({
-			          icon: 'error',
-					  title: 'Error al crear el ejercicio',
-					  icon: "error"
-					});
-			    }
-			},
-			error: function (error) {
-				console.log("Error en la solicitud Ajax:", error);
-			}
-		});
+		} else {
+			// Realiza la solicitud Ajax
+			$.ajax({
+				type: "POST",
+				url: "controller/ajax/ajax.form.php",
+				data: {
+					exerciseName: exerciseName,
+					initialDate: initialDate,
+					finalDate: finalDate,
+					budget: budget,
+					user: user
+				},
+				success: function (response) {
+	
+					if (response === 'ok') {
+	
+						$("input[name='exerciseName']").val('');
+						$("input[name='initialDate']").val('');
+						$("input[name='finalDate']").val('');
+						$("input[name='budget']").val('');
+	
+						$('.sidenav').removeAttr('onclick');
+						showAlertBootstrap('Exito', 'Ejercicio creado exitosamente');
+					} else {
+						
+						showAlertBootstrap('!Atención¡', 'Error al crear el ejercicio');
+					}
+				},
+				error: function (error) {
+					console.log("Error en la solicitud Ajax:", error);
+				}
+			});
+		}
 	});
 });
+
+// Esperar a que el documento esté listo
+document.addEventListener('DOMContentLoaded', function () {
+	// Obtener el botón de cancelar por su ID
+	var cancelButton = document.getElementById('cancelButton');
+
+	// Agregar un evento de clic al botón de cancelar
+	cancelButton.addEventListener('click', function (event) {
+		// Prevenir el comportamiento predeterminado del enlace
+		event.preventDefault();
+
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'exercise');
+		
+	});
+});
+
+function confirmExit(event, destination) {
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+	}
+}

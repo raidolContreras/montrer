@@ -24,10 +24,12 @@ function getAreas() {
                 areaSelect.add(option);
                 // Recorre la lista de áreas y agrega cada una como una opción al select
                 response.forEach(function (area) {
-                    var option = document.createElement('option');
-                    option.value = area.idArea; // Ajusta esto según tu estructura de datos
-                    option.text = area.nameArea; // Ajusta esto según tu estructura de datos
-                    areaSelect.add(option);
+                    if (area.status == 1) {
+                        var option = document.createElement('option');
+                        option.value = area.idArea; // Ajusta esto según tu estructura de datos
+                        option.text = area.nameArea; // Ajusta esto según tu estructura de datos
+                        areaSelect.add(option);
+                    }
                 });
             } else {
                 console.log('La respuesta del servidor no contiene áreas válidas.');

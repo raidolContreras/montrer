@@ -1,3 +1,7 @@
+<?php if ($_SESSION['level']  == 1):?>
+<?php
+    $areas = FormsController::ctrGetAreas();
+?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css" />
 <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
 <!-- Start Main Content Area -->
@@ -5,13 +9,13 @@
 
     <div class="card-box-style">
         <div class="others-title">
-            <h3>Registrar Empresa</h3>
+            <h3>Registrar empresa</h3>
         </div>
 
         <form class="account-wrap" id="companyForm">
             <div class="row">
                 <div class="col-md-6">
-                    <label for="companyName" class="form-label">Nombre de la Empresa</label>
+                    <label for="companyName" class="form-label">Nombre de la empresa</label>
                     <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Nombre de la Empresa">
                 </div>
                 <!-- ... Otras partes del formulario ... -->
@@ -52,12 +56,12 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="areaDescription" class="form-label">Descripción de la Empresa</label>
-                    <input type="text" class="form-control" id="companyDescription" name="companyDescription" placeholder="Descripción de la Empresa">
+                    <label for="areaDescription" class="form-label">Descripción de la empresa</label>
+                    <input type="text" class="form-control" id="companyDescription" name="companyDescription" placeholder="Descripción de la empresa">
                 </div>
 
                 <div class="col-12 mt-2 text-end">
-                    <button type="submit" class="btn btn-primary">Registrar Empresa</button>
+                    <button type="submit" class="btn btn-primary">Registrar empresa</button>
                 </div>
             </div>
         </form>
@@ -66,4 +70,9 @@
 </main>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-companies.js"></script>
-<script src="assets/js/sweetalert2.all.min.js"></script>
+
+<?php else: ?>
+	<script>
+		window.location.href = 'inicio';
+	</script>
+<?php endif ?>

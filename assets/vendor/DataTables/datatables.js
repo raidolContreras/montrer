@@ -10652,7 +10652,7 @@
 		 *      } );
 		 *    } );
 		 */
-		"bAutoWidth": true,
+		"bAutoWidth": false,
 	
 	
 		/**
