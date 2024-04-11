@@ -7,7 +7,10 @@ function verComprobacion(idRequest, status){
             <input type="text" class="form-control" id="comentario">
         `);
     } else {
-        $('.comment').html('');
+        $('.comment').html(`
+            <label for="comentario" class="form-label">Agrega un comentario</label>
+            <input type="text" class="form-control" id="comentario" disabled>
+        `);
         $('.botones-modal').html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
     }
 
