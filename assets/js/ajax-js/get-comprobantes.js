@@ -1,3 +1,4 @@
+
 function verComprobacion(idRequest, status){
     
     if(status == true){
@@ -9,7 +10,7 @@ function verComprobacion(idRequest, status){
         $('.comment').html('');
         $('.botones-modal').html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
     }
-    
+
     $('#verComprobacion').modal('show');
     $.ajax({
         type: 'POST',

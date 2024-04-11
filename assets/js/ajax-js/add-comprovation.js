@@ -39,7 +39,6 @@ var myDropzone = new Dropzone("#documentDropzone", {
                 numXML++;
             }
             toggleSubmitButton(); // Actualizar estado del botón de enviar
-
             var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
             var _this = this;
             removeButton.addEventListener("click", function(e) {
@@ -152,6 +151,7 @@ function showAlert2(title, message) {
     $('.modal-footer-extra').html('<button type="button" class="btn btn-success" onclick="closeModals()">Aceptar</button>');
     $('#alertModal').modal('show');
 }
+
 function showAlert(title, message) {
     $('#modalLabel').text(title);
     $('.modal-body-extra').text(message);

@@ -568,7 +568,6 @@ function verificacion(idUser) {
 							});
 				
 							if (daysDifference >= 8) {
-				
 								showAlertBootstrap('¡Atención!', `Le informamos que tiene un acumulado en solicitudes de pago por un total de: ${formattedBudget}, y la fecha de vencimiento a expirado hace ${daysDifference} días. No podrá realizar una nueva solicitud hasta que haya comprobado los pendientes de forma correcta. <br><br>Tenga en cuenta que, una vez enviada la comprobación, debe esperar a que sea revisado y en su caso validado por el área correspondiente.`);
 								
 								$('.solicitud').html(`
