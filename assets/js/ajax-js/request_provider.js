@@ -22,7 +22,9 @@ function restartSelectProvider() {
 
             // Crea las opciones para el select
             providers.forEach(function(provider) {
-                selectOptionsHtml += `<option value="${provider.idProvider}">${provider.representative_name}</option>`;
+                if (provider.status === 1) {
+                    selectOptionsHtml += `<option value="${provider.idProvider}">${provider.representative_name}</option>`;
+                }
             });
 
             // Agrega la opción "Añadir proveedor" con un ícono de +

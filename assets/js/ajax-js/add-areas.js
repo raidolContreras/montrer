@@ -34,7 +34,7 @@ $(document).ready(function () {
 						$("select[name='user']").val('');
 						$('.sidenav').removeAttr('onclick');
 
-						showAlertBootstrap('Exito', 'Departamento registrado.');
+						showAlertBootstrap3('Departamento registrado', '¿Agregar otro ejercicio?', 'registerArea' , 'areas');
 
 					} else {
 						

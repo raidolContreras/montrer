@@ -279,7 +279,7 @@ class FormsModels {
 						<img src="https://tests.hucco.com.mx/assets/img/logo.png" alt="Logo" class="logo">
 					</div>
 					<div class="content">
-						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuesto de Universidad Montrer.</p>
+						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuestos de Universidad Montrer.</p>
 						<p class="message">Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://tests.hucco.com.mx/" class="link">Ingresar a la plataforma</a>), su usuario es: '.$email.' y su contraseña temporal:
 						<center><p class="password">'.$password.'</p></center>
 						<p class="message">En el primer acceso, deberá cambiar su contraseña, respetando las siguientes condiciones: 10 caracteres (obligatorio: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo).</p>
@@ -324,6 +324,7 @@ class FormsModels {
 					montrer_settings s ON s.idUser = u.idUsers
 				LEFT JOIN 
 					montrer_area a ON a.idUser = u.idUsers
+				WHERE u.deleted = 0
 				GROUP BY 
 					u.idUsers;";
 		$stmt = $pdo->prepare($sql);
@@ -871,7 +872,7 @@ class FormsModels {
 
 	static public function mdlDeleteUser($idUsers){
 		$pdo = Conexion::conectar();
-		$sql = "DELETE FROM montrer_users
+		$sql = "UPDATE montrer_users SET deleted = 1
 				WHERE idUsers = :idUsers";
 
 		$stmt = $pdo->prepare($sql);
@@ -1229,7 +1230,7 @@ class FormsModels {
 					FROM montrer_budget_requests r
 						LEFT JOIN montrer_area a ON a.idArea = r.idArea
 						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
-					WHERE a.status = 1";
+					WHERE a.status = 1 AND u.deleted = 0";
 				$stmt = $pdo->prepare($sql);
 			} else {
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
@@ -1238,7 +1239,7 @@ class FormsModels {
 					FROM montrer_budget_requests r
 						LEFT JOIN montrer_area a ON a.idArea = r.idArea
 						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
-					WHERE a.status = 1 AND u.idUsers = :idUser;";
+					WHERE a.status = 1 AND u.idUsers = :idUser AND u.deleted = 0;";
 				$stmt = $pdo->prepare($sql);
 				$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 			}

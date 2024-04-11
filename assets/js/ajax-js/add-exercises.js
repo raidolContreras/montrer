@@ -43,7 +43,8 @@ $(document).ready(function () {
 						$("input[name='budget']").val('');
 	
 						$('.sidenav').removeAttr('onclick');
-						showAlertBootstrap('Exito', 'Ejercicio creado exitosamente');
+						
+						showAlertBootstrap3('Ejercicio creado exitosamente', '¿Agregar otro ejercicio?', 'registerExercise' , 'exercise');
 					} else {
 						
 						showAlertBootstrap('!Atención¡', 'Error al crear el ejercicio');

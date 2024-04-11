@@ -42,7 +42,7 @@ $(document).ready(function () {
                     
                 } else {
                     
-                    showAlertBootstrap2('!Atención¡', 'Contraseña actualizada correctamente.', 'inicio');
+                    showAlertBootstrap1('Operación realizada', 'Contraseña actualizada correctamente.', 'inicio');
                     
                 }
             },

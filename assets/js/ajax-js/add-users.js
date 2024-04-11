@@ -39,7 +39,7 @@ $(document).ready(function () {
 						$("select[name='level']").val('2');
 						$("select[name='area']").val('');
 
-						showAlertBootstrap('Exito', response+' creado exitosamente');
+						showAlertBootstrap3(response+' creado exitosamente', '¿Agregar otro usuario?', 'register' , 'registers');
 
 					} else if (response === 'Error: Email duplicado') {
 
