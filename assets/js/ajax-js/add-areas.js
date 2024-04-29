@@ -34,7 +34,7 @@ $(document).ready(function () {
 						$("select[name='user']").val('');
 						$('.sidenav').removeAttr('onclick');
 
-						showAlertBootstrap3('Departamento registrado', '¿Agregar otro ejercicio?', 'registerArea' , 'areas');
+						showAlertBootstrap3('Departamento registrado', '¿Agregar otro departamento?', 'registerArea' , 'areas');
 
 					} else if(response === 'Error: El departamento ya existe') {
 
