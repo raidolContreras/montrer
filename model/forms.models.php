@@ -1338,10 +1338,11 @@ class FormsModels {
 		return $result;
 	}
 
-	static public function mdlDenegateRequest($idRequest, $idAdmin){
+	static public function mdlDenegateRequest($idRequest, $idAdmin, $comentRechazo){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 3 where idRequest = :idRequest";
+		$sql = "UPDATE montrer_budget_requests SET idAdmin = :idAdmin, responseDate = DATE_ADD(NOW(), INTERVAL -6 HOUR), status = 3, comentarios = :comentRechazo where idRequest = :idRequest";
 		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':comentRechazo', $comentRechazo, PDO::PARAM_STR);
 		$stmt->bindParam(':idAdmin', $idAdmin, PDO::PARAM_INT);
 		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
 		if($stmt->execute()){

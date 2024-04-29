@@ -90,6 +90,10 @@
             <div class="modal-body">
                 <p>¿Está seguro de que desea denegar el presupuesto?</p>
             </div>
+            <div class="px-3 my-2">
+                <label for="comentarios">Motivo de rechazo</label>
+                <input class="form-control" type="text" id="comentRechazo" >
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success" id="confirmDenegateRequest">Aceptar</button>
@@ -124,6 +128,7 @@
 <script src="assets/js/ajax-js/get-requests.js"></script>
 <?php 
     include "modalComprobar.php";
+    include "modalRespuesta.php";
     include 'modalProvider.php';
     include 'verComprobacion.php';
 ?>

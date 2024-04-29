@@ -161,8 +161,8 @@ class FormsController {
     	return $UpdateProvider;
 	}
 
-	static public function ctrDenegateRequest($idRequest, $idAdmin){
-		$result = FormsModels::mdlDenegateRequest($idRequest, $idAdmin);
+	static public function ctrDenegateRequest($idRequest, $idAdmin, $comentRechazo){
+		$result = FormsModels::mdlDenegateRequest($idRequest, $idAdmin, $comentRechazo);
     	return $result;
 	}
 

@@ -285,10 +285,13 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 				showAlertBootstrap6('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.', idRequest, idBudget);
 			}
 		} else if(modalId == 'denegateModal') {
+
+			var comentRechazo = $('#comentRechazo').val();
 			$.ajax({
 				type: 'POST',
 				url: 'controller/ajax/ajax.form.php',
 				data: { 
+					comentRechazo: comentRechazo,
 					denegateRequest: idRequest,
 					idAdmin: user
 				},
@@ -637,24 +640,26 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 		`;
 	} else if (status == 3) {
 		return `
-			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
+		<div class="container">
+			<div class="row" style="justify-content: center;">
+				<button class="btn btn-danger pendiente-button col-2" onclick="verRespuesta(${idRequest}, false)">
 					Rechazado
-				</div>
+				</button>
 			</div>
+		</div>
 		`;
 	} else if (status == 0 && level == 1 && userRequest != user) {
 		return `
-			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
-						<i class="ri-check-line"></i>
-					</button>
-					<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
-						<i class="ri-close-line"></i>
-					</button>
-				</div>
+		<div class="container">
+			<div class="btn-group" role="group" style="justify-content: center;">
+			<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
+				<i class="ri-check-line"></i>
+			</button>
+			<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
+				<i class="ri-close-line"></i>
+			</button>
 			</div>
+		</div>
 		`;
 	} else if (status == 1 && level == 1 && pagado == 0 && userRequest != user) {
 		return `
@@ -746,4 +751,17 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 		</div>
 		`;
 	}
+}
+function verRespuesta(idRequest) {
+	$.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {verRespuesta: idRequest},
+		dataType: 'json',
+        success: function (response) {
+			$('#respuestaModal').modal('show');
+			var comentarios = (response.comentarios != null) ? response.comentarios : '';
+			$('.comentartioRespuesta').html(comentarios);
+        }
+    });
 }

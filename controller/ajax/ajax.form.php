@@ -753,7 +753,7 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 }
 
 if (isset($_POST['denegateRequest'])) {
-	$denegateRequest = FormsController::ctrDenegateRequest($_POST['denegateRequest'], $_POST['idAdmin']);
+	$denegateRequest = FormsController::ctrDenegateRequest($_POST['denegateRequest'], $_POST['idAdmin'], $_POST['comentRechazo']);
 	
 	if ($denegateRequest == 'ok'){
 		session_start();
@@ -936,4 +936,8 @@ if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($
     $response = FormsController::ctrUpdateRequest($datos);
     echo $response;
 
+}
+
+if (isset($_POST['verRespuesta'])) {
+    echo json_encode(FormsController::ctrGetRequest($_POST['verRespuesta']));
 }
