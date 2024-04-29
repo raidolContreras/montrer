@@ -85,6 +85,9 @@ $(document).ready(function () {
 				}
 			},
 			{
+				data: 'exerciseName',
+			},
+			{
 				data: null,
 				render: function (data) {
 					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado);

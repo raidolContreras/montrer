@@ -1254,21 +1254,25 @@ class FormsModels {
 			$pdo = Conexion::conectar();
 			if ($selection == 1){
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-						r.description, r.requestDate, r.responseDate, r.status, r.folio,
-						a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado
-					FROM montrer_budget_requests r
-						LEFT JOIN montrer_area a ON a.idArea = r.idArea
-						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
-					WHERE a.status = 1 AND u.deleted = 0";
+							r.description, r.requestDate, r.responseDate, r.status, r.folio,
+							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
+						FROM montrer_budget_requests r
+							LEFT JOIN montrer_area a ON a.idArea = r.idArea
+							LEFT JOIN montrer_users u ON u.idUsers = a.idUser
+							LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
+							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+						WHERE a.status = 1 AND u.deleted = 0";
 				$stmt = $pdo->prepare($sql);
 			} else {
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-						r.description, r.requestDate, r.responseDate, r.status, r.folio,
-						a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado
-					FROM montrer_budget_requests r
-						LEFT JOIN montrer_area a ON a.idArea = r.idArea
-						LEFT JOIN montrer_users u ON u.idUsers = a.idUser
-					WHERE a.status = 1 AND u.idUsers = :idUser AND u.deleted = 0;";
+							r.description, r.requestDate, r.responseDate, r.status, r.folio,
+							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
+						FROM montrer_budget_requests r
+							LEFT JOIN montrer_area a ON a.idArea = r.idArea
+							LEFT JOIN montrer_users u ON u.idUsers = a.idUser
+							LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
+							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+						WHERE a.status = 1 AND u.idUsers = :idUser AND u.deleted = 0;";
 				$stmt = $pdo->prepare($sql);
 				$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 			}

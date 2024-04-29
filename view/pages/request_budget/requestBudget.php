@@ -23,6 +23,7 @@
 							<th>Solicitante</th>
 							<th>Descripción</th>
 							<th>Fecha de la solicitud</th>
+                            <th>Ejercicio</th>
 							<th width="15%"></th>
 						</tr>
 					</thead>
