@@ -1190,6 +1190,18 @@ class FormsModels {
 		return $result;
 	}
 	
+	static public function mdlGetProviderByName($rfc){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_providers WHERE rfc = :rfc";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':rfc', $rfc, PDO::PARAM_STR);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+	
 	static public function mdlGetAreaManager($idUser){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT a.idArea, a.nameArea, b.AuthorizedAmount FROM montrer_exercise e

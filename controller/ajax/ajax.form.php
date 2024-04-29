@@ -610,16 +610,20 @@ if (
 		'accountNumber' => $_POST['accountNumber'],
 		'clabe' => $_POST['clabe']
 	);
-
-	$registerProvider = FormsController::ctrRegisterProvider($data);
+	$response = FormsController::ctrGetProviderByName($_POST['rfc']);
+	if ($response == false) {
+		$registerProvider = FormsController::ctrRegisterProvider($data);
+		
+		if ($registerProvider == 'ok'){
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Register provider: '.$_POST['providerKey'], $ip);
+		}
 	
-	if ($registerProvider == 'ok'){
-		session_start();
-		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Register provider: '.$_POST['providerKey'], $ip);
+		echo $registerProvider;
+	} else {
+		echo 'Error: RFC ya registrado';
 	}
-
-	echo $registerProvider;
 }
 
 if (

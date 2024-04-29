@@ -21,7 +21,6 @@ function sendForm() {
 
     if (!validateField(businessName) ||
         !validateField(representativeName) ||
-        !validateField(email) ||
         !validateField(rfc) ||
         !validateField(contactPhone) ||
         !validateField(fiscalAddressStreet) ||
@@ -81,6 +80,10 @@ function sendForm() {
 
                 getNextIdProvider();
                 restartSelectProvider();
+
+            } else if (response == 'Error: RFC ya registrado') {
+                
+                showAlertBootstrap('!Atención¡', 'RFC ya registrado.');
 
             } else {
                 

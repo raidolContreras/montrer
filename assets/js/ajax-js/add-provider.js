@@ -40,7 +40,6 @@ $(document).ready(function () {
 
 		if (!validateField('businessName') ||
 			!validateField('representativeName') ||
-			!validateField('email') ||
 			!validateField('rfc') ||
 			!validateField('contactPhone') ||
 			!validateField('fiscalAddressStreet') ||
@@ -69,6 +68,10 @@ $(document).ready(function () {
 					bandera = 0;
 					showAlertBootstrap3('Proveedor creado exitosamente.', '¿Agregar otro proveedor?', 'registerProvider' , 'provider');
 
+				} else if (response == 'Error: RFC ya registrado') {
+                
+					showAlertBootstrap('!Atención¡', 'RFC ya registrado.');
+	
 				} else {
 					
 					showAlertBootstrap('!Atención¡', 'Error al crear el proveedor.');

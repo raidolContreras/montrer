@@ -432,6 +432,11 @@ class FormsController {
 		return $getProvider;
 	}
 
+	static public function ctrGetProviderByName($rfc){
+		$getProvider = FormsModels::mdlGetProviderByName($rfc);
+		return $getProvider;
+	}
+
 	static public function ctrRequestBudget($data){
 		$requestBudget = FormsModels::mdlRequestBudget($data);
 		return $requestBudget;
