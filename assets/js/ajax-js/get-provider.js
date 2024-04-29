@@ -32,6 +32,7 @@ function getProvider(registerValue) {
             $('input[name="accountHolder"]').val(response.account_holder);
             $('input[name="accountNumber"]').val(response.account_number);
             $('input[name="clabe"]').val(response.clabe);
+            $('input[name="description"]').val(response.description);
 
         },
         error: function (error) {

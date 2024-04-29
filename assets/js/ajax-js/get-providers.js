@@ -82,6 +82,17 @@ $(document).ready(function () {
             },
             {
                 data: null,
+                render: function (data) {
+                    var description = (data.descrition != null) ? data.descrition : '';
+                    return `
+                        <div style="white-space: nowrap;">
+                            ${description}
+                        <div>
+                    `;
+                }
+            },
+            {
+                data: null,
                 visible: (level == 1), // Hace visible la columna solo si level es igual a 1
                 render: function (data) {
                     return renderActionButtons(data.idProvider, data.status);

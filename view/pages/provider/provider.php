@@ -16,6 +16,7 @@
                         <th>Razón Social</th>
                         <th>Dirección Fiscal</th>
                         <th>Datos bancarios</th>
+                        <th>Descripción</th>
                         <th width="30%"></th>
                     </tr>
                 </thead>
