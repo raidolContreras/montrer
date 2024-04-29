@@ -100,6 +100,11 @@ class FormsController {
     	return $getArea;
 	}
 
+	static public function ctrGetAreaByName($name){
+		$getArea = FormsModels::mdlGetAreaByName($name);
+    	return $getArea;
+	}
+
 	static public function ctrGetAreaManager($register){
 		$getArea = FormsModels::mdlGetAreaManager($register);
     	return $getArea;

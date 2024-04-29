@@ -36,6 +36,10 @@ $(document).ready(function () {
 
 						showAlertBootstrap3('Departamento registrado', '¿Agregar otro ejercicio?', 'registerArea' , 'areas');
 
+					} else if(response === 'Error: El departamento ya existe') {
+
+						showAlertBootstrap('!Atención¡', 'El departamento ya existe.');
+
 					} else {
 						
 						showAlertBootstrap('!Atención¡', 'Error al registrar el departamento.');

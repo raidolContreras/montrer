@@ -360,14 +360,18 @@ if (isset($_POST['updateActualPassword']) && isset($_POST['updateNewPassword']) 
 }
 
 if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POST['user'])) {
-
-	$data = array(
-		'nameArea' =>  $_POST['areaName'],
-		'areaDescription' =>  $_POST['areaDescription'],
-		'user' => $_POST['user']
-	);
-	$addArea = AjaxForm::AddArea($data);
-	echo $addArea;
+	$require = FormsController::ctrGetAreaByName($_POST['areaName']);
+	if ($require == false) {
+		$data = array(
+			'nameArea' =>  $_POST['areaName'],
+			'areaDescription' =>  $_POST['areaDescription'],
+			'user' => $_POST['user']
+		);
+		$addArea = AjaxForm::AddArea($data);
+		echo $addArea;
+	} else {
+		echo 'Error: El departamento ya existe';
+	}
 }
 
 if (isset($_POST['companyName']) && isset($_POST['colors']) && isset($_POST['companyDescription'])) {

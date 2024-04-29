@@ -688,6 +688,18 @@ class FormsModels {
 		return $result;
 	}
 
+	static public function mdlGetAreaByName($name){
+		$pdo = Conexion::conectar();
+		$sql = "SELECT * FROM montrer_area a LEFT JOIN montrer_users u ON u.idUsers = a.idUser WHERE a.nameArea = :nameArea";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':nameArea', $name, PDO::PARAM_STR);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
 	static public function mdlUpdateUser($data){
 		$pdo = Conexion::conectar();
 		$sql = "UPDATE montrer_users SET firstname = :firstname, lastname = :lastname, email = :email WHERE idUsers = :idUsers ";
