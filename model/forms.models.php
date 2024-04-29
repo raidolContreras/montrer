@@ -42,7 +42,10 @@ class FormsModels {
 				(SELECT COUNT(*) FROM montrer_users u LEFT JOIN montrer_settings s ON s.idUser = u.idUsers WHERE s.status = 1) AS users,
 				(SELECT exerciseName FROM montrer_exercise WHERE status = 1) AS name,
 				COALESCE((SELECT SUM(AuthorizedAmount) FROM montrer_budgets b LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise WHERE e.status = 1 AND b.status = 1), 0) AS used,
-				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 ), 0) AS comp,
+				COALESCE((SELECT SUM(br.approvedAmount) FROM montrer_budget_requests br
+							LEFT JOIN montrer_budgets b ON b.idBudget = br.idBudget
+							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+							WHERE br.status = 5 AND br.active = 0 AND e.status = 1), 0) AS comp,
 				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 ), 0) AS nocomp,
 				(SELECT budget FROM montrer_exercise WHERE status = 1) AS budget,
 				((SELECT budget FROM montrer_exercise WHERE status = 1) - COALESCE((SELECT SUM(AuthorizedAmount)
