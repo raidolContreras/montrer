@@ -83,7 +83,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data) {
-                    var description = (data.descrition != null) ? data.descrition : '';
+                    var description = (data.description != null) ? data.description : '';
                     return `
                         <div style="white-space: nowrap;">
                             ${description}

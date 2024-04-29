@@ -667,7 +667,7 @@ if (
 	);
 
 	$response = FormsController::ctrGetProviderByName($_POST['updaterfc']);
-	if ($response == false) {
+	if ($response == false || $response['provider_key'] == $_POST['providerKey']) {
 		$registerProvider = FormsController::ctrUpdateProvider($data);
 		
 		if ($registerProvider == 'ok'){

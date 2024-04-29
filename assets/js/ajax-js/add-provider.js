@@ -73,7 +73,7 @@ $(document).ready(function () {
 
 				} else if (response == 'Error: RFC ya registrado') {
                 
-					showAlertBootstrap('!Atención¡', 'RFC ya registrado.');
+					showAlertBootstrap('!Atención¡', 'El RFC ya se encuentra registrado.');
 	
 				} else {
 					

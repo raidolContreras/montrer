@@ -96,7 +96,7 @@ function selectArea() {
                 // Verificar si el idUser está asignado o no es null
                 if (idUser !== null) {
 					console.log(idUser);
-                    showAlertBootstrap7('¡Atención!', '¿Está seguro de cambiar el usuario asignado?');
+                    showAlertBootstrap7('¡Atención!', '¿Está seguro que desea cambiar al usuario responsable del departamento?');
                 }
             });
         },
