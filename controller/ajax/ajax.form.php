@@ -207,13 +207,30 @@ class AjaxForm
 
 	static public function deleteUser($idUsers)
 	{
-		$deleteUser = FormsController::ctrDeleteUser($idUsers);
-		if ($deleteUser == 'ok') {
-			session_start();
-			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Delete user: ' . $idUsers, $ip);
+		$status = '';
+		$request = FormsController::ctrGetAreaByUser($idUsers);
+		if ($request == false) {
+			foreach ($request as $value) {
+				$area = FormsController::ctrGetAreaBycheckup('idArea', $value['idArea']);
+				if ($area == false) {
+					$status = 'ok';
+				} else {
+					$status = 'Presupuestos pendientes';
+					break;
+				}
+			}
+        }
+		if ($status == 'ok') {
+			$deleteUser = FormsController::ctrDeleteUser($idUsers);
+			if ($deleteUser == 'ok') {
+				session_start();
+				$ip = $_SERVER['REMOTE_ADDR'];
+				FormsModels::mdlLog($_SESSION['idUser'], 'Delete user: ' . $idUsers, $ip);
+			}
+			return $deleteUser;
+		} else {
+			return 'Error: Presupuestos pendientes';
 		}
-		return $deleteUser;
 	}
 
 	static public function deleteArea($idArea)
@@ -526,8 +543,13 @@ if (isset($_POST['deleteUser'])) {
 }
 
 if (isset($_POST['deleteArea'])) {
-	$deleteArea = AjaxForm::deleteArea($_POST['deleteArea']);
-	echo $deleteArea;
+	$request = FormsController::ctrGetAreaBycheckup('idArea', $_POST['deleteArea']);
+	if ($request == false) {
+		$deleteArea = AjaxForm::deleteArea($_POST['deleteArea']);
+		echo $deleteArea;
+	} else {
+		echo 'Error: comprobaciones pendientes';
+	}
 }
 
 if (isset($_POST['deleteBudget'])) {

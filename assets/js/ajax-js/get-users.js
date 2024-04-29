@@ -304,7 +304,9 @@ $(document).ready(function () {
 	function handleResponse(response, successMessage, errorMessage) {
 		if (response === 'ok') {
 			showAlertBootstrap4('Operación realizada', successMessage);
-		} else {
+		} else if(response === 'Error: Presupuestos pendientes') {
+			showAlertBootstrap('!Atención¡', `No es posible eliminar el usuario en este momento, ya que el usuario tiene presupuestos pendientes.`);
+		}  else {
 			showAlertBootstrap('!Atención¡', `No se pudo ${errorMessage.toLowerCase()} el usuario`);
 		}
 	}

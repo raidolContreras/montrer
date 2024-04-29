@@ -904,7 +904,7 @@ class FormsModels {
 
 	static public function mdlSelectAreaUser($idUsers){
 	   $pdo = Conexion::conectar();
-	   $sql = "SELECT * FROM montrer_area WHERE idUser = :idUser";
+	   $sql = "SELECT * FROM montrer_area WHERE idUser = :idUser AND active = 1";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->bindParam(':idUser', $idUsers, PDO::PARAM_INT);
 	   $stmt->execute();
@@ -930,8 +930,7 @@ class FormsModels {
 
 	static public function mdlDeleteArea($idArea){
 		$pdo = Conexion::conectar();
-		$sql = "DELETE FROM montrer_area
-				WHERE idArea = :idArea";
+		$sql = "UPDATE montrer_area SET active = 0 WHERE idArea = :idArea ";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
@@ -1627,6 +1626,34 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;
+	}
+
+	static public function mdlGetAreaBycheckup($item,$value){
+		$pdo = Conexion::conectar();
+        $sql = "SELECT *
+                FROM montrer_budget_requests
+                WHERE $item = :$item AND active = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":$item", $value, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
+
+	static public function mdlGetAreaByUser($idUser){
+		$pdo = Conexion::conectar();
+        $sql = "SELECT *
+                FROM montrer_area
+                WHERE idUser = :idUser AND active = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
 	}
 
 }

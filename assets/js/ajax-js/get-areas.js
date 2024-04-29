@@ -201,6 +201,11 @@ $(document).ready(function () {
                 url: 'controller/ajax/ajax.form.php',
                 data: { [`${actionType}Area`]: idArea },
                 success: function (response) {
+                    if (response === 'ok') {
+                        showAlertBootstrap4('Operación realizada', `Departamento ${successMessage} con éxito`);
+                    } else {
+                        showAlertBootstrap('!Atención¡', `No se pudo ${actionType.toLowerCase()} el departamento`);
+                    }
                     handleResponse(response, actionType, successMessage);
                 },
                 complete: function () {
@@ -214,7 +219,9 @@ $(document).ready(function () {
     function handleResponse(response, actionType, successMessage) {
         if (response === 'ok') {
             showAlertBootstrap4('Operación realizada', `Departamento ${successMessage} con éxito`);
-        } else {
+        } else if(response === 'Error: comprobaciones pendientes') {
+            showAlertBootstrap('!Atención¡', `No es posible eliminar el departamento en este momento, ya que el departamento tiene presupuestos pendientes.`);
+        }  else {
             showAlertBootstrap('!Atención¡', `No se pudo ${actionType.toLowerCase()} el departamento`);
         }
     }

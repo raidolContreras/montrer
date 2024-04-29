@@ -693,4 +693,14 @@ class FormsController {
 		return $filename;
 	}
 
+	static public function ctrGetAreaBycheckup($item,$value) {
+		$area = FormsModels::mdlGetAreaBycheckup($item,$value);
+        return $area;
+	}
+
+	static public function ctrGetAreaByUser($idUser) {
+		$area = FormsModels::mdlGetAreaByUser($idUser);
+        return $area;
+	}
+
 }
