@@ -92,6 +92,10 @@
                     <label for="clabe" class="form-label">CLABE interbancaria</label>
                     <input type="text" class="form-control" id="clabe" name="clabe">
                 </div>
+                <div class="col-md-6">
+                    <label for="description" class="form-label">Describa el producto o servicio para este proveedor.</label>
+                    <input type="text" class="form-control" id="description" name="description">
+                </div>
 
                 <div class="col-12 mt-2 text-end">
                     <a class="btn btn-danger" id="cancelButton">Cancelar</a>

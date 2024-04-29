@@ -27,6 +27,7 @@ $(document).ready(function () {
             updateaccountHolder: $("input[name='accountHolder']").val(),
             updateaccountNumber: $("input[name='accountNumber']").val(),
             updateclabe: $("input[name='clabe']").val(),
+            updatedescription: $("input[name='description']").val(),
         };
 
         // Función de validación
@@ -68,7 +69,7 @@ $(document).ready(function () {
                     
 					bandera = 0;
                     showAlertBootstrap1('Operación realizada', 'Proveedor actualizado exitosamente', 'provider');
-                    
+
                 } else if (response == 'Error: RFC ya registrado') {
                 
                     showAlertBootstrap('!Atención¡', 'RFC ya registrado.');

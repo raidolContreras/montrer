@@ -608,7 +608,8 @@ if (
 		'bankName' => $_POST['bankName'],
 		'accountHolder' => $_POST['accountHolder'],
 		'accountNumber' => $_POST['accountNumber'],
-		'clabe' => $_POST['clabe']
+		'clabe' => $_POST['clabe'],
+		'description' => $_POST['description']
 	);
 	$response = FormsController::ctrGetProviderByName($_POST['rfc']);
 	if ($response == false) {
@@ -661,6 +662,7 @@ if (
 		'bankName' => $_POST['updatebankName'],
 		'accountHolder' => $_POST['updateaccountHolder'],
 		'accountNumber' => $_POST['updateaccountNumber'],
+		'description' => $_POST['updatedescription'],
 		'clabe' => $_POST['updateclabe']
 	);
 

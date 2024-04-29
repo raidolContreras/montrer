@@ -17,6 +17,7 @@ function sendForm() {
     var accountHolder = $("input[name='accountHolder']").val();
     var accountNumber = $("input[name='accountNumber']").val();
     var clabe = $("input[name='clabe']").val();
+    var description = $("input[name='description']").val();
     var user = $("input[name='user']").val();
 
     if (!validateField(businessName) ||
@@ -55,6 +56,7 @@ function sendForm() {
             accountHolder: accountHolder,
             accountNumber: accountNumber,
             clabe: clabe,
+            description: description,
             user: user
         },
         success: function (response) {
@@ -77,6 +79,7 @@ function sendForm() {
                 $("input[name='accountHolder']").val('');
                 $("input[name='accountNumber']").val('');
                 $("input[name='clabe']").val('');
+                $("input[name='description']").val('');
 
                 getNextIdProvider();
                 restartSelectProvider();

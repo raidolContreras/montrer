@@ -26,6 +26,7 @@ $(document).ready(function () {
 			accountHolder: $("input[name='accountHolder']").val(),
 			accountNumber: $("input[name='accountNumber']").val(),
 			clabe: $("input[name='clabe']").val(),
+			description: $("input[name='description']").val(),
 		};
 		var user = $("input[name='user']").val();
 
