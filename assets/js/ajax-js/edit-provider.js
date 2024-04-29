@@ -41,7 +41,6 @@ $(document).ready(function () {
         // Validar campos requeridos
         if (!validateField('updatebusinessName') ||
             !validateField('updaterepresentativeName') ||
-            !validateField('updateemail') ||
             !validateField('updaterfc') ||
             !validateField('updatecontactPhone') ||
             !validateField('updatefiscalAddressStreet') ||
@@ -69,6 +68,11 @@ $(document).ready(function () {
                     
 					bandera = 0;
                     showAlertBootstrap1('Operación realizada', 'Proveedor actualizado exitosamente', 'provider');
+                    
+                } else if (response == 'Error: RFC ya registrado') {
+                
+                    showAlertBootstrap('!Atención¡', 'RFC ya registrado.');
+    
                 } else {
                     showAlertBootstrap('!Atención¡', 'Error al actualizar el proveedor');
                 }

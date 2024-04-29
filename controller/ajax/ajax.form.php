@@ -664,15 +664,20 @@ if (
 		'clabe' => $_POST['updateclabe']
 	);
 
-	$registerProvider = FormsController::ctrUpdateProvider($data);
-	
-	if ($registerProvider == 'ok'){
-		session_start();
-		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Update provider: '.$_POST['providerKey'], $ip);
-	}
+	$response = FormsController::ctrGetProviderByName($_POST['updaterfc']);
+	if ($response == false) {
+		$registerProvider = FormsController::ctrUpdateProvider($data);
+		
+		if ($registerProvider == 'ok'){
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update provider: '.$_POST['providerKey'], $ip);
+		}
 
-	echo $registerProvider;
+		echo $registerProvider;
+	} else {
+		echo 'Error: RFC ya registrado';
+	}
 }
 
 if (isset($_POST['disableProvider'])) {
