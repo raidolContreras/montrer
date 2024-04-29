@@ -22,6 +22,7 @@ function sendForm() {
 
     if (!validateField(businessName) ||
         !validateField(representativeName) ||
+        !validateField(email) ||
         !validateField(rfc) ||
         !validateField(contactPhone) ||
         !validateField(fiscalAddressStreet) ||
@@ -31,6 +32,7 @@ function sendForm() {
         !validateField(fiscalAddressCP) ||
         !validateField(bankName) ||
         !validateField(accountHolder) ||
+        !validateField(description) ||
         !validateField(accountNumber)
     ) {
         return;

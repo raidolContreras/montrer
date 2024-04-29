@@ -41,6 +41,7 @@ $(document).ready(function () {
 
 		if (!validateField('businessName') ||
 			!validateField('representativeName') ||
+			!validateField('email') ||
 			!validateField('rfc') ||
 			!validateField('contactPhone') ||
 			!validateField('fiscalAddressStreet') ||
@@ -50,6 +51,7 @@ $(document).ready(function () {
 			!validateField('fiscalAddressCP') ||
 			!validateField('bankName') ||
 			!validateField('accountHolder') ||
+			!validateField('description') ||
 			!validateField('accountNumber')
 		) {
 			return;

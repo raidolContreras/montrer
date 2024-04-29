@@ -27,7 +27,7 @@
                     <input type="tel" class="form-control" id="contactPhone" name="contactPhone">
                 </div>
                 <div class="col-md-6">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label">Email<span class="required"></span></label>
                     <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="col-md-6">
@@ -93,7 +93,7 @@
                     <input type="text" class="form-control" id="clabe" name="clabe">
                 </div>
                 <div class="col-md-6">
-                    <label for="description" class="form-label">Describa el producto o servicio para este proveedor.</label>
+                    <label for="description" class="form-label">Describa el producto o servicio para este proveedor<span class="required"></span></label>
                     <input type="text" class="form-control" id="description" name="description">
                 </div>
 
