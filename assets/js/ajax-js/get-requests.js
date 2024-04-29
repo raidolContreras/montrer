@@ -99,9 +99,9 @@ $(document).ready(function () {
 				extend: 'excelHtml5',
 				text: 'Exportar a Excel',
 				title: 'Presupuestos', // Título personalizado para el archivo Excel
-				exportOptions: {
-					columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
-				}
+				// exportOptions: {
+				// 	columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
+				// }
 			},
 			{
 				extend: 'pdfHtml5',
@@ -125,9 +125,9 @@ $(document).ready(function () {
 				},
 				orientation: 'landscape', // Orientación del PDF
 				pageSize: 'A4', // Tamaño de la página
-				exportOptions: {
-					columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
-				}
+				// exportOptions: {
+				// 	columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
+				// }
 			},			
 			{
 				extend: 'print',
