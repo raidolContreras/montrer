@@ -1,6 +1,6 @@
 var bandera = 0;
 $(document).ready(function () {
-
+	selectArea();
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {
         bandera = 1;
@@ -74,4 +74,46 @@ function confirmExit(event, destination) {
 		event.preventDefault();
 		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
 	}
+}
+
+function selectArea() {
+    $.ajax({
+        type: "POST",
+        url: "controller/ajax/getAreas.php",
+        dataType: "json",
+        success: function (response) {
+            var html = `<option value="">Seleccione el departamento</option>`;
+            response.forEach(area => {
+                html += `<option value="${area.idArea}" data-idUser="${area.idUser}">${area.nameArea}</option>`;
+            });
+            $("#area").html(html);
+
+            // Agregar un evento de cambio al select del área
+            $("#area").change(function() {
+                var selectedArea = $(this).find("option:selected");
+                var idUser = selectedArea.data("iduser");
+
+                // Verificar si el idUser está asignado o no es null
+                if (idUser !== null) {
+					console.log(idUser);
+                    showAlertBootstrap7('¡Atención!', '¿Está seguro de cambiar el usuario asignado?');
+                }
+            });
+        },
+        error: function (error) {
+            console.log("Error en la solicitud Ajax:", error);
+        }
+    });
+}
+
+
+function showAlertBootstrap7(title, message) {
+	$('#modalLabel').text(title);
+	$('.modal-body-extra').text(message);
+	$('.modal-footer-extra').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="selectDefault()">Cancelar</button><button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
+	$('#alertModal').modal('show');
+}
+
+function selectDefault() {
+	selectArea();
 }

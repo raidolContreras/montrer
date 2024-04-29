@@ -453,7 +453,7 @@ class FormsModels {
 
 	static public function mdlGetAreas(){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT a.idArea, a.nameArea, a.description, u.firstname, u.lastname, a.status FROM montrer_area a
+		$sql = "SELECT a.idArea, a.nameArea, a.description, u.firstname, u.lastname, a.status, a.idUser FROM montrer_area a
 				LEFT JOIN montrer_users u ON u.idUsers = a.idUser;";
 		$stmt = $pdo->prepare($sql);
 		

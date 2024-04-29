@@ -1,7 +1,4 @@
 <?php if ($_SESSION['level']  == 1):?>
-<?php
-    $areas = FormsController::ctrGetAreas();
-?>
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 <!-- Start Account Area -->
@@ -41,13 +38,7 @@
 							<span class="input-group-text" id="basic-addon3">
 								<button type="button" class="btn btn-danger btn-circle question-btn" id="questionBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Si el departamento no está listado, deje el campo vacío.">!</button>
 							</span>
-							<select class="form-select form-control" name="area">
-								<option value="">Seleccione el departamento</option>
-								
-								<?php foreach ($areas as $area): ?>
-									<option value="<?php echo $area['idArea']; ?>"><?php echo $area['nameArea']; ?></option>
-								<?php endforeach ?>
-								
+							<select class="form-select form-control" name="area" id="area">
 							</select>
 						</div>
 						<div class="d-grid gap-2 mb-3">
