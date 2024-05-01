@@ -31,10 +31,15 @@ $(document).ready(function () {
             },
             {
                 data: null,
-                render: function (data, type, row) {
-                    var idArea = data.idArea;
-                    var status = data.status;
-                    return renderAreaActionButtons(idArea, status);
+                render: function(data) {
+                    // Verificar si level es un número y es diferente de cero
+                    var level = $('#level').val();
+                    if (!isNaN(level) && level != 0) {
+                        var idArea = data.idArea;
+                        var status = data.status;
+                        return renderAreaActionButtons(idArea, status);
+                    }
+                    return ''; // Retornar una cadena vacía si no se renderizan los botones
                 }
             }
         ],

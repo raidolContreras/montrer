@@ -1,4 +1,4 @@
-<?php if ($_SESSION['level']  == 1):?>
+<?php if ($level  == 1):?>
     <?php if (isset($_GET['exercise'])): ?>
         <!-- Start Main Content Budget -->
         <main class="main-content-wrap">

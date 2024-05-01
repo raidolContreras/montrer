@@ -2,7 +2,7 @@
 <div class="features-area">
 	<div class="container-fluid">
 		<div class="row justify-content-center">
-				<?php if ($_SESSION['level'] == 1): ?>
+				<?php if ($level == 1): ?>
 					<div class="col-lg-4 col-md-6">
 						<a href="exercise" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ejercicios">
 						<div class="single-features">
@@ -25,7 +25,7 @@
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
-										<span class="features-title">Presupuesto utilizado</span>
+										<span class="features-title">Presupuesto asignado a departamentos</span>
 										<h3 class="total-use"></h3>
 										<p class="budget-message-uses"></p>
 									</div>

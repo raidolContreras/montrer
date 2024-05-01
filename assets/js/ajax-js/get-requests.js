@@ -627,134 +627,145 @@ function marcarAjax(idRequest, idUser) {
 }
 
 function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado) {
-
-	if (status == 0 && userRequest == user){
-		return `
-			<div class="container">
-				<div class="btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-						<i class="ri-edit-line"></i>
-					</button>
-					<button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-						<i class="ri-delete-bin-6-line"></i>
-					</button>
-				</div>
-			</div>
-		`;
-	} else if (status == 3) {
-		return `
-		<div class="container">
-			<div class="row" style="justify-content: center;">
-				<button class="btn btn-danger pendiente-button col-2" onclick="verRespuesta(${idRequest}, false)">
-					Rechazado
-				</button>
-			</div>
-		</div>
-		`;
-	} else if (status == 0 && level == 1 && userRequest != user) {
-		return `
-		<div class="container">
-			<div class="btn-group" role="group" style="justify-content: center;">
-			<button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
-				<i class="ri-check-line"></i>
-			</button>
-			<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
-				<i class="ri-close-line"></i>
-			</button>
-			</div>
-		</div>
-		`;
-	} else if (status == 1 && level == 1 && pagado == 0 && userRequest != user) {
-		return `
-			<div class="container">
-				<div class="row btn-group" role="group" style="justify-content: center;">
-					<button class="btn btn-success pendiente-button col-2" onclick="marcarPago(${idRequest}, ${userRequest})">
-						Marcar como pagado
-					</button>
-				</div>
-			</div>
-		`;
-	} else if (status == 1 && userRequest == user) {
-		if (pagado == 0) {
-			return `
-				<div class="container">
-					<div class="row" style="justify-content: center;">
-						Presupuesto aprobado
-					</div>
-				</div>
-			`;
-		} else if(pagado == 1) {
-			return `
-				<div class="container">
-					<div class="row" style="justify-content: center;">
-						<button class="btn btn-success pendiente-button col-2" onclick="modalComprobar(${idRequest}, false)">
-							Enviar comprobante
-						</button>
-					</div>
-				</div>
-			`;
-
-		}
-	} else if (status == 1 && userRequest != user && pagado == 1) {
-		return `
-		<div class="container">
-			<div class="row" style="justify-content: center;">
-				Esperando comprobante
-			</div>
-		</div>
-	`;
-	} else if (status == 2) {
-		if ( userRequest != user && level == 1){
-			return `
-				<div class="container">
-					<div class="row" style="justify-content: center;">
-						<button class="btn btn-success pendiente-button col-2" onclick="verComprobacion(${idRequest}, true)">
-							Ver comprobante
-						</button>
-					</div>
-				</div>
-			`;
-		} else {
-			return `
-				<div class="container">
-					<div class="row" style="justify-content: center;">
-						Esperando respuesta
-					</div>
-				</div>
-			`;
-		}
-	} else if (status == 4) {
-		if ( userRequest != user && level == 1){
-			return `
-				<div class="container">
-					<div class="row" style="justify-content: center;">
-						Esperando comprobante
-					</div>
-				</div>
-			`;
-		} else {
-			return `
-				<div class="container">
-					<div class="row" style="justify-content: center;">
-						<button class="btn btn-danger pendiente-button col-2" onclick="modalComprobar(${idRequest}, true)">
-							Enviar comprobante
-						</button>
-					</div>
-				</div>
-			`;
-		}
-	} else if (status == 5) {
-		return `
-		<div class="container">
-			<div class="row" style="justify-content: center;">
-				<button class="btn btn-success pendiente-button col-2" onclick="verComprobacion(${idRequest}, false)">
-					Aprobado
-				</button>
-			</div>
-		</div>
-		`;
-	}
+    switch (status) {
+        case 0:
+            if (userRequest == user) {
+                return `
+                    <div class="container">
+                        <div class="btn-group" role="group" style="justify-content: center;">
+                            <button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                <i class="ri-edit-line"></i>
+                            </button>
+                            <button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                <i class="ri-delete-bin-6-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (level == 1 && userRequest != user) {
+                return `
+                    <div class="container">
+                        <div class="btn-group" role="group" style="justify-content: center;">
+                            <button class="btn btn-success enable-button col-2" data-id="${idRequest}" data-budget="${idBudget}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar">
+                                <i class="ri-check-line"></i>
+                            </button>
+                            <button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                return '';
+            }
+        case 1:
+            if (userRequest == user) {
+                if (pagado == 0) {
+                    return `
+                        <div class="container">
+                            <div class="row" style="justify-content: center;">
+                                Presupuesto aprobado
+                            </div>
+                        </div>
+                    `;
+                } else if (pagado == 1) {
+                    return `
+                        <div class="container">
+                            <div class="row" style="justify-content: center;">
+                                <button class="btn btn-success pendiente-button col-2" onclick="modalComprobar(${idRequest}, false)">
+                                    Enviar comprobante
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else if (level == 1 && pagado == 0 && userRequest != user) {
+                return `
+                    <div class="container">
+                        <div class="row btn-group" role="group" style="justify-content: center;">
+                            <button class="btn btn-success pendiente-button col-2" onclick="marcarPago(${idRequest}, ${userRequest})">
+                                Marcar como pagado
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (userRequest != user && pagado == 1) {
+                return `
+                    <div class="container">
+                        <div class="row" style="justify-content: center;">
+                            Esperando comprobante
+                        </div>
+                    </div>
+                `;
+            }
+            break;
+        case 2:
+            if (userRequest != user && level == 1) {
+                return `
+                    <div class="container">
+                        <div class="row" style="justify-content: center;">
+                            <button class="btn btn-success pendiente-button col-2" onclick="verComprobacion(${idRequest}, true)">
+                                Ver comprobante
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="container">
+                        <div class="row" style="justify-content: center;">
+                            Esperando respuesta
+                        </div>
+                    </div>
+                `;
+            }
+            break;
+        case 3:
+            return `
+                <div class="container">
+                    <div class="row" style="justify-content: center;">
+                        <button class="btn btn-danger pendiente-button col-2" onclick="verRespuesta(${idRequest}, false)">
+                            Rechazado
+                        </button>
+                    </div>
+                </div>
+            `;
+        case 4:
+            if (userRequest != user && level == 1) {
+                return `
+                    <div class="container">
+                        <div class="row" style="justify-content: center;">
+                            Esperando comprobante
+                        </div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="container">
+                        <div class="row" style="justify-content: center;">
+                            <button class="btn btn-danger pendiente-button col-2" onclick="modalComprobar(${idRequest}, true)">
+                                Enviar comprobante
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            break;
+        case 5:
+            return `
+                <div class="container">
+                    <div class="row" style="justify-content: center;">
+                        <button class="btn btn-success pendiente-button col-2" onclick="verComprobacion(${idRequest}, false)">
+                            Aprobado
+                        </button>
+                    </div>
+                </div>
+            `;
+        default:
+            return '';
+    }
 }
+
 function verRespuesta(idRequest) {
 	$.ajax({
         type: 'POST',

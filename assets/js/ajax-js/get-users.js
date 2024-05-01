@@ -1,3 +1,4 @@
+var level = $('#level').val();
 $(document).ready(function () {
 	moment.locale('es');
 	$('#registers').DataTable({
@@ -59,14 +60,18 @@ $(document).ready(function () {
 					}
 				}
 			},
-			{ 
-				data: null,
-				render: function(data){
-					var idUser = data.idUsers;
-					var status = data.status;
-					return renderActionButtons(idUser, status);
-				}
-			}
+            {
+                data: null,
+                render: function(data) {
+                    // Verificar si level es un número y es diferente de cero
+                    if (!isNaN(level) && level != 0) {
+                        var idUser = data.idUsers;
+                        var status = data.status;
+                        return renderActionButtons(idUser, status);
+                    }
+                    return ''; // Retornar una cadena vacía si no se renderizan los botones
+                }
+            }
 		],
 		responsive: true,
 		autoWidth: false,

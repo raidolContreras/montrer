@@ -11,7 +11,7 @@
             </a>
         </li>
 
-        <?php if ($_SESSION['level'] == 1): ?>
+        <?php if ($level == 1 || $level == 0): ?>
             
             <?php 
                 // Verifica si 'pagina' está seteado y es igual a 'registers' o 'register'

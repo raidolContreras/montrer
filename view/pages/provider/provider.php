@@ -79,6 +79,6 @@
         </div>
     </div>
 </div>
-<input type="hidden" name="level" value="<?php echo $_SESSION['level'] ?>">
+<input type="hidden" name="level" value="<?php echo $level ?>">
 <script src="assets/js/ajax-js/get-providers.js"></script>
 

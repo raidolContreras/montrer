@@ -7,7 +7,19 @@
 		header('Location: change_pass');
     	exit();
 	}
-	$level = ($_SESSION['level'] == 1) ? 'Administrador' : 'Responsable';
+
+	$levelName = '';
+	switch ($level) {
+		case 1:
+			$levelName = 'Administrador';
+			break;
+		case 2: 
+			$levelName = 'Responsable';
+			break;
+		case 0: 
+			$levelName = 'Auditor';
+			break;
+	}
 
 ?>
 <!-- Start Header Area -->
@@ -34,7 +46,7 @@
 										<a class="dropdown-item dropdown-toggle avatar d-flex align-items-center show" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown" aria-expanded="true">
 												<div class="d-none d-lg-block d-md-block">
 														<h3 class="profile-name"><?php echo $_SESSION['firstname']." ".$_SESSION['lastname'] ?></h3>
-														<span class="profile-level"><?php echo $level ?></span>
+														<span class="profile-level"><?php echo $levelName ?></span>
 												</div>
 										</a>
 

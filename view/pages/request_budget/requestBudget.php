@@ -32,7 +32,7 @@
 		</div>
 
 	</main>
-	<input type="hidden" name = "level" value="<?php echo $_SESSION['level'] ?>">
+	<input type="hidden" name = "level" value="<?php echo $level ?>">
 	<input type="hidden" name = "user" value="<?php echo $_SESSION['idUser'] ?>">
 	<!-- End Main Content Area -->
 </div>
@@ -54,7 +54,7 @@
         </div>
     </div>
 </div>
-<?php if($_SESSION['level'] == 1): ?>
+<?php if($level == 1 || $level == 0): ?>
 <!-- enable Modal -->
 <div class="modal fade" id="enableModal" tabindex="-1" aria-labelledby="enableModalLabel" aria-hidden="true">
     <div class="modal-dialog">

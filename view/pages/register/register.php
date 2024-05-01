@@ -1,4 +1,4 @@
-<?php if ($_SESSION['level']  == 1):?>
+<?php if ($level  == 1):?>
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 <!-- Start Account Area -->
@@ -31,6 +31,7 @@
 							<img src="assets/img/svg/level.svg">
 							<select class="form-select form-control" name="level">
 								<option value="2">Responsable de departamento</option>
+								<option value="0">Auditor</option>
 								<option value="1">Administrador</option>
 							</select>
 						</div>

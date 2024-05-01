@@ -127,7 +127,7 @@ class FormsController {
 
 	static public function ctrGetRequests($idUser){
 		$user = FormsModels::mdlGetUser($idUser);
-		if($user['level'] == 1) {
+		if($user['level'] == 1 || $user['level'] == 0) {
 			$selection = 1;
 		} else {
 			$selection = 2;

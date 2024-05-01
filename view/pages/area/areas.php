@@ -1,4 +1,4 @@
-<?php if ($_SESSION['level']  == 1):?>
+<?php if ($level  != 2):?>
 <?php
     $areas = FormsController::ctrGetAreas();
 ?>
@@ -8,7 +8,9 @@
 			<div class="total-browse-content card-box-style single-features">
 				<div class="main-title d-flex justify-content-between align-items-center">
 					<h3>Lista de departamentos</h3>
-					<a class="btn btn-primary" href="registerArea">Nuevo departamento</a>
+					<?php if ($_SESSION['level']  == 1): ?>
+                        <a class="btn btn-primary" href="registerArea">Nuevo departamento</a>
+                    <?php endif ?>
 				</div>
 
 				<table class="table table-responsive" id="areas">
@@ -18,7 +20,7 @@
 							<th>Departamento</th>
 							<th>Descripción</th>
 							<th>Encargado</th>
-							<th width="15%"></th>
+                                <th width="15%"></th>
 						</tr>
 					</thead>
 				</table>

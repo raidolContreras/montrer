@@ -4,7 +4,7 @@
 	<div class="overview-area">
 		<div class="container-fluid">
 			<div class="row justify-content-center">
-				<?php if ($_SESSION['level'] == 1): ?>
+				<?php if ($level == 1): ?>
 				<div class="col-lg-12">
 					<div class="overview-content-wrap card-box-style">
 						<div class="overview-content d-flex justify-content-between align-items-center">
@@ -65,7 +65,7 @@
 					</div>
 				<?php endif ?>
 				
-<?php if ($_SESSION['level'] == 1): ?>
+<?php if ($level == 1): ?>
 	<script src="assets/js/ajax-js/counts.js"></script>
 <?php else: ?>
 	<input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
