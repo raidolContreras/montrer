@@ -57,7 +57,15 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function(data) {
-					return renderActionButtons(data.idExercise, data.status, data.active);
+					
+                    // Verificar si level es un número y es diferente de cero
+                    var level = $('#level').val();
+                    if (!isNaN(level) && level != 0) {
+						return renderActionButtons(data.idExercise, data.status, data.active);
+                    } else {
+                        var status = (data.status == 1) ? 'Activo' : (data.active == 1) ? 'Habilitado' : 'Deshabilitado';
+                        return status;
+                    }
 				}                
 			}
 		],

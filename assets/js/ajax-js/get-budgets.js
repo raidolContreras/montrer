@@ -60,9 +60,16 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function (data) {
-					var idBudget = data.idBudget;
-					var status = data.status;
-					return renderActionButtons(idBudget, status);
+                    // Verificar si level es un número y es diferente de cero
+                    var level = $('#level').val();
+                    if (!isNaN(level) && level != 0) {
+						var idBudget = data.idBudget;
+						var status = data.status;
+						return renderActionButtons(idBudget, status);
+                    } else {
+                        var status = (data.status == 1) ? 'Habilitado' : 'Deshabilitado';
+                        return status;
+                    }
 				}
 			}
 		],

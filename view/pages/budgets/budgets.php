@@ -1,4 +1,4 @@
-<?php if ($level  == 1):?>
+<?php if ($level != 2):?>
     <?php if (isset($_GET['exercise'])): ?>
         <!-- Start Main Content Budget -->
         <main class="main-content-wrap">
@@ -6,7 +6,9 @@
                     <div class="total-browse-content card-box-style single-features">
                         <div class="main-title d-flex justify-content-between align-items-center">
                             <h3>Lista de presupuestos asignados</h3>
-                            <a class="btn btn-primary" href="registerBudgets">Asignar presupuesto</a>
+                            <?php if ($level == 1): ?>
+                                <a class="btn btn-primary" href="registerBudgets">Asignar presupuesto</a>
+                            <?php endif ?>
                         </div>
 
                         <table class="table table-responsive" id="budgets">

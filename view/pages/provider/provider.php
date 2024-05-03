@@ -4,7 +4,9 @@
         <div class="total-browse-content card-box-style single-features">
             <div class="main-title d-flex justify-content-between align-items-center">
                 <h3>Lista de proveedores</h3>
-                <a class="btn btn-primary" href="registerProvider">Nuevo proveedor</a>
+                <?php if ($level == 1): ?>
+                    <a class="btn btn-primary" href="registerProvider">Nuevo proveedor</a>
+                <?php endif ?>
             </div>
 
             <table class="table table-responsive" id="provider">

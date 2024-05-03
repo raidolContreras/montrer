@@ -548,10 +548,18 @@ function verificacion(idUser) {
         dataType: 'json',
         success: function (response) {
 			if (response == false) {
-				$('.solicitud').html(`
-					<h3>Solicitudes de presupuesto</h3>
-					<a class="btn btn-primary denegate" disabled>Nueva solicitud</a>
-				`)
+				
+				var level = $('#level').val();
+				if (level != 0) {
+					$('.solicitud').html(`
+						<h3>Solicitudes de presupuesto</h3>
+						<a class="btn btn-primary denegate" disabled>Nueva solicitud</a>
+					`);
+				} else {
+					$('.solicitud').html(`
+						<h3>Solicitudes de presupuesto</h3>
+					`)
+				}
 			} else {
 				$.ajax({
 					type: 'POST',
@@ -576,10 +584,17 @@ function verificacion(idUser) {
 							if (daysDifference >= 8) {
 								showAlertBootstrap('¡Atención!', `Le informamos que tiene un acumulado en solicitudes de pago por un total de: ${formattedBudget}, y la fecha de vencimiento a expirado hace ${daysDifference} días. No podrá realizar una nueva solicitud hasta que haya comprobado los pendientes de forma correcta. <br><br>Tenga en cuenta que, una vez enviada la comprobación, debe esperar a que sea revisado y en su caso validado por el área correspondiente.`);
 								
-								$('.solicitud').html(`
-									<h3>Solicitudes de presupuesto</h3>
-									<a class="btn btn-primary denegate" disabled>Nueva solicitud</a>
-								`)
+								var level = $('#level').val();
+								if (level != 0) {
+									$('.solicitud').html(`
+										<h3>Solicitudes de presupuesto</h3>
+										<a class="btn btn-primary denegate" disabled>Nueva solicitud</a>
+									`);
+								} else {
+									$('.solicitud').html(`
+										<h3>Solicitudes de presupuesto</h3>
+									`)
+								}
 							} else if( daysDifference > 1 ) {
 								showAlertBootstrap('¡Atención!', `Queremos informarle que su préstamo anterior, valuado en ${formattedBudget}, lleva ${daysDifference} días sin ser comprobado. Le instamos a que lo revise lo antes posible antes de realizar cualquier otra solicitud de presupuesto. Es crucial mantener un seguimiento oportuno de sus transacciones financieras para garantizar una gestión eficiente de los recursos. <br><br>Por favor, tenga en cuenta que una vez enviado, debe esperar a que nuestro equipo administrativo lo revise.`);
 							}

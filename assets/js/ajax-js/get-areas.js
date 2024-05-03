@@ -38,8 +38,10 @@ $(document).ready(function () {
                         var idArea = data.idArea;
                         var status = data.status;
                         return renderAreaActionButtons(idArea, status);
+                    } else {
+                        var status = (data.status == 1) ? 'Habilitado' : 'Deshabilitado';
+                        return status;
                     }
-                    return ''; // Retornar una cadena vacía si no se renderizan los botones
                 }
             }
         ],
