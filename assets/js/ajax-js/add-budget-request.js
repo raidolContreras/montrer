@@ -247,15 +247,11 @@ function confirmExit(event, destination) {
 }
 
 $(document).ready(function () {
-
-    // Verificar si el día actual es de lunes a miércoles (días 1 a 3)
     var today = new Date();
-    if (today.getDay() >= 1 && today.getDay() <= 3) {
-    } else {
-        
-	showAlertBootstrap('Atención', 'Las solicitudes recibidas después del miércoles se tramitarán la semana siguiente. Agradecemos su comprensión.');
+    // Verificar si hoy es miércoles y la hora actual es después de las 4pm (16:00)
+    if (today.getDay() > 3 || (today.getDay() === 3 && today.getHours() >= 16)) {
+        showAlertBootstrap('Atención', 'Las solicitudes recibidas después del miércoles a las 16 horas, se pagarán hasta el viernes de la semana siguiente. Agradecemos su comprensión.');
     }
-
 });
 
 function createFolio(nameArea) {
@@ -267,8 +263,6 @@ function createFolio(nameArea) {
             folio = folio + 1;
             
             var folioFin = folio + sustraerLetras(nameArea);
-
-            console.log(nameArea);
 
             $('input[name="folio"]').val(folioFin);
         }
