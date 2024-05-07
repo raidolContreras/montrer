@@ -17,7 +17,6 @@ $(document).ready(function () {
         var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
 		var description = $("textarea[name='description']").val();
 		var provider = $("select[name='provider']").val();
-        var event = $("input[name='event']").val();
         var eventDate = $("input[name='eventDate']").val();
 		var maxBudget = parseFloat($("input[name='maxBudget']").val());
 		var budget = $("input[name='budget']").val();
@@ -36,7 +35,6 @@ $(document).ready(function () {
 					areaEdit: area,
 					requestedAmountEdit: requestedAmount,
 					descriptionEdit: description,
-                    eventEdit: event,
                     eventDateEdit: eventDate,
 					budgetEdit: budget,
                     providerEdit: provider,
@@ -50,7 +48,6 @@ $(document).ready(function () {
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
 						$("textarea[name='description']").val('');
-                        $("input[name='event']").val('');
                         $("input[name='eventDate']").val('');
                         $('.sidenav').removeAttr('onclick');
 

@@ -1295,9 +1295,9 @@ class FormsModels {
 		$pdo = Conexion::conectar();
 
 		$sql = "INSERT INTO montrer_budget_requests
-					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, event, eventDate, requestDate) 
+					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, eventDate, requestDate) 
 				VALUES 
-					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :event, :eventDate, DATE_ADD(NOW(), INTERVAL -6 HOUR) )";
+					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :eventDate, DATE_ADD(NOW(), INTERVAL -6 HOUR) )";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $data['area'], PDO::PARAM_INT);
@@ -1307,7 +1307,6 @@ class FormsModels {
 		$stmt->bindParam(':requestedAmount', $data['requestedAmount'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
 		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
-		$stmt->bindParam(':event', $data['event'], PDO::PARAM_STR);
 		$stmt->bindParam(':eventDate', $data['eventDate'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
@@ -1424,7 +1423,6 @@ class FormsModels {
 					br.approvedAmount,
 					br.responseDate,
 					br.requestDate,
-					br.event,
 					br.eventDate,
 					a.nameArea,
 					p.business_name,
@@ -1604,14 +1602,13 @@ class FormsModels {
 	static public function mdlUpdateRequest($datos){
 		$pdo = Conexion::conectar();
 
-		$sql = "UPDATE montrer_budget_requests SET idProvider = :idProvider, requestedAmount = :requestedAmount, description = :description, event = :event, eventDate = :eventDate where idRequest = :idRequest";
+		$sql = "UPDATE montrer_budget_requests SET idProvider = :idProvider, requestedAmount = :requestedAmount, description = :description, eventDate = :eventDate where idRequest = :idRequest";
 
 		$stmt = $pdo->prepare($sql);
 
 		$stmt->bindParam(':idProvider', $datos['provider'], PDO::PARAM_INT);
 		$stmt->bindParam(':requestedAmount', $datos['requestedAmount'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $datos['description'], PDO::PARAM_STR);
-		$stmt->bindParam(':event', $datos['event'], PDO::PARAM_STR);
 		$stmt->bindParam(':eventDate', $datos['eventDate'], PDO::PARAM_STR);
 		$stmt->bindParam(':idRequest', $datos['idRequest'], PDO::PARAM_INT);
 

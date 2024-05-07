@@ -54,11 +54,6 @@
                     <label for="description" class="form-label">Descripción<span class="required"></span></label>
                     <textarea class="form-control" id="description" name="description"></textarea>
                 </div>
-                
-                <div class="col-md-6">
-                    <label for="event" class="form-label">Evento<span class="required"></span></label>
-                    <input class="form-control" type="text" name="event" id="event">
-                </div>
 
                 <div class="col-md-6">
                     <label for="eventDate" class="form-label">Fecha del evento<span class="required"></span></label>

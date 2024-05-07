@@ -761,7 +761,6 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 		'requestedAmount' => $_POST['requestedAmount'],
 		'description' => $_POST['description'],
 		'provider' => $_POST['provider'],
-		'event' => $_POST['event'],
 		'eventDate' => $_POST['eventDate'],
 		'folio' => $_POST['folio'],
 		'budget' => $_POST['budget']
@@ -966,7 +965,7 @@ if (isset($_POST['marcarPago'])) {
 	echo $response;
 }
 
-if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($_POST['descriptionEdit']) && isset($_POST['eventEdit']) && isset($_POST['eventDateEdit']) && isset($_POST['budgetEdit']) && isset($_POST['providerEdit'])) {
+if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($_POST['descriptionEdit']) && isset($_POST['eventDateEdit']) && isset($_POST['budgetEdit']) && isset($_POST['providerEdit'])) {
 
 	$datos = array(
 		'area' => $_POST['areaEdit'],

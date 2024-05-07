@@ -14,13 +14,12 @@ $(document).ready(function () {
         var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
 		var description = $("textarea[name='description']").val();
 		var provider = $("select[name='provider']").val();
-        var event = $("input[name='event']").val();
         var eventDate = $("input[name='eventDate']").val();
 		var maxBudget = parseFloat($("input[name='maxBudget']").val());
 		var budget = $("input[name='budget']").val();
 		var folio = $("input[name='folio']").val();
 
-		if (area == '' || requestedAmount == '' || description == '' || event == '' || eventDate == '' || provider == ''){
+		if (area == '' || requestedAmount == '' || description == '' || eventDate == '' || provider == ''){
             
             showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
             
@@ -33,7 +32,6 @@ $(document).ready(function () {
 					area: area,
 					requestedAmount: requestedAmount,
 					description: description,
-                    event: event,
                     eventDate: eventDate,
 					budget: budget,
 					folio: folio,
