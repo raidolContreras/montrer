@@ -13,14 +13,14 @@
                 <thead>
                     <tr>
                         <th>Clave del proveedor</th>
-                        <th>Representante</th>
-                        <th>Contacto</th>
                         <th>Razón Social</th>
+                        <th>Contacto</th>
+                        <th>Representante</th>
                         <th>Dirección Fiscal</th>
                         <th>Datos bancarios</th>
                         <th>Descripción</th>
                         <th>Cédula fiscal</th>
-                        <th>Edo. de cuenta</th>
+                        <th>Caratula Edo. de cuenta</th>
                         <th width="30%"></th>
                     </tr>
                 </thead>

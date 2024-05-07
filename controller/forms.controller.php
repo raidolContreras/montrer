@@ -533,7 +533,7 @@ class FormsController {
 		$sheet = $spreadsheet->getActiveSheet();
 	
 		// Definir los encabezados de las columnas
-		$columnHeaders = ['Clave del proveedor', 'Representante', 'Teléfono', 'Email', 'Página web', 'Razón social', 'RFC', 'Dirección fiscal', 'Banco', 'Titular', 'N° cuenta', 'CLABE'];
+		$columnHeaders = ['Clave del proveedor', 'Contacto', 'Teléfono', 'Email', 'Página web', 'Razón social', 'RFC', 'Dirección fiscal', 'Banco', 'Titular', 'N° cuenta', 'CLABE'];
 	
 		// Insertar los encabezados de las columnas y aplicar estilo
 		$columnIndex = 65; // ASCII para 'A'

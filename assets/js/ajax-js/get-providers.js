@@ -31,16 +31,6 @@ $(document).ready(function () {
                 data: null,
                 render: function (data) {
                     return `
-                        <div style="white-space: nowrap;">
-                            ${data.representative_name}
-                        <div>
-                    `;
-                }
-            },
-            {
-                data: null,
-                render: function (data) {
-                    return `
                     <div style="white-space: nowrap;">
                         Teléfono: ${data.contact_phone}<br>
                         Email: ${data.email}<br>
@@ -58,6 +48,16 @@ $(document).ready(function () {
                         RFC: ${data.rfc}
                     </div>
                 `;
+                }
+            },
+            {
+                data: null,
+                render: function (data) {
+                    return `
+                        <div style="white-space: nowrap;">
+                            ${data.representative_name}
+                        <div>
+                    `;
                 }
             },
             {
