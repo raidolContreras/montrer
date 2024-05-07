@@ -120,8 +120,8 @@ class FormsController {
     	return $getAuthorizedAmount;
 	}
 
-	static public function ctrGetProviders(){
-		$getProvider = FormsModels::mdlGetProviders();
+	static public function ctrGetProviders($provider_idUser){
+		$getProvider = FormsModels::mdlGetProviders($provider_idUser);
     	return $getProvider;
 	}
 
@@ -432,8 +432,8 @@ class FormsController {
 		return $getProvider;
 	}
 
-	static public function ctrGetProviderByName($rfc){
-		$getProvider = FormsModels::mdlGetProviderByName($rfc);
+	static public function ctrGetProviderByName($rfc, $idUser){
+		$getProvider = FormsModels::mdlGetProviderByName($rfc, $idUser);
 		return $getProvider;
 	}
 
@@ -526,7 +526,7 @@ class FormsController {
 
     static public function ctrDownloadProviders() {
 		// Obtener los proveedores desde el modelo
-		$providers = FormsModels::mdlGetProviders();
+		$providers = FormsModels::mdlGetProviders(null);
 	
 		// Crear un nuevo objeto Spreadsheet
 		$spreadsheet = new Spreadsheet();
@@ -611,7 +611,7 @@ class FormsController {
 
 	static public function ctrDownloadProvidersPDF() {
 		// Obtener los proveedores desde el modelo
-		$providers = FormsModels::mdlGetProviders();
+		$providers = FormsModels::mdlGetProviders(null);
 	
 		// Crear un nuevo objeto TCPDF
 		$pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);

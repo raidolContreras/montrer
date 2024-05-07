@@ -71,6 +71,7 @@ if ($is_mobile) {
 
     </style>
 </head>
+    <input type="hidden" id="idUser" value="<?php echo $_SESSION['idUser'] ?>">
     <input type="hidden" id="level" value="<?php echo $level ?>">
 
 <!-- Bootstrap Modal for Alerts -->

@@ -35,6 +35,10 @@
                     <input type="url" class="form-control" id="website" name="website">
                 </div>
                 <div class="col-md-6">
+                    <label for="description" class="form-label">Describa el producto o servicio para este proveedor<span class="required"></span></label>
+                    <input type="text" class="form-control" id="description" name="description">
+                </div>
+                <div class="col-md-6">
                     <label for="businessName" class="form-label">Razón social<span class="required"></span></label>
                     <input type="text" class="form-control" id="businessName" name="businessName">
                 </div>
@@ -92,20 +96,29 @@
                     <label for="clabe" class="form-label">CLABE interbancaria</label>
                     <input type="text" class="form-control" id="clabe" name="clabe">
                 </div>
+                
                 <div class="col-md-6">
-                    <label for="description" class="form-label">Describa el producto o servicio para este proveedor<span class="required"></span></label>
-                    <input type="text" class="form-control" id="description" name="description">
+                    <label for="cedula" class="form-label">Cédula fiscal<span class="required"></span></label>
+                    <div class="dropzone cedula"></div>
                 </div>
+
+                <div class="col-md-6">
+                    <label for="caratula" class="form-label">Caratula del estado de cuenta<span class="required"></span></label>
+                    <div class="dropzone caratula"></div>
+                </div>
+
 
                 <div class="col-12 mt-2 text-end">
                     <a class="btn btn-danger" id="cancelButton">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Aceptar</button>
+                    <button type="submit" class="btn btn-success accept" disabled>Aceptar</button>
                 </div>
             </div>
         </form>
     </div>
 
 </main>
-<!-- End Main Content Area -->
+<!-- Incluye Dropzone -->
+<link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">
+<script src="assets/vendor/dropzone/dropzone-min.js"></script>
 <script src="assets/js/ajax-js/add-provider.js"></script>
 <script src="assets/js/ajax-js/get-nextIdProvider.js"></script>

@@ -127,7 +127,6 @@ function enviarComprobante() {
     myDropzone.on("sending", function(file, xhr, formData) {
         formData.append("idPaymentRequest", idPaymentRequest);
     });
-    console.log(myDropzone);
 }
 
 // Esperar a que el documento esté listo

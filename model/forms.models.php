@@ -1018,15 +1018,22 @@ class FormsModels {
 		$stmt = null;
 	}
 
-	static public function mdlGetProviders(){
-	   $pdo = Conexion::conectar();
-	   $sql = "SELECT * FROM montrer_providers";
-	   $stmt = $pdo->prepare($sql);
-	   $stmt->execute();
-	   $result = $stmt->fetchAll();
-	   $stmt->closeCursor();
-	   $stmt = null;
-	   return $result;
+	static public function mdlGetProviders($provider_idUser){
+		$pdo = Conexion::conectar();
+		if($provider_idUser != null){
+			$sql = "SELECT * FROM montrer_providers WHERE provider_idUser = :provider_idUser";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':provider_idUser', $provider_idUser, PDO::PARAM_INT);
+		} else {
+			$pdo = Conexion::conectar();
+			$sql = "SELECT * FROM montrer_providers";
+			$stmt = $pdo->prepare($sql);
+		}
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
 	}
 
 	static public function mdlGetProviderON(){
@@ -1045,11 +1052,11 @@ class FormsModels {
 		$sql = "INSERT INTO montrer_providers 
 		(provider_key, representative_name, contact_phone, email, website, business_name, rfc, 
 		fiscal_address_street, fiscal_address_colonia, fiscal_address_municipio, fiscal_address_estado, 
-		fiscal_address_cp, bank_name, account_holder, account_number, clabe, description, created_at, updated_at) 
+		fiscal_address_cp, bank_name, account_holder, account_number, clabe, description, created_at, updated_at, provider_idUser) 
 		VALUES 
 		(:providerKey, :representativeName, :contactPhone, :email, :website, :businessName, :rfc, 
 		:fiscalAddressStreet, :fiscalAddressColonia, :fiscalAddressMunicipio, :fiscalAddressEstado, 
-		:fiscalAddressCP, :bankName, :accountHolder, :accountNumber, :clabe, :description, NOW(), NOW())";
+		:fiscalAddressCP, :bankName, :accountHolder, :accountNumber, :clabe, :description, NOW(), NOW(), :idUser)";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':providerKey', $data['providerKey'], PDO::PARAM_STR);
@@ -1069,9 +1076,10 @@ class FormsModels {
 		$stmt->bindParam(':accountNumber', $data['accountNumber'], PDO::PARAM_STR);
 		$stmt->bindParam(':clabe', $data['clabe'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			$result = 'ok';
+			$result = $pdo->lastInsertId();
 		} else {
 			$result = 'Error';
 			print_r($pdo->errorInfo());
@@ -1191,11 +1199,12 @@ class FormsModels {
 		return $result;
 	}
 	
-	static public function mdlGetProviderByName($rfc){
+	static public function mdlGetProviderByName($rfc, $idUser){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_providers WHERE rfc = :rfc";
+		$sql = "SELECT * FROM montrer_providers WHERE rfc = :rfc AND provider_idUser = :idUser";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':rfc', $rfc, PDO::PARAM_STR);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_STR);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		$stmt->closeCursor();

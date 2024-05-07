@@ -59,6 +59,7 @@ function sendForm() {
             accountNumber: accountNumber,
             clabe: clabe,
             description: description,
+			idUser: document.getElementById("idUser").value,
             user: user
         },
         success: function (response) {

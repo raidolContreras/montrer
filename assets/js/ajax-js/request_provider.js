@@ -10,11 +10,13 @@ $(document).ready(function () {
 });
 
 function restartSelectProvider() {
-
+    var idUser = (level == 1) ? $("#idUser").val() : NaN;
     // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
     $.ajax({
         type: "POST",
         url: "controller/ajax/getProviders.php",
+        data: {idUser: idUser},
+        dataSrc: '',
         success: function (response) {
             // Parsea la respuesta JSON
             var providers = JSON.parse(response);

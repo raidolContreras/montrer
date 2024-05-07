@@ -611,6 +611,7 @@ if (
 	isset($_POST['bankName']) &&
 	isset($_POST['accountHolder']) &&
 	isset($_POST['accountNumber']) &&
+	isset($_POST['idUser']) &&
 	isset($_POST['clabe'])
 ) {
 
@@ -631,9 +632,10 @@ if (
 		'accountHolder' => $_POST['accountHolder'],
 		'accountNumber' => $_POST['accountNumber'],
 		'clabe' => $_POST['clabe'],
+		'idUser' => $_POST['idUser'],
 		'description' => $_POST['description']
 	);
-	$response = FormsController::ctrGetProviderByName($_POST['rfc']);
+	$response = FormsController::ctrGetProviderByName($_POST['rfc'], $_POST['idUser']);
 	if ($response == false) {
 		$registerProvider = FormsController::ctrRegisterProvider($data);
 		
@@ -688,7 +690,7 @@ if (
 		'clabe' => $_POST['updateclabe']
 	);
 
-	$response = FormsController::ctrGetProviderByName($_POST['updaterfc']);
+	$response = FormsController::ctrGetProviderByName($_POST['updaterfc'], $_POST['idUser']);
 	if ($response == false || $response['provider_key'] == $_POST['providerKey']) {
 		$registerProvider = FormsController::ctrUpdateProvider($data);
 		
@@ -866,6 +868,28 @@ if (isset($_POST['idPaymentRequest'])) {
 	} else {
 		echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, xml).'));
 	}
+}
+
+if (isset($_POST['newProvider'])) {
+	$targetDir = "../../view/providers/" . $_POST['newProvider'] . "/";
+	$fileName = basename($_POST['document'].'.pdf');
+	$targetFilePath = $targetDir . $fileName;
+	$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+	if (!file_exists($targetDir)) {
+		mkdir($targetDir, 0777, true);
+	}
+
+		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Send files providers: '.$fileName, $ip);
+			
+			echo 'ok';
+		} else {
+			echo 'Error';
+		}
 }
 
 if (isset($_POST['searchComprobante'])) {

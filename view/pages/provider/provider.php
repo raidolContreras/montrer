@@ -19,6 +19,8 @@
                         <th>Dirección Fiscal</th>
                         <th>Datos bancarios</th>
                         <th>Descripción</th>
+                        <th>Cédula fiscal</th>
+                        <th>Edo. de cuenta</th>
                         <th width="30%"></th>
                     </tr>
                 </thead>
@@ -81,6 +83,5 @@
         </div>
     </div>
 </div>
-<input type="hidden" name="level" value="<?php echo $level ?>">
 <script src="assets/js/ajax-js/get-providers.js"></script>
 

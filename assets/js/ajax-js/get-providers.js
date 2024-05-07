@@ -1,6 +1,11 @@
+var level = $("#level").val();
 $(document).ready(function () {
-    level = $("input[name='level']").val();
-
+    console.log($("#idUser").val());
+    if (level == 1) {
+        var idUser = null
+    } else {
+        var idUser = $("#idUser").val();
+    }
 
     $('#provider').DataTable({
 		// tus otras opciones de configuración aquí...
@@ -13,7 +18,9 @@ $(document).ready(function () {
 			$('[data-bs-toggle="tooltip"]').tooltip();
 		},
         ajax: {
+            type: 'POST',
             url: 'controller/ajax/getProviders.php', // Ajusta la URL según tu estructura
+            data: {idUser: idUser},
             dataSrc: ''
         },
         columns: [
@@ -87,6 +94,30 @@ $(document).ready(function () {
                     return `
                         <div style="white-space: nowrap;">
                             ${description}
+                        <div>
+                    `;
+                }
+            },
+            {
+                data: null,
+                render: function (data) {
+                    return `
+                        <div style="white-space: nowrap;">
+                            <a class="btn btn-primary" download href="view/providers/${data.idProvider}/cedula.pdf">
+                                Descargar <i class="ri-download-fill></i> 
+                            </a>
+                        <div>
+                    `;
+                }
+            },
+            {
+                data: null,
+                render: function (data) {
+                    return `
+                        <div style="white-space: nowrap;">
+                            <a class="btn btn-primary" download href="view/providers/${data.idProvider}/caratula.pdf">
+                                Descargar <i class="ri-download-fill></i> 
+                            </a>
                         <div>
                     `;
                 }
@@ -204,9 +235,9 @@ $(document).ready(function () {
             data: { 'enableProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    showAlertBootstrap4('Operación realizada', 'Proveedor deshabilitado con éxito');
+                    showAlertBootstrap4('Operación realizada', 'Proveedor habilitado con éxito');
                 } else {
-                    showAlertBootstrap('!Atención¡', 'No se pudo deshabilitar el proveedor');
+                    showAlertBootstrap('!Atención¡', 'No se pudo habilitar el proveedor');
                 }
             },
             complete: function () {
@@ -281,10 +312,10 @@ $(document).ready(function () {
             data: { 'deleteProvider': idProvider },
             success: function (response) {
                 if (response === 'ok') {
-                    showAlertBootstrap4('Operación realizada', 'Proveedor deshabilitado con éxito');
+                    showAlertBootstrap4('Operación realizada', 'Proveedor deshabilitar con éxito');
 
                 } else {
-                    showAlertBootstrap('!Atención¡', 'No se pudo deshabilitar el proveedor');
+                    showAlertBootstrap('!Atención¡', 'No se pudo eliminar el proveedor');
                 }
             },
             complete: function () {
@@ -309,31 +340,44 @@ function renderActionButtons(idProvider, status) {
 
     if (status == 1) {
         return `
-            <div class="container">
-                <div class="row btn-group" role="group" style="justify-content: center;">
-                    <button class="btn btn-primary edit-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+            <div class="container" style="justify-content: center;">
+                <div class="row btn-group" role="group" style="flex-wrap: nowrap;">
+                    <button class="btn btn-primary edit-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                         <i class="ri-edit-line"></i>
                     </button>
-                    <button class="btn btn-warning disable-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Deshabilitar">
+                    <button class="btn btn-warning disable-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Deshabilitar">
                         <i class="ri-forbid-line"></i>
                     </button>
-                    <button class="btn btn-danger delete-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                    <button class="btn btn-danger delete-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
                         <i class="ri-delete-bin-6-line"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    } else if(level == 1 && status == 2) {
+        return `
+            <div class="container" style="display:grid; justify-content: center;">
+                <div class="row btn-group" role="group" style="flex-wrap: nowrap;">
+                    <button class="btn btn-success enable-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Aceptar proveedor">
+                        <i class="ri-check-line"></i>
+                    </button>
+                    <button class="btn btn-danger delete-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar proveedor">
+                        <i class="ri-close-line"></i>
                     </button>
                 </div>
             </div>
         `;
     } else {
         return `
-            <div class="container">
-                <div class="row btn-group" role="group" style="justify-content: center;">
-                    <button class="btn btn-primary edit-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+            <div class="container" style="justify-content: center;">
+                <div class="row btn-group" role="group" style="flex-wrap: nowrap;">
+                    <button class="btn btn-primary edit-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
                         <i class="ri-edit-line"></i>
                     </button>
-                    <button class="btn btn-success enable-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
+                    <button class="btn btn-success enable-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
                         <i class="ri-forbid-line"></i>
                     </button>
-                    <button class="btn btn-danger delete-button col-2" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                    <button class="btn btn-danger delete-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
                         <i class="ri-delete-bin-6-line"></i> 
                     </button>
                 </div>
