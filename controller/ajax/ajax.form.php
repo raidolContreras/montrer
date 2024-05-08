@@ -830,11 +830,37 @@ if (
 		'idUser' => $_POST['idUser'],
 	);
 	$response = FormsController::ctrSendComprobation($data);
-	if ($response == 'ok'){
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
 		FormsModels::mdlLog($_SESSION['idUser'], 'Send comprobation: '.$_POST['idRequest'], $ip);
-	}
+		
+		$request = FormsController::ctrGetRequest($_POST['idRequest']);
+		$user = FormsController::ctrGetUser($_POST['idUser']);
+		if ($result == 'ok') {
+			// Mensaje del correo electrónico
+			$message = array(
+				0 => 'Estimados colaboradores:',
+				1 => 'El sistema ha recibido la comprobación del presupuesto',
+				2 => 'Folio com´probado: '.$request['folio'],
+				3 => 'Monto comprobado: $'.$request['approvedAmount']
+			);
+	
+			// Dirección de correo electrónico del destinatario
+			$email = $user['email'];
+	
+			// Asunto del correo electrónico
+			$subject = 'Actualización del estado del presupuesto';
+	
+			// Título del correo electrónico
+			$title = 'Actualización del estado del presupuesto';
+	
+			// Subtítulo del correo electrónico
+			$subtitle = 'Detalles del presupuesto actualizado';
+	
+			// Envío del correo electrónico
+			FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
+		}
+
 	echo $response;
 }
 

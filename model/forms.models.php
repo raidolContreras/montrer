@@ -1662,13 +1662,13 @@ class FormsModels {
         return $result;
 	}
 
-	static public function mdlSendEmail(){
+	static public function mdlSendEmail($email, $message, $subject, $title, $subtitle){
 				
 		// Destinatario
-		$para = 'oscarcontrerasf91@gmail.com';
+		$para = $email;
 
 		// Asunto del correo
-		$asunto = 'Reporte de Estado de Presupuestos';
+		$asunto = $subject;
 
 		// Contenido HTML del correo
 		$templateHTML = '
@@ -1781,28 +1781,29 @@ class FormsModels {
 					</div>
 					<!-- Encabezado -->
 					<div class="header">
-						<h1>Reporte de Estado de Presupuestos</h1>
-						<p>Dirigido a los administrativos de tesorería y a rectoría</p>
+						<h1>'.$title.'</h1>
+						<p>'.$subtitle.'</p>
 					</div>
 					<!-- Contenido del Correo -->
 					<div class="card-body">
-						<p class="card-text">Estimados colaboradores,</p>
-						<p class="card-text">Adjuntamos el reporte actualizado del estado de los presupuestos para su revisión y consideración. Por favor, tomen nota de cualquier cambio o detalle relevante y comuníquense con nosotros si necesitan más información o aclaraciones.</p>
-						<p class="card-text">Agradecemos su atención y colaboración.</p>
-						<p class="card-text">Atentamente,<br>Equipo de Tesorería</p>
+		';
+		foreach ($message as $key => $val) {
+			$templateHTML.= '<p class="card-text">'.$val.'</p>';
+		}
+		$templateHTML .= '
+				</div>
+
+				<!-- Pie de Página -->
+				<div class="footer">
+					<div class="logo">
+						<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiwYdc6JjvK8wto9xbuHcTAYFtzp0giLWm3pO6Gl6AlzUkVp2tM8E4ZGtbFUilQSJWACk_VAzzTpylpA-OleuC-Fs65QshR-Ud_Ua4gAWrxl00Ea1vDYA-mB2hovzOoC8t7tYQHBFUY0pEk5_JywC5y_Zg7HTtR8EN-NZfRztW9Gakn8yWjzHffaFkeeA/s1584/UNIMO-logotipo-2019-BLANCO.png" alt="Logo de UNIMO">
 					</div>
-					<!-- Pie de Página -->
-					<div class="footer">
-						<div class="logo">
-							<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiwYdc6JjvK8wto9xbuHcTAYFtzp0giLWm3pO6Gl6AlzUkVp2tM8E4ZGtbFUilQSJWACk_VAzzTpylpA-OleuC-Fs65QshR-Ud_Ua4gAWrxl00Ea1vDYA-mB2hovzOoC8t7tYQHBFUY0pEk5_JywC5y_Zg7HTtR8EN-NZfRztW9Gakn8yWjzHffaFkeeA/s1584/UNIMO-logotipo-2019-BLANCO.png" alt="Logo de UNIMO">
-						</div>
-						<p>© 2024 Universidad Montrer. Todos los derechos reservados.</p>
-					</div>
+					<p>© 2024 Universidad Montrer. Todos los derechos reservados.</p>
 				</div>
 			</div>
+		</div>
 		</body>
-		</html>
-		';
+		</html>';
 
 		// Cabeceras del correo
 		$headers = "MIME-Version: 1.0" . "\r\n";
@@ -1810,11 +1811,7 @@ class FormsModels {
 		$headers .= 'From: UNIMO <unimo@unimontrer.edu.mx>' . "\r\n";
 
 		// Envío del correo
-		if (mail($para, $asunto, $templateHTML, $headers)) {
-			echo 'Correo enviado correctamente';
-		} else {
-			echo 'Error al enviar el correo';
-		}
+		mail($para, $asunto, $templateHTML, $headers);
 	}
 
 }

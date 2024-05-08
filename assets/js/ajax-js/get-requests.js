@@ -696,13 +696,13 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                 }
             } else if (level == 1 && pagado == 0 && userRequest != user) {
                 return `
-                    <div class="container">
-                        <div class="row btn-group" role="group" style="justify-content: center;">
-                            <button class="btn btn-success pendiente-button col-2" onclick="marcarPago(${idRequest}, ${userRequest})">
-                                Marcar como pagado
-                            </button>
-                        </div>
-                    </div>
+					<div class="container">
+						<div class="row" style="justify-content: center;">
+							<button class="btn btn-success pendiente-button col-2" onclick="marcarPago(${idRequest}, ${userRequest})">
+								Marcar como pagado
+							</button>
+						</div>
+					</div>
                 `;
             } else if (userRequest != user && pagado == 1) {
                 return `

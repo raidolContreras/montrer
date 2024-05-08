@@ -168,11 +168,35 @@ class FormsController {
 
 	static public function ctrEnableRequest($idRequest, $idAdmin, $approvedAmount){
 		$result = FormsModels::mdlEnableRequest($idRequest, $idAdmin, $approvedAmount);
+		$request = FormsController::ctrGetRequest($idRequest);
+		$user = FormsController::ctrGetUser($request['idUsers']);
 		if ($result == 'ok') {
-			FormsModels::mdlSendEmail();
+			// Mensaje del correo electrónico
+			$message = array(
+				0 => 'Estimados colaboradores:',
+				1 => 'El estado del presupuesto con el siguiente folio ha sido actualizado:',
+				2 => 'Folio del presupuesto: '.$request['folio'],
+				3 => 'Monto aprobado: $'.$request['approvedAmount']
+			);
+	
+			// Dirección de correo electrónico del destinatario
+			$email = $user['email'];
+	
+			// Asunto del correo electrónico
+			$subject = 'Actualización del estado del presupuesto';
+	
+			// Título del correo electrónico
+			$title = 'Actualización del estado del presupuesto';
+	
+			// Subtítulo del correo electrónico
+			$subtitle = 'Detalles del presupuesto actualizado';
+	
+			// Envío del correo electrónico
+			FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
 		}
-    	return $result;
+		return $result;
 	}
+	
 
 	static public function ctrGetRequest($idRequest){
 		$result = FormsModels::mdlGetRequest($idRequest);
@@ -512,7 +536,36 @@ class FormsController {
     }
 	
 	static public function ctrMarcarPago($idRequest,$idUser){
-        return FormsModels::mdlMarcarPago($idRequest,$idUser);
+        $result = FormsModels::mdlMarcarPago($idRequest,$idUser);
+		
+		$request = FormsController::ctrGetRequest($idRequest);
+		$user = FormsController::ctrGetUser($request['idUsers']);
+		if ($result == 'ok') {
+			// Mensaje del correo electrónico
+			$message = array(
+				0 => 'Estimados colaboradores:',
+				1 => 'El estado del presupuesto con el siguiente folio ha sido marcado como pagado:',
+				2 => 'Folio del presupuesto: '.$request['folio'],
+				3 => 'Monto pagado: $'.$request['approvedAmount']
+			);
+	
+			// Dirección de correo electrónico del destinatario
+			$email = $user['email'];
+	
+			// Asunto del correo electrónico
+			$subject = 'Actualización del estado del presupuesto';
+	
+			// Título del correo electrónico
+			$title = 'Actualización del estado del presupuesto';
+	
+			// Subtítulo del correo electrónico
+			$subtitle = 'Detalles del presupuesto actualizado';
+	
+			// Envío del correo electrónico
+			FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
+		}
+
+		return $result;
     }
 	
 	static public function ctrSearchRequest($idRequest){
