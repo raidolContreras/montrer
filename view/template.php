@@ -7,6 +7,7 @@ header('Content-Type: text/html; charset=utf-8');
 session_start();
 
 $level =  (isset($_SESSION['level'])) ? $_SESSION['level'] : '' ;
+$idUser =  (isset($_SESSION['idUser'] )) ? $_SESSION['idUser']  : '' ;
 
 // Obtener el agente de usuario
 $user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -71,7 +72,7 @@ if ($is_mobile) {
 
     </style>
 </head>
-    <input type="hidden" id="idUser" value="<?php echo $_SESSION['idUser'] ?>">
+    <input type="hidden" id="idUser" value="<?php echo $idUser?>">
     <input type="hidden" id="level" value="<?php echo $level ?>">
 
 <!-- Bootstrap Modal for Alerts -->

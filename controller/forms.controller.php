@@ -168,6 +168,9 @@ class FormsController {
 
 	static public function ctrEnableRequest($idRequest, $idAdmin, $approvedAmount){
 		$result = FormsModels::mdlEnableRequest($idRequest, $idAdmin, $approvedAmount);
+		if ($result == 'ok') {
+			FormsModels::mdlSendEmail();
+		}
     	return $result;
 	}
 

@@ -1662,4 +1662,159 @@ class FormsModels {
         return $result;
 	}
 
+	static public function mdlSendEmail(){
+				
+		// Destinatario
+		$para = 'oscarcontrerasf91@gmail.com';
+
+		// Asunto del correo
+		$asunto = 'Reporte de Estado de Presupuestos';
+
+		// Contenido HTML del correo
+		$templateHTML = '
+		<!DOCTYPE html>
+		<html lang="es">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Reporte de Estado de Presupuestos</title>
+			<!-- Estilos de Bootstrap -->
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+			<!-- Estilos personalizados -->
+			<style>
+				body {
+					font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif;
+					background-color: #f0f0f0;
+					color: #333;
+					line-height: 1.6;
+					margin: 0;
+					padding: 0;
+				}
+				.container {
+					min-height: 100vh;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				.logo img {
+					width: 200px;
+					max-width: 100%;
+				}
+				.card {
+					border: none;
+					border-radius: 10px;
+					background-color: #fff;
+					box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+					width: 100%;
+					max-width: 600px;
+					animation: fadeIn 1s ease-out;
+				}
+				@keyframes fadeIn {
+					from {
+						opacity: 0;
+					}
+					to {
+						opacity: 1;
+					}
+				}
+				.card-header {
+					background-color: #fff;
+				}
+				.header {
+					text-align: center;
+					background-color: #026f35;
+					color: #fff;
+					padding: 20px;
+					margin-bottom: 20px;
+				}
+				.header h1 {
+					font-size: 28px;
+					margin-bottom: 10px;
+				}
+				.header p {
+					font-size: 16px;
+					margin-bottom: 0;
+				}
+				.card-title {
+					font-size: 24px;
+					font-weight: bold;
+					color: #026f35;
+					margin-bottom: 20px;
+				}
+				.card-text {
+					font-size: 18px;
+					color: #555;
+					margin-bottom: 20px;
+				}
+				.btn-primary {
+					background-color: #026f35;
+					border: none;
+					border-radius: 5px;
+					padding: 12px 24px;
+					color: #fff;
+					font-size: 18px;
+					text-decoration: none;
+					transition: background-color 0.3s ease;
+				}
+				.btn-primary:hover {
+					background-color: #025c2b;
+				}
+				.footer {
+					text-align: center;
+					background-color: #666666;
+					padding-bottom: 10px;
+					border-radius: 0 0 10px 10px;
+					color: #fff;
+				}
+				.footer p {
+					font-size: 16px;
+					margin-bottom: 0;
+				}
+			</style>
+		</head>
+		<body>
+			<div class="container">
+				<div class="card">
+					<!-- Logo -->
+					<div class="card-header logo text-center">
+						<img src="https://portal.unimontrer.edu.mx/wp-content/uploads/2021/04/universidad-montrer-logotipo-promocional-recortao-01.png" alt="Logo de UNIMO">
+					</div>
+					<!-- Encabezado -->
+					<div class="header">
+						<h1>Reporte de Estado de Presupuestos</h1>
+						<p>Dirigido a los administrativos de tesorería y a rectoría</p>
+					</div>
+					<!-- Contenido del Correo -->
+					<div class="card-body">
+						<p class="card-text">Estimados colaboradores,</p>
+						<p class="card-text">Adjuntamos el reporte actualizado del estado de los presupuestos para su revisión y consideración. Por favor, tomen nota de cualquier cambio o detalle relevante y comuníquense con nosotros si necesitan más información o aclaraciones.</p>
+						<p class="card-text">Agradecemos su atención y colaboración.</p>
+						<p class="card-text">Atentamente,<br>Equipo de Tesorería</p>
+					</div>
+					<!-- Pie de Página -->
+					<div class="footer">
+						<div class="logo">
+							<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiwYdc6JjvK8wto9xbuHcTAYFtzp0giLWm3pO6Gl6AlzUkVp2tM8E4ZGtbFUilQSJWACk_VAzzTpylpA-OleuC-Fs65QshR-Ud_Ua4gAWrxl00Ea1vDYA-mB2hovzOoC8t7tYQHBFUY0pEk5_JywC5y_Zg7HTtR8EN-NZfRztW9Gakn8yWjzHffaFkeeA/s1584/UNIMO-logotipo-2019-BLANCO.png" alt="Logo de UNIMO">
+						</div>
+						<p>© 2024 Universidad Montrer. Todos los derechos reservados.</p>
+					</div>
+				</div>
+			</div>
+		</body>
+		</html>
+		';
+
+		// Cabeceras del correo
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+		$headers .= 'From: UNIMO <unimo@unimontrer.edu.mx>' . "\r\n";
+
+		// Envío del correo
+		if (mail($para, $asunto, $templateHTML, $headers)) {
+			echo 'Correo enviado correctamente';
+		} else {
+			echo 'Error al enviar el correo';
+		}
+	}
+
 }
