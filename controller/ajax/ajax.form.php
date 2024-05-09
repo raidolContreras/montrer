@@ -208,7 +208,9 @@ class AjaxForm
 	static public function deleteUser($idUsers)
 	{
 		$status = '';
+		$area = '';
 		$request = FormsController::ctrGetAreaByUser($idUsers);
+		echo json_encode($request);
 		if ($request == false) {
 			foreach ($request as $value) {
 				$area = FormsController::ctrGetAreaBycheckup('idArea', $value['idArea']);

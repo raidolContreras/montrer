@@ -1667,8 +1667,9 @@ class FormsModels {
 	static public function mdlGetAreaByUser($idUser){
 		$pdo = Conexion::conectar();
         $sql = "SELECT *
-                FROM montrer_area
-                WHERE idUser = :idUser AND active = 1";
+                FROM montrer_users_to_areas ua
+				LEFT JOIN montrer_area a ON a.idArea = ua.idArea
+                WHERE ua.idUser = :idUser AND a.active = 1";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $stmt->execute();
