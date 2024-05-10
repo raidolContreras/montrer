@@ -20,14 +20,7 @@ $(document).ready(function () {
             },
             { data: 'description' },
             {
-                data: null,
-                render: function (data, type, row) {
-                    if (data.firstname == null) {
-                        return '';
-                    } else {
-                        return data.firstname + ' ' + data.lastname;
-                    }
-                }
+                data: 'names'
             },
             {
                 data: null,
