@@ -453,18 +453,8 @@ class FormsModels {
 
 	static public function mdlGetAreas(){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT 
-					ma.idArea,
-					ma.nameArea,
-					ma.description,
-					ma.status,
-					(
-						SELECT GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', ')
-						FROM montrer_users u 
-						LEFT JOIN montrer_users_to_areas ua ON ua.idUser = u.idUsers 
-						WHERE ua.idArea = ma.idArea
-					) AS names
-				FROM montrer_area ma;";
+		$sql = "SELECT a.idArea, a.nameArea, a.description, u.firstname, u.lastname, a.status, a.idUser FROM montrer_area a
+				LEFT JOIN montrer_users u ON u.idUsers = a.idUser;";
 		$stmt = $pdo->prepare($sql);
 		
 		if ($stmt->execute()){

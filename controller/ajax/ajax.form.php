@@ -210,19 +210,15 @@ class AjaxForm
 		$status = '';
 		$area = '';
 		$request = FormsController::ctrGetAreaByUser($idUsers);
-		
-		if ($request != false) {
+		echo json_encode($request);
+		if ($request == false) {
 			foreach ($request as $value) {
 				$area = FormsController::ctrGetAreaBycheckup('idArea', $value['idArea']);
 				if ($area == false) {
 					$status = 'ok';
 				} else {
-					if ($area['idUser'] != $idUsers){
-						$status = 'ok';
-					} else {
-						$status = 'Presupuestos pendientes';
-						break;
-					}
+					$status = 'Presupuestos pendientes';
+					break;
 				}
 			}
         }
