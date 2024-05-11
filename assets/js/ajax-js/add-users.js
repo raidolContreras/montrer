@@ -88,6 +88,17 @@ function selectArea() {
             });
             $("#area").html(html);
 
+            // Agregar un evento de cambio al select del área
+            $("#area").change(function() {
+                var selectedArea = $(this).find("option:selected");
+                var idUser = selectedArea.data("iduser");
+
+                // Verificar si el idUser está asignado o no es null
+                if (idUser !== null) {
+					console.log(idUser);
+                    showAlertBootstrap7('¡Atención!', '¿Está seguro que desea cambiar al usuario responsable del departamento?');
+                }
+            });
         },
         error: function (error) {
             console.log("Error en la solicitud Ajax:", error);
