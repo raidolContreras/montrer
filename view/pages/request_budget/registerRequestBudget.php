@@ -69,6 +69,10 @@
                     <input class="form-control" type="date" id="eventDate" name="eventDate">
                 </div>
                 
+                <div class="col-12 mt-4">
+                    <div class="dropzone" id="documentDropzone"></div>
+                </div>
+                
                 <div class="col-12 mt-2 text-end">
                     <a class="btn btn-danger" id="cancelButton">Cancelar</a>
                     <button type="submit" class="btn btn-success">Aceptar</button>
@@ -83,6 +87,10 @@
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 
 <!-- End Main Content Area -->
+<!-- Incluye Dropzone -->
+<link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">
+<script src="assets/vendor/dropzone/dropzone-min.js"></script>
+
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
 <script src="assets/js/ajax-js/request_provider.js"></script>
 <script src="assets/js/ajax-js/add-provider2.js"></script>
