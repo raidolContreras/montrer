@@ -131,7 +131,7 @@ class FormsModels {
 				$temporalPassword = FormsModels::mdlSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
 				$settings = FormsModels::mdlSettingsUser($userId, $data['level'], 0);
 				if ($data['area'] != '') {
-					$area = FormsModels::mdlUpdateAreaUser($userId, $data['area']);
+					$area = FormsModels::mdlAddAreaUser($userId, $data['area']);
 					if($temporalPassword == 'ok' && $settings == 'ok' && $area == 'ok'){
 						return $data['email'];
 					} else {
@@ -324,9 +324,11 @@ class FormsModels {
 				FROM 
 					montrer_users u
 				LEFT JOIN 
+					montrer_users_to_areas ua ON ua.idUser = u.idUsers
+				LEFT JOIN 
 					montrer_settings s ON s.idUser = u.idUsers
 				LEFT JOIN 
-					montrer_area a ON a.idUser = u.idUsers
+					montrer_area a ON a.idArea = ua.idArea
 				WHERE u.deleted = 0
 				GROUP BY 
 					u.idUsers;";
@@ -443,12 +445,26 @@ class FormsModels {
 	   $stmt->bindParam(':description', $data['areaDescription'], PDO::PARAM_STR);
 	   $stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
 	   if($stmt->execute()){
-		return "ok";
+		$result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
+		return $result;
 	   } else {
 		print_r($pdo->errorInfo());
 	   }
 		$stmt->closeCursor();
 		$stmt = null;
+	}
+
+	static public function mdlAddAreaUser($idUser, $idArea){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO montrer_users_to_areas(idArea, idUser) VALUES (:idArea, :idUser)";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+		if($stmt->execute()){
+            return "ok";
+        } else {
+            print_r($pdo->errorInfo());
+        }
 	}
 
 	static public function mdlGetAreas(){
