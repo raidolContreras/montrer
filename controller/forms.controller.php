@@ -759,4 +759,9 @@ class FormsController {
         return $area;
 	}
 
+	static public function ctrChangePaymentDate($idRequest, $paymentDate) {
+		$response = FormsModels::mdlChangePaymentDate($idRequest,$paymentDate);
+		return $response;
+    }
+
 }

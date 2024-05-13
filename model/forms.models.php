@@ -445,6 +445,7 @@ class FormsModels {
 	   $stmt->bindParam(':description', $data['areaDescription'], PDO::PARAM_STR);
 	   $stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
 	   if($stmt->execute()){
+		return "ok";
 		$result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
 		return $result;
 	   } else {
@@ -1288,7 +1289,7 @@ class FormsModels {
 			$pdo = Conexion::conectar();
 			if ($selection == 1){
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-							r.description, r.requestDate, r.responseDate, r.status, r.folio,
+							r.description, r.requestDate, r.responseDate, r.status, r.folio, r.paymentDate,
 							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
 						FROM montrer_budget_requests r
 							LEFT JOIN montrer_area a ON a.idArea = r.idArea
@@ -1299,7 +1300,7 @@ class FormsModels {
 				$stmt = $pdo->prepare($sql);
 			} else {
 				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-							r.description, r.requestDate, r.responseDate, r.status, r.folio,
+							r.description, r.requestDate, r.responseDate, r.status, r.folio, r.paymentDate,
 							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
 						FROM montrer_budget_requests r
 							LEFT JOIN montrer_area a ON a.idArea = r.idArea
@@ -1319,12 +1320,26 @@ class FormsModels {
 
 	static public function mdlRequestBudget($data){
 		$pdo = Conexion::conectar();
-
+	
+		// Calcula la fecha de pago (paymentDate) según la fecha de creación de la solicitud (requestDate)
+		$requestDate = new DateTime($data['requestDate']);
+		$currentDay = $requestDate->format('N'); // Obtiene el día de la semana (1: lunes, 2: martes, ..., 7: domingo)
+		$hour = $requestDate->format('H:i'); // Obtiene la hora de la solicitud
+	
+		// Si el día de la solicitud es lunes (1), martes (2) o miércoles (3) antes de las 16:00 (4:00 PM)
+		if ($currentDay <= 3 && $hour < '16:00') {
+			// Establece el día de pago (paymentDate) al viernes de la misma semana
+			$paymentDate = $requestDate->modify('next friday');
+		} else {
+			// Establece el día de pago (paymentDate) al viernes de la siguiente semana
+			$paymentDate = $requestDate->modify('next friday');
+		}
+	
 		$sql = "INSERT INTO montrer_budget_requests
-					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, eventDate, requestDate) 
+					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, eventDate, requestDate, paymentDate) 
 				VALUES 
-					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :eventDate, DATE_ADD(NOW(), INTERVAL -6 HOUR) )";
-
+					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :eventDate, :requestDate, :paymentDate)";
+	
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $data['area'], PDO::PARAM_INT);
 		$stmt->bindParam(':folio', $data['folio'], PDO::PARAM_STR);
@@ -1334,17 +1349,18 @@ class FormsModels {
 		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
 		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
 		$stmt->bindParam(':eventDate', $data['eventDate'], PDO::PARAM_STR);
-
+		$stmt->bindParam(':requestDate', $data['requestDate'], PDO::PARAM_STR);
+		$stmt->bindParam(':paymentDate', $paymentDate->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+	
 		if($stmt->execute()){
-			$result = 'ok';
+			$result = $pdo->lastInsertId();
 		} else {
-			print_r($pdo->errorInfo());
 			$result = 'Error';
 		}
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;
-	}
+	}	
 
 	static public function mdlDeleteRequest($idRequest){
 		$pdo = Conexion::conectar();
@@ -1839,6 +1855,24 @@ class FormsModels {
 
 		// Envío del correo
 		mail($para, $asunto, $templateHTML, $headers);
+	}
+
+	static function mdlChangePaymentDate($idRequest,$paymentDate) {
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_budget_requests SET paymentDate = :paymentDate WHERE idRequest = :idRequest";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+		$stmt->bindParam(':paymentDate', $paymentDate, PDO::PARAM_STR);
+		
+		if($stmt->execute()){
+			$result = 'ok';
+		} else {
+			print_r($pdo->errorInfo());
+			$result = 'Error';
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
 	}
 
 }

@@ -90,7 +90,7 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function (data) {
-					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado);
+					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado, data.paymentDate);
 				}
 			}
 		],
@@ -420,7 +420,8 @@ function modalComprobar(idRequest, status) {
         success: function (response) {
 			
 			var registerValue = $('#register-value').data('register');
-
+			
+			documentRequest(idRequest);
             getArea(registerValue);
             $('#fechaSolicitud').val(response.responseDate.split(' ')[0]);
             $("input[name='importeSolicitado']").val(response.approvedAmount);
@@ -626,6 +627,36 @@ function marcarPago(idRequest, idUser) {
 
 };
 
+function changePaymentDateModal(idRequest, paymentDate) {
+    $('#modalChangePaymentDate').modal('show');
+	$('#paymentDate').val(paymentDate);
+	var html =  `
+		<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+		<button type="button" class="btn btn-success" onclick="changePaymentDate(${idRequest})">Aceptar</button>
+	`;
+
+	$('.marcar-footer').html(html);
+}
+
+function changePaymentDate(idRequest) {
+	
+	var paymentDate = $('#paymentDate').val();
+
+	$.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {changePaymentDate: idRequest, paymentDate: paymentDate},
+        dataSrc: '',
+        success: function (response) {
+            if(response == 'ok'){
+                $('#requests').DataTable().ajax.reload();
+                $('#modalChangePaymentDate').modal('hide');
+            }
+        }
+    });
+	
+}
+
 function marcarAjax(idRequest, idUser) {
 	$.ajax({
 		type: 'POST',
@@ -641,7 +672,7 @@ function marcarAjax(idRequest, idUser) {
 	});
 }
 
-function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado) {
+function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado, paymentDate) {
     switch (status) {
         case 0:
             if (userRequest == user) {
@@ -667,7 +698,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                             <button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
                                 <i class="ri-close-line"></i>
                             </button>
-                        </div>
+						</div>
                     </div>
                 `;
             } else {
@@ -697,10 +728,13 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
             } else if (level == 1 && pagado == 0 && userRequest != user) {
                 return `
 					<div class="container">
-						<div class="row" style="justify-content: center;">
+						<div class="btn-group" role="group" style="justify-content: center;">
 							<button class="btn btn-success pendiente-button col-2" onclick="marcarPago(${idRequest}, ${userRequest})">
 								Marcar como pagado
 							</button>
+                            <button class="btn btn-primary change-date-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Cambiar fecha del pago" onclick="changePaymentDateModal(${idRequest}, '${paymentDate}')">
+                                <i class="ri-calendar-event-line"></i>
+                            </button>
 						</div>
 					</div>
                 `;
@@ -793,4 +827,101 @@ function verRespuesta(idRequest) {
 			$('.comentartioRespuesta').html(comentarios);
         }
     });
+}
+
+function documentRequest(idRequest) {
+	
+	$.ajax({
+		type: 'POST',
+		url: 'controller/ajax/ajax.form.php', // URL actualizada si es necesario
+		data: { getDocumentsTemp: idRequest },
+		success: function(response) {
+			var documentos = JSON.parse(response);
+			$('#listaDocumentos').empty(); // Limpiar la lista actual
+
+			if(documentos.length > 0) {
+
+				documentos.forEach(function(documento) {
+					var extension = documento.split('.').pop().toLowerCase();
+					var colorClass = '';
+					var iconClass = '';
+					switch(extension) {
+						case 'pdf':
+							colorClass = 'doc-pdf';
+							iconClass = 'ri-file-pdf-line';
+							numPDF ++;
+							break;
+						case 'xml':
+							colorClass = 'doc-image';
+							iconClass = 'ri-image-line';
+							numXML++;
+							break;
+						default:
+							colorClass = 'doc-other';
+							iconClass = 'ri-pages-line';
+							break;
+					}
+				
+					$('#listaDocumentos').append(`
+						<li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
+							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger deleteButton" onclick="deleteDocument('${documento}', ${idRequest})">
+								&times;
+								<span class="visually-hidden">unread messages</span>
+							</span>
+							<div>
+								<a href="view/documents/requestTemp/${idRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
+									<div class="document-icon ${colorClass}">
+										<i class="${iconClass}"></i>
+									</div>
+								</a>
+							</div>
+							${documento}
+						</li>
+					`);
+				});
+				
+			} else {
+				$('#listaDocumentos').append(`<li class="list-group-item">No hay documentos asignados.</li>`);
+			}
+
+		},
+		error: function() {
+			$('#listaDocumentos').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
+		}
+	});
+
+}
+
+function deleteDocument(document, idRequest) {
+    // Confirmar si el usuario desea eliminar el documento
+    var confirmDelete = confirm("¿Estás seguro de que deseas eliminar este documento?");
+    
+    // Si el usuario confirma la eliminación
+    if (confirmDelete) {
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/deleteDocument.php',
+            data: { document: document, idRequest: idRequest },
+            dataType: 'json',
+            success: function (response) {
+				
+				var extension = document.split('.').pop().toLowerCase();
+                
+				switch(extension) {
+					case 'pdf':
+						numPDF--;
+						break;
+					case 'xml':
+						numXML--;
+						break;
+				}
+
+				documentRequest(idRequest);
+                
+            },
+            error: function (error) {
+                console.log('Error en la solicitud AJAX:', error);
+            }
+        });
+    }
 }

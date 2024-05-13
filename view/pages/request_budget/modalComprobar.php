@@ -64,6 +64,14 @@
                             <div id="documentDropzone" class="dropzone"></div>
                         </div>
 
+                        <!-- Apartado para documentos -->
+                        <div class="col-12 mt-4">
+                            <h5>Lista de documentos</h5>
+                            <ul id="listaDocumentos" class="list-group-ul">
+                                <!-- Los documentos se listarán aquí -->
+                            </ul>
+                        </div>
+
                         <div class="col-12 mt-2 text-end">
                             <a class="btn btn-danger" id="cancelButton">Cancelar</a>
                             <button type="submit" class="btn btn-success send-comprobante" onclick="enviarComprobante()" disabled>Aceptar</button>

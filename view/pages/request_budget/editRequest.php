@@ -59,6 +59,18 @@
                     <label for="eventDate" class="form-label">Fecha del evento<span class="required"></span></label>
                     <input class="form-control" type="date" id="eventDate" name="eventDate">
                 </div>
+
+                <div class="col-12 mt-4">
+                    <div class="dropzone" id="documentDropzone"></div>
+                </div>
+
+                <!-- Apartado para documentos -->
+                <div class="col-12 mt-4">
+                    <h5>Lista de documentos</h5>
+                    <ul id="listaDocumentos" class="list-group-ul">
+                        <!-- Los documentos se listarán aquí -->
+                    </ul>
+                </div>
                 
                 <div class="col-12 mt-2 text-end">
                     <a class="btn btn-danger" id="cancelButton">Cancelar</a>
@@ -76,6 +88,10 @@
 
 
 <input type="hidden" name="budget">
+
+<!-- Incluye Dropzone -->
+<link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">
+<script src="assets/vendor/dropzone/dropzone-min.js"></script>
 
 <script src="assets/js/ajax-js/add-provider2.js"></script>
 <!-- End Main Content Area -->

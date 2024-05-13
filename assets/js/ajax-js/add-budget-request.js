@@ -1,3 +1,47 @@
+var myDropzone = new Dropzone("#documentDropzone", {
+    parallelUploads: 10,
+    maxFiles: 10,
+    url: "controller/ajax/ajax.form.php",
+    maxFilesize: 10,
+    acceptedFiles: "application/pdf, application/xml, text/xml", // Modificamos esta línea
+    dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
+    autoProcessQueue: false,
+    dictInvalidFileType: "Archivo no está permitido. Por favor, sube archivos en formato PDF o XML.",
+    dictFileTooBig: "El archivo es demasiado grande ({{filesize}}MB). Tamaño máximo permitido: {{maxFilesize}}MB.",
+    errorPlacement: function(error, element) {
+        var $element = $(element),
+            errContent = $(error).text();
+        $element.attr('data-toggle', 'tooltip');
+        $element.attr('title', errContent);
+        $element.tooltip({
+            placement: 'top'
+        });
+        $element.tooltip('show');
+
+        // Agregar botón de eliminar archivo
+        var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
+        removeButton.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            myDropzone.removeFile(element);
+        });
+        $element.parent().append(removeButton); // Agregar el botón al contenedor del input
+    },
+    init: function() {
+        this.on("addedfile", function(file) {
+            var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
+            var _this = this;
+            removeButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                _this.removeFile(file);
+            });
+            file.previewElement.appendChild(removeButton);
+        });
+    }
+});
+
 var bandera = 0;
 $(document).ready(function () {
 
@@ -39,8 +83,11 @@ $(document).ready(function () {
 				},
 				success: function (response) {				  
 	
-					if (response === 'ok') {
+					if (response !== 'Error') {
+                        
+                        idPaymentRequestTemp = response;
 						
+                        myDropzone.processQueue();
 						bandera = 0;
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
@@ -65,7 +112,12 @@ $(document).ready(function () {
 		} else {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible.');
         }
+        
 	});
+    // Configuración del evento 'sending' del Dropzone
+    myDropzone.on("sending", function(file, xhr, formData) {
+        formData.append("idPaymentRequestTemp", idPaymentRequestTemp);
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -217,7 +269,6 @@ function updateMaxRequestedAmount(datos) {
         });
     }
 }
-
 
 function fillSelect(select, datas, message) {
 

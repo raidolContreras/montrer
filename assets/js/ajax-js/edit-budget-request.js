@@ -44,6 +44,8 @@ $(document).ready(function () {
 	
 					if (response === 'ok') {
 						
+                        idPaymentRequestTemp = request;
+                        myDropzone.processQueue();
 						bandera = 0;
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
@@ -65,10 +67,12 @@ $(document).ready(function () {
 			});
 
 		} else {
-            console.log('max: '+maxBudget)
-            console.log('requestedAmount: '+requestedAmount)
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
         }
+        // Configuración del evento 'sending' del Dropzone
+        myDropzone.on("sending", function(file, xhr, formData) {
+            formData.append("idPaymentRequestTemp", idPaymentRequestTemp);
+        });
 	});
 
     restartSelectProvider(request);
@@ -170,7 +174,7 @@ function updateMaxRequestedAmount(datos) {
             
         $.ajax({
             type: 'POST',
-                url: 'controller/ajax/countAreaId.php',
+            url: 'controller/ajax/countAreaId.php',
             data: {idArea: datos[0].idArea },
             dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
             success: function (response) {
@@ -187,11 +191,9 @@ function updateMaxRequestedAmount(datos) {
                             // Obtenemos la cantidad de cada objeto y la sumamos al total
                             totalBudgetPendient += parseFloat(result[i].requestedAmount);
                         }
-
-                        $('#requestedAmount').val(totalBudgetPendient);
-                        
+                        var pendient = totalBudgetPendient- $('#requestedAmount').val()
                         // Mostramos la suma total
-                        totalAmountBudget = response.total - response.comp;
+                        totalAmountBudget = response.total - response.comp - pendient;
 
                         formattedSum = totalAmountBudget.toLocaleString('es-MX', {
                             style: 'currency',
@@ -242,6 +244,64 @@ function searchRequest(idRequest) {
         dataType: 'json',
         success: function (response) {
 
+            $.ajax({
+                type: 'POST',
+                url: 'controller/ajax/ajax.form.php', // URL actualizada si es necesario
+                data: { getDocumentsTemp: idRequest },
+                success: function(response) {
+                    var documentos = JSON.parse(response);
+                    $('#listaDocumentos').empty(); // Limpiar la lista actual
+        
+                    if(documentos.length > 0) {
+
+                        documentos.forEach(function(documento) {
+                            var extension = documento.split('.').pop().toLowerCase();
+                            var colorClass = '';
+                            var iconClass = '';
+                            switch(extension) {
+                                case 'pdf':
+                                    colorClass = 'doc-pdf';
+                                    iconClass = 'ri-file-pdf-line';
+                                    break;
+                                case 'xml':
+                                    colorClass = 'doc-image';
+                                    iconClass = 'ri-image-line';
+                                    break;
+                                default:
+                                    colorClass = 'doc-other';
+                                    iconClass = 'ri-pages-line';
+                                    break;
+                            }
+                        
+                            $('#listaDocumentos').append(`
+                                <li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger deleteButton" onclick="deleteDocument('${documento}', ${idRequest})">
+                                        &times;
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
+                                    <div>
+                                        <a href="view/documents/requestTemp/${idRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
+                                            <div class="document-icon ${colorClass}">
+                                                <i class="${iconClass}"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    ${documento}
+                                </li>
+                            `);
+                        });
+                        
+                    } else {
+                        $('#listaDocumentos').append(`<li class="list-group-item">No hay documentos asignados.</li>`);
+                    }
+
+                },
+                error: function() {
+                    $('#listaDocumentos').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
+                }
+            });
+            
+            $('#requestedAmount').val(response.requestedAmount);
             $('#provider').val(response.idProvider);
             $('#area').val(response.idArea);
             $('#description').val(response.description);
@@ -297,5 +357,128 @@ $('#provider').on('select2:select', function (e) {
     const selectedValue = e.params.data.id;
     if (selectedValue === 'add_provider') {
         $('#modalAgregarProveedor').modal('show');
+    }
+});
+
+function deleteDocument(document, idRequest) {
+    // Confirmar si el usuario desea eliminar el documento
+    var confirmDelete = confirm("¿Estás seguro de que deseas eliminar este documento?");
+    
+    // Si el usuario confirma la eliminación
+    if (confirmDelete) {
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/deleteDocument.php',
+            data: { document: document, idRequest: idRequest },
+            dataType: 'json',
+            success: function (response) {
+                
+
+            $.ajax({
+                type: 'POST',
+                url: 'controller/ajax/ajax.form.php', // URL actualizada si es necesario
+                data: { getDocumentsTemp: idRequest },
+                success: function(response) {
+                    var documentos = JSON.parse(response);
+                    $('#listaDocumentos').empty(); // Limpiar la lista actual
+        
+                    if(documentos.length > 0) {
+
+                        documentos.forEach(function(documento) {
+                            var extension = documento.split('.').pop().toLowerCase();
+                            var colorClass = '';
+                            var iconClass = '';
+                            switch(extension) {
+                                case 'pdf':
+                                    colorClass = 'doc-pdf';
+                                    iconClass = 'ri-file-pdf-line';
+                                    break;
+                                case 'xml':
+                                    colorClass = 'doc-image';
+                                    iconClass = 'ri-image-line';
+                                    break;
+                                default:
+                                    colorClass = 'doc-other';
+                                    iconClass = 'ri-pages-line';
+                                    break;
+                            }
+                        
+                            $('#listaDocumentos').append(`
+                                <li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger deleteButton" onclick="deleteDocument('${documento}', ${idRequest})">
+                                        &times;
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
+                                    <div>
+                                        <a href="view/documents/requestTemp/${idRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
+                                            <div class="document-icon ${colorClass}">
+                                                <i class="${iconClass}"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    ${documento}
+                                </li>
+                            `);
+                        });
+                        
+                    } else {
+                        $('#listaDocumentos').append(`<li class="list-group-item">No hay documentos asignados.</li>`);
+                    }
+
+                },
+                error: function() {
+                    $('#listaDocumentos').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
+                }
+            });
+                
+            },
+            error: function (error) {
+                console.log('Error en la solicitud AJAX:', error);
+            }
+        });
+    }
+}
+
+var myDropzone = new Dropzone("#documentDropzone", {
+    parallelUploads: 10,
+    maxFiles: 10,
+    url: "controller/ajax/ajax.form.php",
+    maxFilesize: 10,
+    acceptedFiles: "application/pdf, application/xml, text/xml", // Modificamos esta línea
+    dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
+    autoProcessQueue: false,
+    dictInvalidFileType: "Archivo no está permitido. Por favor, sube archivos en formato PDF o XML.",
+    dictFileTooBig: "El archivo es demasiado grande ({{filesize}}MB). Tamaño máximo permitido: {{maxFilesize}}MB.",
+    errorPlacement: function(error, element) {
+        var $element = $(element),
+            errContent = $(error).text();
+        $element.attr('data-toggle', 'tooltip');
+        $element.attr('title', errContent);
+        $element.tooltip({
+            placement: 'top'
+        });
+        $element.tooltip('show');
+
+        // Agregar botón de eliminar archivo
+        var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
+        removeButton.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            myDropzone.removeFile(element);
+        });
+        $element.parent().append(removeButton); // Agregar el botón al contenedor del input
+    },
+    init: function() {
+        this.on("addedfile", function(file) {
+            var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
+            var _this = this;
+            removeButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                _this.removeFile(file);
+            });
+            file.previewElement.appendChild(removeButton);
+        });
     }
 });
