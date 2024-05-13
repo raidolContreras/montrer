@@ -39,7 +39,7 @@ function verComprobacion(idRequest, status){
                 data: { getDocuments: idPaymentRequest },
                 success: function(response) {
                     var documentos = JSON.parse(response);
-                    $('#listaDocumentos').empty(); // Limpiar la lista actual
+                    $('#listaDocumentosRequest').empty(); // Limpiar la lista actual
         
                     if(documentos.length > 0) {
 
@@ -62,7 +62,7 @@ function verComprobacion(idRequest, status){
                                     break;
                             }
                         
-                            $('#listaDocumentos').append(`
+                            $('#listaDocumentosRequest').append(`
                                 <a href="view/documents/${idPaymentRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
                                     <li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
                                         <div class="document-icon ${colorClass}"><i class="${iconClass}"></i></div>
@@ -73,7 +73,7 @@ function verComprobacion(idRequest, status){
                         });
                         
                     } else {
-                        $('#listaDocumentos').append(`<li class="list-group-item">No hay documentos asignados.</li>`);
+                        $('#listaDocumentosRequest').append(`<li class="list-group-item">No hay documentos asignados.</li>`);
                     }
 
                     comments(idRequest);
@@ -88,7 +88,7 @@ function verComprobacion(idRequest, status){
 
                 },
                 error: function() {
-                    $('#listaDocumentos').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
+                    $('#listaDocumentosRequest').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
                 }
             });
         },
