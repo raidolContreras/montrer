@@ -83,8 +83,11 @@ $(document).ready(function () {
 				},
 				success: function (response) {				  
 	
-					if (response === 'ok') {
+					if (response !== 'Error') {
+                        
+                        idPaymentRequestTemp = response;
 						
+                        myDropzone.processQueue();
 						bandera = 0;
 						$("select[name='area']").val('');
 						$("input[name='requestedAmount']").val('');
@@ -109,7 +112,12 @@ $(document).ready(function () {
 		} else {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible.');
         }
+        
 	});
+    // Configuración del evento 'sending' del Dropzone
+    myDropzone.on("sending", function(file, xhr, formData) {
+        formData.append("idPaymentRequestTemp", idPaymentRequestTemp);
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {

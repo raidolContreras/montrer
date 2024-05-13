@@ -1337,9 +1337,8 @@ class FormsModels {
 		$stmt->bindParam(':eventDate', $data['eventDate'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
-			$result = 'ok';
+			$result = $pdo->lastInsertId();
 		} else {
-			print_r($pdo->errorInfo());
 			$result = 'Error';
 		}
 		$stmt->closeCursor();

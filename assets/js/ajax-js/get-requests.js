@@ -420,7 +420,8 @@ function modalComprobar(idRequest, status) {
         success: function (response) {
 			
 			var registerValue = $('#register-value').data('register');
-
+			
+			documentRequest(idRequest);
             getArea(registerValue);
             $('#fechaSolicitud').val(response.responseDate.split(' ')[0]);
             $("input[name='importeSolicitado']").val(response.approvedAmount);
@@ -793,4 +794,101 @@ function verRespuesta(idRequest) {
 			$('.comentartioRespuesta').html(comentarios);
         }
     });
+}
+
+function documentRequest(idRequest) {
+	
+	$.ajax({
+		type: 'POST',
+		url: 'controller/ajax/ajax.form.php', // URL actualizada si es necesario
+		data: { getDocumentsTemp: idRequest },
+		success: function(response) {
+			var documentos = JSON.parse(response);
+			$('#listaDocumentos').empty(); // Limpiar la lista actual
+
+			if(documentos.length > 0) {
+
+				documentos.forEach(function(documento) {
+					var extension = documento.split('.').pop().toLowerCase();
+					var colorClass = '';
+					var iconClass = '';
+					switch(extension) {
+						case 'pdf':
+							colorClass = 'doc-pdf';
+							iconClass = 'ri-file-pdf-line';
+							numPDF ++;
+							break;
+						case 'xml':
+							colorClass = 'doc-image';
+							iconClass = 'ri-image-line';
+							numXML++;
+							break;
+						default:
+							colorClass = 'doc-other';
+							iconClass = 'ri-pages-line';
+							break;
+					}
+				
+					$('#listaDocumentos').append(`
+						<li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
+							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger deleteButton" onclick="deleteDocument('${documento}', ${idRequest})">
+								&times;
+								<span class="visually-hidden">unread messages</span>
+							</span>
+							<div>
+								<a href="view/documents/requestTemp/${idRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
+									<div class="document-icon ${colorClass}">
+										<i class="${iconClass}"></i>
+									</div>
+								</a>
+							</div>
+							${documento}
+						</li>
+					`);
+				});
+				
+			} else {
+				$('#listaDocumentos').append(`<li class="list-group-item">No hay documentos asignados.</li>`);
+			}
+
+		},
+		error: function() {
+			$('#listaDocumentos').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
+		}
+	});
+
+}
+
+function deleteDocument(document, idRequest) {
+    // Confirmar si el usuario desea eliminar el documento
+    var confirmDelete = confirm("¿Estás seguro de que deseas eliminar este documento?");
+    
+    // Si el usuario confirma la eliminación
+    if (confirmDelete) {
+        $.ajax({
+            type: 'POST',
+            url: 'controller/ajax/deleteDocument.php',
+            data: { document: document, idRequest: idRequest },
+            dataType: 'json',
+            success: function (response) {
+				
+				var extension = document.split('.').pop().toLowerCase();
+                
+				switch(extension) {
+					case 'pdf':
+						numPDF--;
+						break;
+					case 'xml':
+						numXML--;
+						break;
+				}
+
+				documentRequest(idRequest);
+                
+            },
+            error: function (error) {
+                console.log('Error en la solicitud AJAX:', error);
+            }
+        });
+    }
 }
