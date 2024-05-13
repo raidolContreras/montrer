@@ -1086,3 +1086,8 @@ if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($
 if (isset($_POST['verRespuesta'])) {
     echo json_encode(FormsController::ctrGetRequest($_POST['verRespuesta']));
 }
+
+if (isset($_POST['changePaymentDate']) && isset($_POST['paymentDate'])) {
+	$response = FormsController::ctrChangePaymentDate($_POST['changePaymentDate'], $_POST['paymentDate']);
+    echo $response;
+}

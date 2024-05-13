@@ -90,7 +90,7 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function (data) {
-					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado);
+					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado, data.paymentDate);
 				}
 			}
 		],
@@ -627,6 +627,36 @@ function marcarPago(idRequest, idUser) {
 
 };
 
+function changePaymentDateModal(idRequest, paymentDate) {
+    $('#modalChangePaymentDate').modal('show');
+	$('#paymentDate').val(paymentDate);
+	var html =  `
+		<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+		<button type="button" class="btn btn-success" onclick="changePaymentDate(${idRequest})">Aceptar</button>
+	`;
+
+	$('.marcar-footer').html(html);
+}
+
+function changePaymentDate(idRequest) {
+	
+	var paymentDate = $('#paymentDate').val();
+
+	$.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {changePaymentDate: idRequest, paymentDate: paymentDate},
+        dataSrc: '',
+        success: function (response) {
+            if(response == 'ok'){
+                $('#requests').DataTable().ajax.reload();
+                $('#modalChangePaymentDate').modal('hide');
+            }
+        }
+    });
+	
+}
+
 function marcarAjax(idRequest, idUser) {
 	$.ajax({
 		type: 'POST',
@@ -642,7 +672,7 @@ function marcarAjax(idRequest, idUser) {
 	});
 }
 
-function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado) {
+function renderActionButtons(idRequest, status, userRequest, user, level, idBudget, pagado, paymentDate) {
     switch (status) {
         case 0:
             if (userRequest == user) {
@@ -668,7 +698,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                             <button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
                                 <i class="ri-close-line"></i>
                             </button>
-                        </div>
+						</div>
                     </div>
                 `;
             } else {
@@ -698,10 +728,13 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
             } else if (level == 1 && pagado == 0 && userRequest != user) {
                 return `
 					<div class="container">
-						<div class="row" style="justify-content: center;">
+						<div class="btn-group" role="group" style="justify-content: center;">
 							<button class="btn btn-success pendiente-button col-2" onclick="marcarPago(${idRequest}, ${userRequest})">
 								Marcar como pagado
 							</button>
+                            <button class="btn btn-primary change-date-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Cambiar fecha del pago" onclick="changePaymentDateModal(${idRequest}, '${paymentDate}')">
+                                <i class="ri-calendar-event-line"></i>
+                            </button>
 						</div>
 					</div>
                 `;

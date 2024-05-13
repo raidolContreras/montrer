@@ -270,7 +270,6 @@ function updateMaxRequestedAmount(datos) {
     }
 }
 
-
 function fillSelect(select, datas, message) {
 
     var selectOption = $('#' + select);
