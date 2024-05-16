@@ -907,16 +907,16 @@ if (isset($_POST['newProvider'])) {
 		mkdir($targetDir, 0777, true);
 	}
 
-		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+	if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
 
-			session_start();
-			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Send files providers: '.$fileName, $ip);
-			
-			echo 'ok';
-		} else {
-			echo 'Error';
-		}
+		session_start();
+		$ip = $_SERVER['REMOTE_ADDR'];
+		FormsModels::mdlLog($_SESSION['idUser'], 'Send files providers: '.$fileName, $ip);
+		
+		echo 'ok';
+	} else {
+		echo 'Error';
+	}
 }
 
 if (isset($_POST['searchComprobante'])) {
