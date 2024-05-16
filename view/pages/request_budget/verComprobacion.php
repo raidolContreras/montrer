@@ -50,7 +50,7 @@
                         <!-- Apartado para documentos -->
                         <div class="col-12 mt-4">
                             <h5>Lista de documentos</h5>
-                            <ul id="listaDocumentos" class="list-group-ul">
+                            <ul id="listaDocumentosRequest" class="list-group-ul">
                                 <!-- Los documentos se listarán aquí -->
                             </ul>
                         </div>

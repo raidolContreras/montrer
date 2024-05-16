@@ -82,6 +82,7 @@
         </div>
     </div>
 </div>
+
 <!-- denegate Modal -->
 <div class="modal fade" id="denegateModal" tabindex="-1" aria-labelledby="denegateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -104,6 +105,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="marcarModal" tabindex="-1" aria-labelledby="marcarModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -113,6 +115,23 @@
             </div>
             <div class="modal-body">
                 <p>¿Está seguro de que desea marcar como pagado el presupuesto?</p>
+            </div>
+            <div class="modal-footer marcar-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalChangePaymentDate" tabindex="-1" aria-labelledby="modalChangePaymentDate" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalChangePaymentDate">Cambiar la fecha de pago</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea cambiar la fecha de pago?</p>
+                <input type="date" id="paymentDate" class="form-control">
             </div>
             <div class="modal-footer marcar-footer">
             </div>

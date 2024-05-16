@@ -113,6 +113,7 @@ function enviarComprobante() {
             },
             success: function (response) {
                 idPaymentRequest = response;
+                idRequest = idRequest;
                 showAlert2('Exito', 'Comprobante enviado');
                 myDropzone.processQueue();
             },
@@ -126,6 +127,7 @@ function enviarComprobante() {
     // Configuración del evento 'sending' del Dropzone
     myDropzone.on("sending", function(file, xhr, formData) {
         formData.append("idPaymentRequest", idPaymentRequest);
+        formData.append("idRequest", idRequest);
     });
 }
 

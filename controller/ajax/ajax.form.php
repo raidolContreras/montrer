@@ -769,7 +769,7 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 	);
 	$response = FormsController::ctrRequestBudget($data);
 	
-	if ($response == 'ok'){
+	if ($response != 'Error'){
 		$ip = $_SERVER['REMOTE_ADDR'];
 		FormsModels::mdlLog($_SESSION['idUser'], 'Create request: '.$_POST['requestedAmount'], $ip);
 	}
@@ -867,11 +867,58 @@ if (
 }
 
 if (isset($_POST['idPaymentRequest'])) {
+    $data = array(
+        'idPaymentRequest' => $_POST['idPaymentRequest'],
+        'file' => $_FILES['file']['name']
+    );
+    $targetDir = "../../view/documents/" . $_POST['idPaymentRequest'] . "/";
+    $fileName = basename($_FILES["file"]["name"]);
+    $targetFilePath = $targetDir . $fileName;
+    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
+    $allowTypes = array('xml', 'pdf');
+    if (in_array($fileType, $allowTypes)) {
+        // Mover los nuevos archivos
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+            session_start();
+            $ip = $_SERVER['REMOTE_ADDR'];
+            FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: '.$fileName, $ip);
+            
+            // Obtener la ruta de la carpeta de archivos temporales existente
+            $tempDir = "../../view/documents/requestTemp/" . $_POST['idRequest'] . "/";
+            // Obtener la ruta de destino para los archivos existentes
+            $newTargetDir = $targetDir;
+            // Mover los archivos existentes a la nueva ubicación
+            if (file_exists($tempDir)) {
+                $files = glob($tempDir . "*");
+                foreach ($files as $file) {
+                    $newFilePath = $newTargetDir . basename($file);
+                    rename($file, $newFilePath);
+                }
+                // Eliminar la carpeta de archivos temporales
+                rmdir($tempDir);
+            }
+            
+            echo 'ok';
+        } else {
+            echo 'Error';
+        }
+    } else {
+        echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, xml).'));
+    }
+    $idRequest = $_POST['idRequest'];
+}
+
+if (isset($_POST['idPaymentRequestTemp'])) {
 	$data = array(
-		'idPaymentRequest' => $_POST['idPaymentRequest'],
+		'idPaymentRequestTemp' => $_POST['idPaymentRequestTemp'],
 		'file' => $_FILES['file']['name']
 	);
-	$targetDir = "../../view/documents/" . $_POST['idPaymentRequest'] . "/";
+	$targetDir = "../../view/documents/requestTemp/" . $_POST['idPaymentRequestTemp'] . "/";
 	$fileName = basename($_FILES["file"]["name"]);
 	$targetFilePath = $targetDir . $fileName;
 	$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
@@ -926,6 +973,27 @@ if (isset($_POST['searchComprobante'])) {
 if (isset($_POST['getDocuments'])) {
 	$idRequest = $_POST['getDocuments'];
 	$directoryPath = "../../view/documents/" . $idRequest . "/";
+	$files = [];
+
+	// Comprobar si la carpeta existe
+	if (file_exists($directoryPath)) {
+		foreach (new DirectoryIterator($directoryPath) as $file) {
+			if ($file->isFile()) {
+				$files[] = $file->getFilename();
+			}
+		}
+
+		// Devolver los nombres de los archivos en formato JSON
+		echo json_encode($files);
+	} else {
+		// Carpeta no existe
+		echo json_encode([]);
+	}
+}
+
+if (isset($_POST['getDocumentsTemp'])) {
+	$idRequest = $_POST['getDocumentsTemp'];
+	$directoryPath = "../../view/documents/requestTemp/" . $idRequest . "/";
 	$files = [];
 
 	// Comprobar si la carpeta existe
@@ -1013,4 +1081,9 @@ if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($
 
 if (isset($_POST['verRespuesta'])) {
     echo json_encode(FormsController::ctrGetRequest($_POST['verRespuesta']));
+}
+
+if (isset($_POST['changePaymentDate']) && isset($_POST['paymentDate'])) {
+	$response = FormsController::ctrChangePaymentDate($_POST['changePaymentDate'], $_POST['paymentDate']);
+    echo $response;
 }
