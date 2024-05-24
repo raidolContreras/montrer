@@ -746,7 +746,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         </div>
                     </div>
                 `;
-            }
+            } else {
+				return '';
+			}
             break;
         case 2:
             if (userRequest != user && level == 1) {
