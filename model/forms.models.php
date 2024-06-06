@@ -444,8 +444,8 @@ class FormsModels {
 	   $stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
 	   if($stmt->execute()){
 		return "ok";
-		$result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
-		return $result;
+		// $result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
+		// return $result;
 	   } else {
 		print_r($pdo->errorInfo());
 	   }
