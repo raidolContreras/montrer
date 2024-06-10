@@ -281,8 +281,6 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 					}
 				});
 			} else {
-				console.log('Max: '+maxBudget);
-				console.log(approvedAmount);
 				$(`#${modalId}`).modal('hide');
 				var idBudget = $('input[name="budget"]').val();
 				showAlertBootstrap6('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.', idRequest, idBudget);
@@ -574,8 +572,6 @@ function verificacion(idUser) {
 				
 							var timeDifference = today.getTime() - responseDate.getTime();
 							var daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-				
-							console.log("Días transcurridos desde la respuesta:", daysDifference);
 							// Formatear como pesos
 							var formattedBudget = parseFloat(item.approvedAmount).toLocaleString('es-MX', {
 								style: 'currency',

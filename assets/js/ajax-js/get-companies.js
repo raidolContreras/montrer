@@ -9,14 +9,12 @@ $(document).ready(function () {
             { 
                 data: null,
                 render: function(data, type, row) {
-                    console.log(row);
                     return '<a href="">' + data.name + '</a>';
                 }
             },
             { 
                 data: null,
                 render: function(data, type, row) {
-                    console.log(row);
                     return '<div class="image-container" align="center" style="background-color: #ececec; display: inline-block; padding: 5px;">'+
                                 '<img src="assets/img/companies/' + data.idCompany + '/' + data.logo + '" width="50px" style="display: block;">'+
                             '</div>';

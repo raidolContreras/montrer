@@ -1,6 +1,5 @@
 var level = $("#level").val();
 $(document).ready(function () {
-    console.log($("#idUser").val());
     if (level == 1) {
         var idUser = null
     } else {

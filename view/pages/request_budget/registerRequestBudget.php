@@ -83,7 +83,7 @@
 
                 <div class="col-md-4 mb-3">
                     <label for="entidadBancaria" class="form-label">Entidad bancaria</label>
-                    <input class="form-control" disabled type="text" id="entidadBancaria" name="entidadBancaria">
+                    <input class="form-control" type="text" id="entidadBancaria" name="entidadBancaria" disabled>
                 </div>
 
                 <div class="col-md-4 mb-3">

@@ -53,7 +53,7 @@ $(document).ready(function () {
             data: {'register': provider},
             dataType: 'json',
             success: function(data) {
-		        $("input[name='entidadBancaria']").val(data.bank_name);
+		        $("#entidadBancaria").val(data.bank_name);
             }
         });
     });

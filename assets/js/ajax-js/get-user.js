@@ -15,7 +15,6 @@ function getUser(registerValue) {
         data: {'register': registerValue}, // Agrega el valor de register a la solicitud
         dataType: 'json',
         success: function (response) {
-            console.log('Respuesta del servidor:', response);
             if (response == false) {
                 window.location.href = "registers";
             }
