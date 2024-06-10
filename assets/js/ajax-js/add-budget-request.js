@@ -45,6 +45,29 @@ var myDropzone = new Dropzone("#documentDropzone", {
 var bandera = 0;
 $(document).ready(function () {
 
+    $('#provider').on('change', function() {
+        provider = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: 'controller/ajax/getProvider.php',
+            data: {'register': provider},
+            dataType: 'json',
+            success: function(data) {
+		        $("input[name='entidadBancaria']").val(data.bank_name);
+            }
+        });
+    });
+
+    $('#pagoCon').on('change', function() {
+        if ($('#pagoCon').val() === 'cheque') {
+            $('.cheque').show();
+            $('#chequeNombre').prop('disabled', false);
+        } else {
+            $('.cheque').hide();
+            $('#chequeNombre').prop('disabled', true);
+        }
+    });
+
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {
         bandera = 1;
