@@ -66,6 +66,13 @@
 					modalFooter.html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
 				$('#alertModal').modal('show');
 			}
+
+			function showAlert(title, message) {
+				$('#modalLabel').text(title);
+				$('.modal-body-extra').html(message);
+				$('.modal-footer-extra').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success sendRequest">Aceptar</button>');
+				$('#alertModal').modal('show');
+			}
 			
 			function showAlertBootstrap1(title, message, adress) {
 				$('#modalLabel').text(title);

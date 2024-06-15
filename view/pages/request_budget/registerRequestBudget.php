@@ -98,12 +98,12 @@
 
                 <div class="col-md-4 mb-3">
                     <label for="conceptoPago" class="form-label">Concepto del pago</label>
-                    <textarea class="form-control" disabled id="conceptoPago" name="conceptoPago"></textarea>
+                    <textarea class="form-control" id="conceptoPago" name="conceptoPago"></textarea>
                 </div>
 
                 <div class="col-md-4 mb-3">
                     <label for="description" class="form-label">Descripción<span class="required"></span></label>
-                    <textarea class="form-control" disabled id="description" name="description"></textarea>
+                    <textarea class="form-control" id="description" name="description"></textarea>
                 </div>
 
                 <div class="col-md-4 mb-3">

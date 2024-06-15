@@ -1,3 +1,5 @@
+var docs = 0;
+
 var myDropzone = new Dropzone("#documentDropzone", {
     parallelUploads: 10,
     maxFiles: 10,
@@ -30,12 +32,14 @@ var myDropzone = new Dropzone("#documentDropzone", {
     init: function() {
         this.on("addedfile", function(file) {
             var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
+            docs++;
             var _this = this;
             removeButton.addEventListener("click", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-
+                
                 _this.removeFile(file);
+                docs--;
             });
             file.previewElement.appendChild(removeButton);
         });
@@ -54,6 +58,10 @@ $(document).ready(function () {
             dataType: 'json',
             success: function(data) {
 		        $("#entidadBancaria").val(data.bank_name);
+		        $("#titularCuenta").val(data.account_holder);
+		        $("#numCuenta").val(data.account_number);
+		        $("#clabe").val(data.clabe);
+		        $("#description").val(data.description);
             }
         });
     });
@@ -86,52 +94,22 @@ $(document).ready(function () {
 		var budget = $("input[name='budget']").val();
 		var folio = $("input[name='folio']").val();
 
+        console.log('Area: ', area,' cantidad: ', requestedAmount,' descripción: ', description,' proveedor: ', provider,' evento: ', eventDate);
+
 		if (area == '' || requestedAmount == '' || description == '' || eventDate == '' || provider == ''){
             
             showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
             
 		} else if (maxBudget >= requestedAmount) {
 
-			$.ajax({
-				type: "POST",
-				url: "controller/ajax/ajax.form.php",
-				data: {
-					area: area,
-					requestedAmount: requestedAmount,
-					description: description,
-                    eventDate: eventDate,
-					budget: budget,
-					folio: folio,
-                    provider: provider
-				},
-				success: function (response) {				  
-	
-					if (response !== 'Error') {
-                        
-                        idPaymentRequestTemp = response;
-						
-                        myDropzone.processQueue();
-						bandera = 0;
-						$("select[name='area']").val('');
-						$("input[name='requestedAmount']").val('');
-						$("textarea[name='description']").val('');
-                        $("input[name='event']").val('');
-                        $("input[name='eventDate']").val('');
-                        $('.sidenav').removeAttr('onclick');
-
-	                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
-
-					} else {
-                        
-	                    showAlertBootstrap('!Atención¡', 'Error al crear la solicitud.');
-                        
-					}
-				},
-				error: function (error) {
-					console.log("Error en la solicitud Ajax:", error);
-				}
-			});
-
+            if (docs == 0) {
+                showAlert('¡Atención!', 'Esta seguro de enviar la solicitud sin adjuntar documentos.');
+                
+                $('.sendRequest').on('click', function() {
+                    submitRequestBudget(area, requestedAmount, description, eventDate, budget, folio, provider);
+                });
+            }
+            
 		} else {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible.');
         }
@@ -142,6 +120,49 @@ $(document).ready(function () {
         formData.append("idPaymentRequestTemp", idPaymentRequestTemp);
     });
 });
+
+function submitRequestBudget(area, requestedAmount, description, eventDate, budget, folio, provider) {
+    
+    $.ajax({
+        type: "POST",
+        url: "controller/ajax/ajax.form.php",
+        data: {
+            area: area,
+            requestedAmount: requestedAmount,
+            description: description,
+            eventDate: eventDate,
+            budget: budget,
+            folio: folio,
+            provider: provider
+        },
+        success: function (response) {				  
+
+            if (response !== 'Error') {
+                
+                idPaymentRequestTemp = response;
+                
+                myDropzone.processQueue();
+                bandera = 0;
+                $("select[name='area']").val('');
+                $("input[name='requestedAmount']").val('');
+                $("textarea[name='description']").val('');
+                $("input[name='event']").val('');
+                $("input[name='eventDate']").val('');
+                $('.sidenav').removeAttr('onclick');
+
+                showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
+
+            } else {
+                
+                showAlertBootstrap('!Atención¡', 'Error al crear la solicitud.');
+                
+            }
+        },
+        error: function (error) {
+            console.log("Error en la solicitud Ajax:", error);
+        }
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function () {
 	var cancelButton = document.getElementById('cancelButton');
