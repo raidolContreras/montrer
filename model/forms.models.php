@@ -1297,7 +1297,7 @@ class FormsModels {
 		$pdo = Conexion::conectar();
 	
 		// Calcula la fecha de pago (paymentDate) según la fecha de creación de la solicitud (requestDate)
-		$requestDate = new DateTime($data['requestDate']);
+		$requestDate = new DateTime();
 		$currentDay = $requestDate->format('N'); // Obtiene el día de la semana (1: lunes, 2: martes, ..., 7: domingo)
 		$hour = $requestDate->format('H:i'); // Obtiene la hora de la solicitud
 	
@@ -1311,9 +1311,9 @@ class FormsModels {
 		}
 	
 		$sql = "INSERT INTO montrer_budget_requests
-					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, eventDate, requestDate, paymentDate) 
+					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, eventDate, requestDate, paymentDate, conceptoPago, pagoCon, chequeNombre, subPartida) 
 				VALUES 
-					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :eventDate, :requestDate, :paymentDate)";
+					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :eventDate, :requestDate, :paymentDate, :conceptoPago, :pagoCon, :chequeNombre, :subPartida)";
 	
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $data['area'], PDO::PARAM_INT);
@@ -1326,6 +1326,10 @@ class FormsModels {
 		$stmt->bindParam(':eventDate', $data['eventDate'], PDO::PARAM_STR);
 		$stmt->bindParam(':requestDate', $data['requestDate'], PDO::PARAM_STR);
 		$stmt->bindParam(':paymentDate', $paymentDate->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+		$stmt->bindParam(':conceptoPago', $data['conceptoPago'], PDO::PARAM_STR);
+		$stmt->bindParam(':pagoCon', $data['pagoCon'], PDO::PARAM_STR);
+		$stmt->bindParam(':chequeNombre', $data['chequeNombre'], PDO::PARAM_STR);
+		$stmt->bindParam(':subPartida', $data['supPartida'], PDO::PARAM_INT);
 	
 		if($stmt->execute()){
 			$result = $pdo->lastInsertId();
@@ -1619,7 +1623,7 @@ class FormsModels {
 	static public function mdlUpdateRequest($datos){
 		$pdo = Conexion::conectar();
 
-		$sql = "UPDATE montrer_budget_requests SET idProvider = :idProvider, requestedAmount = :requestedAmount, description = :description, eventDate = :eventDate where idRequest = :idRequest";
+		$sql = "UPDATE montrer_budget_requests SET idProvider = :idProvider, requestedAmount = :requestedAmount, description = :description, eventDate = :eventDate, conceptoPago = :conceptoPago, pagoCon = :pagoCon, chequeNombre = :chequeNombre, subPartida = :subPartida where idRequest = :idRequest";
 
 		$stmt = $pdo->prepare($sql);
 
@@ -1627,6 +1631,10 @@ class FormsModels {
 		$stmt->bindParam(':requestedAmount', $datos['requestedAmount'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $datos['description'], PDO::PARAM_STR);
 		$stmt->bindParam(':eventDate', $datos['eventDate'], PDO::PARAM_STR);
+		$stmt->bindParam(':conceptoPago', $datos['conceptoPago'], PDO::PARAM_STR);
+		$stmt->bindParam(':pagoCon', $datos['pagoCon'], PDO::PARAM_STR);
+		$stmt->bindParam(':chequeNombre', $datos['chequeNombre'], PDO::PARAM_STR);
+		$stmt->bindParam(':subPartida', $datos['supPartida'], PDO::PARAM_INT);
 		$stmt->bindParam(':idRequest', $datos['idRequest'], PDO::PARAM_INT);
 
 		if($stmt->execute()){

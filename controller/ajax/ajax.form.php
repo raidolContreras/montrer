@@ -765,6 +765,10 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 		'provider' => $_POST['provider'],
 		'eventDate' => $_POST['eventDate'],
 		'folio' => $_POST['folio'],
+		'conceptoPago' => $_POST['conceptoPago'],
+		'pagoCon' => $_POST['pagoCon'],
+		'chequeNombre' => $_POST['chequeNombre'],
+		'supPartida' => $_POST['supPartida'],
 		'budget' => $_POST['budget']
 	);
 	$response = FormsController::ctrRequestBudget($data);
@@ -1061,16 +1065,24 @@ if (isset($_POST['marcarPago'])) {
 	echo $response;
 }
 
-if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($_POST['descriptionEdit']) && isset($_POST['eventDateEdit']) && isset($_POST['budgetEdit']) && isset($_POST['providerEdit'])) {
+if (isset($_POST['areaEdit']) &&
+	isset($_POST['requestedAmountEdit']) &&
+	isset($_POST['descriptionEdit']) &&
+	isset($_POST['eventDateEdit']) &&
+	isset($_POST['budgetEdit']) &&
+	isset($_POST['providerEdit'])) {
 
 	$datos = array(
 		'area' => $_POST['areaEdit'],
         'requestedAmount' => $_POST['requestedAmountEdit'],
         'description' => $_POST['descriptionEdit'],
-        'event' => $_POST['eventEdit'],
         'eventDate' => $_POST['eventDateEdit'],
         'budget' => $_POST['budgetEdit'],
         'provider' => $_POST['providerEdit'],
+        'conceptoPago' => $_POST['conceptoPago'],
+        'pagoCon' => $_POST['pagoCon'],
+        'chequeNombre' => $_POST['chequeNombre'],
+        'supPartida' => $_POST['supPartida'],
 		'idRequest' => $_POST['requestEdit']
 	);
 

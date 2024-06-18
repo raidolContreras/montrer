@@ -55,6 +55,19 @@
                         <option value="">Seleccionar departamento</option>
                     </select>
                 </div>
+
+                <div class="col-md-4">
+                    <label for="supPartida" class="form-label">Sub-partida<span class="required"></span></label>
+                    <select name="supPartida" id="supPartida" class="form-select form-control">
+                        <option value="">Seleccione una subpartida</option>
+                        <option value="1">16/9</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="description" class="form-label">Descripción<span class="required"></span></label>
+                    <textarea class="form-control" id="description" name="description"></textarea>
+                </div>
                 
                 <div class="col-md-4">
                     <label for="requestedAmount" class="form-label">Monto solicitado ($)<span class="required"></span></label>
@@ -63,7 +76,7 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label for="pagoCon" class="form-label">Pago con</label>
+                    <label for="pagoCon" class="form-label">Pago con<span class="required"></span></label>
                     <select class="form-select form-control" id="pagoCon" name="pagoCon">
                         <option value="">Selecciona un metodo de pago</option>
                         <option value="cheque">Cheque</option>
@@ -72,7 +85,7 @@
                 </div>
 
                 <div class="col-md-4 mb-3 cheque">
-                    <label for="chequeNombre" class="form-label">Cheque a nombre de</label>
+                    <label for="chequeNombre" class="form-label">Cheque a nombre de<span class="required"></span></label>
                     <input class="form-control" disabled type="text" id="chequeNombre" name="chequeNombre">
                 </div>
 
@@ -97,13 +110,11 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label for="conceptoPago" class="form-label">Concepto del pago</label>
-                    <textarea class="form-control" id="conceptoPago" name="conceptoPago"></textarea>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label for="description" class="form-label">Descripción<span class="required"></span></label>
-                    <textarea class="form-control" id="description" name="description"></textarea>
+                    <label for="conceptoPago" class="form-label">Concepto del pago<span class="required"></span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="conceptoPago" name="conceptoPago" readonly>
+                        <button type="button" class="btn btn-outline-secondary" onclick="generarConcepto()">Generar</button>
+                    </div>
                 </div>
 
                 <div class="col-md-4 mb-3">

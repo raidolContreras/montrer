@@ -1,4 +1,9 @@
 var docs = 0;
+var providerSelected = '';
+var departamentSelected = '';
+var supPartidaSelected = '';
+var pagoConSelected = '';
+var description = '';
 
 var myDropzone = new Dropzone("#documentDropzone", {
     parallelUploads: 10,
@@ -57,11 +62,15 @@ $(document).ready(function () {
             data: {'register': provider},
             dataType: 'json',
             success: function(data) {
-		        $("#entidadBancaria").val(data.bank_name);
-		        $("#titularCuenta").val(data.account_holder);
-		        $("#numCuenta").val(data.account_number);
-		        $("#clabe").val(data.clabe);
-		        $("#description").val(data.description);
+                if (provider != ''){
+                    providerSelected = data.business_name;
+                    $("#entidadBancaria").val(data.bank_name);
+                    $("#titularCuenta").val(data.account_holder);
+                    $("#numCuenta").val(data.account_number);
+                    $("#clabe").val(data.clabe);
+                } else {
+                    providerSelected = '';
+                }
             }
         });
     });
@@ -74,6 +83,7 @@ $(document).ready(function () {
             $('.cheque').hide();
             $('#chequeNombre').prop('disabled', true);
         }
+        pagoConSelected = $(this).find('option:selected').text();
     });
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
@@ -87,28 +97,36 @@ $(document).ready(function () {
 
 		var area = $("select[name='area']").val();
         var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
-		var description = $("textarea[name='description']").val();
+		description = $("textarea[name='description']").val();
 		var provider = $("select[name='provider']").val();
         var eventDate = $("input[name='eventDate']").val();
 		var maxBudget = parseFloat($("input[name='maxBudget']").val());
 		var budget = $("input[name='budget']").val();
 		var folio = $("input[name='folio']").val();
+		var conceptoPago = $("input[name='conceptoPago']").val();
+		var pagoCon = $("select[name='pagoCon']").val();
+		var supPartida = $("select[name='supPartida']").val();
 
-        console.log('Area: ', area,' cantidad: ', requestedAmount,' descripción: ', description,' proveedor: ', provider,' evento: ', eventDate);
+		var chequeNombre = (pagoCon == 'cheque') ? $("input[name='chequeNombre']").val() : '';
 
-		if (area == '' || requestedAmount == '' || description == '' || eventDate == '' || provider == ''){
+		if (area == '' || requestedAmount == '' || description == '' || eventDate == '' || provider == '' || pagoCon == '' || conceptoPago == '' || supPartida == ''){
             
             showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
             
 		} else if (maxBudget >= requestedAmount) {
 
-            if (docs == 0) {
-                showAlert('¡Atención!', 'Esta seguro de enviar la solicitud sin adjuntar documentos.');
-                
-                $('.sendRequest').on('click', function() {
-                    submitRequestBudget(area, requestedAmount, description, eventDate, budget, folio, provider);
-                });
+            if (pagoCon == 'cheque' && chequeNombre == '') {
+                showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            } else {
+                if (docs == 0) {
+                    showAlert('¡Atención!', 'Esta seguro de enviar la solicitud sin adjuntar documentos.');
+                    
+                    $('.sendRequest').on('click', function() {
+                        submitRequestBudget(area, requestedAmount, description, eventDate, budget, folio, provider, conceptoPago, pagoCon, chequeNombre, supPartida);
+                    });
+                }
             }
+
             
 		} else {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible.');
@@ -121,8 +139,7 @@ $(document).ready(function () {
     });
 });
 
-function submitRequestBudget(area, requestedAmount, description, eventDate, budget, folio, provider) {
-    
+function submitRequestBudget(area, requestedAmount, description, eventDate, budget, folio, provider, conceptoPago, pagoCon, chequeNombre, supPartida) {
     $.ajax({
         type: "POST",
         url: "controller/ajax/ajax.form.php",
@@ -133,6 +150,10 @@ function submitRequestBudget(area, requestedAmount, description, eventDate, budg
             eventDate: eventDate,
             budget: budget,
             folio: folio,
+            conceptoPago: conceptoPago,
+            pagoCon: pagoCon,
+            chequeNombre: chequeNombre,
+            supPartida: supPartida,
             provider: provider
         },
         success: function (response) {				  
@@ -213,6 +234,8 @@ function fillAreaSelect(select, datas, message) {
         var option = $('<option>').val(data[0]).text(data[1]);
         selectOption.append(option);
 
+        departamentSelected = data[1];
+
         if (init == 1) {
             $.ajax({
                 type: 'POST',
@@ -235,7 +258,9 @@ function fillAreaSelect(select, datas, message) {
 $('#area').on('change', function() {
     var selectedAreaId = $(this).val();
     var selectedAreaText = $(this).find('option:selected').text();
-    
+
+    departamentSelected = selectedAreaText;
+
     createFolio(selectedAreaText);
 
     $.ajax({
@@ -251,6 +276,10 @@ $('#area').on('change', function() {
         }
     });
 
+});
+
+$('#supPartida').on('change', function() {
+    supPartidaSelected = $(this).find('option:selected').text();
 });
 
 function updateMaxRequestedAmount(datos) {
@@ -362,4 +391,35 @@ function createFolio(nameArea) {
             $('input[name="folio"]').val(folioFin);
         }
     });
+}
+
+function generarConcepto() {
+    let validar = 0;
+
+    pagoCon = (pagoConSelected == 'Cheque') ? 'cheque' : 'Trnsf';
+
+    let conceptoPago = `${pagoCon}. ${providerSelected}-${departamentSelected}-${supPartidaSelected}-${$('#description').val()}`;
+
+    const fieldsToValidate = [
+        { id: '#pagoCon', value: pagoConSelected },
+        { id: '#provider', value: providerSelected },
+        { id: '#area', value: departamentSelected },
+        { id: '#supPartida', value: supPartidaSelected },
+        { id: '#description', value: $('#description').val() }
+    ];
+
+    fieldsToValidate.forEach(field => {
+        if (field.value === '') {
+            $(field.id).css('border-color', 'red');
+            validar++;
+        } else {
+            $(field.id).css('border-color', '');
+        }
+    });
+
+    if (validar === 0) {
+        $('#conceptoPago').val(conceptoPago);
+    } else {
+        showAlertBootstrap('Atención', 'Llena los campos marcados en rojo');
+    }
 }

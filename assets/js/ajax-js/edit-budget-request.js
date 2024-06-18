@@ -1,4 +1,11 @@
 var bandera = 0;
+
+var providerSelected = '';
+var departamentSelected = '';
+var supPartidaSelected = '';
+var pagoConSelected = '';
+var description = '';
+
 $(document).ready(function () {
 
     var request = $('#request').val();
@@ -15,56 +22,68 @@ $(document).ready(function () {
 
 		var area = $("select[name='area']").val();
         var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
-		var description = $("textarea[name='description']").val();
+		description = $("textarea[name='description']").val();
 		var provider = $("select[name='provider']").val();
         var eventDate = $("input[name='eventDate']").val();
 		var maxBudget = parseFloat($("input[name='maxBudget']").val());
 		var budget = $("input[name='budget']").val();
-		var folio = $("input[name='folio']").val();
+		var conceptoPago = $("input[name='conceptoPago']").val();
+		var pagoCon = $("select[name='pagoCon']").val();
+		var supPartida = $("select[name='supPartida']").val();
 
-		if (area == '' || requestedAmount == '' || description == '' || event == '' || eventDate == '' || provider == ''){
+		var chequeNombre = (pagoCon == 'cheque') ? $("input[name='chequeNombre']").val() : '';
+
+		if (area == '' || requestedAmount == '' || description == '' || eventDate == '' || provider == '' || pagoCon == '' || conceptoPago == '' || supPartida == ''){
             
             showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
             
 		} else if (maxBudget >= requestedAmount) {
-
-			$.ajax({
-				type: "POST",
-				url: "controller/ajax/ajax.form.php",
-				data: {
-					areaEdit: area,
-					requestedAmountEdit: requestedAmount,
-					descriptionEdit: description,
-                    eventDateEdit: eventDate,
-					budgetEdit: budget,
-                    providerEdit: provider,
-                    requestEdit: request
-				},
-				success: function (response) {				  
-	
-					if (response === 'ok') {
-						
-                        idPaymentRequestTemp = request;
-                        myDropzone.processQueue();
-						bandera = 0;
-						$("select[name='area']").val('');
-						$("input[name='requestedAmount']").val('');
-						$("textarea[name='description']").val('');
-                        $("input[name='eventDate']").val('');
-                        $('.sidenav').removeAttr('onclick');
-
-	                    showAlertBootstrap1('Operación realizada', 'Presupuesto actualizado correctamente', 'requestBudget');
-
-					} else {
-                        
-	                    showAlertBootstrap('!Atención¡', 'Error al crear la solicitud.');
-                        
-					}
-				},
-				error: function (error) {
-					console.log("Error en la solicitud Ajax:", error);
-				}
-			});
+            
+            if (pagoCon == 'cheque' && chequeNombre == '') {
+                showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "controller/ajax/ajax.form.php",
+                    data: {
+                        areaEdit: area,
+                        requestedAmountEdit: requestedAmount,
+                        descriptionEdit: description,
+                        eventDateEdit: eventDate,
+                        budgetEdit: budget,
+                        providerEdit: provider,
+                        requestEdit: request,
+                        conceptoPago: conceptoPago,
+                        pagoCon: pagoCon,
+                        chequeNombre: chequeNombre,
+                        supPartida: supPartida,
+                    },
+                    success: function (response) {				  
+            
+                        if (response === 'ok') {
+                            
+                            idPaymentRequestTemp = request;
+                            myDropzone.processQueue();
+                            bandera = 0;
+                            $("select[name='area']").val('');
+                            $("input[name='requestedAmount']").val('');
+                            $("textarea[name='description']").val('');
+                            $("input[name='eventDate']").val('');
+                            $('.sidenav').removeAttr('onclick');
+            
+                            showAlertBootstrap1('Operación realizada', 'Presupuesto actualizado correctamente', 'requestBudget');
+            
+                        } else {
+                            
+                            showAlertBootstrap('!Atención¡', 'Error al crear la solicitud.');
+                            
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error en la solicitud Ajax:", error);
+                    }
+                });
+            }
 
 		} else {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible mensual.');
@@ -84,6 +103,8 @@ $(document).ready(function () {
         // Verifica si la opción seleccionada es "Añadir proveedor"
         if ($(this).val() === "add_provider") {
             $('#modalAgregarProveedor').modal('show');
+        } else {
+            dataProvider($(this).val());
         }
     });
 
@@ -145,22 +166,25 @@ function fillAreaSelect(select, datas, message) {
     });
 }
 
-// Luego, agrega el evento change al select de áreas
-$('#area').on('change', function() {
-    var selectedAreaId = $(this).val();
+$('#pagoCon').on('change', function() {
+    
+    if ($(this).val() != ''){
+        pagoConSelected = $('#pagoCon').find('option:selected').text();
+        generarConcepto();
+    } else {
+        pagoConSelected = '';
+    }
 
-    $.ajax({
-        type: 'POST',
-        url: 'controller/ajax/getAuthorizedAmount.php',
-        data: { areaId: selectedAreaId },
-        dataType: 'json',
-        success: function (response) {
-            updateMaxRequestedAmount(response);
-        },
-        error: function (error) {
-            console.log('Error en la solicitud AJAX:', error);
-        }
-    });
+});
+
+$('#supPartida').on('change', function() {
+
+    if ($(this).val() != ''){
+        supPartidaSelected = $('#supPartida').find('option:selected').text();
+        generarConcepto();
+    } else {
+        supPartidaSelected = '';
+    }
 
 });
 
@@ -303,11 +327,24 @@ function searchRequest(idRequest) {
             
             $('#requestedAmount').val(response.requestedAmount);
             $('#provider').val(response.idProvider);
+
+            dataProvider(response.idProvider);
+
             $('#area').val(response.idArea);
             $('#description').val(response.description);
             $('#event').val(response.event);
             $('#eventDate').val(response.eventDate);
             $('#folio').val(response.folio);
+
+            $('#conceptoPago').val(response.conceptoPago);
+            $('#supPartida').val(response.subPartida);
+            $('#pagoCon').val(response.pagoCon);
+
+            departamentSelected = $('#area').find('option:selected').text();
+            supPartidaSelected = $('#supPartida').find('option:selected').text();
+            pagoConSelected = $('#pagoCon').find('option:selected').text();
+
+            $('#chequeNombre').val(response.chequeNombre);
             
             var datetimeString = response.requestDate;
             var parts = datetimeString.split(' ');
@@ -317,6 +354,29 @@ function searchRequest(idRequest) {
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+function dataProvider(provider) {
+    $.ajax({
+        type: "POST",
+        url: 'controller/ajax/getProvider.php',
+        data: {'register': provider},
+        dataType: 'json',
+        success: function(data) {
+            
+            if (provider != ''){
+                providerSelected = data.business_name;
+                $("#entidadBancaria").val(data.bank_name);
+                $("#titularCuenta").val(data.account_holder);
+                $("#numCuenta").val(data.account_number);
+                $("#clabe").val(data.clabe);
+                generarConcepto();
+            } else {
+                providerSelected = '';
+            }
+            
         }
     });
 }
@@ -482,3 +542,35 @@ var myDropzone = new Dropzone("#documentDropzone", {
         });
     }
 });
+
+function generarConcepto() {
+    let validar = 0;
+
+    pagoCon = (pagoConSelected == 'Cheque') ? 'cheque' : 'Trnsf';
+
+    let conceptoPago = `${pagoCon}. ${providerSelected}-${departamentSelected}-${supPartidaSelected}-${$('#description').val()}`;
+
+    const fieldsToValidate = [
+        { id: '#pagoCon', value: pagoConSelected },
+        { id: '#provider', value: providerSelected },
+        { id: '#area', value: departamentSelected },
+        { id: '#supPartida', value: supPartidaSelected },
+        { id: '#description', value: $('#description').val() }
+    ];
+
+    fieldsToValidate.forEach(field => {
+        if (field.value === '') {
+            $(field.id).css('border-color', 'red');
+            validar++;
+        } else {
+            $(field.id).css('border-color', '');
+        }
+    });
+
+    if (validar === 0) {
+        $('#conceptoPago').val(conceptoPago);
+        console.log(conceptoPago);
+    } else {
+        showAlertBootstrap('Atención', 'Llena los campos marcados en rojo');
+    }
+}
