@@ -16,8 +16,103 @@
 <main class="main-content-wrap">
 
     <div class="card-box-style">
-        <div class="others-title">
-            <h3>Solicitud de presupuesto</h3>
+        <center class="others-title">
+            <h3>SOLICITUD DE PAGO</h3>
+        </center>
+
+        <div class="row">
+            <div class="col-2">SOLICITANTE:</div>
+            <div class="col-5"><?php echo $_SESSION['firstname'] . " " . $_SESSION['lastname'] ?></div>
+            <div class="col-5">1000-001-005-007</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-6">EMPRESA:</div>
+            <div class="col-6">IMO</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-2">ÁREA DE CARGO:</div>
+            <div class="col-5">COORD LOGISTICA Y EVENTOS</div>
+            <div class="col-5">5002-001-000-000-000</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">CUENTA QUE SE AFECTA:</div>
+            <div class="col-5">DESFILES</div>
+            <div class="col-5">5002-001-001-000-000</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">PARTIDA QUE SE AFECTA:</div>
+            <div class="col-5">16-SEP</div>
+            <div class="col-5">5002-001-001-001-000</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">CONCEPTO:</div>
+            <div class="col-5">UNIFORMES</div>
+            <div class="col-5">5002-001-001-001-000</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-2">IMPORTE SOLICITADO:</div>
+            <div class="col-5">$70,000</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">IMPORTE CON LETRA:</div>
+            <div class="col-5">SETENTA MIL PESOS 00/100 M.N.</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">FECHA COMPROMISO DE PAGO:</div>
+            <div class="col-5">15/07/2024</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">PROVEEDOR:</div>
+            <div class="col-5">SUBURBIA S.A. DE C.V.</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">CLAVE INTERBANCARIA:</div>
+            <div class="col-5">XXXXXXXXXXXXXXXX</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">BANCO:</div>
+            <div class="col-5">SANTANDER</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">CONCEPTO POLIZA CONTABLE:</div>
+            <div class="col-5">Trnsf. Suburbia S.A. DE C.V. - DESFILES  - 16/09 - UNIFORMES</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">ANEXA COMPROBANTE FISCAL:</div>
+            <div class="col-5">SI (X)</div>
+            <div class="col-5">NO ()</div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">ADJUNTA COMPROBANTE FISCAL:</div>
+            <div class="col-10">
+                <div class="dropzone" id="documentDropzone"></div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-3">ENVIAR SOLICITUD:</div>
+            <div class="col-3">SE ENVIO SI (X) NO ()</div>
+            <div class="col-3">FECHA DE ENVIO</div>
+            <div class="col-3">12/12/2024</div>
+        </div>
+        
+        <div class="row">
+            <div class="col-2">FOLIO DE CONFIRMACIÓN DE ENVIO DE LA SOLICITUD:</div>
+            <div class="col-5">XXXXX</div>
         </div>
 
         <form class="account-wrap" id="budgetRequestForm">
@@ -70,7 +165,6 @@
                 </div>
                 
                 <div class="col-12 mt-4">
-                    <div class="dropzone" id="documentDropzone"></div>
                 </div>
                 
                 <div class="col-12 mt-2 text-end">
