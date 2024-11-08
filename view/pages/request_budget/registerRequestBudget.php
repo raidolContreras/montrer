@@ -99,10 +99,11 @@
                 </div>
 
                 <!-- Adjuntar Archivos -->
-                <div class="col-md-6">
-                    <label for="attachment" class="form-label">Anexa Comprobante Fiscal (PDF/XML)<span class="required"></span></label>
-                    <input type="file" class="form-control" id="attachment" name="attachment[]" multiple accept=".pdf,.xml">
-                    <p>Hasta 20 archivos permitidos.</p>
+                <div class="row">
+                    <div class="col-2">Anexa Comprobante Fiscal (PDF/XML):</div>
+                    <div class="col-10">
+                        <div class="dropzone" id="documentDropzone"></div>
+                    </div>
                 </div>
 
                 <!-- Enviar Solicitud -->
