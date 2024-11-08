@@ -45,11 +45,11 @@
                     </select>
                 </div>
 
-                <!-- Área de Cargo -->
+                <!--  Área de Cargo -->
                 <div class="col-md-6">
-                    <label for="areaCargo" class="form-label">Área de Cargo<span class="required"></span></label>
-                    <select name="areaCargo" id="areaCargo" class="form-select form-control">
-                        <option value="">Seleccionar área de cargo</option>
+                    <label for="area" class="form-label">Área de Cargo<span class="required"></span></label>
+                    <select name="area" id="area" class="form-select form-control">
+                        <option value="">Seleccionar un área</option>
                     </select>
                 </div>
 
@@ -144,6 +144,7 @@
         </form>
     </div>
 </main>
+<div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 
 <!-- End Main Content Area -->
 <!-- Incluye Dropzone -->
