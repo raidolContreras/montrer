@@ -109,7 +109,7 @@
                 </div>
 
                 <!-- Adjuntar Archivos -->
-                <div class="row">
+                <div class="row my-3">
                     <div class="col-2">Anexa Comprobante Fiscal (PDF/XML):</div>
                     <div class="col-10">
                         <div class="dropzone" id="documentDropzone"></div>
@@ -117,12 +117,12 @@
                 </div>
 
                 <!-- Enviar Solicitud -->
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <label for="enviarSolicitud" class="form-label">Enviar Solicitud</label>
                     <input type="checkbox" id="enviarSolicitud" name="enviarSolicitud">
                     <label for="enviarSolicitud">Se envió</label>
                     <input class="form-control mt-2" type="date" id="fechaEnvio" name="fechaEnvio">
-                </div>
+                </div> -->
 
                 <!-- Folios consecutivos -->
                 <div class="col-md-6">
