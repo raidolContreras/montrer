@@ -136,42 +136,9 @@
 </main>
 
 <script>
-    $(document).ready(function() {
-        // Inicializar Input Mask para el campo de presupuesto
+    $j(document).ready(function() {
         $j('.inputmask').inputmask();
-
-        // Presupuesto Disponible
-        $('#requestedAmount').focus(function() {
-            // Mostrar el presupuesto máximo disponible en un alert o en el label correspondiente
-            let maxBudget = $('#maxBudget').val();
-            alert("Presupuesto disponible para este mes: " + maxBudget);
-        });
-
-        // Conversión del Importe Solicitado a Letra
-        $('#requestedAmount').change(function() {
-            let importe = $(this).val();
-            $('#importeLetra').val(convertirNumeroALetras(importe));
-        });
-
-        // Fecha de compromiso de pago: lógica según el día de la semana
-        $('#fechaPago').change(function() {
-            let selectedDate = new Date($(this).val());
-            let day = selectedDate.getDay(); // 0 - Domingo, 6 - Sábado
-
-            if (day === 1 || day === 2 || day === 3) {
-                alert('El pago se realizará el viernes de esa misma semana.');
-            } else if (day === 4 || day === 5) {
-                alert('El pago se realizará el próximo viernes.');
-            }
-        });
     });
-
-    // Función para convertir número a letras (simplificado para fines de demostración)
-    function convertirNumeroALetras(numero) {
-        // Aquí podrías implementar una función más completa para convertir números a letras
-        return "Setenta mil pesos";
-    }
 </script>
-
 <?php
 include 'view/pages/request_budget/modalProvider.php';
