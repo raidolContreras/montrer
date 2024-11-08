@@ -126,8 +126,8 @@
 
                 <!-- Folios consecutivos -->
                 <div class="col-md-6">
-                    <label for="folioConsecutivo" class="form-label">Folio de Confirmación de Envío de la Solicitud</label>
-                    <input type="text" id="folioConsecutivo" name="folioConsecutivo" class="form-control" readonly>
+                    <label for="folio" class="form-label">Folio de envío de la solicitud</label>
+                    <input class="form-control" type="text" id="folio" name="folio" readonly>
                 </div>
 
                 <!-- Botones de Aceptar/Cancelar -->

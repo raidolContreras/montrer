@@ -44,6 +44,21 @@ var myDropzone = new Dropzone("#documentDropzone", {
 
 var bandera = 0;
 $(document).ready(function () {
+    
+    $('#requestedAmount').on('input', function () {
+        var inputValue = $(this).val().replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
+        if (inputValue) {
+            var numero = parseFloat(inputValue);
+            if (!isNaN(numero)) {
+                var textoEnLetras = numeroALetra(numero, true);
+                $('#importeLetra').val(textoEnLetras);
+            } else {
+                $('#importeLetra').val('');
+            }
+        } else {
+            $('#importeLetra').val('');
+        }
+    });
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {
@@ -318,4 +333,69 @@ function createFolio(nameArea) {
             $('input[name="folio"]').val(folioFin);
         }
     });
+}
+
+function numeroALetra(numero, status) {
+    var unidades = ['', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+    var decenas = ['','diez','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
+    var centenas = ['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
+
+    var texto = '';
+
+    var entero = Math.floor(numero);
+    var decimal = Math.round((numero - entero) * 100);
+
+    if (entero === 0) {
+        texto = 'cero';
+    } else {
+        // Parte entera
+        if (entero >= 1000000) {
+            texto += numeroALetra(Math.floor(entero / 1000000), false) + ' millón ';
+            entero %= 1000000;
+        }
+
+        if (entero >= 1000) {
+            texto += numeroALetra(Math.floor(entero / 1000), false) + ' mil ';
+            entero %= 1000;
+        }
+
+        if (entero >= 100) {
+            texto += centenas[Math.floor(entero / 100)] + ' ';
+            entero %= 100;
+        }
+
+        if (entero >= 20) {
+			if (entero > 20 && entero < 30 && status == true) {
+				texto += 'veinti';
+			} else if (entero != 30 && entero != 40 && entero != 50 && entero != 60 && entero != 70 && entero != 80 && entero != 90 && status == true) {
+				texto += decenas[Math.floor(entero / 10)] + ' ';
+				texto += 'y ';
+			}else if (status == true) {
+				texto += decenas[Math.floor(entero / 10)] + '';
+				texto += '';
+			} else {
+				texto += decenas[Math.floor(entero / 10)] + ' ';
+			}
+            entero %= 10;
+        }
+
+        if (entero >= 10) {
+            texto += especiales[entero - 10];
+            decimal = 0; // No hay centavos si el número es un número especial
+        } else if (entero > 0) {
+            texto += unidades[entero];
+        }
+    }
+
+    // Centavos
+    if (decimal > 0) {
+        texto += (entero > 0 ? ' ' : '') + (decimal === 1 ? 'pesos con un centavo' : 'pesos con ' + numeroALetra(decimal, false) + ' centavos');
+    } else {
+		if (status == true) {	
+			texto += ' pesos'; 
+		}
+	}
+
+    return texto.trim();
 }
