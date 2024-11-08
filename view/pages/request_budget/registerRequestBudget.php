@@ -136,9 +136,10 @@
 </main>
 
 <script>
-    $j(document).ready(function() {
-        $j('.inputmask').inputmask();
+    $(document).ready(function() {
+        $('.inputmask').inputmask();
     });
 </script>
+
 <?php
 include 'view/pages/request_budget/modalProvider.php';
