@@ -1,46 +1,39 @@
 $(document).ready(function () {
     $('#companies').DataTable({
         ajax: {
-            url: 'controller/ajax/getCompanies.php', // Cambia el nombre del script PHP según tu estructura de archivos
-            dataSrc: ''
+            url: 'controller/ajax/getCompanies.php',
+            dataSrc: '',
+            dataType: 'json',
         },
         columns: [
-            { data: 'idCompany' },
-            { 
-                data: null,
-                render: function(data, type, row) {
-                    console.log(row);
-                    return '<a href="">' + data.name + '</a>';
-                }
-            },
-            { 
-                data: null,
-                render: function(data, type, row) {
-                    console.log(row);
-                    return '<div class="image-container" align="center" style="background-color: #ececec; display: inline-block; padding: 5px;">'+
-                                '<img src="assets/img/companies/' + data.idCompany + '/' + data.logo + '" width="50px" style="display: block;">'+
-                            '</div>';
-                }
-            },
             {
-                data: 'colors',
-                render: function (data, type, row) {
-                    var colors = JSON.parse(data); // Parsea la cadena JSON
-
-                    // Crea un contenedor para mostrar los colores
-                    var colorContainer = '<div style="display: flex; justify-content: space-between;background-color: #ccc; padding: 5px;">';
-
-                    // Agrega un cuadro de color para cada color
-                    Object.keys(colors).forEach(function (key) {
-                        colorContainer += '<div style="width: 20px; height: 20px; background-color: ' + colors[key] + '; margin-right: 5px;"></div>';
-                    });
-
-                    colorContainer += '</div>';
-
-                    return colorContainer;
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
                 }
             },
-            { data: 'description' }
+            { 
+                data: null,
+                render: function(data, type, row) {
+                    return `${data.name}`;
+                }
+            },
+            { data: 'description' },
+            {
+                data: null,
+                render: function(data) {
+                    // Verificar si level es un número y es diferente de cero
+                    var level = $('#level').val();
+                    if (!isNaN(level) && level != 0) {
+                        var idBusiness = data.idAridBusinessea;
+                        var status = data.status;
+                        return renderAreaActionButtons(idBusiness, status);
+                    } else {
+                        var status = (data.status == 1) ? 'Habilitado' : 'Deshabilitado';
+                        return status;
+                    }
+                }
+            }
         ],
         language: {
             "paginate": {
@@ -54,7 +47,49 @@ $(document).ready(function () {
             "loadingRecords": "Cargando...",
             "info":           "Mostrando _START_ de _END_ en _TOTAL_ resultados",
             "infoEmpty":      "Sin resultados",
-			"emptyTable":	  "Ningún dato disponible en esta tabla"
+            "emptyTable":	  "Ningún dato disponible en esta tabla"
         }
     });
 });
+
+function renderAreaActionButtons(idBusiness, status) {
+    if (status == 1) {
+        return `
+        <div class="container">
+            <div class="row btn-group" role="group" style="justify-content: center;">
+                <button class="btn btn-primary edit-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                    <i class="ri-edit-line"></i>
+                </button>
+                <button class="btn btn-warning disable-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Deshabilitar">
+                    <i class="ri-forbid-line"></i>
+                </button>
+                <button class="btn btn-danger delete-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                    <i class="ri-delete-bin-6-line"></i>
+                </button>
+                <button class="btn btn-link users-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Asignar usuarios">
+                    <i class="ri-team-fill"></i>
+                </button>
+            </div>
+        </div>
+        `;
+    } else {
+        return `
+        <div class="container">
+            <div class="row btn-group" role="group" style="justify-content: center;">
+                <button class="btn btn-primary edit-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                    <i class="ri-edit-line"></i>
+                </button>
+                <button class="btn btn-success enable-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
+                    <i class="ri-checkbox-circle-line"></i>
+                </button>
+                <button class="btn btn-danger delete-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                    <i class="ri-delete-bin-6-line"></i>
+                </button>
+                <button class="btn btn-link users-button col-2" data-id="${idBusiness}" data-bs-toggle="tooltip" data-bs-placement="top" title="Asignar usuarios">
+                    <i class="ri-team-fill"></i>
+                </button>
+            </div>
+        </div>
+        `;
+    }
+}

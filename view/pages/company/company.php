@@ -16,9 +16,8 @@
 						<tr>
 							<th>#</th>
 							<th>Nombre</th>
-							<th>Logo</th>
-							<th>Colores</th>
 							<th>Descripción</th>
+							<th></th>
 						</tr>
 					</thead>
 				</table>

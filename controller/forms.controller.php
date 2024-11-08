@@ -80,11 +80,6 @@ class FormsController {
     	return $addCompany;
 	}
 
-	static public function ctrAddLogo($data){
-		$addLogo = FormsModels::mdlAddLogo($data);
-    	return $addLogo;
-	}
-
 	static public function ctrAddExercise($data){
 		$addExercise = FormsModels::mdlAddExercise($data);
     	return $addExercise;

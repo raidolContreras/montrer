@@ -67,12 +67,6 @@ class AjaxForm
 		return $addCompany;
 	}
 
-	static public function AddLogo($data)
-	{
-		$addLogo = FormsController::ctrAddLogo($data);
-		return $addLogo;
-	}
-
 	static public function AddExercise($data)
 	{
 		$addExercise = FormsController::ctrAddExercise($data);
@@ -393,10 +387,9 @@ if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POS
 	}
 }
 
-if (isset($_POST['companyName']) && isset($_POST['colors']) && isset($_POST['companyDescription'])) {
+if (isset($_POST['companyName']) && isset($_POST['companyDescription'])) {
 	$data = array(
 		'companyName' => $_POST['companyName'],
-		'colors' => $_POST['colors'],
 		'companyDescription' => $_POST['companyDescription'],
 	);
 	$addCompany = AjaxForm::AddCompany($data);

@@ -1,15 +1,10 @@
+var bandera = 0;
 $(document).ready(function () {
-    var myDropzone = new Dropzone("#logoDropzone", {
-        url: "controller/ajax/ajax.form.php",
-        maxFiles: 1,
-        paramName: "logo",
-        maxFilesize: 10,
-        acceptedFiles: "image/png",
-        dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .png,.jpg,.jpeg (Tamaño máximo 10 MB)</p>',
-        autoProcessQueue: false,
-    });
 
-    var idCompany;
+    // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
+    $("form.account-wrap input, form.account-wrap select").change(function() {
+        bandera = 1;
+    });
 
     $("#companyForm").submit(function (event) {
         // Evitar el envío del formulario por defecto
@@ -17,25 +12,7 @@ $(document).ready(function () {
 
         // Recoge los valores del formulario
         var companyName = $("#companyName").val();
-        
-        // Nuevos campos de colores
-        var primaryColor = $("#primaryColor").val();
-        var secondaryColor = $("#secondaryColor").val();
-        var accentColor = $("#accentColor").val();
-        var background1Color = $("#background1Color").val();
-        var background2Color = $("#background2Color").val();
-        // Agrega más campos según sea necesario
-
         var companyDescription = $("#companyDescription").val();
-
-        // Construye el objeto JSON
-        var colors = {
-            primary: primaryColor,
-            secondary: secondaryColor,
-            accent: accentColor,
-            background1: background1Color,
-            background2: background2Color,
-        };
 
         // Realiza la solicitud Ajax
         $.ajax({
@@ -43,31 +20,18 @@ $(document).ready(function () {
             url: "controller/ajax/ajax.form.php",
             data: {
                 companyName: companyName,
-                colors: JSON.stringify(colors),
                 companyDescription: companyDescription,
             },
             success: function (response) {
 
                 if (response !== 'Error') {
                     
-                    showAlertBootstrap('', 'Empresa '+companyName+' creada exitosamente.');
-
-                    idCompany = response;
-                    myDropzone.processQueue();
+                    showAlertBootstrap('', 'Empresa creada exitosamente.');
 
 					// Vaciar los campos del formulario
 					$("#companyName").val("");
 					$("#companyDescription").val("");
-					$("#primaryColor").val("#3498db");
-					$("#secondaryColor").val("#e74c3c");
-					$("#accentColor").val("#2ecc71");
-					$("#background1Color").val("#ecf0f1");
-					$("#background2Color").val("#ffffff");
-                    
-                    setTimeout(() => {
-                        // Limpiar el Dropzone
-                        myDropzone.removeAllFiles();
-                    }, 1000);
+                    bandera = 0;
 
                 } else {
                     
@@ -81,8 +45,25 @@ $(document).ready(function () {
         });
     });
 
-    // Configuración del evento 'sending' del Dropzone
-	myDropzone.on("sending", function(file, xhr, formData) {
-			formData.append("idCompany", idCompany);
+});
+
+// Esperar a que el documento esté listo
+document.addEventListener('DOMContentLoaded', function () {
+	// Obtener el botón de cancelar por su ID
+	var cancelButton = document.getElementById('cancelButton');
+
+	// Agregar un evento de clic al botón de cancelar
+	cancelButton.addEventListener('click', function (event) {
+		// Prevenir el comportamiento predeterminado del enlace
+		event.preventDefault();
+		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'company');
+
 	});
 });
+
+function confirmExit(event, destination) {
+	if (bandera == 1){
+		event.preventDefault();
+		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', 'company');
+	}
+}

@@ -444,8 +444,8 @@ class FormsModels {
 	   $stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
 	   if($stmt->execute()){
 		return "ok";
-		$result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
-		return $result;
+		// $result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
+		// return $result;
 	   } else {
 		print_r($pdo->errorInfo());
 	   }
@@ -471,7 +471,7 @@ class FormsModels {
 
 	static public function mdlGetCompanies(){
 	   $pdo = Conexion::conectar();
-	   $sql = "SELECT * FROM montrer_company";
+	   $sql = "SELECT * FROM montrer_business";
 	   $stmt = $pdo->prepare($sql);
 	   if ($stmt->execute()){
 		   return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -485,10 +485,9 @@ class FormsModels {
 
 	static public function mdlAddCompany($data){
 		$pdo = Conexion::conectar();
-		$sql = "INSERT INTO montrer_company(name, colors, description) VALUES (:name, :colors, :description)";
+		$sql = "INSERT INTO montrer_business(name, description) VALUES (:name, :description)";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':name', $data['companyName'], PDO::PARAM_STR);
-		$stmt->bindParam(':colors', $data['colors'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $data['companyDescription'], PDO::PARAM_STR);
 		if($stmt->execute()){
 			if (($pdo -> lastInsertId() != 0)){
@@ -502,21 +501,6 @@ class FormsModels {
 		}
 		 $stmt->closeCursor();
 		 $stmt = null;
-	}
-	
-	static public function mdlAddLogo($data){
-		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_company SET logo = :logo WHERE idCompany = :idCompany";
-		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':logo', $data['logo'], PDO::PARAM_STR);
-		$stmt->bindParam(':idCompany', $data['idCompany'], PDO::PARAM_INT);
-		if($stmt->execute()){
-			return "ok";
-		} else {
-			print_r($pdo->errorInfo());
-		}
-		$stmt->closeCursor();
-		$stmt = null;
 	}
 	
 	static public function mdlGetExercise(){

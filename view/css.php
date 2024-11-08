@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="assets/css/metismenu.min.css">
 		<link rel="stylesheet" href="assets/css/simplebar.min.css">
 		<link rel="stylesheet" href="assets/css/calendar.css">
-		<link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+		<!-- <link rel="stylesheet" href="assets/css/sweetalert2.min.css"> -->
 		<link rel="stylesheet" href="assets/css/jbox.all.min.css">
 		<link rel="stylesheet" href="assets/css/editor.css">
 		<link rel="stylesheet" href="assets/css/fontawesome.min.css">
