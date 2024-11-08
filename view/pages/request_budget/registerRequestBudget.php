@@ -138,7 +138,7 @@
 <script>
     $(document).ready(function() {
         // Inicializar Input Mask para el campo de presupuesto
-        $('.inputmask').inputmask();
+        $j('.inputmask').inputmask();
 
         // Presupuesto Disponible
         $('#requestedAmount').focus(function() {
@@ -172,3 +172,6 @@
         return "Setenta mil pesos";
     }
 </script>
+
+<?php
+include 'view/pages/request_budget/modalProvider.php';
