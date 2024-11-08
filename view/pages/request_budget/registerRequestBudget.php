@@ -136,8 +136,9 @@
 </main>
 
 <script>
-    $(document).ready(function() {
-        $('.inputmask').inputmask();
+    var $j = jQuery.noConflict();
+    $j(document).ready(function() {
+        $j('.inputmask').inputmask();
     });
 </script>
 
