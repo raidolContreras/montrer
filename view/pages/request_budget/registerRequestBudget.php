@@ -1,4 +1,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var $j = jQuery.noConflict();
+</script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <style>
     .form-label {
@@ -7,6 +10,13 @@
     .required::after {
         content: " *";
         color: red;
+    }
+    
+    option {
+        background-color: white; 
+    }
+    .add-provider-option {
+        background-color: #f0f0f0 !important; 
     }
 </style>
 
@@ -102,7 +112,7 @@
                 <div class="row">
                     <div class="col-2">Anexa Comprobante Fiscal (PDF/XML):</div>
                     <div class="col-10">
-                        <div class="dropzone" id="documentDropzone"></div>
+                        <div class="" id="documentDropzone"></div>
                     </div>
                 </div>
 
@@ -136,7 +146,6 @@
 </main>
 
 <script>
-    var $j = jQuery.noConflict();
     $j(document).ready(function() {
         $j('.inputmask').inputmask();
     });
