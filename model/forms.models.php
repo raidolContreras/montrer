@@ -872,19 +872,41 @@ class FormsModels {
 
 	static public function mdlDeleteExercise($idExercise){
 		$pdo = Conexion::conectar();
-		$sql = "DELETE FROM montrer_exercise
-				WHERE idExercise = :idExercise";
-
-		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
-
-		if($stmt->execute()){
+		
+		try {
+			// Start a transaction
+			$pdo->beginTransaction();
+	
+			// First, delete related records in montrer_budget_requests
+			$sqlDeleteRequests = "DELETE FROM montrer_budget_requests WHERE idBudget IN (SELECT idBudget FROM montrer_budgets WHERE idExercise = :idExercise)";
+			$stmtDeleteRequests = $pdo->prepare($sqlDeleteRequests);
+			$stmtDeleteRequests->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
+			$stmtDeleteRequests->execute();
+	
+			// Then, delete related records in montrer_budgets
+			$sqlDeleteBudgets = "DELETE FROM montrer_budgets WHERE idExercise = :idExercise";
+			$stmtDeleteBudgets = $pdo->prepare($sqlDeleteBudgets);
+			$stmtDeleteBudgets->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
+			$stmtDeleteBudgets->execute();
+	
+			// Finally, delete the exercise
+			$sqlDeleteExercise = "DELETE FROM montrer_exercise WHERE idExercise = :idExercise";
+			$stmtDeleteExercise = $pdo->prepare($sqlDeleteExercise);
+			$stmtDeleteExercise->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
+			$stmtDeleteExercise->execute();
+	
+			// Commit the transaction
+			$pdo->commit();
+	
 			return "ok";
-		} else {
-			print_r($pdo->errorInfo());
+		} catch (PDOException $e) {
+			// Rollback the transaction if an error occurred
+			$pdo->rollBack();
+			return "Error: " . $e->getMessage();
+		} finally {
+			// Close the connection
+			$pdo = null;
 		}
-		$stmt->closeCursor();
-		$stmt = null;
 	}
 
 	static public function mdlDeleteUser($idUsers){
