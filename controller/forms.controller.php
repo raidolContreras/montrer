@@ -759,4 +759,9 @@ class FormsController {
 		return $response;
     }
 
+	static public function ctrGetBusiness($idUser) {
+		$business = FormsModels::mdlGetBusiness($idUser);
+        return $business;
+	}
+
 }

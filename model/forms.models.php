@@ -1856,4 +1856,20 @@ class FormsModels {
 		return $result;
 	}
 
+	static public function mdlGetBusiness($idUser) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_business b
+				LEFT JOIN montrer_users_to_business ub ON ub.idBusiness = b.idBusiness
+				WHERE ub.idUser = :idUser";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+        $stmt->execute();
+		
+        $result = $stmt->fetchAll();
+
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
 }

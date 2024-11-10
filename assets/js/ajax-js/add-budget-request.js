@@ -44,10 +44,17 @@ var myDropzone = new Dropzone("#documentDropzone", {
 
 var bandera = 0;
 $(document).ready(function () {
-    
-    $('#requestedAmount').on('input', function () {
-        var inputValue = $(this).val().replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
-        if (inputValue) {
+    getBusiness();
+
+    let $comment = document.getElementById("requestedAmount")
+    let timeout
+
+    //El evento lo puedes reemplazar con keyup, keypress y el tiempo a tu necesidad
+    $comment.addEventListener('keydown', () => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            requestedAmount = $('#requestedAmount').val();
+            var inputValue = requestedAmount.replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
             var numero = parseFloat(inputValue);
             if (!isNaN(numero)) {
                 var textoEnLetras = numeroALetra(numero, true);
@@ -55,9 +62,8 @@ $(document).ready(function () {
             } else {
                 $('#importeLetra').val('');
             }
-        } else {
-            $('#importeLetra').val('');
-        }
+            clearTimeout(timeout)
+        },500)
     });
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
@@ -325,9 +331,12 @@ function createFolio(nameArea) {
         url: 'controller/ajax/maxRequestBudgets.php',
         dataType: 'json',
         success: function (response) {
-            var folio = parseInt(response.maxRequest);
-            folio = folio + 1;
-            
+            if (response.maxRequest) {
+                var folio = parseInt(response.maxRequest);
+                folio = folio + 1;
+            } else {
+                var folio = 1;
+            }
             var folioFin = folio + sustraerLetras(nameArea);
 
             $('input[name="folio"]').val(folioFin);
@@ -335,11 +344,62 @@ function createFolio(nameArea) {
     });
 }
 
+function getBusiness() {
+    var registerValue = $('#register-value').data('register');
+    
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getBusiness.php',
+        data: {'idUser': registerValue},
+        dataType: 'json',
+        success: function (response) {
+            var container = $('#empresa-container'); // Contenedor donde se colocará el input o select
+            container.find('input, select').remove(); // Limpiar el contenedor antes de agregar nuevos elementos
+
+            if (response.length === 0) {
+                // Si no hay empresas registradas, mostrar mensaje de alerta
+                showAlertBootstrap2(
+                    'No está registrado',
+                    'No está registrado en ninguna empresa.',
+                    'requestBudget'
+                );
+            } else if (response.length === 1) {
+                // Si solo hay un resultado, mostrar un input
+                var input = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', 'bussinessName')
+                    .attr('id', 'bussinessName')
+                    .attr('data-value-bussiness', response[0].idBusiness)
+                    .attr('data-value-user', response[0].idBusinessUser)
+                    .attr('readonly', '')
+                    .addClass('form-control')
+                    .val(response[0].name); // Asignar el nombre de la empresa al input
+                container.append(input);
+            } else if (response.length > 1) {
+                // Si hay múltiples resultados, mostrar un select
+                var select = $('<select>')
+                    .attr('name', 'empresa')
+                    .attr('id', 'empresa')
+                    .addClass('form-select form-control');
+                
+                response.forEach(function(item) {
+                    var option = $('<option>')
+                        .attr('value', item.idBusiness)
+                        .text(item.name); // Usar el nombre de la empresa para mostrar en el select
+                    select.append(option);
+                });
+
+                container.append(select);
+            }
+        }
+    });
+}
+
 function numeroALetra(numero, status) {
     var unidades = ['', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
     var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
-    var decenas = ['','diez','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
-    var centenas = ['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
+    var decenas = ['', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    var centenas = ['', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
 
     var texto = '';
 
@@ -366,36 +426,34 @@ function numeroALetra(numero, status) {
         }
 
         if (entero >= 20) {
-			if (entero > 20 && entero < 30 && status == true) {
-				texto += 'veinti';
-			} else if (entero != 30 && entero != 40 && entero != 50 && entero != 60 && entero != 70 && entero != 80 && entero != 90 && status == true) {
-				texto += decenas[Math.floor(entero / 10)] + ' ';
-				texto += 'y ';
-			}else if (status == true) {
-				texto += decenas[Math.floor(entero / 10)] + '';
-				texto += '';
-			} else {
-				texto += decenas[Math.floor(entero / 10)] + ' ';
-			}
-            entero %= 10;
+            texto += decenas[Math.floor(entero / 10)];
+            if (entero % 10 !== 0) {
+                texto += (entero >= 30 ? ' y ' : '') + unidades[entero % 10];
+            }
+            entero = 0; // Se procesó toda la parte de decenas
         }
 
         if (entero >= 10) {
             texto += especiales[entero - 10];
-            decimal = 0; // No hay centavos si el número es un número especial
-        } else if (entero > 0) {
+            entero = 0; // No hay centavos si el número es un número especial
+        }
+
+        if (entero > 0) {
             texto += unidades[entero];
         }
     }
 
     // Centavos
     if (decimal > 0) {
-        texto += (entero > 0 ? ' ' : '') + (decimal === 1 ? 'pesos con un centavo' : 'pesos con ' + numeroALetra(decimal, false) + ' centavos');
+        texto += (texto ? ' ' : '') + (decimal === 1 ? 'pesos con un centavo' : 'pesos con ' + numeroALetra(decimal, false) + ' centavos');
     } else {
-		if (status == true) {	
-			texto += ' pesos'; 
-		}
-	}
-
-    return texto.trim();
+        if (status) {	
+            texto += ' pesos';
+        }
+    }
+    
+    return texto.replace(/\s+/g, ' ').trim().replace(/^./, function(str) {
+        return str.toUpperCase();
+    });
+    
 }

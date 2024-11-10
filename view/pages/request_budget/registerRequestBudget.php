@@ -37,12 +37,8 @@
                 </div>
 
                 <!-- Empresa -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="empresa-container">
                     <label for="empresa" class="form-label">Empresa<span class="required"></span></label>
-                    <select name="empresa" id="empresa" class="form-select form-control">
-                        <!-- Empresas en las que trabaja el usuario -->
-                        <option value="">Seleccionar empresa</option>
-                    </select>
                 </div>
 
                 <!--  Área de Cargo -->
