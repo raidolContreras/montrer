@@ -1,0 +1,133 @@
+
+    /* Form Title */
+    .others-title h3 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #333; /* Dark header */
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    /* Main Card Style */
+    .card-box-style {
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+    }
+    
+    /* Form Labels */
+    .form-label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    /* Form Control */
+    .form-control {
+        background-color: #f1f5ff; /* Light background */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    /* Input Hover Effect */
+    .form-control:hover {
+        border-color: #4fcb8d; /* Green border on hover */
+    }
+    
+    /* Required Field Indicator */
+    .required::after {
+        content: " *";
+        color: red;
+    }
+    
+    /* Inline Flex Containers for Fields */
+    .d-flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    /* Select Box Styling */
+    .form-select {
+        background-color: #f1f5ff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    
+    /* Centered Button Styling */
+    .btn {
+        padding: 8px 20px;
+        font-weight: bold;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+    
+    /* Button Colors */
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+    }
+    
+    .btn-success {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+    }
+    
+    /* Concept Poliza Styling */
+    #conceptoPoliza {
+        background-color: #e9ecef;
+        color: #333;
+        font-style: italic;
+    }
+    
+    /* Checkbox and Additional Info */
+    input[type="checkbox"] + label {
+        font-size: 13px;
+        color: #555;
+        margin-left: 8px;
+    }
+    
+    /* Input Field Styling */
+    input[type="text"],
+    input[type="date"] {
+        border-radius: 5px;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    
+    /* Dropzone Styling */
+    .dropzone {
+        background: #f1f5ff;
+        border: 1px dashed #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        color: #888;
+    }
+    
+    /* Responsiveness */
+    @media (max-width: 768px) {
+        .d-flex {
+            flex-direction: column;
+        }
+    
+        .form-control {
+            width: 100%;
+        }
+    
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+    
+    

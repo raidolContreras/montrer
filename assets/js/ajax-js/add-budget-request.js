@@ -348,7 +348,7 @@ function createFolio(nameArea) {
             }
             var folioFin = folio + sustraerLetras(nameArea);
 
-            $('input[name="folio"]').val(folioFin);
+            $('#folio').text(folioFin);
         }
     });
 }
@@ -491,3 +491,11 @@ function numeroALetra(numero, status) {
 
     return texto;
 }
+
+$('#toggleDropzone').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('#dropzoneContainer').show();
+    } else {
+        $('#dropzoneContainer').hide();
+    }
+});

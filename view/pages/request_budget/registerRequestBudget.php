@@ -3,44 +3,7 @@
     var $j = jQuery.noConflict();
 </script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
-<style>
-    .form-label {
-        font-weight: bold;
-        margin-top: .5rem;
-    }
-    .required::after {
-        content: " *";
-        color: red;
-    }
-    
-    option {
-        background-color: white; 
-    }
-    .add-provider-option {
-        background-color: #f0f0f0 !important; 
-    }
-
-    #solicitante-container {
-        height: 60px;
-        color: #292d32;
-        border: 1px solid #F1F5FF;
-        background-color: #F1F5FF;
-        border-radius: 10px;
-        font-size: 14px;
-        padding: 10px 20px;
-        width: 100%;
-        transition: all ease 0.5s;
-    }
-
-    #solicitante-container:hover {
-        color: #292d32;
-        background-color: transparent;
-        box-shadow: unset;
-        outline: 0;
-        border-color: #4fcb8d;
-    }
-
-</style>
+<link rel="stylesheet" href="assets/css/requestBudget.css">
 
 <main class="main-content-wrap">
     <div class="card-box-style">
@@ -128,27 +91,29 @@
                     <label for="conceptoPoliza" class="form-label">Concepto Póliza Contable</label>
                     <input class="form-control" type="text" id="conceptoPoliza" name="conceptoPoliza" readonly>
                 </div>
+                
+                <div class="row my-3">
+                    <div class="col-2">
+                        <label for="toggleDropzone">¿Anexar Comprobante Fiscal (PDF/XML)?</label>
+                    </div>
+                    <div class="col-10">
+                        <input type="checkbox" id="toggleDropzone">
+                    </div>
+                </div>
 
                 <!-- Adjuntar Archivos -->
-                <div class="row my-3">
-                    <div class="col-2">Anexa Comprobante Fiscal (PDF/XML):</div>
-                    <div class="col-10">
+                <div class="row my-3" id="dropzoneContainer" style="display: none;">
+                    <div class="col">
                         <div class="dropzone" id="documentDropzone"></div>
                     </div>
                 </div>
 
-                <!-- Enviar Solicitud -->
-                <!-- <div class="col-md-6">
-                    <label for="enviarSolicitud" class="form-label">Enviar Solicitud</label>
-                    <input type="checkbox" id="enviarSolicitud" name="enviarSolicitud">
-                    <label for="enviarSolicitud">Se envió</label>
-                    <input class="form-control mt-2" type="date" id="fechaEnvio" name="fechaEnvio">
-                </div> -->
-
                 <!-- Folios consecutivos -->
                 <div class="col-md-6">
-                    <label for="folio" class="form-label">Folio de envío de la solicitud</label>
-                    <input class="form-control" type="text" id="folio" name="folio" readonly>
+                    
+                <div class="form-control d-flex justify-content-between align-items-center" id="solicitante-container">
+                    <span>Folio de envío de la solicitud</span>
+                    <span id="folio"></span>
                 </div>
 
                 <!-- Botones de Aceptar/Cancelar -->
