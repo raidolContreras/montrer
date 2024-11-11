@@ -6,6 +6,7 @@
 <style>
     .form-label {
         font-weight: bold;
+        margin-top: .5rem;
     }
     .required::after {
         content: " *";
@@ -18,6 +19,27 @@
     .add-provider-option {
         background-color: #f0f0f0 !important; 
     }
+
+    #solicitante-container {
+        height: 60px;
+        color: #292d32;
+        border: 1px solid #F1F5FF;
+        background-color: #F1F5FF;
+        border-radius: 10px;
+        font-size: 14px;
+        padding: 10px 20px;
+        width: 100%;
+        transition: all ease 0.5s;
+    }
+
+    #solicitante-container:hover {
+        color: #292d32;
+        background-color: transparent;
+        box-shadow: unset;
+        outline: 0;
+        border-color: #4fcb8d;
+    }
+
 </style>
 
 <main class="main-content-wrap">
@@ -30,10 +52,13 @@
             <div class="row">
 
                 <!-- Solicitante -->
-                <div class="col-md-6">
+                <!-- Contenedor de Solicitante con Nombre a la Izquierda y Número a la Derecha -->
+                <div class="col-md-12">
                     <label for="solicitante" class="form-label">Solicitante</label>
-                    <input class="form-control" type="text" id="solicitante" name="solicitante"
-                        value="<?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>" readonly>
+                    <div class="form-control d-flex justify-content-between align-items-center" id="solicitante-container">
+                        <span><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
+                        <span id="idBusinessUser"></span>
+                    </div>
                 </div>
 
                 <!-- Empresa -->
@@ -50,7 +75,7 @@
                 </div>
 
                 <!-- Cuenta que se afecta -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="cuentaAfectada" class="form-label">Cuenta que se afecta<span class="required"></span></label>
                     <select name="cuentaAfectada" id="cuentaAfectada" class="form-select form-control">
                         <option value="">Seleccionar cuenta</option>
@@ -58,13 +83,13 @@
                 </div>
 
                 <!-- Partida que se afecta -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="partidaAfectada" class="form-label">Partida que se afecta<span class="required"></span></label>
                     <input class="form-control" type="text" id="partidaAfectada" name="partidaAfectada" placeholder="Por ejemplo: 16-sep">
                 </div>
 
                 <!-- Concepto -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="concepto" class="form-label">Concepto<span class="required"></span></label>
                     <input class="form-control" type="text" id="concepto" name="concepto" placeholder="Uniformes, Desfiles, etc.">
                 </div>

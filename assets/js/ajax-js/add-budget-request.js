@@ -1,10 +1,10 @@
 var myDropzone = new Dropzone("#documentDropzone", {
-    parallelUploads: 10,
-    maxFiles: 10,
+    parallelUploads: 20,
+    maxFiles: 20,
     url: "controller/ajax/ajax.form.php",
     maxFilesize: 10,
     acceptedFiles: "application/pdf, application/xml, text/xml", // Modificamos esta línea
-    dictDefaultMessage: 'Arrastra y suelta el archivo aquí o haz clic para seleccionar uno <p class="subtitulo-sup">Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
+    dictDefaultMessage: 'Arrastra y suelta los archivos aquí o haz clic para seleccionarlos <p class="subtitulo-sup">Máximo 20 archivos, Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
     autoProcessQueue: false,
     dictInvalidFileType: "Archivo no está permitido. Por favor, sube archivos en formato PDF o XML.",
     dictFileTooBig: "El archivo es demasiado grande ({{filesize}}MB). Tamaño máximo permitido: {{maxFilesize}}MB.",
@@ -231,6 +231,8 @@ $('#area').on('change', function() {
 });
 
 function updateMaxRequestedAmount(datos) {
+    const fecha = new Date();
+    const mesActual = fecha.getMonth();
     if (!datos) {
         // Si authorizedAmount es falso (undefined, null, 0, '', false), deshabilita el campo de entrada y reinicia los valores
         $('#requestedAmount').prop('disabled', true);
@@ -245,7 +247,8 @@ function updateMaxRequestedAmount(datos) {
             dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
             success: function (response) {
 
-                var totalBudgetPendient = 0;
+                var totalBudget = 0;
+                var totalBudgetUsed = 0;
 
                 $.ajax({
                     type: 'POST',
@@ -253,27 +256,33 @@ function updateMaxRequestedAmount(datos) {
                     data: { areaId: datos[0].idArea },
                     dataType: 'json',
                     success: function (result) {
-                        for (var i = 0; i < result.length; i++) {
-                            // Obtenemos la cantidad de cada objeto y la sumamos al total
-                            totalBudgetPendient += parseFloat(result[i].requestedAmount);
+                        // for (var i = 0; i < result.length; i++) {
+                        //     // Obtenemos la cantidad de cada objeto y la sumamos al total
+                            
+                        //     totalBudgetPendient += parseFloat(result[i].requestedAmount);
+                        // }
+
+                        for (var i = 0; i < mesActual; i++) {
+                            totalBudgetUsed += datos[i].budget_used;
+                            totalBudget += datos[i].budget_month;
                         }
                         
                         // Mostramos la suma total
-                        totalAmountBudget = response.total - response.comp - totalBudgetPendient;
+                        totalBudget = (totalBudget - totalBudgetUsed) - response.comp;
 
-                        formattedSum = totalAmountBudget.toLocaleString('es-MX', {
+                        formattedSum = totalBudget.toLocaleString('es-MX', {
                             style: 'currency',
                             currency: 'MXN',
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                         });
 
-                        // Aquí puedes colocar el código que depende de totalAmountBudget
+                        // Aquí puedes colocar el código que depende de totalBudget
                         var idBudget = datos[0].idBudget;
                         if(datos[0].approvedAmount !== 0){
                             $("input[name='budget']").val(idBudget);
-                            $("input[name='maxBudget']").val(totalAmountBudget.toFixed(2));
-                            // $('#requestedAmount').val(totalAmountBudget.toFixed(2));
+                            $("input[name='maxBudget']").val(totalBudget.toFixed(2));
+                            // $('#requestedAmount').val(totalBudget.toFixed(2));
                             $('.requestMax').text('Presupuesto maximo a solicitar es de: ' + formattedSum);
                         } else {
                             $('#requestedAmount').prop('disabled', true);
@@ -374,6 +383,13 @@ function getBusiness() {
                     .attr('readonly', '')
                     .addClass('form-control')
                     .val(response[0].name); // Asignar el nombre de la empresa al input
+                                    
+                // Cuando recibes la respuesta
+                let idBusinessUser = response[0].idBusinessUser; // "1000001001001"
+                let formattedId = formatBusinessUserId(idBusinessUser); // "1000-001-001-001"
+                // Asigna el valor formateado al input
+                $('#idBusinessUser').text(formattedId);
+
                 container.append(input);
             } else if (response.length > 1) {
                 // Si hay múltiples resultados, mostrar un select
@@ -395,6 +411,20 @@ function getBusiness() {
     });
 }
 
+function formatBusinessUserId(id) {
+    // Convierte el ID a una cadena para asegurarse de que pueda usar .substring()
+    id = id.toString(); 
+
+    // Divide el string en partes según el formato que deseas
+    let part1 = id.substring(0, 4);
+    let part2 = id.substring(4, 7);
+    let part3 = id.substring(7, 10);
+    let part4 = id.substring(10, 13);
+
+    // Retorna el ID formateado con los guiones
+    return `${part1}-${part2}-${part3}-${part4}`;
+}
+
 function numeroALetra(numero, status) {
     var unidades = ['', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
     var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
@@ -411,17 +441,19 @@ function numeroALetra(numero, status) {
     } else {
         // Parte entera
         if (entero >= 1000000) {
-            texto += numeroALetra(Math.floor(entero / 1000000), false) + ' millón ';
+            let millones = Math.floor(entero / 1000000);
+            texto += millones === 1 ? 'un millón ' : numeroALetra(millones, false) + ' millones ';
             entero %= 1000000;
         }
 
         if (entero >= 1000) {
-            texto += numeroALetra(Math.floor(entero / 1000), false) + ' mil ';
+            let miles = Math.floor(entero / 1000);
+            texto += miles === 1 ? 'mil ' : numeroALetra(miles, false) + ' mil ';
             entero %= 1000;
         }
 
         if (entero >= 100) {
-            texto += centenas[Math.floor(entero / 100)] + ' ';
+            texto += (entero === 100 ? 'cien' : centenas[Math.floor(entero / 100)]) + ' ';
             entero %= 100;
         }
 
@@ -452,8 +484,10 @@ function numeroALetra(numero, status) {
         }
     }
     
-    return texto.replace(/\s+/g, ' ').trim().replace(/^./, function(str) {
+    // Ajustes de formato final: eliminar espacios duplicados y capitalizar
+    texto = texto.replace(/\s+/g, ' ').trim().replace(/^./, function(str) {
         return str.toUpperCase();
     });
-    
+
+    return texto;
 }
