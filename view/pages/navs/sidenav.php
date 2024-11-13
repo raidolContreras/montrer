@@ -21,15 +21,15 @@
                     <img src="assets/img/svg/registers.svg" width='25px' alt="calendar">
                 </a>
             </li>
-            
+<!--             
             <?php
-                $activeCompany = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerCompany' || $_GET['pagina'] == 'company' || $_GET['pagina'] == 'editCompany')) ? 'active' : '';
+                // $activeCompany = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerCompany' || $_GET['pagina'] == 'company' || $_GET['pagina'] == 'editCompany')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeCompany; ?>">
                 <a href="company" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Empresas" onclick="confirmExit(event, 'company')">
                 <img src="assets/img/svg/company.svg" width='25px' alt="business">
                 </a>
-            </li>
+            </li> -->
             
             <?php
                 $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerArea' || $_GET['pagina'] == 'areas' || $_GET['pagina'] == 'editArea')) ? 'active' : '';

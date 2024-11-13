@@ -1,125 +1,134 @@
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    var $j = jQuery.noConflict();
-</script>
-<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
-<link rel="stylesheet" href="assets/css/requestBudget.css">
-
 <main class="main-content-wrap">
-    <div class="card-box-style">
-        <center class="others-title">
-            <h3>SOLICITUD DE PAGO</h3>
+    <div class="card-box-style p-4 rounded shadow-sm bg-light">
+        <center class="others-title mb-4">
+            <h3 class="text-primary">SOLICITUD DE PAGO</h3>
         </center>
 
         <form class="account-wrap" id="budgetRequestForm">
-            <div class="row">
-
+            <div class="row gy-3">
+                
                 <!-- Solicitante -->
-                <!-- Contenedor de Solicitante con Nombre a la Izquierda y Número a la Derecha -->
-                <div class="col-md-12">
-                    <label for="solicitante" class="form-label">Solicitante</label>
-                    <div class="form-control d-flex justify-content-between align-items-center" id="solicitante-container">
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="solicitante" class="form-label col-2 fw-bold">Solicitante:</label>
+                    <div class="form-control d-flex justify-content-between align-items-center col bg-white border">
                         <span><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
-                        <span id="idBusinessUser"></span>
                     </div>
+                    <input class="form-control col ms-2" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" disabled>
                 </div>
 
                 <!-- Empresa -->
-                <div class="col-md-6" id="empresa-container">
-                    <label for="empresa" class="form-label">Empresa<span class="required"></span></label>
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="empresa" class="form-label col-2 fw-bold">Empresa:</label>
+                    <input class="form-control col bg-white border" type="text" id="empresa" name="empresa" placeholder="">
                 </div>
 
-                <!--  Área de Cargo -->
-                <div class="col-md-6">
-                    <label for="area" class="form-label">Área de Cargo<span class="required"></span></label>
-                    <select name="area" id="area" class="form-select form-control">
+                <!-- Área de Cargo -->
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="area" class="form-label col-2 fw-bold">Área de Cargo:</label>
+                    <select name="area" id="area" class="form-select form-control col">
                         <option value="">Seleccionar un área</option>
                     </select>
+                    <input class="form-control col ms-2" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Cuenta que se afecta -->
-                <div class="col-md-12">
-                    <label for="cuentaAfectada" class="form-label">Cuenta que se afecta<span class="required"></span></label>
-                    <select name="cuentaAfectada" id="cuentaAfectada" class="form-select form-control">
-                        <option value="">Seleccionar cuenta</option>
-                    </select>
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:</label>
+                    <input class="form-control col bg-white border" type="text" id="cuentaAfectada" name="cuentaAfectada" placeholder="Ejemplo: Ejemplo: Desfiles">
+                    <input class="form-control col ms-2" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Partida que se afecta -->
-                <div class="col-md-12">
-                    <label for="partidaAfectada" class="form-label">Partida que se afecta<span class="required"></span></label>
-                    <input class="form-control" type="text" id="partidaAfectada" name="partidaAfectada" placeholder="Por ejemplo: 16-sep">
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:</label>
+                    <input class="form-control col bg-white border" type="text" id="partidaAfectada" name="partidaAfectada" placeholder="Ejemplo: 16-sep">
+                    <input class="form-control col ms-2" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Concepto -->
-                <div class="col-md-12">
-                    <label for="concepto" class="form-label">Concepto<span class="required"></span></label>
-                    <input class="form-control" type="text" id="concepto" name="concepto" placeholder="Uniformes, Desfiles, etc.">
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="concepto" class="form-label col-2 fw-bold">Concepto:</label>
+                    <input class="form-control col bg-white border" type="text" id="concepto" name="concepto" placeholder="Ejemplo: Uniformes">
+                    <input class="form-control col ms-2" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Importe Solicitado -->
-                <div class="col-md-6">
-                    <label for="requestedAmount" class="form-label">Importe Solicitado ($)<span class="required"></span></label>
-                    <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true"> 
-                    <label class="requestMax">Presupuesto disponible para este mes: <span id="maxBudgetDisplay"></span></label>
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="requestedAmount" class="form-label col-2 fw-bold">Importe Solicitado ($):</label>
+                    <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask col bg-white border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                 </div>
 
                 <!-- Importe con letra -->
-                <div class="col-md-6">
-                    <label for="importeLetra" class="form-label">Importe con letra</label>
-                    <input type="text" id="importeLetra" name="importeLetra" class="form-control" readonly>
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="importeLetra" class="form-label col-2 fw-bold">Importe con letra:</label>
+                    <input type="text" id="importeLetra" name="importeLetra" class="form-control col bg-light border" disabled>
                 </div>
 
                 <!-- Fecha compromiso de pago -->
-                <div class="col-md-6">
-                    <label for="fechaPago" class="form-label">Fecha Compromiso de Pago<span class="required"></span></label>
-                    <input class="form-control" type="date" id="fechaPago" name="fechaPago">
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha Compromiso de Pago:</label>
+                    <input class="form-control col bg-white border" type="date" id="fechaPago" name="fechaPago">
                 </div>
 
                 <!-- Proveedor -->
-                <div class="col-md-6">
-                    <label for="provider" class="form-label">Proveedor<span class="required"></span></label>
-                    <select name="provider" id="provider" class="form-select form-control">
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="provider" class="form-label col-2 fw-bold">Proveedor:</label>
+                    <select name="provider" id="provider" class="form-select form-control col">
                         <option value="">Seleccionar proveedor</option>
                     </select>
-                    <input type="checkbox" id="proveedorInternacional" name="proveedorInternacional">
-                    <label for="proveedorInternacional">No es nacional (requiere otros datos)</label>
+                    <!-- <div class="form-check col ms-2">
+                        <input type="checkbox" id="proveedorInternacional" name="proveedorInternacional" class="form-check-input">
+                        <label for="proveedorInternacional" class="form-check-label">No es nacional</label>
+                    </div> -->
+                </div>
+
+                <!-- Clave interbancaria -->
+                 <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="clabe" class="form-label col-2 fw-bold">Clave Interbancaria:</label>
+                    <input type="text" id="clabe" name="clabe" class="form-control col bg-light border" disabled>
+                </div>
+
+                <!-- Banco -->
+                 <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="bank_name" class="form-label col-2 fw-bold">Banco:</label>
+                    <input type="text" id="bank_name" name="bank_name" class="form-control col bg-light border" disabled>
+                </div>
+
+                <!-- Numero de cuenta -->
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="account_number" class="form-label col-2 fw-bold">Número de Cuenta:</label>
+                    <input type="text" id="account_number" name="account_number" class="form-control col bg-light border" disabled>
                 </div>
 
                 <!-- Concepto Póliza Contable -->
-                <div class="col-md-6">
-                    <label for="conceptoPoliza" class="form-label">Concepto Póliza Contable</label>
-                    <input class="form-control" type="text" id="conceptoPoliza" name="conceptoPoliza" readonly>
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="conceptoPago" class="form-label col-2 fw-bold">Concepto de pago:</label>
+                    <input class="form-control col bg-light border" type="text" id="conceptoPago" name="conceptoPago">
                 </div>
-                
-                <div class="row my-3">
-                    <div class="col-2">
-                        <label for="toggleDropzone">¿Anexar Comprobante Fiscal (PDF/XML)?</label>
-                    </div>
-                    <div class="col-10">
-                        <input type="checkbox" id="toggleDropzone">
-                    </div>
+
+                <!-- Adjuntar Comprobante Fiscal -->
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label for="toggleDropzone" class="form-label col-2 fw-bold">Comprobante Fiscal (PDF/XML):</label>
+                    <input type="checkbox" id="toggleDropzone" class="form-check-input ms-2">
                 </div>
 
                 <!-- Adjuntar Archivos -->
-                <div class="row my-3" id="dropzoneContainer" style="display: none;">
+                <div class="col-md-12 row mb-3" id="dropzoneContainer" style="display: none; align-items: center;">
                     <div class="col">
                         <div class="dropzone" id="documentDropzone"></div>
                     </div>
                 </div>
 
                 <!-- Folios consecutivos -->
-                <div class="col-md-6">
-                    
-                <div class="form-control d-flex justify-content-between align-items-center" id="solicitante-container">
-                    <span>Folio de envío de la solicitud</span>
-                    <span id="folio"></span>
+                <div class="col-md-12 row mb-3" style="align-items: center;">
+                    <label class="form-label col-2 fw-bold">Folio solicitud:</label>
+                    <span id="folio" class="form-control col bg-light border"></span>
                 </div>
 
                 <!-- Botones de Aceptar/Cancelar -->
-                <div class="col-12 mt-4 text-end">
-                    <a class="btn btn-danger" id="cancelButton">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Aceptar</button>
+                <div class="col-md-12 row mt-4 text-end" style="align-items: center;">
+                    <a class="btn btn-outline-danger col-2 me-2" id="cancelButton">Cancelar</a>
+                    <button type="submit" class="btn btn-success col-2">Aceptar</button>
                 </div>
             </div>
 
@@ -130,6 +139,7 @@
         </form>
     </div>
 </main>
+
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 
 <!-- End Main Content Area -->
@@ -137,15 +147,40 @@
 <link href="assets/vendor/dropzone/dropzone.css" rel="stylesheet">
 <script src="assets/vendor/dropzone/dropzone-min.js"></script>
 
-<script src="assets/js/ajax-js/add-budget-request.js"></script>
-<script src="assets/js/ajax-js/request_provider.js"></script>
-<script src="assets/js/ajax-js/add-provider2.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    var $j = jQuery.noConflict();
+</script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <script>
     $j(document).ready(function() {
         $j('.inputmask').inputmask();
     });
 </script>
 
+<script src="assets/js/ajax-js/add-budget-request.js"></script>
+<script src="assets/js/ajax-js/request_provider.js"></script>
+<script src="assets/js/ajax-js/add-provider2.js"></script>
+
 <?php
 include 'view/pages/request_budget/modalProvider.php';
+?>
+
+<!-- Modal de Presupuesto Disponible -->
+<div class="modal fade" id="availableBudgetModal" tabindex="-1" aria-labelledby="availableBudgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary" id="availableBudgetModalLabel">Presupuesto Disponible</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>El presupuesto disponible para este mes es:</p>
+                <p class="fw-bold text-success" id="modalBudgetDisplay">$<span id="maxBudgetDisplay"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

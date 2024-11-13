@@ -44,7 +44,6 @@ var myDropzone = new Dropzone("#documentDropzone", {
 
 var bandera = 0;
 $(document).ready(function () {
-    getBusiness();
 
     let $comment = document.getElementById("requestedAmount")
     let timeout
@@ -71,73 +70,91 @@ $(document).ready(function () {
         bandera = 1;
     });
 
-	$("form.account-wrap").submit(function (event) {
-
-		event.preventDefault();
-
-		var area = $("select[name='area']").val();
+    $("form.account-wrap").submit(function (event) {
+        event.preventDefault();
+    
+        // Recuperar valores de los campos del formulario
+        var area = $("select[name='area']").val();
         var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
-		var description = $("textarea[name='description']").val();
-		var provider = $("select[name='provider']").val();
-        var eventDate = $("input[name='eventDate']").val();
-		var maxBudget = parseFloat($("input[name='maxBudget']").val());
-		var budget = $("input[name='budget']").val();
-		var folio = $("input[name='folio']").val();
-
-		if (area == '' || requestedAmount == '' || description == '' || eventDate == '' || provider == ''){
-            
-            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
-            
-		} else if (maxBudget >= requestedAmount) {
-
-			$.ajax({
-				type: "POST",
-				url: "controller/ajax/ajax.form.php",
-				data: {
-					area: area,
-					requestedAmount: requestedAmount,
-					description: description,
-                    eventDate: eventDate,
-					budget: budget,
-					folio: folio,
-                    provider: provider
-				},
-				success: function (response) {				  
-	
-					if (response !== 'Error') {
-                        
-                        idPaymentRequestTemp = response;
-						
+        var importeLetra = $("input[name='importeLetra']").val();
+        var conceptoPago = $("input[name='conceptoPago']").val();
+        var cuentaAfectada = $("input[name='cuentaAfectada']").val();
+        var partidaAfectada = $("input[name='partidaAfectada']").val();
+        var concepto = $("input[name='concepto']").val();
+        var provider = $("select[name='provider']").val();
+        var clabe = $("input[name='clabe']").val();
+        var bankName = $("input[name='bank_name']").val();
+        var accountNumber = $("input[name='account_number']").val();
+        var fechaPago = $("input[name='fechaPago']").val();
+        var maxBudget = parseFloat($("input[name='maxBudget']").val());
+        var folio = $("span#folio").text(); // folio se obtiene del span en lugar de un input
+    
+        // Verificar si todos los campos obligatorios están completos
+        if (!area || !requestedAmount || !provider || !fechaPago || !cuentaAfectada || !conceptoPago) {
+            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos los campos señalados con un (*).');
+            return;
+        }
+    
+        // Verificar que el importe solicitado no exceda el presupuesto máximo disponible
+        if (maxBudget >= requestedAmount) {
+            // Hacer la solicitud AJAX si el monto es válido
+            $.ajax({
+                type: "POST",
+                url: "controller/ajax/ajax.form.php",
+                data: {
+                    area: area,
+                    requestedAmount: requestedAmount,
+                    importeLetra: importeLetra,
+                    conceptoPago: conceptoPago,
+                    cuentaAfectada: cuentaAfectada,
+                    partidaAfectada: partidaAfectada,
+                    concepto: concepto,
+                    provider: provider,
+                    clabe: clabe,
+                    bankName: bankName,
+                    accountNumber: accountNumber,
+                    fechaPago: fechaPago,
+                    budget: maxBudget,
+                    folio: folio
+                },
+                success: function (response) {
+                    if (response !== 'Error') {
+                        // Procesar la solicitud de subida de archivos si es necesario
                         myDropzone.processQueue();
-						bandera = 0;
-						$("select[name='area']").val('');
-						$("input[name='requestedAmount']").val('');
-						$("textarea[name='description']").val('');
-                        $("input[name='event']").val('');
-                        $("input[name='eventDate']").val('');
-                        $('.sidenav').removeAttr('onclick');
-
-	                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
-
-					} else {
-                        
-	                    showAlertBootstrap('!Atención¡', 'Error al crear la solicitud.');
-                        
-					}
-				},
-				error: function (error) {
-					console.log("Error en la solicitud Ajax:", error);
-				}
-			});
-
-		} else {
+                        bandera = 0;
+    
+                        // Limpiar el formulario después de enviar
+                        $("form.account-wrap")[0].reset();
+    
+                        // Mostrar mensaje de éxito
+                        showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
+                    } else {
+                        showAlertBootstrap('¡Atención!', 'Error al crear la solicitud.');
+                    }
+                },
+                error: function (error) {
+                    console.log("Error en la solicitud Ajax:", error);
+                }
+            });
+        } else {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible.');
         }
-        
-	});
+    });
+    
     // Configuración del evento 'sending' del Dropzone
     myDropzone.on("sending", function(file, xhr, formData) {
         formData.append("idPaymentRequestTemp", idPaymentRequestTemp);
+    });
+    
+    // Variable de control para mostrar el modal solo una vez
+    let hasModalShown = false;
+
+    // Mostrar el modal una vez al hacer clic en requestedAmount
+    $('#requestedAmount').on('click', function() {
+        if (!hasModalShown) {
+            $('#availableBudgetModal').modal('show'); // Muestra el modal
+            hasModalShown = true; // Cambiar la variable para no mostrarlo nuevamente
+        }
     });
 });
 
@@ -230,6 +247,24 @@ $('#area').on('change', function() {
 
 });
 
+// Manejador de eventos para el cambio en el select
+$('#provider').on('change', function() {
+    var selectedProviderId = $(this).val();
+    var selectedProviderText = $(this).find('option:selected').text();
+
+    // Verifica si se seleccionó un proveedor válido
+    if (selectedProviderId && selectedProviderId !== "add_provider" && storedProviders) {
+        // Busca el proveedor seleccionado en storedProviders
+        var selectedProvider = storedProviders.find(provider => provider.idProvider == selectedProviderId);
+        
+        if (selectedProvider) {
+            $('#clabe').val(selectedProvider.clabe);
+            $('#bank_name').val(selectedProvider.bank_name);
+            $('#account_number').val(selectedProvider.account_number);
+        }
+    }
+});
+
 function updateMaxRequestedAmount(datos) {
     const fecha = new Date();
     const mesActual = fecha.getMonth();
@@ -283,7 +318,8 @@ function updateMaxRequestedAmount(datos) {
                             $("input[name='budget']").val(idBudget);
                             $("input[name='maxBudget']").val(totalBudget.toFixed(2));
                             // $('#requestedAmount').val(totalBudget.toFixed(2));
-                            $('.requestMax').text('Presupuesto maximo a solicitar es de: ' + formattedSum);
+                            // $('.requestMax').text('Presupuesto maximo a solicitar es de: ' + formattedSum);
+                            $('#modalBudgetDisplay').text(formattedSum);
                         } else {
                             $('#requestedAmount').prop('disabled', true);
                             $('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
@@ -353,63 +389,56 @@ function createFolio(nameArea) {
     });
 }
 
-function getBusiness() {
-    var registerValue = $('#register-value').data('register');
+// function getBusiness() {
+//     var registerValue = $('#register-value').data('register');
     
-    $.ajax({
-        type: 'POST',
-        url: 'controller/ajax/getBusiness.php',
-        data: {'idUser': registerValue},
-        dataType: 'json',
-        success: function (response) {
-            var container = $('#empresa-container'); // Contenedor donde se colocará el input o select
-            container.find('input, select').remove(); // Limpiar el contenedor antes de agregar nuevos elementos
+//     $.ajax({
+//         type: 'POST',
+//         url: 'controller/ajax/getBusiness.php',
+//         data: {'idUser': registerValue},
+//         dataType: 'json',
+//         success: function (response) {
+//             var container = $('#empresa-container'); // Contenedor donde se colocará el input o select
+//             container.find('input, select').remove(); // Limpiar el contenedor antes de agregar nuevos elementos
 
-            if (response.length === 0) {
-                // Si no hay empresas registradas, mostrar mensaje de alerta
-                showAlertBootstrap2(
-                    'No está registrado',
-                    'No está registrado en ninguna empresa.',
-                    'requestBudget'
-                );
-            } else if (response.length === 1) {
-                // Si solo hay un resultado, mostrar un input
-                var input = $('<input>')
-                    .attr('type', 'text')
-                    .attr('name', 'bussinessName')
-                    .attr('id', 'bussinessName')
-                    .attr('data-value-bussiness', response[0].idBusiness)
-                    .attr('data-value-user', response[0].idBusinessUser)
-                    .attr('readonly', '')
-                    .addClass('form-control')
-                    .val(response[0].name); // Asignar el nombre de la empresa al input
-                                    
-                // Cuando recibes la respuesta
-                let idBusinessUser = response[0].idBusinessUser; // "1000001001001"
-                let formattedId = formatBusinessUserId(idBusinessUser); // "1000-001-001-001"
-                // Asigna el valor formateado al input
-                $('#idBusinessUser').text(formattedId);
+//             if (response.length === 0) {
+//                 // Si no hay empresas registradas, mostrar mensaje de alerta
+//                 showAlertBootstrap2(
+//                     'No está registrado',
+//                     'No está registrado en ninguna empresa.',
+//                     'requestBudget'
+//                 );
+//             } else if (response.length === 1) {
+//                 // Si solo hay un resultado, mostrar un input
+//                 var input = $('<input>')
+//                     .attr('type', 'text')
+//                     .attr('name', 'bussinessName')
+//                     .attr('id', 'bussinessName')
+//                     .attr('data-value-bussiness', response[0].idBusiness)
+//                     .attr('readonly', '')
+//                     .addClass('form-control')
+//                     .val(response[0].name); // Asignar el nombre de la empresa al input
 
-                container.append(input);
-            } else if (response.length > 1) {
-                // Si hay múltiples resultados, mostrar un select
-                var select = $('<select>')
-                    .attr('name', 'empresa')
-                    .attr('id', 'empresa')
-                    .addClass('form-select form-control');
+//                 container.append(input);
+//             } else if (response.length > 1) {
+//                 // Si hay múltiples resultados, mostrar un select
+//                 var select = $('<select>')
+//                     .attr('name', 'empresa')
+//                     .attr('id', 'empresa')
+//                     .addClass('form-select form-control');
                 
-                response.forEach(function(item) {
-                    var option = $('<option>')
-                        .attr('value', item.idBusiness)
-                        .text(item.name); // Usar el nombre de la empresa para mostrar en el select
-                    select.append(option);
-                });
+//                 response.forEach(function(item) {
+//                     var option = $('<option>')
+//                         .attr('value', item.idBusiness)
+//                         .text(item.name); // Usar el nombre de la empresa para mostrar en el select
+//                     select.append(option);
+//                 });
 
-                container.append(select);
-            }
-        }
-    });
-}
+//                 container.append(select);
+//             }
+//         }
+//     });
+// }
 
 function formatBusinessUserId(id) {
     // Convierte el ID a una cadena para asegurarse de que pueda usar .substring()

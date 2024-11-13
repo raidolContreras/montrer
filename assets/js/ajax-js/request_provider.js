@@ -1,5 +1,9 @@
+// Variable global para almacenar los proveedores obtenidos
+var storedProviders = null;
+
 $(document).ready(function () {
     restartSelectProvider();
+
     // Manejador de eventos para el cambio en el select
     $('#provider').on('change', function() {
         // Verifica si la opción seleccionada es "Añadir proveedor"
@@ -11,19 +15,20 @@ $(document).ready(function () {
 
 function restartSelectProvider() {
     var idUser = (level == 1) ? $("#idUser").val() : NaN;
-    // Realiza la solicitud Ajax a exerciseOn.php con el idExercise
+
+    // Realiza la solicitud Ajax para obtener los proveedores
     $.ajax({
         type: "POST",
         url: "controller/ajax/getProviders.php",
         data: {idUser: idUser},
         dataSrc: '',
         success: function (response) {
-            // Parsea la respuesta JSON
-            var providers = JSON.parse(response);
-            var selectOptionsHtml = `<option value="">Seleccionar proveedor</option>`;
+            // Parsea y almacena la respuesta JSON en la variable global
+            storedProviders = JSON.parse(response);
 
-            // Crea las opciones para el select
-            providers.forEach(function(provider) {
+            // Genera las opciones del select con los proveedores almacenados
+            var selectOptionsHtml = `<option value="">Seleccionar proveedor</option>`;
+            storedProviders.forEach(function(provider) {
                 if (provider.status === 1) {
                     selectOptionsHtml += `<option value="${provider.idProvider}">${provider.representative_name}</option>`;
                 }
@@ -40,10 +45,19 @@ function restartSelectProvider() {
     });
 }
 
-// Manejar la selección de "add_provider"
+// Manejar la selección de "add_provider" en el select (ejemplo adicional)
 $('#provider').on('select2:select', function (e) {
     const selectedValue = e.params.data.id;
     if (selectedValue === 'add_provider') {
         $('#modalAgregarProveedor').modal('show');
     }
 });
+
+// Ejemplo de uso posterior de la variable storedProviders
+function logProviders() {
+    if (storedProviders) {
+        console.log("Lista de proveedores almacenados:", storedProviders);
+    } else {
+        console.log("No se han cargado proveedores aún.");
+    }
+}
