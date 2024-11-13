@@ -103,6 +103,14 @@ $(document).ready(function () {
 			formData.append("document", 'caratula');
 		});
 	});
+    // Muestra u oculta los campos adicionales si el proveedor es extranjero
+    $('#foreignProvider').change(function () {
+        if ($(this).is(':checked')) {
+            $('.foreign-fields').show(); // Muestra los campos adicionales
+        } else {
+            $('.foreign-fields').hide(); // Oculta los campos adicionales
+        }
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
