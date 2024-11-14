@@ -100,6 +100,19 @@
                     <input type="text" id="account_number" name="account_number" class="form-control col bg-light border" disabled>
                 </div>
 
+                <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
+                    <label for="swiftCode" class="form-label col-2 fw-bold">Código ABA/SWIFT</label>
+                    <input type="text" class="form-control col bg-light border" id="swiftCode" name="swiftCode" disabled>
+                </div>
+                <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
+                    <label for="beneficiaryAddress" class="form-label col-2 fw-bold">Domicilio del beneficiario</label>
+                    <input type="text" class="form-control col bg-light border" id="beneficiaryAddress" name="beneficiaryAddress" disabled>
+                </div>
+                <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
+                    <label for="currencyType" class="form-label col-2 fw-bold">Tipo de divisa de la cuenta</label>
+                    <input type="text" class="form-control col bg-light border" id="currencyType" name="currencyType" disabled>
+                </div>
+
                 <!-- Concepto Póliza Contable -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="conceptoPago" class="form-label col-2 fw-bold">Concepto de pago:</label>

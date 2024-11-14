@@ -261,7 +261,29 @@ $('#provider').on('change', function() {
             $('#clabe').val(selectedProvider.clabe);
             $('#bank_name').val(selectedProvider.bank_name);
             $('#account_number').val(selectedProvider.account_number);
+            if (selectedProvider.extrangero == 1) {
+                $('.foreign-fields').show(); 
+                $('#swiftCode').val(selectedProvider.swiftCode);
+                $('#beneficiaryAddress').val(selectedProvider.beneficiaryAddress);
+                $('#currencyType').val(selectedProvider.currencyType);
+            } else {
+                $('.foreign-fields').hide();
+                $('#swiftCode').val('');
+                $('#beneficiaryAddress').val('');
+                $('#currencyType').val('');
+            }
         }
+    } else {
+        // Muestra u oculta los campos adicionales si el proveedor es extranjero
+        $('#foreignProvider').change(function () {
+            if ($(this).is(':checked')) {
+                $('.foreign-fields').show(); // Muestra los campos adicionales
+                extrangero = true;
+            } else {
+                $('.foreign-fields').hide(); // Oculta los campos adicionales
+                extrangero = false;
+            }
+        });
     }
 });
 

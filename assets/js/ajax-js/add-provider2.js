@@ -1,4 +1,5 @@
 
+var extrangero = false;
 function sendForm() {
 
     var providerKey = $("input[name='providerKey']").val();
@@ -19,6 +20,9 @@ function sendForm() {
     var clabe = $("input[name='clabe']").val();
     var description = $("input[name='description']").val();
     var user = $("input[name='user']").val();
+    var swiftCode = $("input[name='swiftCode']").val();
+    var beneficiaryAddress = $("input[name='beneficiaryAddress']").val();
+    var currencyType = $("input[name='currencyType']").val();
 
     if (!validateField(businessName) ||
         !validateField(representativeName) ||
@@ -60,10 +64,14 @@ function sendForm() {
             clabe: clabe,
             description: description,
 			idUser: document.getElementById("idUser").value,
-            user: user
+            user: user,
+            swiftCode: swiftCode,
+            beneficiaryAddress: beneficiaryAddress,
+            currencyType: currencyType,
+            extrangero: extrangero
         },
         success: function (response) {
-            if (response === 'ok') {
+            if (response !== 'Error') {
 
                 $('#modalAgregarProveedor').modal('hide');
 
@@ -83,6 +91,10 @@ function sendForm() {
                 $("input[name='accountNumber']").val('');
                 $("input[name='clabe']").val('');
                 $("input[name='description']").val('');
+                $("input[name='swiftCode']").val('');
+                $("input[name='beneficiaryAddress']").val('');
+                $("input[name='currencyType']").val('');
+                $('.foreign-fields').hide();
 
                 getNextIdProvider();
                 restartSelectProvider();

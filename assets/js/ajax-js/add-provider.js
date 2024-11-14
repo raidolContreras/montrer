@@ -1,6 +1,7 @@
 var bandera = 0;
 var cedula = 0; // Contador para archivos PDF
 var caratula = 0; // Contador para archivos PDF
+var extrangero = false;
 
 $(document).ready(function () {
 
@@ -30,8 +31,11 @@ $(document).ready(function () {
 			accountNumber: $("input[name='accountNumber']").val(),
 			clabe: $("input[name='clabe']").val(),
 			description: $("input[name='description']").val(),
-			idUser: document.getElementById("idUser").value
-
+			idUser: document.getElementById("idUser").value,
+            extrangero: extrangero,
+            swiftCode: $("input[name='swiftCode']").val(),
+            beneficiaryAddress: $("input[name='beneficiaryAddress']").val(),
+            currencyType: $("input[name='currencyType']").val(),
 		};
 		var user = $("input[name='user']").val();
 
@@ -107,8 +111,10 @@ $(document).ready(function () {
     $('#foreignProvider').change(function () {
         if ($(this).is(':checked')) {
             $('.foreign-fields').show(); // Muestra los campos adicionales
+            extrangero = true;
         } else {
             $('.foreign-fields').hide(); // Oculta los campos adicionales
+            extrangero = false;
         }
     });
 });
@@ -129,7 +135,6 @@ function confirmExit(event, destination) {
 		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
 	}
 }
-
 
 var cedulaDropzone = new Dropzone(".cedula", {
     maxFiles: 1,

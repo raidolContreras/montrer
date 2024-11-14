@@ -576,6 +576,19 @@ if (
 	isset($_POST['clabe'])
 ) {
 
+	$extrangero = $_POST['extrangero'];
+	if ($extrangero) {
+		$extrangero = 1;
+		$swiftCode = $_POST['swiftCode'];
+		$beneficiaryAddress = $_POST['beneficiaryAddress'];
+		$currencyType = $_POST['currencyType'];
+	} else {
+		$extrangero = 0;
+		$swiftCode = '';
+        $beneficiaryAddress = '';
+        $currencyType = '';
+	}
+
 	$data = array(
 		'providerKey' => $_POST['providerKey'],
 		'representativeName' => $_POST['representativeName'],
@@ -594,7 +607,11 @@ if (
 		'accountNumber' => $_POST['accountNumber'],
 		'clabe' => $_POST['clabe'],
 		'idUser' => $_POST['idUser'],
-		'description' => $_POST['description']
+		'description' => $_POST['description'],
+		'swiftCode' => $swiftCode,
+        'beneficiaryAddress' => $beneficiaryAddress,
+        'currencyType' => $currencyType,
+        'extrangero' => $extrangero
 	);
 	$response = FormsController::ctrGetProviderByName($_POST['rfc'], $_POST['idUser']);
 	if ($response == false) {
