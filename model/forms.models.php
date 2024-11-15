@@ -1259,10 +1259,10 @@ class FormsModels {
 	
 	static public function mdlGetAmountPendient($idArea){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT r.requestedAmount, r.idRequest FROM montrer_budget_requests r
+		$sql = "SELECT r.importe_solicitado AS requestedAmount, r.idRequest FROM montrer_budget_requests r
 					LEFT JOIN montrer_budgets b ON b.idArea = r.idArea
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-				WHERE e.status = 1 AND r.status = 0 AND r.idArea = :idArea;";
+				WHERE e.status = 1 AND r.status = 0 AND r.idArea = :idArea order by r.idRequest DESC;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		$stmt->execute();
@@ -1275,19 +1275,19 @@ class FormsModels {
 	static public function mdlGetRequests($idUser, $selection){
 			$pdo = Conexion::conectar();
 			if ($selection == 1){
-				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-							r.description, r.requestDate, r.responseDate, r.status, r.folio, r.paymentDate,
+				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.importe_solicitado AS requestedAmount, r.approvedAmount,
+							r.concepto_pago, r.requestDate, r.responseDate, r.status, r.folio, r.paymentDate, r.complete,
 							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
 						FROM montrer_budget_requests r
 							LEFT JOIN montrer_area a ON a.idArea = r.idArea
 							LEFT JOIN montrer_users u ON u.idUsers = a.idUser
 							LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-						WHERE a.status = 1 AND u.deleted = 0";
+						WHERE a.status = 1 AND u.deleted = 0;";
 				$stmt = $pdo->prepare($sql);
 			} else {
-				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.requestedAmount, r.approvedAmount,
-							r.description, r.requestDate, r.responseDate, r.status, r.folio, r.paymentDate,
+				$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.importe_solicitado AS requestedAmount, r.approvedAmount,
+							r.concepto_pago, r.requestDate, r.responseDate, r.status, r.folio, r.paymentDate, r.complete,
 							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
 						FROM montrer_budget_requests r
 							LEFT JOIN montrer_area a ON a.idArea = r.idArea
@@ -1309,7 +1309,7 @@ class FormsModels {
 		$pdo = Conexion::conectar();
 	
 		// Calcula la fecha de pago (paymentDate) según la fecha de creación de la solicitud (requestDate)
-		$requestDate = new DateTime($data['requestDate']);
+		$requestDate = new DateTime(); // Suponiendo que requestDate sea la fecha actual
 		$currentDay = $requestDate->format('N'); // Obtiene el día de la semana (1: lunes, 2: martes, ..., 7: domingo)
 		$hour = $requestDate->format('H:i'); // Obtiene la hora de la solicitud
 	
@@ -1322,32 +1322,79 @@ class FormsModels {
 			$paymentDate = $requestDate->modify('next friday');
 		}
 	
-		$sql = "INSERT INTO montrer_budget_requests
-					(idArea, folio, idBudget, idProvider, requestedAmount, description, idUser, eventDate, requestDate, paymentDate) 
-				VALUES 
-					(:idArea, :folio, :idBudget, :idProvider, :requestedAmount, :description, :idUser, :eventDate, :requestDate, :paymentDate)";
+		// Agrega la fecha de pago calculada a los datos
+		$data['paymentDate'] = $paymentDate->format('Y-m-d');
+	
+		// Consulta SQL para insertar los datos en la tabla montrer_budget_requests
+		$sql = "INSERT INTO montrer_budget_requests (
+					solicitante_nombre,
+					empresa,
+					concepto,
+					importe_solicitado,
+					importe_letra,
+					fecha_pago,
+					clabe,
+					banco,
+					numero_cuenta,
+					concepto_pago,
+					cuentaAfectada,
+					partidaAfectada,
+					idUser,
+					idArea,
+					idBudget,
+					idProvider,
+					idEmployer,
+					idAreaCargo,
+					idCuentaAfectada,
+					idPartidaAfectada,
+					idConcepto,
+					swift_code,
+					beneficiario_direccion,
+					tipo_divisa,
+					folio,
+					paymentDate
+				) VALUES (
+					:solicitante_nombre,
+					:empresa,
+					:concepto,
+					:importe_solicitado,
+					:importe_letra,
+					:fecha_pago,
+					:clabe,
+					:banco,
+					:numero_cuenta,
+					:concepto_pago,
+					:cuentaAfectada,
+					:partidaAfectada,
+					:idUser,
+					:idArea,
+					:idBudget,
+					:idProvider,
+					:idEmployer,
+					:idAreaCargo,
+					:idCuentaAfectada,
+					:idPartidaAfectada,
+					:idConcepto,
+					:swift_code,
+					:beneficiario_direccion,
+					:tipo_divisa,
+					:folio,
+					:paymentDate
+				)";
 	
 		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':idArea', $data['area'], PDO::PARAM_INT);
-		$stmt->bindParam(':folio', $data['folio'], PDO::PARAM_STR);
-		$stmt->bindParam(':idBudget', $data['budget'], PDO::PARAM_INT);
-		$stmt->bindParam(':idProvider', $data['provider'], PDO::PARAM_INT);
-		$stmt->bindParam(':requestedAmount', $data['requestedAmount'], PDO::PARAM_STR);
-		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
-		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
-		$stmt->bindParam(':eventDate', $data['eventDate'], PDO::PARAM_STR);
-		$stmt->bindParam(':requestDate', $data['requestDate'], PDO::PARAM_STR);
-		$stmt->bindParam(':paymentDate', $paymentDate->format('Y-m-d H:i:s'), PDO::PARAM_STR);
 	
-		if($stmt->execute()){
+		// Ejecutar la consulta
+		if($stmt->execute($data)){
 			$result = $pdo->lastInsertId();
 		} else {
-			$result = 'Error';
+			$result = 'Error: ' . implode(" - ", $stmt->errorInfo());
 		}
+	
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;
-	}	
+	}
 
 	static public function mdlDeleteRequest($idRequest){
 		$pdo = Conexion::conectar();
@@ -1447,12 +1494,12 @@ class FormsModels {
 		$pdo = Conexion::conectar();
 		$sql = "SELECT 
 					br.idRequest,
-					br.requestedAmount,
-					br.description,
+					br.importe_solicitado AS requestedAmount,
+					br.concepto_pago,
 					br.approvedAmount,
 					br.responseDate,
 					br.requestDate,
-					br.eventDate,
+					br.importe_letra,
 					a.nameArea,
 					p.business_name,
 					br.idProvider,
@@ -1877,5 +1924,67 @@ class FormsModels {
 		$stmt = null;
 		return $result;
 	}
+
+	static public function mdlCompleteRequest($data) {
+		try {
+			$pdo = Conexion::conectar();
+			
+			$stmt = $pdo->prepare("UPDATE montrer_budget_requests 
+				SET 
+					idEmployer = :idEmployer,
+					empresa = :empresa,
+					idAreaCargo = :idAreaCargo,
+					cuentaAfectada = :cuentaAfectada,
+					idCuentaAfectada = :idCuentaAfectada,
+					partidaAfectada = :partidaAfectada,
+					idPartidaAfectada = :idPartidaAfectada,
+					concepto = :concepto,
+					idConcepto = :idConcepto,
+					importe_solicitado = :requestedAmount,
+					importe_letra = :importeLetra,
+					fecha_pago = :fechaPago,
+					idProvider = :provider,
+					clabe = :clabe,
+					banco = :bank_name,
+					numero_cuenta = :account_number,
+					swift_code = :swiftCode,
+					beneficiario_direccion = :beneficiaryAddress,
+					tipo_divisa = :currencyType,
+					concepto_pago = :conceptoPago,
+					complete = 1
+				WHERE idRequest = :idRequest");
+	
+			$stmt->bindParam(":idEmployer", $data['idEmployer'], PDO::PARAM_STR);
+			$stmt->bindParam(":empresa", $data['empresa'], PDO::PARAM_STR);
+			$stmt->bindParam(":idAreaCargo", $data['idAreaCargo'], PDO::PARAM_STR);
+			$stmt->bindParam(":cuentaAfectada", $data['cuentaAfectada'], PDO::PARAM_STR);
+			$stmt->bindParam(":idCuentaAfectada", $data['idCuentaAfectada'], PDO::PARAM_STR);
+			$stmt->bindParam(":partidaAfectada", $data['partidaAfectada'], PDO::PARAM_STR);
+			$stmt->bindParam(":idPartidaAfectada", $data['idPartidaAfectada'], PDO::PARAM_STR);
+			$stmt->bindParam(":concepto", $data['concepto'], PDO::PARAM_STR);
+			$stmt->bindParam(":idConcepto", $data['idConcepto'], PDO::PARAM_STR);
+			$stmt->bindParam(":requestedAmount", $data['requestedAmount'], PDO::PARAM_STR);
+			$stmt->bindParam(":importeLetra", $data['importeLetra'], PDO::PARAM_STR);
+			$stmt->bindParam(":fechaPago", $data['fechaPago'], PDO::PARAM_STR);
+			$stmt->bindParam(":provider", $data['provider'], PDO::PARAM_STR);
+			$stmt->bindParam(":clabe", $data['clabe'], PDO::PARAM_STR);
+			$stmt->bindParam(":bank_name", $data['bank_name'], PDO::PARAM_STR);
+			$stmt->bindParam(":account_number", $data['account_number'], PDO::PARAM_STR);
+			$stmt->bindParam(":swiftCode", $data['swiftCode'], PDO::PARAM_STR);
+			$stmt->bindParam(":beneficiaryAddress", $data['beneficiaryAddress'], PDO::PARAM_STR);
+			$stmt->bindParam(":currencyType", $data['currencyType'], PDO::PARAM_STR);
+			$stmt->bindParam(":conceptoPago", $data['conceptoPago'], PDO::PARAM_STR);
+			$stmt->bindParam(":idRequest", $data['idRequest'], PDO::PARAM_INT);
+	
+			if ($stmt->execute()) {
+				return "success";
+			} else {
+				return "error";
+			}
+	
+		} catch (PDOException $e) {
+			return "error: " . $e->getMessage();
+		}
+	}	
 
 }

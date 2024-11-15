@@ -163,8 +163,10 @@ class FormsController {
 
 	static public function ctrEnableRequest($idRequest, $idAdmin, $approvedAmount){
 		$result = FormsModels::mdlEnableRequest($idRequest, $idAdmin, $approvedAmount);
+
 		$request = FormsController::ctrGetRequest($idRequest);
-		$user = FormsController::ctrGetUser($request['idUsers']);
+		
+		$user = FormsController::ctrGetUser($request['idUser']);
 		if ($result == 'ok') {
 			// Mensaje del correo electrónico
 			$message = array(
@@ -187,7 +189,7 @@ class FormsController {
 			$subtitle = 'Detalles del presupuesto actualizado';
 	
 			// Envío del correo electrónico
-			FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
+			// FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
 		}
 		return $result;
 	}
@@ -534,7 +536,7 @@ class FormsController {
         $result = FormsModels::mdlMarcarPago($idRequest,$idUser);
 		
 		$request = FormsController::ctrGetRequest($idRequest);
-		$user = FormsController::ctrGetUser($request['idUsers']);
+		$user = FormsController::ctrGetUser($request['idUser']);
 		if ($result == 'ok') {
 			// Mensaje del correo electrónico
 			$message = array(
@@ -557,7 +559,7 @@ class FormsController {
 			$subtitle = 'Detalles del presupuesto actualizado';
 	
 			// Envío del correo electrónico
-			FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
+			// FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
 		}
 
 		return $result;
@@ -762,6 +764,11 @@ class FormsController {
 	static public function ctrGetBusiness($idUser) {
 		$business = FormsModels::mdlGetBusiness($idUser);
         return $business;
+	}
+
+	static public function ctrCompleteRequest($data) {
+		$response = FormsModels::mdlCompleteRequest($data);
+        return $response;
 	}
 
 }

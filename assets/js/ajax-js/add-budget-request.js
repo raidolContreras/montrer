@@ -1,48 +1,5 @@
-var myDropzone = new Dropzone("#documentDropzone", {
-    parallelUploads: 20,
-    maxFiles: 20,
-    url: "controller/ajax/ajax.form.php",
-    maxFilesize: 10,
-    acceptedFiles: "application/pdf, application/xml, text/xml", // Modificamos esta línea
-    dictDefaultMessage: 'Arrastra y suelta los archivos aquí o haz clic para seleccionarlos <p class="subtitulo-sup">Máximo 20 archivos, Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
-    autoProcessQueue: false,
-    dictInvalidFileType: "Archivo no está permitido. Por favor, sube archivos en formato PDF o XML.",
-    dictFileTooBig: "El archivo es demasiado grande ({{filesize}}MB). Tamaño máximo permitido: {{maxFilesize}}MB.",
-    errorPlacement: function(error, element) {
-        var $element = $(element),
-            errContent = $(error).text();
-        $element.attr('data-toggle', 'tooltip');
-        $element.attr('title', errContent);
-        $element.tooltip({
-            placement: 'top'
-        });
-        $element.tooltip('show');
-
-        // Agregar botón de eliminar archivo
-        var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
-        removeButton.addEventListener("click", function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            myDropzone.removeFile(element);
-        });
-        $element.parent().append(removeButton); // Agregar el botón al contenedor del input
-    },
-    init: function() {
-        this.on("addedfile", function(file) {
-            var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
-            var _this = this;
-            removeButton.addEventListener("click", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                _this.removeFile(file);
-            });
-            file.previewElement.appendChild(removeButton);
-        });
-    }
-});
-
 var bandera = 0;
+var toggleDropzone = 0;
 $(document).ready(function () {
 
     let $comment = document.getElementById("requestedAmount")
@@ -72,73 +29,72 @@ $(document).ready(function () {
 
     $("form.account-wrap").submit(function (event) {
         event.preventDefault();
-    
-        // Recuperar valores de los campos del formulario
-        var area = $("select[name='area']").val();
-        var requestedAmount = parseFloat($("input[name='requestedAmount']").val());
-        var importeLetra = $("input[name='importeLetra']").val();
-        var conceptoPago = $("input[name='conceptoPago']").val();
-        var cuentaAfectada = $("input[name='cuentaAfectada']").val();
-        var partidaAfectada = $("input[name='partidaAfectada']").val();
-        var concepto = $("input[name='concepto']").val();
-        var provider = $("select[name='provider']").val();
-        var clabe = $("input[name='clabe']").val();
-        var bankName = $("input[name='bank_name']").val();
-        var accountNumber = $("input[name='account_number']").val();
-        var fechaPago = $("input[name='fechaPago']").val();
-        var maxBudget = parseFloat($("input[name='maxBudget']").val());
-        var folio = $("span#folio").text(); // folio se obtiene del span en lugar de un input
-    
-        // Verificar si todos los campos obligatorios están completos
-        if (!area || !requestedAmount || !provider || !fechaPago || !cuentaAfectada || !conceptoPago) {
-            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos los campos señalados con un (*).');
+
+        // Capturamos todos los campos habilitados usando serialize()
+        var formData = $(this).serializeArray();
+
+        // Añadir "idUser" del atributo "data-register" de #register-value
+        formData.push({
+            name: 'idUser',
+            value: $('#register-value').data('register')
+        });
+
+        // Añadir campos deshabilitados al resultado
+        $(this).find(':disabled').each(function () {
+            formData.push({
+                name: this.name,
+                value: $(this).val()
+            });
+        });
+
+        // Convertir a un objeto más fácil de manejar
+        var formDataObject = formData.reduce(function (acc, field) {
+            acc[field.name] = field.value;
+            return acc;
+        }, {});
+
+        // Validar el presupuesto
+        let maxBudget = parseFloat($("input[name='maxBudget']").val());
+        let requestedAmount = parseFloat($("input[name='requestedAmount']").val());
+
+        if (isNaN(requestedAmount) || requestedAmount <= 0) {
+            showAlertBootstrap('¡Atención!', 'No se puede solicitar un presupuesto de $0 o vacío.');
             return;
         }
-    
-        // Verificar que el importe solicitado no exceda el presupuesto máximo disponible
-        if (maxBudget >= requestedAmount) {
-            // Hacer la solicitud AJAX si el monto es válido
-            $.ajax({
-                type: "POST",
-                url: "controller/ajax/ajax.form.php",
-                data: {
-                    area: area,
-                    requestedAmount: requestedAmount,
-                    importeLetra: importeLetra,
-                    conceptoPago: conceptoPago,
-                    cuentaAfectada: cuentaAfectada,
-                    partidaAfectada: partidaAfectada,
-                    concepto: concepto,
-                    provider: provider,
-                    clabe: clabe,
-                    bankName: bankName,
-                    accountNumber: accountNumber,
-                    fechaPago: fechaPago,
-                    budget: maxBudget,
-                    folio: folio
-                },
-                success: function (response) {
-                    if (response !== 'Error') {
-                        // Procesar la solicitud de subida de archivos si es necesario
-                        myDropzone.processQueue();
-                        bandera = 0;
-    
-                        // Limpiar el formulario después de enviar
-                        $("form.account-wrap")[0].reset();
-    
-                        // Mostrar mensaje de éxito
-                        showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
-                    } else {
-                        showAlertBootstrap('¡Atención!', 'Error al crear la solicitud.');
-                    }
-                },
-                error: function (error) {
-                    console.log("Error en la solicitud Ajax:", error);
-                }
-            });
-        } else {
+
+        if (requestedAmount > maxBudget) {
             showAlertBootstrap('¡Atención!', 'La cantidad solicitada no debe de superar el monto disponible.');
+            return;
         }
+
+        // showAlertBootstrap('¡Éxito!', 'Presupuesto asignado');
+        
+        // Hacer la solicitud AJAX si el monto es válido
+        $.ajax({
+            type: "POST",
+            url: "controller/ajax/ajax.form.php",
+            data: formDataObject,
+            success: function (response) {
+                if (response !== 'Error') {
+                    // Procesar la solicitud de subida de archivos si es necesario
+                    if (toggleDropzone === 1) {
+                        myDropzone.processQueue();
+                    }
+                    bandera = 0;
+
+                    // Limpiar el formulario después de enviar
+                    $("form.account-wrap")[0].reset();
+
+                    // Mostrar mensaje de éxito
+                    showAlertBootstrap3('Presupuesto solicitado correctamente', '¿Agregar otra solicitud?', 'registerRequestBudget', 'requestBudget');
+                } else {
+                    showAlertBootstrap('¡Atención!', 'Error al crear la solicitud.');
+                }
+            },
+            error: function (error) {
+                console.error("Error en la solicitud Ajax:", error);
+            }
+        });
     });
     
     // Configuración del evento 'sending' del Dropzone
@@ -250,7 +206,6 @@ $('#area').on('change', function() {
 // Manejador de eventos para el cambio en el select
 $('#provider').on('change', function() {
     var selectedProviderId = $(this).val();
-    var selectedProviderText = $(this).find('option:selected').text();
 
     // Verifica si se seleccionó un proveedor válido
     if (selectedProviderId && selectedProviderId !== "add_provider" && storedProviders) {
@@ -407,6 +362,7 @@ function createFolio(nameArea) {
             var folioFin = folio + sustraerLetras(nameArea);
 
             $('#folio').text(folioFin);
+            $("input[name='folio']").val(folioFin);
         }
     });
 }
@@ -545,8 +501,54 @@ function numeroALetra(numero, status) {
 
 $('#toggleDropzone').on('change', function() {
     if ($(this).is(':checked')) {
+        toggleDropzone = 1;
         $('#dropzoneContainer').show();
     } else {
+        toggleDropzone = 0;
         $('#dropzoneContainer').hide();
+    }
+});
+
+var myDropzone = new Dropzone("#documentDropzone", {
+    parallelUploads: 20,
+    maxFiles: 20,
+    url: "controller/ajax/ajax.form.php",
+    maxFilesize: 10,
+    acceptedFiles: "application/pdf, application/xml, text/xml", // Modificamos esta línea
+    dictDefaultMessage: 'Arrastra y suelta los archivos aquí o haz clic para seleccionarlos <p class="subtitulo-sup">Máximo 20 archivos, Tipos de archivo permitidos .pdf, .xml (Tamaño máximo 10 MB)</p>',
+    autoProcessQueue: false,
+    dictInvalidFileType: "Archivo no está permitido. Por favor, sube archivos en formato PDF o XML.",
+    dictFileTooBig: "El archivo es demasiado grande ({{filesize}}MB). Tamaño máximo permitido: {{maxFilesize}}MB.",
+    errorPlacement: function(error, element) {
+        var $element = $(element),
+            errContent = $(error).text();
+        $element.attr('data-toggle', 'tooltip');
+        $element.attr('title', errContent);
+        $element.tooltip({
+            placement: 'top'
+        });
+        $element.tooltip('show');
+
+        // Agregar botón de eliminar archivo
+        var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
+        removeButton.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            myDropzone.removeFile(element);
+        });
+        $element.parent().append(removeButton); // Agregar el botón al contenedor del input
+    },
+    init: function() {
+        this.on("addedfile", function(file) {
+            var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
+            var _this = this;
+            removeButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                _this.removeFile(file);
+            });
+            file.previewElement.appendChild(removeButton);
+        });
     }
 });

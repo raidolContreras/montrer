@@ -23,7 +23,7 @@
 							<th>Departamento</th>
 							<th>Presupuesto</th>
 							<th>Solicitante</th>
-							<th>Descripción</th>
+							<th>Concepto de pago</th>
 							<th>Fecha de la solicitud</th>
                             <th>Ejercicio</th>
 							<th width="15%"></th>
@@ -138,6 +138,11 @@
         </div>
     </div>
 </div>
+
+<?php
+// include 'view/pages/request_budget/modalProvider.php';
+include 'view/pages/request_budget/modalCompleteRequestBudget.php';
+?>
 
 <?php endif ?>
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>

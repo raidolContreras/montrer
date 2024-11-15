@@ -9,23 +9,24 @@
                 
                 <!-- Solicitante -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="solicitante" class="form-label col-2 fw-bold">Solicitante:</label>
+                    <label for="solicitante" class="form-label col-2 fw-bold">Solicitante:<span class="required"></span></label>
                     <div class="form-control d-flex justify-content-between align-items-center col bg-white border">
                         <span><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
                     </div>
+                    <input type="hidden" name="solicitante_nombre" value="<?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>">
                     <input class="form-control col ms-2" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" disabled>
                 </div>
 
                 <!-- Empresa -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="empresa" class="form-label col-2 fw-bold">Empresa:</label>
-                    <input class="form-control col bg-white border" type="text" id="empresa" name="empresa" placeholder="">
+                    <label for="empresa" class="form-label col-2 fw-bold">Empresa:<span class="required"></span></label>
+                    <input class="form-control col bg-white border" type="text" id="empresa" name="empresa" placeholder="" required>
                 </div>
 
                 <!-- Área de Cargo -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="area" class="form-label col-2 fw-bold">Área de Cargo:</label>
-                    <select name="area" id="area" class="form-select form-control col">
+                    <label for="area" class="form-label col-2 fw-bold">Área de Cargo:<span class="required"></span></label>
+                    <select name="area" id="area" class="form-select form-control col" required>
                         <option value="">Seleccionar un área</option>
                     </select>
                     <input class="form-control col ms-2" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" disabled>
@@ -33,28 +34,28 @@
 
                 <!-- Cuenta que se afecta -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:</label>
-                    <input class="form-control col bg-white border" type="text" id="cuentaAfectada" name="cuentaAfectada" placeholder="Ejemplo: Ejemplo: Desfiles">
+                    <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:<span class="required"></span></label>
+                    <input class="form-control col bg-white border" type="text" id="cuentaAfectada" name="cuentaAfectada" placeholder="Ejemplo: Ejemplo: Desfiles" required>
                     <input class="form-control col ms-2" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Partida que se afecta -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:</label>
-                    <input class="form-control col bg-white border" type="text" id="partidaAfectada" name="partidaAfectada" placeholder="Ejemplo: 16-sep">
+                    <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:<span class="required"></span></label>
+                    <input class="form-control col bg-white border" type="text" id="partidaAfectada" name="partidaAfectada" placeholder="Ejemplo: 16-sep" required>
                     <input class="form-control col ms-2" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Concepto -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="concepto" class="form-label col-2 fw-bold">Concepto:</label>
-                    <input class="form-control col bg-white border" type="text" id="concepto" name="concepto" placeholder="Ejemplo: Uniformes">
+                    <label for="concepto" class="form-label col-2 fw-bold">Concepto:<span class="required"></span></label>
+                    <input class="form-control col bg-white border" type="text" id="concepto" name="concepto" placeholder="Ejemplo: Uniformes" required>
                     <input class="form-control col ms-2" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Importe Solicitado -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="requestedAmount" class="form-label col-2 fw-bold">Importe Solicitado ($):</label>
+                    <label for="requestedAmount" class="form-label col-2 fw-bold">Importe Solicitado ($):<span class="required"></span></label>
                     <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask col bg-white border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                 </div>
 
@@ -66,20 +67,16 @@
 
                 <!-- Fecha compromiso de pago -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha Compromiso de Pago:</label>
-                    <input class="form-control col bg-white border" type="date" id="fechaPago" name="fechaPago">
+                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha Compromiso de Pago:<span class="required"></span></label>
+                    <input class="form-control col bg-white border" type="date" id="fechaPago" name="fechaPago" required>
                 </div>
 
                 <!-- Proveedor -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="provider" class="form-label col-2 fw-bold">Proveedor:</label>
-                    <select name="provider" id="provider" class="form-select form-control col">
+                    <label for="provider" class="form-label col-2 fw-bold">Proveedor:<span class="required"></span></label>
+                    <select name="provider" id="provider" class="form-select form-control col" required>
                         <option value="">Seleccionar proveedor</option>
                     </select>
-                    <!-- <div class="form-check col ms-2">
-                        <input type="checkbox" id="proveedorInternacional" name="proveedorInternacional" class="form-check-input">
-                        <label for="proveedorInternacional" class="form-check-label">No es nacional</label>
-                    </div> -->
                 </div>
 
                 <!-- Clave interbancaria -->
@@ -115,8 +112,8 @@
 
                 <!-- Concepto Póliza Contable -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="conceptoPago" class="form-label col-2 fw-bold">Concepto de pago:</label>
-                    <input class="form-control col bg-light border" type="text" id="conceptoPago" name="conceptoPago">
+                    <label for="conceptoPago" class="form-label col-2 fw-bold">Concepto de pago:<span class="required"></span></label>
+                    <input class="form-control col bg-white border" type="text" id="conceptoPago" name="conceptoPago" placeholder="Concepto de pago" required>
                 </div>
 
                 <!-- Adjuntar Comprobante Fiscal -->
@@ -136,6 +133,7 @@
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label class="form-label col-2 fw-bold">Folio solicitud:</label>
                     <span id="folio" class="form-control col bg-light border"></span>
+                    <input type="hidden" name="folio">
                 </div>
 
                 <!-- Botones de Aceptar/Cancelar -->
@@ -152,8 +150,32 @@
         </form>
     </div>
 </main>
-
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
+
+
+<!-- Modal de Presupuesto Disponible -->
+<div class="modal fade" id="availableBudgetModal" tabindex="-1" aria-labelledby="availableBudgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary" id="availableBudgetModalLabel">Presupuesto Disponible</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>El presupuesto disponible para este mes es:</p>
+                <p class="fw-bold text-success" id="modalBudgetDisplay">$<span id="maxBudgetDisplay"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+include 'view/pages/request_budget/modalProvider.php';
+?>
+
 
 <!-- End Main Content Area -->
 <!-- Incluye Dropzone -->
@@ -174,26 +196,3 @@
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
 <script src="assets/js/ajax-js/request_provider.js"></script>
 <script src="assets/js/ajax-js/add-provider2.js"></script>
-
-<?php
-include 'view/pages/request_budget/modalProvider.php';
-?>
-
-<!-- Modal de Presupuesto Disponible -->
-<div class="modal fade" id="availableBudgetModal" tabindex="-1" aria-labelledby="availableBudgetModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-primary" id="availableBudgetModalLabel">Presupuesto Disponible</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>El presupuesto disponible para este mes es:</p>
-                <p class="fw-bold text-success" id="modalBudgetDisplay">$<span id="maxBudgetDisplay"></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>

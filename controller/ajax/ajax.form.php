@@ -814,30 +814,30 @@ if (
 		
 		$request = FormsController::ctrGetRequest($_POST['idRequest']);
 		$user = FormsController::ctrGetUser($_POST['idUser']);
-		if ($result == 'ok') {
-			// Mensaje del correo electrónico
-			$message = array(
-				0 => 'Estimados colaboradores:',
-				1 => 'El sistema ha recibido la comprobación del presupuesto',
-				2 => 'Folio com´probado: '.$request['folio'],
-				3 => 'Monto comprobado: $'.$request['approvedAmount']
-			);
+		// if ($response == 'ok') {
+		// 	// Mensaje del correo electrónico
+		// 	$message = array(
+		// 		0 => 'Estimados colaboradores:',
+		// 		1 => 'El sistema ha recibido la comprobación del presupuesto',
+		// 		2 => 'Folio com´probado: '.$request['folio'],
+		// 		3 => 'Monto comprobado: $'.$request['approvedAmount']
+		// 	);
 	
-			// Dirección de correo electrónico del destinatario
-			$email = $user['email'];
+		// 	// Dirección de correo electrónico del destinatario
+		// 	$email = $user['email'];
 	
-			// Asunto del correo electrónico
-			$subject = 'Actualización del estado del presupuesto';
+		// 	// Asunto del correo electrónico
+		// 	$subject = 'Actualización del estado del presupuesto';
 	
-			// Título del correo electrónico
-			$title = 'Actualización del estado del presupuesto';
+		// 	// Título del correo electrónico
+		// 	$title = 'Actualización del estado del presupuesto';
 	
-			// Subtítulo del correo electrónico
-			$subtitle = 'Detalles del presupuesto actualizado';
+		// 	// Subtítulo del correo electrónico
+		// 	$subtitle = 'Detalles del presupuesto actualizado';
 	
-			// Envío del correo electrónico
-			FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
-		}
+		// 	// Envío del correo electrónico
+		// 	FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
+		// }
 
 	echo $response;
 }
@@ -1062,4 +1062,67 @@ if (isset($_POST['verRespuesta'])) {
 if (isset($_POST['changePaymentDate']) && isset($_POST['paymentDate'])) {
 	$response = FormsController::ctrChangePaymentDate($_POST['changePaymentDate'], $_POST['paymentDate']);
     echo $response;
+}
+
+if (
+	isset($_POST['solicitante_nombre']) &&
+	isset($_POST['empresa']) &&
+	isset($_POST['area']) &&
+	isset($_POST['cuentaAfectada']) &&
+	isset($_POST['partidaAfectada']) &&
+	isset($_POST['concepto']) &&
+	isset($_POST['requestedAmount']) &&
+	isset($_POST['fechaPago']) &&
+	isset($_POST['provider']) &&
+	isset($_POST['conceptoPago']) &&
+	isset($_POST['folio']) &&
+	isset($_POST['idBudget']) &&
+	isset($_POST['budget']) &&
+	isset($_POST['idUser']) &&
+	isset($_POST['idEmployer']) &&
+	isset($_POST['idAreaCargo']) &&
+	isset($_POST['idCuentaAfectada']) &&
+	isset($_POST['idPartidaAfectada']) &&
+	isset($_POST['idConcepto']) &&
+	isset($_POST['importeLetra']) &&
+	isset($_POST['clabe']) &&
+	isset($_POST['bank_name']) &&
+	isset($_POST['account_number']) &&
+	isset($_POST['swiftCode']) &&
+	isset($_POST['beneficiaryAddress']) &&
+	isset($_POST['currencyType'])
+) {
+	$data = array(
+		'solicitante_nombre' => $_POST['solicitante_nombre'],
+		'empresa' => $_POST['empresa'],
+		'concepto' => $_POST['concepto'],
+		'importe_solicitado' => $_POST['requestedAmount'],
+		'importe_letra' => $_POST['importeLetra'],
+		'fecha_pago' => $_POST['fechaPago'],
+		'clabe' => $_POST['clabe'],
+		'banco' => $_POST['bank_name'],
+		'numero_cuenta' => $_POST['account_number'],
+		'concepto_pago' => $_POST['conceptoPago'],
+		'cuentaAfectada' => $_POST['cuentaAfectada'],
+		'partidaAfectada' => $_POST['partidaAfectada'],
+		
+		
+		'idUser' => $_POST['idUser'],
+		'idArea' => $_POST['area'],
+		'idBudget' => $_POST['budget'],
+		'idProvider' => $_POST['provider'],
+
+		'idEmployer' => ($_POST['idEmployer'] == '') ? null : $_POST['idEmployer'],
+		'idAreaCargo' => ($_POST['idAreaCargo'] == '') ? null : $_POST['idAreaCargo'],
+		'idCuentaAfectada' => ($_POST['idCuentaAfectada'] == '') ? null : $_POST['idCuentaAfectada'],
+		'idPartidaAfectada' => ($_POST['idPartidaAfectada'] == '') ? null : $_POST['idPartidaAfectada'],
+		'idConcepto' => ($_POST['idConcepto'] == '') ? null : $_POST['idConcepto'],
+		
+		'swift_code' => ($_POST['swiftCode'] == '') ? null : $_POST['swiftCode'],
+		'beneficiario_direccion' => ($_POST['beneficiaryAddress'] == '') ? null : $_POST['beneficiaryAddress'],
+		'tipo_divisa' => ($_POST['currencyType'] == '') ? null : $_POST['currencyType'],
+		'folio' => $_POST['folio'],
+	);
+	$response = FormsController::ctrRequestBudget($data);
+	echo $response;
 }
