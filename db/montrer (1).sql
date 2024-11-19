@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2024 a las 09:52:17
+-- Tiempo de generación: 19-11-2024 a las 09:21:39
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -113,6 +113,12 @@ CREATE TABLE `montrer_budget_requests` (
   `idBudget` int(11) NOT NULL,
   `idArea` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
+  `cuentaAfectadaCount` text DEFAULT NULL,
+  `partidaAfectadaCount` text DEFAULT NULL,
+  `polizeType` text DEFAULT NULL,
+  `numberPolize` text DEFAULT NULL,
+  `cargo` double DEFAULT NULL,
+  `abono` double DEFAULT NULL,
   `complete` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -120,8 +126,9 @@ CREATE TABLE `montrer_budget_requests` (
 -- Volcado de datos para la tabla `montrer_budget_requests`
 --
 
-INSERT INTO `montrer_budget_requests` (`idRequest`, `solicitante_nombre`, `empresa`, `concepto`, `cuentaAfectada`, `partidaAfectada`, `idEmployer`, `idAreaCargo`, `idCuentaAfectada`, `idPartidaAfectada`, `idConcepto`, `importe_solicitado`, `importe_letra`, `fecha_pago`, `clabe`, `banco`, `numero_cuenta`, `swift_code`, `beneficiario_direccion`, `tipo_divisa`, `concepto_pago`, `folio`, `approvedAmount`, `importe_letra_aprobado`, `responseDate`, `status`, `active`, `pagado`, `paymentDate`, `comentarios`, `requestDate`, `idAdmin`, `idProvider`, `idBudget`, `idArea`, `idUser`, `complete`) VALUES
-(1, 'HN Gonzalez Garcia', 'colegios.pucp.net', 'rrr', 'asd', 'eee', '1111-111-111-111', '2222-222-222-222-222', '3333-333-333-333-333', '4444-444-444-444-444', '5555-555-555-555-555', 16500, 'Dieciséis mil quinientos pesos', '2024-11-22', '34567789996', 'BBVA', '58980398', '', '', '', 'asdasd', '1BDG241114', 16500, NULL, '2024-11-15 02:49:01', 1, 1, 0, '2024-11-23', '', '2024-11-15 04:29:37', 32, 2, 28, 3, 3, 1);
+INSERT INTO `montrer_budget_requests` (`idRequest`, `solicitante_nombre`, `empresa`, `concepto`, `cuentaAfectada`, `partidaAfectada`, `idEmployer`, `idAreaCargo`, `idCuentaAfectada`, `idPartidaAfectada`, `idConcepto`, `importe_solicitado`, `importe_letra`, `fecha_pago`, `clabe`, `banco`, `numero_cuenta`, `swift_code`, `beneficiario_direccion`, `tipo_divisa`, `concepto_pago`, `folio`, `approvedAmount`, `importe_letra_aprobado`, `responseDate`, `status`, `active`, `pagado`, `paymentDate`, `comentarios`, `requestDate`, `idAdmin`, `idProvider`, `idBudget`, `idArea`, `idUser`, `cuentaAfectadaCount`, `partidaAfectadaCount`, `polizeType`, `numberPolize`, `cargo`, `abono`, `complete`) VALUES
+(2, 'HN Gonzalez Garcia', 'colegios.pucp.net', 'rrr', 'wwwww', 'eee', '1111-111-111-111', '2222-222-222-222-222', '3333-333-333-333-333', '4444-444-444-444-444', '5555-555-555-555-555', 15500, 'Quince mil quinientos pesos', '2024-11-28', '5642536599652565', 'SANTANDER', '55256352445', 'ASD22', 'ASDAQQ', 'ASDAEE', 'Trnsf. Gastos de servicios-Banda de guerra-16/9-aasd', '1BDG241118', 15500, NULL, '2024-11-18 23:55:07', 5, 0, 1, '2024-11-22', 'Los archivos están correctos', '2024-11-19 04:46:36', 3, 4, 28, 3, 3, '2222', '1111', 'EG', '125562', 15500, 15500, 1),
+(3, 'HN Gonzalez Garcia', 'colegios.pucp.net', 'rrr', 'wwwww', 'eee', NULL, NULL, NULL, NULL, NULL, 35000, 'Treinta y cinco mil pesos', '2024-11-28', '34567789996', 'BBVA', '58980398', NULL, NULL, NULL, 'cheque. Gastos de servicios-Banda de guerra-16/9-aasd', '3BDG241119', NULL, NULL, NULL, 0, NULL, 0, '2024-11-22', NULL, '2024-11-19 06:54:32', NULL, 2, 28, 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -459,7 +466,18 @@ INSERT INTO `montrer_logs` (`idLog`, `idUser`, `timestamp`, `actionType`, `ipAdd
 (269, 3, '2024-11-15 07:09:20', 'Send comprobation: 1', '127.0.0.1'),
 (270, 3, '2024-11-15 07:09:20', 'Send files comprobation: CSF HECTOR 08_03_24.pdf', '127.0.0.1'),
 (271, 3, '2024-11-15 07:09:20', 'Send files comprobation: SHE MARZO 24.xml', '127.0.0.1'),
-(272, 32, '2024-11-15 08:49:03', 'Enable request: 1', '127.0.0.1');
+(272, 32, '2024-11-15 08:49:03', 'Enable request: 1', '127.0.0.1'),
+(273, 3, '2024-11-18 23:30:20', 'Send comprobation: 1', '127.0.0.1'),
+(274, 3, '2024-11-18 23:30:20', 'Send files comprobation: SHE MARZO 24.xml', '127.0.0.1'),
+(275, 3, '2024-11-18 23:30:20', 'Send files comprobation: CSF HECTOR 08_03_24.pdf', '127.0.0.1'),
+(276, 32, '2024-11-19 00:55:10', 'Acept comprobation: 1', '127.0.0.1'),
+(277, 32, '2024-11-19 00:55:10', 'Acept comprobation: 1', '127.0.0.1'),
+(278, 32, '2024-11-19 04:43:12', 'Enable request: 1', '127.0.0.1'),
+(279, 32, '2024-11-19 05:51:12', 'Enable request: 2', '127.0.0.1'),
+(280, 3, '2024-11-19 06:45:17', 'Send comprobation: 2', '127.0.0.1'),
+(281, 3, '2024-11-19 06:45:17', 'Send files comprobation: SHE MARZO 24.xml', '127.0.0.1'),
+(282, 3, '2024-11-19 06:45:17', 'Send files comprobation: CSF HECTOR 08_03_24.pdf', '127.0.0.1'),
+(283, 32, '2024-11-19 06:47:16', 'Acept comprobation: 2', '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -481,7 +499,7 @@ CREATE TABLE `montrer_month_budget` (
 --
 
 INSERT INTO `montrer_month_budget` (`idMensualBudget`, `month`, `budget_month`, `budget_used`, `total_used`, `idBudget`) VALUES
-(24, 1, 16666.67, 16500, NULL, 28),
+(24, 1, 16666.67, 15500, NULL, 28),
 (25, 2, 16666.67, 0, NULL, 28),
 (26, 3, 16666.67, 0, NULL, 28),
 (27, 4, 16666.67, 0, NULL, 28),
@@ -552,6 +570,13 @@ CREATE TABLE `montrer_payment_requests` (
   `fechaEnvio` datetime NOT NULL DEFAULT current_timestamp(),
   `statusPayment` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `montrer_payment_requests`
+--
+
+INSERT INTO `montrer_payment_requests` (`idPaymentRequest`, `nombreCompleto`, `fechaSolicitud`, `idProvider`, `idArea`, `importeSolicitado`, `importeLetra`, `titularCuenta`, `entidadBancaria`, `conceptoPago`, `idRequest`, `idUser`, `fechaEnvio`, `statusPayment`) VALUES
+(25, 'HN Gonzalez Garcia', '2024-11-18', 4, 3, 15500, 'Quince mil quinientos pesos', 'Jaime Gomez', 'SANTANDER', 'Trnsf. Gastos de servicios-Banda de guerra-16/9-aasd', 2, 3, '2024-11-19 00:45:17', 1);
 
 -- --------------------------------------------------------
 
@@ -669,12 +694,12 @@ CREATE TABLE `montrer_users` (
 --
 
 INSERT INTO `montrer_users` (`idUsers`, `firstname`, `lastname`, `email`, `password`, `createDate`, `lastConection`, `deleted`) VALUES
-(3, 'HN', 'Gonzalez Garcia', 'henogoga@outlook.com1', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-01-05 04:06:44', '2024-11-14 18:10:15', 0),
+(3, 'HN', 'Gonzalez Garcia', 'henogoga@outlook.com1', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-01-05 04:06:44', '2024-11-18 11:15:50', 0),
 (5, 'Noel', 'González García', 'henogoga@gmail.com', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-01-12 18:50:49', '2024-04-29 14:47:22', 0),
 (7, 'Adriana', 'Cisneros Ruiz', 'acisneros@unimontrer.edu.mx', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-01-12 20:31:28', '2024-05-16 12:28:35', 0),
 (19, 'Usuario', 'Administrador', 'henogoga@institutogestalt.edu.mx', '', '2024-02-22 15:44:12', '0000-00-00 00:00:00', 0),
 (31, 'Raúl', 'Pérez', 'hector.gonzalez@radixeducation.org', '', '2024-02-27 15:49:17', '0000-00-00 00:00:00', 0),
-(32, 'Administrador', 'General', 'admin@example.com', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-03-11 15:19:31', '2024-11-14 17:20:51', 0),
+(32, 'Administrador', 'General', 'admin@example.com', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-03-11 15:19:31', '2024-11-18 11:20:16', 0),
 (34, 'Salvador', 'Pérez', 'henogoga@outlook.com', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-04-10 18:52:45', '2024-05-12 21:49:17', 1),
 (35, 'Toby', 'González García', 'plataforma@unives.mx', '$2a$07$asxx54ahjppf45sd87a5auRHz5VyvxsgbNKYyggXQtOKy0VNwnILK', '2024-04-28 20:30:20', '2024-04-29 09:16:47', 1),
 (37, 'Dana', 'González García', 'henogoga@ccmmex.com', '', '2024-04-28 20:31:35', '0000-00-00 00:00:00', 1),
@@ -854,7 +879,7 @@ ALTER TABLE `montrer_budgets`
 -- AUTO_INCREMENT de la tabla `montrer_budget_requests`
 --
 ALTER TABLE `montrer_budget_requests`
-  MODIFY `idRequest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idRequest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `montrer_business`
@@ -872,7 +897,7 @@ ALTER TABLE `montrer_exercise`
 -- AUTO_INCREMENT de la tabla `montrer_logs`
 --
 ALTER TABLE `montrer_logs`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=273;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
 
 --
 -- AUTO_INCREMENT de la tabla `montrer_month_budget`
@@ -884,7 +909,7 @@ ALTER TABLE `montrer_month_budget`
 -- AUTO_INCREMENT de la tabla `montrer_payment_requests`
 --
 ALTER TABLE `montrer_payment_requests`
-  MODIFY `idPaymentRequest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idPaymentRequest` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `montrer_providers`
