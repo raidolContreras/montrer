@@ -9,6 +9,24 @@
 	<main class="main-content-wrap">
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
+                
+            <?php if ($level != 0): ?>
+                <!-- Formulario en una sola línea -->
+                <form class="row gx-2 align-items-center" id="GenReport">
+                    <div class="col-auto">
+                        <label for="startDate" class="form-label mb-0">Fecha de inicio:</label>
+                        <input type="date" id="startDate" name="startDate" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-auto">
+                        <label for="endDate" class="form-label mb-0">Fecha de término:</label>
+                        <input type="date" id="endDate" name="endDate" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary btn-sm" type="submit">Generar reporte</button>
+                    </div>
+                </form>
+
+            <?php endif ?>
 				<div class="main-title d-flex justify-content-between align-items-center solicitud">
 					<h3>Solicitudes de presupuesto</h3>
                     <?php if ($level != 0): ?>
@@ -139,11 +157,6 @@
     </div>
 </div>
 
-<?php
-// include 'view/pages/request_budget/modalProvider.php';
-include 'view/pages/request_budget/modalCompleteRequestBudget.php';
-?>
-
 <?php endif ?>
 <div id="register-value" data-register="<?php echo $_SESSION['idUser']; ?>"></div>
 
@@ -154,8 +167,9 @@ include 'view/pages/request_budget/modalCompleteRequestBudget.php';
 </script>
 <script src="assets/js/ajax-js/get-requests.js"></script>
 <?php 
+    include 'verComprobacion.php';
+    include 'modalCompleteRequestBudget.php';
     include "modalComprobar.php";
     include "modalRespuesta.php";
     include 'modalProvider.php';
-    include 'verComprobacion.php';
 ?>

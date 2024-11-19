@@ -20,14 +20,14 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="provider" class="form-label">Proveedor</label>
-                            <select class="form-select" id="provider" name="provider" disabled>
+                            <label for="provider2" class="form-label">Proveedor</label>
+                            <select class="form-select" id="provider2" name="provider2" disabled>
                             </select>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="area" class="form-label">Departamento a cargo</label>
-                            <select class="form-select" id="area" name="area" disabled>
+                            <label for="area2" class="form-label">Departamento a cargo</label>
+                            <select class="form-select" id="area2" name="area2" disabled>
                             </select>
                         </div>
 

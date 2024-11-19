@@ -72,8 +72,8 @@ function enviarComprobante() {
 	event.preventDefault();
     var nombreCompleto = $("input[name='nombreCompleto']").val();
     var fechaSolicitud = $("input[name='fechaSolicitud']").val();
-    var provider = $("select[name='provider']").val();
-    var area = $("select[name='area']").val();
+    var provider = $("select[name='provider2']").val();
+    var area = $("select[name='area2']").val();
     var importeSolicitado = $("input[name='importeSolicitado']").val();
     var importeLetra = $("input[name='importeLetra']").val();
     var titularCuenta = $("input[name='titularCuenta']").val();

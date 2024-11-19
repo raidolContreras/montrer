@@ -771,4 +771,9 @@ class FormsController {
         return $response;
 	}
 
+	static public function ctrGetReports($startDate, $endDate) {
+		$reports = FormsModels::mdlGetReports($startDate, $endDate);
+        return $reports;
+	}
+
 }

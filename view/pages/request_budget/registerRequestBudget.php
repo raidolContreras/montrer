@@ -136,6 +136,72 @@
                     <input type="hidden" name="folio">
                 </div>
 
+                <div class="container my-5">
+                    <div class="form-container">
+                        <div class="form-header text-center">
+                            SECCIÓN A CARGO DE CONTABILIDAD Y BANCOS:
+                        </div>
+                        <table class="table table-bordered text-center" style="border-collapse: separate; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <!-- Encabezados agrupados -->
+                                <tr style="background-color: #d9e2ec; font-weight: bold;">
+                                    <th>CONTABILIZADO CON PÓLIZA</th>
+                                    <th rowspan="2">DETALLES DE LA PÓLIZA</th>
+                                    <th rowspan="2">TIPO DE PÓLIZA</th>
+                                    <th rowspan="2">CARGO</th>
+                                    <th rowspan="2">ABONO</th>
+                                </tr>
+                                <tr style="background-color: #d9e2ec; font-weight: bold;">
+                                    <th>CUENTA QUE SE AFECTA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input class="form-control col ms-2" type="text" id="cuentaAfectadaCount" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000" disabled>
+                                    </td>
+                                    <td>
+                                        <input class="form-control col ms-2" type="text" id="polizeType" name="polizeType" placeholder="EG" disabled>
+                                    </td>
+                                    <td>
+                                        <input class="form-control col ms-2" type="text" id="numberPolize" name="numberPolize" placeholder="Tipo de póliza" disabled>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="cargo" name="cargo" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control col ms-2" type="text" id="partidaAfectadaCount" name="partidaAfectadaCount" placeholder="1000-001-001-001" disabled>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" id="abono" name="abono" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #d9e2ec; font-weight: bold;">
+                                    <td>
+                                        ESTATUS:
+                                    </td>
+                                        <td colspan="2">
+                                            <select id="estatus" name="estatus" class="form-select col border" disabled>
+                                                <option value="pendiente_de_pago">Pendiente de pago</option>
+                                                <option value="denegado">Denegado</option>
+                                                <option value="pagado">Pagado</option>
+                                            </select>
+                                    </td>
+                                        <td>FECHA DE CARGO</td>
+                                        <td>
+                                        <input class="form-control col border" type="date" id="fechaCarga" name="fechaCarga" disabled>
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <!-- Botones de Aceptar/Cancelar -->
                 <div class="col-md-12 row mt-4 text-end" style="align-items: center;">
                     <a class="btn btn-outline-danger col-2 me-2" id="cancelButton">Cancelar</a>
@@ -147,6 +213,7 @@
             <input type="hidden" name="maxBudget" id="maxBudget">
             <input type="hidden" class="form-control" id="idBudget" name="idBudget">
             <input type="hidden" name="budget">
+            
         </form>
     </div>
 </main>

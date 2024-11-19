@@ -1549,11 +1549,12 @@ class FormsModels {
 	}
 	static public function mdlGetComprobante($idRequest){
 		$pdo = Conexion::conectar();
-        $sql = "SELECT r.*, a.nameArea, p.business_name 
+        $sql = "SELECT r.*, br.*, a.nameArea, p.business_name 
 				FROM montrer_payment_requests r
 					LEFT JOIN montrer_area a ON a.idArea = r.idArea
 					LEFT JOIN montrer_providers p ON p.idProvider = r.idProvider
-				WHERE idRequest = :idRequest
+					LEFT JOIN montrer_budget_requests br ON br.idRequest = r.idRequest
+				WHERE r.idRequest = :idRequest
 				ORDER BY r.idPaymentRequest DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
@@ -1951,8 +1952,15 @@ class FormsModels {
 					beneficiario_direccion = :beneficiaryAddress,
 					tipo_divisa = :currencyType,
 					concepto_pago = :conceptoPago,
+					cuentaAfectadaCount = :cuentaAfectadaCount, -- Añadido
+					partidaAfectadaCount = :partidaAfectadaCount, -- Añadido
+					polizeType = :polizeType, -- Añadido
+					numberPolize = :numberPolize, -- Añadido
+					cargo = :cargo, -- Añadido
+					abono = :abono, -- Añadido
 					complete = 1
 				WHERE idRequest = :idRequest");
+				
 	
 			$stmt->bindParam(":idEmployer", $data['idEmployer'], PDO::PARAM_STR);
 			$stmt->bindParam(":empresa", $data['empresa'], PDO::PARAM_STR);
@@ -1975,6 +1983,12 @@ class FormsModels {
 			$stmt->bindParam(":currencyType", $data['currencyType'], PDO::PARAM_STR);
 			$stmt->bindParam(":conceptoPago", $data['conceptoPago'], PDO::PARAM_STR);
 			$stmt->bindParam(":idRequest", $data['idRequest'], PDO::PARAM_INT);
+			$stmt->bindParam(":cuentaAfectadaCount", $data['cuentaAfectadaCount'], PDO::PARAM_INT);
+			$stmt->bindParam(":partidaAfectadaCount", $data['partidaAfectadaCount'], PDO::PARAM_INT);
+			$stmt->bindParam(":polizeType", $data['polizeType'], PDO::PARAM_STR);
+			$stmt->bindParam(":numberPolize", $data['numberPolize'], PDO::PARAM_STR);
+			$stmt->bindParam(":cargo", $data['cargo'], PDO::PARAM_STR);
+			$stmt->bindParam(":abono", $data['abono'], PDO::PARAM_STR);
 	
 			if ($stmt->execute()) {
 				return "success";
@@ -1985,6 +1999,24 @@ class FormsModels {
 		} catch (PDOException $e) {
 			return "error: " . $e->getMessage();
 		}
-	}	
+	}
+	static public function mdlGetReports($startDate, $endDate) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_budget_requests br
+                LEFT JOIN montrer_business b ON br.idEmployer = b.idBusiness
+                LEFT JOIN montrer_users_to_business ub ON ub.idBusiness = b.idBusiness
+                LEFT JOIN montrer_users u ON ub.idUser = u.idUsers
+                WHERE br.responseDate BETWEEN :startDate AND :endDate";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':startDate', $startDate, PDO::PARAM_STR);
+        $stmt->bindParam(':endDate', $endDate, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll();
+		
+        $stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
 
 }

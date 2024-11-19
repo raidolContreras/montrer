@@ -300,15 +300,21 @@ function searchRequest(idRequest) {
                     $('#listaDocumentos').append(`<li class="list-group-item">Error al buscar documentos.</li>`);
                 }
             });
-            
+
             $('#requestedAmount').val(response.requestedAmount);
             $('#provider').val(response.idProvider);
+            $('#empresa').val(response.empresa);
+            $('#cuentaAfectada').val(response.cuentaAfectada);
+            $('#partidaAfectada').val(response.partidaAfectada);
+            $('#requestedAmount').val(response.importe_solicitado);
+            $('#concepto').val(response.concepto);
+            $('#fechaPago').val(response.fecha_pago);
             $('#area').val(response.idArea);
             $('#description').val(response.description);
             $('#event').val(response.event);
             $('#eventDate').val(response.eventDate);
-            $('#folio').val(response.folio);
-            
+            $('#folio').text(response.folio);
+
             var datetimeString = response.requestDate;
             var parts = datetimeString.split(' ');
             var dateString = parts[0];

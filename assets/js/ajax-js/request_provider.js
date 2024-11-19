@@ -38,6 +38,8 @@ function restartSelectProvider() {
             selectOptionsHtml += `<option value="add_provider" class="add-provider-option">&#43; Añadir proveedor</option>`;
             
             $('#provider').html(selectOptionsHtml);
+            $('#provider2').html(selectOptionsHtml);
+            $('#providerGet').html(selectOptionsHtml);
         },
         error: function (error) {
             console.log("Error en la solicitud Ajax:", error);
