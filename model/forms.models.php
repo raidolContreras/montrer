@@ -2002,7 +2002,7 @@ class FormsModels {
 	}
 	static public function mdlGetReports($startDate, $endDate) {
 		$pdo = Conexion::conectar();
-        $sql = "SELECT * FROM montrer_budget_requests br
+        $sql = "SELECT *, br.status AS statusBudgetRequest FROM montrer_budget_requests br
                 LEFT JOIN montrer_business b ON br.idEmployer = b.idBusiness
                 LEFT JOIN montrer_users_to_business ub ON ub.idBusiness = b.idBusiness
                 LEFT JOIN montrer_users u ON ub.idUser = u.idUsers

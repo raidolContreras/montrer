@@ -49,6 +49,35 @@ $sheet->fromArray($headers, NULL, 'A1');
 $sheet->getStyle('A1:' . chr(64 + count($headers)) . '1')->applyFromArray($headerStyle);
 $sheet->getRowDimension('1')->setRowHeight(30);
 
+// Función para determinar el estatus
+function getStatus($statusBudgetRequest, $active, $pagado)
+{
+    if (!is_null($statusBudgetRequest)) {
+        switch ($statusBudgetRequest) {
+            case 0: return "No respondido";
+            case 1: return "Aprobado";
+            case 2: return "Envió de comprobante";
+            case 3: return "Rechazado";
+            case 4: return "Denegado el comprobante";
+            case 5: return "Aprobado el comprobante";
+        }
+    }
+
+    if (is_null($active)) {
+        return "No respondido";
+    } elseif ($active == 1 && $pagado == 0) {
+        return "Envió de comprobante";
+    } elseif ($active == 1 && $pagado == 1) {
+        return "Aprobado el comprobante";
+    } elseif ($active == 0 && $pagado == 0) {
+        return "Denegado el comprobante";
+    } elseif ($active == 0 && $pagado == 1) {
+        return "Aprobado";
+    }
+
+    return "Rechazado"; // Valor predeterminado en caso de error
+}
+
 // Insertar datos
 $row = 2;
 $totalSolicitudes = 0;
@@ -67,7 +96,10 @@ foreach ($data as $record) {
     $sheet->setCellValueExplicit("K{$row}", $record['clabe'] ?? '', \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
     $sheet->setCellValue("L{$row}", $record['cuentaAfectada'] ?? '');
     $sheet->setCellValue("M{$row}", $record['partidaAfectada'] ?? '');
-    $sheet->setCellValue("N{$row}", $record['status'] ?? '');
+
+    // Determinar estatus
+    $status = getStatus($record['statusBudgetRequest'] ?? null, $record['active'] ?? null, $record['pagado'] ?? null);
+    $sheet->setCellValue("N{$row}", $status);
 
     // Sumar el monto de las solicitudes
     $totalSolicitudes += $record['cargo'] ?? 0;
