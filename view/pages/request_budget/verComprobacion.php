@@ -1,15 +1,26 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
 <div class="modal fade" id="verComprovacion" tabindex="-1" aria-labelledby="comprobarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="comprobarModalLabel">SOLICITUD DE PAGO</h5>
+                <button type="button" class="btn btn-primary btn-sm me-2" id="btnPrintModal">
+                    <i class="bi bi-printer"></i> Imprimir
+                </button>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
                 <div class="card-box-style p-4 rounded shadow-sm bg-light">
-                    <center class="others-title mb-4">
-                        <h3 class="text-primary">DETALLE DE SOLICITUD</h3>
-                    </center>
+                <center class="others-title mb-4 row">
+                        <h3 class="text-primary col-10">DETALLE DE SOLICITUD</h3>
+                        <!-- Fecha de solicitud -->
+                        <div class="col row mb-3" style="align-items: center;">
+                            <input type="date" id="fechaSolicitudGet" name="fechaSolicitudGet" class="form-control col bg-light border" value="" readonly>
+                        </div>
+                </center>
                     <form class="account-wrap" id="budgetRequestForm">
                         <div class="row gy-3">
                             <!-- Solicitante -->
@@ -18,7 +29,7 @@
                                 <div class="form-control d-flex justify-content-between align-items-center col border">
                                     <span id="nombreCompletoGet"></span>
                                 </div>
-                                <input class="form-control col ms-2" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" disabled>
+                                <input class="form-control col ms-2" type="text" id="idEmployerGet" name="idEmployerGet" placeholder="1000-001-001-001" disabled>
                             </div>
 
                             <!-- Empresa -->
@@ -29,7 +40,7 @@
 
                             <!-- Área de Cargo -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="area" class="form-label col-2 fw-bold">Área de Cargo:<span class="disabled"></span></label>
+                                <label for="area" class="form-label col-2 fw-bold">Área de cargo:<span class="disabled"></span></label>
                                 <input class="form-control col border" type="text" id="areaGet" name="area" placeholder="" disabled>
                                 <input class="form-control col ms-2" type="text" id="idAreaCargoGet" name="idAreaCargo" placeholder="5000-001-000-000-000" disabled>
                             </div>
@@ -57,7 +68,7 @@
 
                             <!-- Importe Solicitado -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="requestedAmount" class="form-label col-2 fw-bold">Importe Solicitado ($):<span class="disabled"></span></label>
+                                <label for="requestedAmount" class="form-label col-2 fw-bold">Importe solicitado ($):<span class="disabled"></span></label>
                                 <input type="text" id="requestedAmountGet" name="requestedAmount" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
                             </div>
 
@@ -69,7 +80,7 @@
 
                             <!-- Fecha compromiso de pago -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha Compromiso de Pago:<span class="disabled"></span></label>
+                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:<span class="disabled"></span></label>
                                 <input class="form-control col border" type="date" id="fechaPagoGet" name="fechaPago" disabled>
                             </div>
 
@@ -82,8 +93,8 @@
                             </div>
 
                             <!-- Clave interbancaria -->
-                            <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="clabe" class="form-label col-2 fw-bold">Clave Interbancaria:</label>
+                            <div class="col-md-12 row mb-3 clabe" style="align-items: center;">
+                                <label for="clabe" class="form-label col-2 fw-bold">Clabe interbancaria:</label>
                                 <input type="text" id="clabeGet" name="clabe" class="form-control col border" disabled>
                             </div>
 
@@ -95,7 +106,7 @@
 
                             <!-- Número de cuenta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="account_number" class="form-label col-2 fw-bold">Número de Cuenta:</label>
+                                <label for="account_number" class="form-label col-2 fw-bold">Número de cuenta:</label>
                                 <input type="text" id="account_numberGet" name="account_number" class="form-control col border" disabled>
                             </div>
 
@@ -215,3 +226,39 @@
         </div>
     </div>
 </div>
+<script>
+document.getElementById("btnPrintModal").addEventListener("click", function () {
+    const modalContent = document.querySelector(".modal-content");
+
+    if (!modalContent) {
+        console.error("El elemento modal-content no existe en el DOM.");
+        alert("No se encontró el contenido del modal.");
+        return;
+    }
+
+    html2canvas(modalContent, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+    })
+        .then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jspdf.jsPDF({
+                orientation: "portrait",
+                unit: "px",
+                format: "a4",
+            });
+
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+            pdf.save("Solicitud_Pago.pdf");
+        })
+        .catch((error) => {
+            console.error("Error generando el PDF:", error);
+            alert("Ocurrió un error al generar el PDF. Verifica la consola para más detalles.");
+        });
+});
+</script>

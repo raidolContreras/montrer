@@ -8,10 +8,13 @@
             </div>
             <div class="modal-body">
                 <div class="card-box-style p-4 rounded shadow-sm bg-light">
-                    <center class="others-title mb-4">
-                        <h3 class="text-primary">SOLICITUD DE PAGO</h3>
+                    <center class="others-title mb-4 row">
+                        <h3 class="text-primary col-9">SOLICITUD DE PAGO</h3>
+                            <!-- Fecha de solicitud -->
+                            <div class="col row mb-3" style="align-items: center;">
+                                <input type="date" id="fechaSolicitud" name="fechaSolicitud" class="form-control col bg-light border" readonly>
+                            </div>
                     </center>
-
                     <form class="account-wrap" id="completeRequestForm">
                         <div class="row gy-3">
 
@@ -33,7 +36,7 @@
 
                             <!-- Área de Cargo -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="area" class="form-label col-2 fw-bold">Área de Cargo:<span class="required"></span></label>
+                                <label for="area" class="form-label col-2 fw-bold">Área de cargo:<span class="required"></span></label>
                                 <input class="form-control col bg-white border" type="text" id="area" name="area" readonly>
                                 <input class="form-control col ms-2 auto-format2" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" required>
                             </div>
@@ -61,7 +64,7 @@
 
                             <!-- Importe Solicitado -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="requestedAmount" class="form-label col-2 fw-bold">Importe Solicitado ($):<span class="required"></span></label>
+                                <label for="requestedAmount" class="form-label col-2 fw-bold">Importe solicitado ($):<span class="required"></span></label>
                                 <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask col bg-white border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                             </div>
 
@@ -73,7 +76,7 @@
 
                             <!-- Fecha compromiso de pago -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha Compromiso de Pago:<span class="required"></span></label>
+                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:<span class="required"></span></label>
                                 <input class="form-control col bg-light border" type="date" id="fechaPago" name="fechaPago" required>
                             </div>
 
@@ -86,8 +89,8 @@
                             </div>
 
                             <!-- Clave interbancaria -->
-                            <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="clabe" class="form-label col-2 fw-bold">Clave Interbancaria:</label>
+                            <div class="col-md-12 row mb-3 clabe" style="align-items: center;">
+                                <label for="clabe" class="form-label col-2 fw-bold">Clabe interbancaria:</label>
                                 <input type="text" id="clabe" name="clabe" class="form-control col bg-light border" readonly>
                             </div>
 
@@ -99,7 +102,7 @@
 
                             <!-- Numero de cuenta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="account_number" class="form-label col-2 fw-bold">Número de Cuenta:</label>
+                                <label for="account_number" class="form-label col-2 fw-bold">Número de cuenta:</label>
                                 <input type="text" id="account_number" name="account_number" class="form-control col bg-light border" readonly>
                             </div>
 

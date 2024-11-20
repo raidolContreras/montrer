@@ -103,15 +103,15 @@ $(document).ready(function () {
     });
     
     // Variable de control para mostrar el modal solo una vez
-    let hasModalShown = false;
+    // let hasModalShown = false;
 
     // Mostrar el modal una vez al hacer clic en requestedAmount
-    $('#requestedAmount').on('click', function() {
-        if (!hasModalShown) {
-            $('#availableBudgetModal').modal('show'); // Muestra el modal
-            hasModalShown = true; // Cambiar la variable para no mostrarlo nuevamente
-        }
-    });
+    // $('#requestedAmount').on('click', function() {
+    //     if (!hasModalShown) {
+    //         $('#availableBudgetModal').modal('show'); // Muestra el modal
+    //         hasModalShown = true; // Cambiar la variable para no mostrarlo nuevamente
+    //     }
+    // });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -218,11 +218,13 @@ $('#provider').on('change', function() {
             $('#account_number').val(selectedProvider.account_number);
             if (selectedProvider.extrangero == 1) {
                 $('.foreign-fields').show(); 
+                $('.clabe').hide();
                 $('#swiftCode').val(selectedProvider.swiftCode);
                 $('#beneficiaryAddress').val(selectedProvider.beneficiaryAddress);
                 $('#currencyType').val(selectedProvider.currencyType);
             } else {
                 $('.foreign-fields').hide();
+                $('.clabe').show();
                 $('#swiftCode').val('');
                 $('#beneficiaryAddress').val('');
                 $('#currencyType').val('');

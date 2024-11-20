@@ -21,64 +21,12 @@ function verComprobacion(idRequest, status){
         data: { searchComprobante: idRequest },
         dataType: 'json',
         success: function (response) {
-            /* {
-  "idPaymentRequest": 24,
-  "nombreCompleto": "HN Gonzalez Garcia",
-  "fechaSolicitud": "2024-11-18",
-  "idProvider": 2,
-  "idArea": 3,
-  "importeSolicitado": 16500,
-  "importeLetra": "Dieciséis mil quinientos pesos",
-  "titularCuenta": "Héctor Noel González García",
-  "entidadBancaria": "BBVA",
-  "conceptoPago": "asdasd",
-  "idRequest": 1,
-  "idUser": 3,
-  "fechaEnvio": "2024-11-18 17:30:19",
-  "statusPayment": 1,
-  "solicitante_nombre": "HN Gonzalez Garcia",
-  "empresa": "colegios.pucp.net",
-  "concepto": "rrr",
-  "cuentaAfectada": "asd",
-  "partidaAfectada": "eee",
-  "idEmployer": "1111-111-111-111",
-  "idAreaCargo": "2222-222-222-222-222",
-  "idCuentaAfectada": "3333-333-333-333-333",
-  "idPartidaAfectada": "4444-444-444-444-444",
-  "idConcepto": "5555-555-555-555-555",
-  "importe_solicitado": 16500,
-  "importe_letra": "Dieciséis mil quinientos pesos",
-  "fecha_pago": "2024-11-22",
-  "clabe": "34567789996",
-  "banco": "BBVA",
-  "numero_cuenta": "58980398",
-  "swift_code": "ABCDEFG",
-  "beneficiario_direccion": "Casa de JUANICHI",
-  "tipo_divisa": "DOLAR",
-  "concepto_pago": "asdasd",
-  "folio": "1BDG241114",
-  "approvedAmount": 16500,
-  "importe_letra_aprobado": null,
-  "responseDate": "2024-11-18 11:20:25",
-  "status": 5,
-  "active": 0,
-  "pagado": 1,
-  "paymentDate": "2024-11-23",
-  "comentarios": "Aceptado",
-  "requestDate": "2024-11-14 22:29:37",
-  "idAdmin": 3,
-  "idBudget": 28,
-  "cuentaAfectadaCount": "5002-001-002-003-033",
-  "partidaAfectadaCount": "1002-102-501-110",
-  "polizeType": "EG",
-  "numberPolize": "10023",
-  "cargo": 16500,
-  "abono": 16500,
-  "complete": 1,
-  "nameArea": "Banda de guerra",
-  "business_name": "Héctor Noel González García"
-}
-            */
+            let date = new Date(response.requestDate);
+            console.log(date);
+            let formattedDate = date.toISOString().split('T')[0];
+
+            $('#fechaSolicitudGet').val(formattedDate);
+
             $('#nombreCompletoGet').text(response.nombreCompleto);
             $('#idEmployerGet').val(response.idEmployer);
             $('#empresaGet').val(response.empresa);

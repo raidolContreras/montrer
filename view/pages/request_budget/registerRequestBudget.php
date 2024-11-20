@@ -1,12 +1,16 @@
 <main class="main-content-wrap">
     <div class="card-box-style p-4 rounded shadow-sm bg-light">
-        <center class="others-title mb-4">
-            <h3 class="text-primary">SOLICITUD DE PAGO</h3>
+        <center class="others-title mb-4 row">
+            <h3 class="text-primary col-9">SOLICITUD DE PAGO</h3>
+                <!-- Fecha de solicitud -->
+                <div class="col row mb-3" style="align-items: center;">
+                    <input type="date" id="fechaSolicitud" name="fechaSolicitud" class="form-control col bg-light border" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
         </center>
 
         <form class="account-wrap" id="budgetRequestForm">
             <div class="row gy-3">
-                
+
                 <!-- Solicitante -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="solicitante" class="form-label col-2 fw-bold">Solicitante:<span class="required"></span></label>
@@ -19,13 +23,13 @@
 
                 <!-- Empresa -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="empresa" class="form-label col-2 fw-bold">Empresa:<span class="required"></span></label>
-                    <input class="form-control col bg-white border" type="text" id="empresa" name="empresa" placeholder="" required>
+                    <label for="empresa" class="form-label col-2 fw-bold">Empresa:</label>
+                    <input class="form-control col bg-white border" type="text" id="empresa" name="empresa" placeholder="" disabled>
                 </div>
 
                 <!-- Área de Cargo -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="area" class="form-label col-2 fw-bold">Área de Cargo:<span class="required"></span></label>
+                    <label for="area" class="form-label col-2 fw-bold">Área de cargo:<span class="required"></span></label>
                     <select name="area" id="area" class="form-select form-control col" required>
                         <option value="">Seleccionar un área</option>
                     </select>
@@ -55,7 +59,7 @@
 
                 <!-- Importe Solicitado -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="requestedAmount" class="form-label col-2 fw-bold">Importe Solicitado ($):<span class="required"></span></label>
+                    <label for="requestedAmount" class="form-label col-2 fw-bold">Importe solicitado ($):<span class="required"></span></label>
                     <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask col bg-white border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                 </div>
 
@@ -67,7 +71,7 @@
 
                 <!-- Fecha compromiso de pago -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha Compromiso de Pago:<span class="required"></span></label>
+                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:<span class="required"></span></label>
                     <input class="form-control col bg-white border" type="date" id="fechaPago" name="fechaPago" required>
                 </div>
 
@@ -80,8 +84,8 @@
                 </div>
 
                 <!-- Clave interbancaria -->
-                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="clabe" class="form-label col-2 fw-bold">Clave Interbancaria:</label>
+                 <div class="col-md-12 row mb-3 clabe" style="align-items: center;">
+                    <label for="clabe" class="form-label col-2 fw-bold">Clabe interbancaria:</label>
                     <input type="text" id="clabe" name="clabe" class="form-control col bg-light border" disabled>
                 </div>
 
@@ -93,7 +97,7 @@
 
                 <!-- Numero de cuenta -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="account_number" class="form-label col-2 fw-bold">Número de Cuenta:</label>
+                    <label for="account_number" class="form-label col-2 fw-bold">Número de cuenta:</label>
                     <input type="text" id="account_number" name="account_number" class="form-control col bg-light border" disabled>
                 </div>
 
@@ -118,7 +122,7 @@
 
                 <!-- Adjuntar Comprobante Fiscal -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="toggleDropzone" class="form-label col-2 fw-bold">Comprobante Fiscal (PDF/XML):</label>
+                    <label for="toggleDropzone" class="form-label col-2 fw-bold">Comprobante fiscal (PDF/XML):</label>
                     <input type="checkbox" id="toggleDropzone" class="form-check-input ms-2">
                 </div>
 
@@ -225,7 +229,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-primary" id="availableBudgetModalLabel">Presupuesto Disponible</h5>
+                <h5 class="modal-title text-primary" id="availableBudgetModalLabel">Presupuesto disponible</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

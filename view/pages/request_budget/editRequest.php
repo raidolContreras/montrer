@@ -6,8 +6,12 @@
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
     <div class="card-box-style p-4 rounded shadow-sm bg-light">
-        <center class="others-title mb-4">
-            <h3 class="text-primary">EDICIÓN DEL PRESUPUESTO</h3>
+        <center class="others-title mb-4 row">
+            <h3 class="text-primary col-10">EDICIÓN DEL PRESUPUESTO</h3>
+                <!-- Fecha de solicitud -->
+                <div class="col row mb-3" style="align-items: center;">
+                    <input type="date" id="fechaSolicitud" name="fechaSolicitud" class="form-control col bg-light border" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
         </center>
 
         <form class="account-wrap" id="budgetRequestForm">
@@ -31,7 +35,7 @@
 
                 <!-- Área de Cargo -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="area" class="form-label col-2 fw-bold">Área de Cargo:<span class="required"></span></label>
+                    <label for="area" class="form-label col-2 fw-bold">Área de cargo:<span class="required"></span></label>
                     <select name="area" id="area" class="form-select form-control col" required>
                         <option value="">Seleccionar un área</option>
                     </select>
@@ -61,13 +65,13 @@
 
                 <!-- Importe Solicitado -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="requestedAmount" class="form-label col-2 fw-bold">Importe Solicitado ($):<span class="required"></span></label>
+                    <label for="requestedAmount" class="form-label col-2 fw-bold">Importe solicitado ($):<span class="required"></span></label>
                     <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask col bg-white border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                 </div>
 
                 <!-- Fecha compromiso de pago -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha Compromiso de Pago:<span class="required"></span></label>
+                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:<span class="required"></span></label>
                     <input class="form-control col bg-white border" type="date" id="fechaPago" name="fechaPago" required>
                 </div>
 
