@@ -37,7 +37,10 @@ function verComprobacion(idRequest, status){
         success: function (response) {
             // Supongamos que response.requestDate tiene el formato '2024-11-18 22:46:36'
             let requestdate = formatearfecha(response.requestDate);
-            let paymentDate = formatearfecha(response.paymentDate);
+            let paymentDate
+            if (response.pagado == 1) {
+                paymentDate = formatearfecha(response.paymentDate);
+            }
 
             // Asignamos la fecha al elemento
             $('#fechaSolicitudGet').text(requestdate);
