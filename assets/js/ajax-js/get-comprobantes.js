@@ -22,7 +22,7 @@ function verComprobacion(idRequest, status){
         `);
     } else {
         $('.comment').html(`
-            <label for="comentario" class="form-label">Agrega un comentario</label>
+            <label for="comentario" class="form-label">Comentario</label>
             <input type="text" class="form-control" id="comentario" disabled>
         `);
         $('.botones-modal').html('<button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>');
