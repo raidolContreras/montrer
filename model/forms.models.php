@@ -2019,4 +2019,18 @@ class FormsModels {
 		return $result;
 	}
 
+	static public function mdlIdPaymentRequest($idRequest) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT idPaymentRequest FROM montrer_payment_requests WHERE idRequest = :idRequest order by idPaymentRequest DESC LIMIT 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $result = $stmt->fetch();
+        
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
+
 }

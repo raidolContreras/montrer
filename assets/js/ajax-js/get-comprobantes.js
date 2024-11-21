@@ -25,60 +25,69 @@ function verComprobacion(idRequest, status){
             console.log(date);
             let formattedDate = date.toISOString().split('T')[0];
 
-            $('#fechaSolicitudGet').val(formattedDate);
+            $('#fechaSolicitudGet').text(formattedDate);
 
             $('#nombreCompletoGet').text(response.nombreCompleto);
-            $('#idEmployerGet').val(response.idEmployer);
-            $('#empresaGet').val(response.empresa);
-            $('#areaGet').val(response.nameArea);
-            $('#idAreaCargoGet').val(response.idAreaCargo);
-            $('#cuentaAfectadaGet').val(response.cuentaAfectada);
-            $('#idCuentaAfectadaGet').val(response.idCuentaAfectada);
-            $('#partidaAfectadaGet').val(response.partidaAfectada);
-            $('#idPartidaAfectadaGet').val(response.idPartidaAfectada);
-            $('#conceptoGet').val(response.concepto);
-            $('#idConceptoGet').val(response.idConcepto);
-            $('#requestedAmountGet').val(response.approvedAmount);
-            $('#importeLetraGet').val(response.importe_letra);
-            $('#fechaPagoGet').val(response.paymentDate);
-            $('#providerGet').val(response.idProvider);
-            $('#clabeGet').val(response.clabe);
-            $('#bank_nameGet').val(response.banco);
-            $('#account_numberGet').val(response.numero_cuenta);
-            $('#conceptoPagoGet').val(response.concepto_pago);
+            $('#idEmployerGet').text(response.idEmployer);
+            $('#empresaGet').text(response.empresa);
+            $('#areaGet').text(response.nameArea);
+            $('#idAreaCargoGet').text(response.idAreaCargo);
+            $('#cuentaAfectadaGet').text(response.cuentaAfectada);
+            $('#idCuentaAfectadaGet').text(response.idCuentaAfectada);
+            $('#partidaAfectadaGet').text(response.partidaAfectada);
+            $('#idPartidaAfectadaGet').text(response.idPartidaAfectada);
+            $('#conceptoGet').text(response.concepto);
+            $('#idConceptoGet').text(response.idConcepto);
+            $('#requestedAmountGet').text(response.approvedAmount);
+            $('#importeLetraGet').text(response.importe_letra);
+            $('#fechaPagoGet').text(response.paymentDate);
+            $('#providerGet').text(response.business_name);
+            $('#clabeGet').text(response.clabe);
+            $('#bank_nameGet').text(response.banco);
+            $('#account_numberGet').text(response.numero_cuenta);
+            $('#conceptoPagoGet').text(response.concepto_pago);
             $('#folioGet').text(response.folio);
-            $('#cuentaAfectadaCountGet').val(response.cuentaAfectadaCount);
-            $('#partidaAfectadaCountGet').val(response.partidaAfectadaCount);
-            $('#polizeTypeGet').val(response.polizeType);
-            $('#numberPolizeGet').val(response.numberPolize);
-            $('#cargoGet').val(response.cargo);
-            $('#abonoGet').val(response.abono);
-            $('#fechaCargaGet').val(response.paymentDate);
+            $('#cuentaAfectadaCountGet').text(response.cuentaAfectadaCount);
+            $('#partidaAfectadaCountGet').text(response.partidaAfectadaCount);
+            $('#polizeTypeGet').text(response.polizeType);
+            $('#numberPolizeGet').text(response.numberPolize);
+            $('#cargoGet').text(response.cargo);
+            $('#abonoGet').text(response.abono);
+            $('#fechaCargaGet').text(response.paymentDate);
             
             if (response.pagado == 1) {
-                $('#estatusGet').val('pagado');
+                $('#estatusGet').text('pagado');
             } else if (response.status == 2 && response.pagado == 0) {
-                $('#estatusGet').val('pendiente');
+                $('#estatusGet').text('pendiente');
             } else {
-                $('#estatusGet').val('denegado');
+                $('#estatusGet').text('denegado');
             }
 
             if (response.swift_code !== '') {
                 // Muestra los elementos ocultos con la clase 'foreign-fields'
                 $('.foreign-fields').css('display', 'flex');
+                $('.clabe').css('display', 'none');
             
                 // Asigna valores a los campos dinámicos
-                $('#swiftCodeGet').val(response.swift_code);
-                $('#beneficiaryAddressGet').val(response.beneficiario_direccion || '');
-                $('#currencyTypeGet').val(response.tipo_divisa || '');
-            }            
+                $('#swiftCodeGet').text(response.swift_code);
+                $('#beneficiaryAddressGet').text(response.beneficiario_direccion || '');
+                $('#currencyTypeGet').text(response.tipo_divisa || '');
+            }    else {
+                // Oculta los elementos ocultos con la clase 'foreign-fields'
+                $('.foreign-fields').css('display', 'none');
+                $('.clabe').css('display', 'flex');
+                $('#swiftCodeGet').text('');
+                $('#beneficiaryAddressGet').text('');
+                $('#currencyTypeGet').text('');
 
-            var idPaymentRequest = response.idPaymentRequest;
+            }         
+
+            var idRequest = response.idRequest;
 
             $.ajax({
                 type: 'POST',
                 url: 'controller/ajax/ajax.form.php', // URL actualizada si es necesario
-                data: { getDocuments: idPaymentRequest },
+                data: { getDocuments: idRequest },
                 success: function(response) {
                     var documentos = JSON.parse(response);
                     $('#listaDocumentosRequest').empty(); // Limpiar la lista actual
@@ -105,7 +114,7 @@ function verComprobacion(idRequest, status){
                             }
                         
                             $('#listaDocumentosRequest').append(`
-                                <a href="view/documents/${idPaymentRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
+                                <a href="view/documents/requestTemp/${idRequest}/${documento}" download target="_blank" class="mt-2 text-wrap">
                                     <li class="list-group-item d-flex flex-column align-items-center justify-content-center p-3">
                                         <div class="document-icon ${colorClass}"><i class="${iconClass}"></i></div>
                                         ${documento}

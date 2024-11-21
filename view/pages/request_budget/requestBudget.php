@@ -4,29 +4,45 @@
 <script>
     var $j = jQuery.noConflict();
 </script>
+<style>
+    .form-input {
+        font-size: 11px;
+        padding: 7px 19px;
+        width: 100%;
+        transition: all ease 0.5s;
+        display: block;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--bs-body-color);
+        background-color: var(--bs-body-bg);
+        background-clip: padding-box;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: var(--bs-border-radius);
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+    .btn-report {
+        font-weight: 200;
+        font-size: 10px;
+        border: none;
+        padding: 8px 15px;
+        background-color: var(--bs-primary);
+        color: #fff;
+        border-radius: 15px;
+    }
+    .btn-report:hover {
+        background-color: #085f12;
+    }
+
+</style>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 <!-- Start Main Content Area -->
 	<main class="main-content-wrap">
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
-                
-            <?php if ($level != 0): ?>
-                <!-- Formulario en una sola línea -->
-                <form class="row gx-2 align-items-center" id="GenReport">
-                    <div class="col-auto">
-                        <label for="startDate" class="form-label mb-0">Fecha de inicio:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control form-control-sm">
-                    </div>
-                    <div class="col-auto">
-                        <label for="endDate" class="form-label mb-0">Fecha de término:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-control form-control-sm">
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-primary btn-sm" type="submit">Generar reporte</button>
-                    </div>
-                </form>
-
-            <?php endif ?>
 				<div class="main-title d-flex justify-content-between align-items-center solicitud">
 					<h3>Solicitudes de presupuesto</h3>
                     <?php if ($level != 0): ?>
@@ -44,6 +60,7 @@
 							<th>Concepto de pago</th>
 							<th>Fecha de la solicitud</th>
                             <th>Ejercicio</th>
+                            <th>Estatus</th>
 							<th width="15%"></th>
 						</tr>
 					</thead>

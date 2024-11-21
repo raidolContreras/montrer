@@ -1,142 +1,200 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const printButton = document.getElementById('btnPrintModal');
+        if (printButton) {
+            printButton.addEventListener('click', function () {
+                const printContents = document.getElementById('verComprovacion').innerHTML;
+                const printWindow = window.open('', '', 'height=800,width=600');
+
+                // Copiar todos los estilos CSS de la página principal
+                let styles = '';
+                for (const styleSheet of document.styleSheets) {
+                    try {
+                        for (const rule of styleSheet.cssRules) {
+                            styles += rule.cssText;
+                        }
+                    } catch (e) {
+                        // Ignorar los errores que vienen de estilos externos de diferentes dominios
+                    }
+                }
+
+                printWindow.document.write('<html><head><title>Solicitud de Pago</title>');
+                printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">');
+                printWindow.document.write('<style>' + styles + '</style>');
+                printWindow.document.write('<style>');
+                printWindow.document.write(`
+                    @media print {
+                        @page {
+                            size: A4;
+                            margin: 10mm;
+                        }
+                        body {
+                            -webkit-print-color-adjust: exact;
+                            font-size: 12px;
+                        }
+                        .modal-content {
+                            max-width: 100%;
+                            width: 100%;
+                        }
+                        .card-box-style {
+                            padding: 0;
+                        }
+                        .container, .modal-body, .modal-footer, .modal-header {
+                            margin: 0;
+                            padding: 10px;
+                        }
+                        .table {
+                            font-size: 10px;
+                        }
+                        .btn, .btn-close {
+                            display: none;
+                        }
+                    }
+                `);
+                printWindow.document.write('</style></head><body >');
+                printWindow.document.write(printContents);
+                printWindow.document.write('</body></html>');
+
+                printWindow.document.close();
+                printWindow.print();
+            });
+        }
+    });
+</script>
 
 <div class="modal fade" id="verComprovacion" tabindex="-1" aria-labelledby="comprobarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="comprobarModalLabel">SOLICITUD DE PAGO</h5>
-                <button type="button" class="btn btn-primary btn-sm me-2" id="btnPrintModal">
+                <button type="button" class="btn btn-primary btn-sm" id="btnPrintModal">
                     <i class="bi bi-printer"></i> Imprimir
                 </button>
+            <div class="modal-header">
+                <h5 class="modal-title" id="comprobarModalLabel">SOLICITUD DE PAGO</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
                 <div class="card-box-style p-4 rounded shadow-sm bg-light">
                 <center class="others-title mb-4 row">
-                        <h3 class="text-primary col-10">DETALLE DE SOLICITUD</h3>
+                        <h3 class="text-primary col-9">DETALLE DE SOLICITUD</h3>
                         <!-- Fecha de solicitud -->
                         <div class="col row mb-3" style="align-items: center;">
-                            <input type="date" id="fechaSolicitudGet" name="fechaSolicitudGet" class="form-control col bg-light border" value="" readonly>
+                            <span id="fechaSolicitudGet" style="height: 35px !important" class="form-control col bg-light border" readonly></span>
                         </div>
                 </center>
                     <form class="account-wrap" id="budgetRequestForm">
                         <div class="row gy-3">
                             <!-- Solicitante -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="solicitante" class="form-label col-2 fw-bold">Solicitante:<span class="disabled"></span></label>
-                                <div class="form-control d-flex justify-content-between align-items-center col border">
+                                <label for="solicitante" class="form-label col-2 fw-bold">Solicitante:</label>
+                                <div style="height: 35px !important" class="form-control d-flex justify-content-between align-items-center col border">
                                     <span id="nombreCompletoGet"></span>
                                 </div>
-                                <input class="form-control col ms-2" type="text" id="idEmployerGet" name="idEmployerGet" placeholder="1000-001-001-001" disabled>
+                                <span style="height: 35px !important" class="form-control col ms-2" id="idEmployerGet"></span>
                             </div>
 
                             <!-- Empresa -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="empresa" class="form-label col-2 fw-bold">Empresa:<span class="disabled"></span></label>
-                                <input class="form-control col border" type="text" id="empresaGet" name="empresa" placeholder="" disabled>
+                                <label for="empresa" class="form-label col-2 fw-bold">Empresa:</label>
+                                <span style="height: 35px !important" class="form-control col border" id="empresaGet"></span>
                             </div>
 
                             <!-- Área de Cargo -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="area" class="form-label col-2 fw-bold">Área de cargo:<span class="disabled"></span></label>
-                                <input class="form-control col border" type="text" id="areaGet" name="area" placeholder="" disabled>
-                                <input class="form-control col ms-2" type="text" id="idAreaCargoGet" name="idAreaCargo" placeholder="5000-001-000-000-000" disabled>
+                                <label for="area" class="form-label col-2 fw-bold">Área de cargo:</label>
+                                <span style="height: 35px !important" class="form-control col border" id="areaGet"></span>
+                                <span style="height: 35px !important" class="form-control col ms-2" id="idAreaCargoGet"></span>
                             </div>
 
                             <!-- Cuenta que se afecta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:<span class="disabled"></span></label>
-                                <input class="form-control col border" type="text" id="cuentaAfectadaGet" name="cuentaAfectada" placeholder="Ejemplo: Desfiles" disabled>
-                                <input class="form-control col ms-2" type="text" id="idCuentaAfectadaGet" name="idCuentaAfectada" placeholder="5000-001-000-000-000" disabled>
+                                <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:</label>
+                                <span style="height: 35px !important" class="form-control col border" id="cuentaAfectadaGet"></span>
+                                <span style="height: 35px !important" class="form-control col ms-2" id="idCuentaAfectadaGet"></span>
                             </div>
 
                             <!-- Partida que se afecta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:<span class="disabled"></span></label>
-                                <input class="form-control col border" type="text" id="partidaAfectadaGet" name="partidaAfectada" placeholder="Ejemplo: 16-sep" disabled>
-                                <input class="form-control col ms-2" type="text" id="idPartidaAfectadaGet" name="idPartidaAfectada" placeholder="5000-001-000-000-000" disabled>
+                                <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:</label>
+                                <span style="height: 35px !important" class="form-control col border" id="partidaAfectadaGet"></span>
+                                <span style="height: 35px !important" class="form-control col ms-2" id="idPartidaAfectadaGet"></span>
                             </div>
 
                             <!-- Concepto -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="concepto" class="form-label col-2 fw-bold">Concepto:<span class="disabled"></span></label>
-                                <input class="form-control col border" type="text" id="conceptoGet" name="concepto" placeholder="Ejemplo: Uniformes" disabled>
-                                <input class="form-control col ms-2" type="text" id="idConceptoGet" name="idConcepto" placeholder="5000-001-000-000-000" disabled>
+                                <label for="concepto" class="form-label col-2 fw-bold">Concepto:</label>
+                                <span style="height: 35px !important" class="form-control col border" id="conceptoGet"></span>
+                                <span style="height: 35px !important" class="form-control col ms-2" id="idConceptoGet"></span>
                             </div>
 
                             <!-- Importe Solicitado -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="requestedAmount" class="form-label col-2 fw-bold">Importe solicitado ($):<span class="disabled"></span></label>
-                                <input type="text" id="requestedAmountGet" name="requestedAmount" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
+                                <label for="requestedAmount" class="form-label col-2 fw-bold">Importe solicitado ($):</label>
+                                <span id="requestedAmountGet" style="height: 35px !important" class="form-control inputmask col border"></span>
                             </div>
 
                             <!-- Importe con letra -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="importeLetra" class="form-label col-2 fw-bold">Importe con letra:</label>
-                                <input type="text" id="importeLetraGet" name="importeLetra" class="form-control col border" disabled>
+                                <span id="importeLetraGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <!-- Fecha compromiso de pago -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:<span class="disabled"></span></label>
-                                <input class="form-control col border" type="date" id="fechaPagoGet" name="fechaPago" disabled>
+                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:</label>
+                                <span id="fechaPagoGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <!-- Proveedor -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="providerGet" class="form-label col-2 fw-bold">Proveedor:<span class="disabled"></span></label>
-                                <select name="providerGet" id="providerGet" class="form-select form-control col" disabled>
-                                    <option value="">Seleccionar proveedor</option>
-                                </select>
+                                <label for="providerGet" class="form-label col-2 fw-bold">Proveedor:</label>
+                                <span id="providerGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <!-- Clave interbancaria -->
                             <div class="col-md-12 row mb-3 clabe" style="align-items: center;">
                                 <label for="clabe" class="form-label col-2 fw-bold">Clabe interbancaria:</label>
-                                <input type="text" id="clabeGet" name="clabe" class="form-control col border" disabled>
+                                <span id="clabeGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <!-- Banco -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="bank_name" class="form-label col-2 fw-bold">Banco:</label>
-                                <input type="text" id="bank_nameGet" name="bank_name" class="form-control col border" disabled>
+                                <span id="bank_nameGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <!-- Número de cuenta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="account_number" class="form-label col-2 fw-bold">Número de cuenta:</label>
-                                <input type="text" id="account_numberGet" name="account_number" class="form-control col border" disabled>
+                                <span id="account_numberGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <!-- Concepto Póliza Contable -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="conceptoPago" class="form-label col-2 fw-bold">Concepto de pago:<span class="disabled"></span></label>
-                                <input class="form-control col border" type="text" id="conceptoPagoGet" name="conceptoPago" placeholder="Concepto de pago" disabled>
+                                <label for="conceptoPago" class="form-label col-2 fw-bold">Concepto de pago:</label>
+                                <span id="conceptoPagoGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
                                 <label for="swiftCode" class="form-label col-2 fw-bold">Código ABA/SWIFT</label>
-                                <input type="text" class="form-control col border" id="swiftCodeGet" name="swiftCode" disabled>
+                                <span id="swiftCodeGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
                                 <label for="beneficiaryAddress" class="form-label col-2 fw-bold">Domicilio del beneficiario</label>
-                                <input type="text" class="form-control col border" id="beneficiaryAddressGet" name="beneficiaryAddress" disabled>
+                                <span id="beneficiaryAddressGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
                                 <label for="currencyType" class="form-label col-2 fw-bold">Tipo de divisa de la cuenta</label>
-                                <input type="text" class="form-control col border" id="currencyTypeGet" name="currencyType" disabled>
+                                <span id="currencyTypeGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
                             <!-- Folios consecutivos -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label class="form-label col-2 fw-bold">Folio solicitud:</label>
-                                <span id="folioGet" class="form-control col bg-light border"></span>
+                                <span id="folioGet" style="height: 35px !important" class="form-control col bg-light border"></span>
                             </div>
-
                             <div class="container my-5">
                                 <div class="form-container">
                                     <div class="form-header text-center">
@@ -159,28 +217,28 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input class="form-control col ms-2" type="text" id="cuentaAfectadaCountGet" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000" disabled>
+                                                    <span id="cuentaAfectadaCountGet" style="height: 35px !important" class="form-control col ms-2"></span>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control col ms-2" type="text" id="polizeTypeGet" name="polizeType" placeholder="EG" disabled>
+                                                    <span id="polizeTypeGet" style="height: 35px !important" class="form-control col ms-2"></span>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control col ms-2" type="text" id="numberPolizeGet" name="numberPolize" placeholder="Tipo de póliza" disabled>
+                                                    <span id="numberPolizeGet" style="height: 35px !important" class="form-control col ms-2"></span>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="cargoGet" name="cargo" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
+                                                    <span id="cargoGet" style="height: 35px !important" class="form-control inputmask col border"></span>
                                                 </td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input class="form-control col ms-2" type="text" id="partidaAfectadaCountGet" name="partidaAfectadaCount" placeholder="1000-001-001-001" disabled>
+                                                    <span id="partidaAfectadaCountGet" style="height: 35px !important" class="form-control col ms-2"></span>
                                                 </td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td>
-                                                    <input type="text" id="abonoGet" name="abono" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
+                                                    <span id="abonoGet" style="height: 35px !important" class="form-control inputmask col border"></span>
                                                 </td>
                                             </tr>
                                             <tr style="background-color: #d9e2ec; font-weight: bold;">
@@ -188,22 +246,17 @@
                                                     ESTATUS:
                                                 </td>
                                                 <td colspan="2">
-                                                    <select id="estatusGet" name="estatus" class="form-select col border" disabled>
-                                                        <option value="pendiente_de_pago">Pendiente de pago</option>
-                                                        <option value="denegado">Denegado</option>
-                                                        <option value="pagado">Pagado</option>
-                                                    </select>
+                                                    <span id="estatusGet" style="height: 35px !important" class="form-control col border"></span>
                                                 </td>
                                                 <td>FECHA DE CARGO</td>
                                                 <td>
-                                                    <input class="form-control col border" type="date" id="fechaCargaGet" name="fechaCargaGet" disabled>
+                                                    <span id="fechaCargaGet" style="height: 35px !important" class="form-control col border"></span>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                             <div class="comment mt-5">
                             </div>
                         </div>
@@ -226,39 +279,3 @@
         </div>
     </div>
 </div>
-<script>
-document.getElementById("btnPrintModal").addEventListener("click", function () {
-    const modalContent = document.querySelector(".modal-content");
-
-    if (!modalContent) {
-        console.error("El elemento modal-content no existe en el DOM.");
-        alert("No se encontró el contenido del modal.");
-        return;
-    }
-
-    html2canvas(modalContent, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-    })
-        .then((canvas) => {
-            const imgData = canvas.toDataURL("image/png");
-
-            const pdf = new jspdf.jsPDF({
-                orientation: "portrait",
-                unit: "px",
-                format: "a4",
-            });
-
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-            pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-            pdf.save("Solicitud_Pago.pdf");
-        })
-        .catch((error) => {
-            console.error("Error generando el PDF:", error);
-            alert("Ocurrió un error al generar el PDF. Verifica la consola para más detalles.");
-        });
-});
-</script>

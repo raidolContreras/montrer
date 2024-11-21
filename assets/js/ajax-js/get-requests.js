@@ -1,11 +1,9 @@
 $(document).ready(function () {
+    let $comment = document.getElementById("requestedAmount");
+    let timeout;
 
-    let $comment = document.getElementById("requestedAmount")
-    let timeout
-
-    //El evento lo puedes reemplazar con keyup, keypress y el tiempo a tu necesidad
     $comment.addEventListener('keydown', () => {
-        clearTimeout(timeout)
+        clearTimeout(timeout);
         timeout = setTimeout(() => {
             requestedAmount = $('#requestedAmount').val();
             var inputValue = requestedAmount.replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
@@ -16,201 +14,194 @@ $(document).ready(function () {
             } else {
                 $('#importeLetra').val('');
             }
-            clearTimeout(timeout)
-        },500)
+            clearTimeout(timeout);
+        }, 500);
     });
 
-	$("input[name='metodoDePago']").change(function(){
-        // Si el radio button seleccionado es 'cheque', habilita el input
-        if($("#cheque").is(":checked")) {
+    $("input[name='metodoDePago']").change(function () {
+        if ($("#cheque").is(":checked")) {
             $("#chequeNombre").removeAttr("disabled");
         } else {
-            // Si se selecciona cualquier otro método de pago, deshabilita el input
             $("#chequeNombre").attr("disabled", true);
         }
     });
 
-	var level = $("input[name='level']").val();
-	var user = $("input[name='user']").val();
+    var level = $("input[name='level']").val();
+    var user = $("input[name='user']").val();
 
-	verificacion(user);
-	
-	moment.locale('es');
-	$('#requests').DataTable({
-		// tus otras opciones de configuración aquí...
-		initComplete: function(settings, json) {
-			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		},
-		drawCallback: function(settings) {
-			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		},
-		ajax: {
-			type: 'POST',
-			url: 'controller/ajax/getRequests.php', // Ajusta la URL según tu estructura
-			dataSrc: '',
-			data: {
-				user: user
-			}
-		},
-		columns: [
-			{
-				data: 'folio',
-			},
-			{
-				data: 'nameArea',
-			},
-			{
-				data: null,
-				render: function (data, type, row) {
-					if (type === 'display' || type === 'filter') {
-						var dataAmount;
-						var color;
-			
-						if (data.approvedAmount != null) {
-							dataAmount = data.approvedAmount;
-							color = 'green';
-						} else {
-							dataAmount = data.requestedAmount;
-							color = 'orange';
-						}
-			
-						// Formatear como pesos
-						var formattedBudget = parseFloat(dataAmount).toLocaleString('es-MX', {
-							style: 'currency',
-							currency: 'MXN'
-						});
-			
-						// Construir el HTML con el texto y el color
-						var html = '<span style="color: ' + color + ';">' + formattedBudget + '</span>';
-						return html;
-					}
-					return data;
-				}
-			},			
-			{
-				data: null,
-				render: function (data) {
-					return data.firstname + ' ' + data.lastname;
-				}
-			},
-			{
-				data: 'concepto_pago'
-			},
-			{
-				data: 'requestDate',
-				render: function (data, type, row) {
-					return moment(data).format('DD-MMM-YYYY hh:mm A');
-				}
-			},
-			{
-				data: 'exerciseName',
-			},
+    verificacion(user);
+
+    moment.locale('es');
+    $('#requests').DataTable({
+        initComplete: function (settings, json) {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        },
+        drawCallback: function (settings) {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        },
+        ajax: {
+            type: 'POST',
+            url: 'controller/ajax/getRequests.php',
+            dataSrc: '',
+            data: {
+                user: user
+            }
+        },
+        columns: [
+            { data: 'folio' },
+            { data: 'nameArea' },
+            {
+                data: null,
+                render: function (data, type) {
+                    var dataAmount, color;
+
+                    if (data.approvedAmount != null) {
+                        dataAmount = data.approvedAmount;
+                        color = 'green';
+                    } else {
+                        dataAmount = data.requestedAmount;
+                        color = 'orange';
+                    }
+
+                    var formattedBudget = parseFloat(dataAmount).toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN'
+                    });
+
+                    var html = '<span style="color: ' + color + ';">' + formattedBudget + '</span>';
+                    return html;
+                }
+            },
+            {
+                data: null,
+                render: function (data) {
+                    return data.firstname + ' ' + data.lastname;
+                }
+            },
+            { data: 'concepto_pago' },
+            {
+                data: 'requestDate',
+                render: function (data) {
+                    return moment(data).format('DD-MMM-YYYY hh:mm A');
+                }
+            },
+            { data: 'exerciseName' },
 			{
 				data: null,
 				render: function (data) {
-					return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado, data.paymentDate, data.complete);
-				}
-			}
-		],
-		responsive: true,
-		autoWidth: false,
-		dom: 'Bfrtip', // Define la estructura del DOM para incluir botones
-		buttons: [
-			{
-				extend: 'excelHtml5',
-				text: 'Exportar a Excel',
-				title: 'Presupuestos', // Título personalizado para el archivo Excel
-				// exportOptions: {
-				// 	columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
-				// }
-			},
-			{
-				extend: 'pdfHtml5',
-				text: 'Exportar a PDF',
-				title: 'Presupuestos',
-				titleAttr: 'PDF',
-				customize: function(doc) {
-			
-					// Añadir el logo en la parte superior
-					doc.content.splice(1, 0, {
-						image: logo64(), // Imagen en Base64
-						width: 100, // Ancho del logo
-						alignment: 'center' // Alineación del logo
-					});
-			
-					// Eliminar cabeceras y pies de página por defecto
-					delete doc['header']; // Eliminar la cabecera si existe
-					delete doc['footer']; // Eliminar el pie de página si existe
-			
-					// Personalizaciones adicionales aquí
-				},
-				orientation: 'landscape', // Orientación del PDF
-				pageSize: 'A4', // Tamaño de la página
-				// exportOptions: {
-				// 	columns: ':not(:last-child)' // Exportar todas las columnas excepto la última
-				// }
-			},			
-			{
-				extend: 'print',
-				text: 'Imprimir',
-				title: '',
-				customize: function(win) {
-					// Añadir el logo
-					$(win.document.body).prepend(
-						'<img src="assets/img/logo.png" style="position:absolute; top:10px; left:10px; height:50px;" />'
-					);
-					$(win.document.body).prepend(
-						'<h1 style="text-align: center; font-size: 8pt; padding-top: 10px;">Presupuestos</h1>'
-					);
-
-					$(win.document.body).css('font-size', '8pt');
-					$(win.document.body).css('margin', '10mm');
-			
-					$(win.document.body).find('table')
-						.addClass('compact')
-						.css('font-size', 'inherit');
-			
-					$(win.document.body).find('table').each(function(index, elem) {
-						$(elem).width('100%');
-					});
-
-					var css = '@page { size: landscape; }',
-						head = win.document.head || win.document.getElementsByTagName('head')[0],
-						style = win.document.createElement('style');
-			
-					style.type = 'text/css';
-					style.media = 'print';
-			
-					if (style.styleSheet){
-						style.styleSheet.cssText = css;
+                    if (data.pagado == 0) {
+						return 'Pendiente de pago';
 					} else {
-						style.appendChild(win.document.createTextNode(css));
+						return 'Pagado';
 					}
-			
-					head.appendChild(style);
-				}
+                }
 			},
-			
-		],
-		language: {
-			"paginate": {
-				"first": "<<",
-				"last": ">>",
-				"next": ">",
-				"previous": "<"
-			},
-			"search": "Buscar:",
-			"lengthMenu": "Ver _MENU_ resultados",
-			"loadingRecords": "Cargando...",
-			"info": "Mostrando _START_ de _END_ en _TOTAL_ resultados",
-			"infoEmpty": "Mostrando 0 resultados",
-			"emptyTable":	  "Ningún dato disponible en esta tabla"
-		}
-	});
+            {
+                data: null,
+                render: function (data) {
+                    return renderActionButtons(data.idRequest, data.status, data.idUsers, user, level, data.idBudget, data.pagado, data.paymentDate, data.complete);
+                }
+            }
+        ],
+        responsive: true,
+        autoWidth: false,
+        dom: "<'row'<'col-sm-6'B><'col-sm-6 text-end'f>>" + // Botones y búsqueda
+             "<'row'<'col-sm-12't>>" +
+             "<'row'<'col-sm-6'i><'col-sm-6'p>>" + // Información y paginación
+             "<'row'<'col-sm-12'<'d-flex justify-content-between align-items-center'l>>>" + // Personalización del DOM
+             "<'row'<'col-sm-12'<'mt-3'G>>>", // Donde G se reemplaza por el formulario
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: 'Exportar a Excel',
+                title: 'Presupuestos',
+            },
+            {
+                extend: 'pdfHtml5',
+                text: 'Exportar a PDF',
+                title: 'Presupuestos',
+                titleAttr: 'PDF',
+                customize: function (doc) {
+                    doc.content.splice(1, 0, {
+                        image: logo64(),
+                        width: 100,
+                        alignment: 'center'
+                    });
+                    delete doc['header'];
+                    delete doc['footer'];
+                },
+                orientation: 'landscape',
+                pageSize: 'A4'
+            },
+            {
+                extend: 'print',
+                text: 'Imprimir',
+                customize: function (win) {
+                    $(win.document.body).prepend(
+                        '<img src="assets/img/logo.png" style="position:absolute; top:10px; left:10px; height:50px;" />' +
+                        '<h1 style="text-align: center; font-size: 8pt; padding-top: 10px;">Presupuestos</h1>'
+                    );
+                    $(win.document.body).css('font-size', '8pt');
+                    $(win.document.body).css('margin', '10mm');
+                    $(win.document.body).find('table').addClass('compact').css('font-size', 'inherit');
+                    $(win.document.body).find('table').each(function (index, elem) {
+                        $(elem).width('100%');
+                    });
+                    var css = '@page { size: landscape; }',
+                        head = win.document.head || win.document.getElementsByTagName('head')[0],
+                        style = win.document.createElement('style');
 
+                    style.type = 'text/css';
+                    style.media = 'print';
+
+                    if (style.styleSheet) {
+                        style.styleSheet.cssText = css;
+                    } else {
+                        style.appendChild(win.document.createTextNode(css));
+                    }
+
+                    head.appendChild(style);
+                }
+            }
+        ],
+        language: {
+            "paginate": {
+                "first": "<<",
+                "last": ">>",
+                "next": ">",
+                "previous": "<"
+            },
+            "search": "Buscar:",
+            "lengthMenu": "Ver _MENU_ resultados",
+            "loadingRecords": "Cargando...",
+            "info": "Mostrando _START_ de _END_ en _TOTAL_ resultados",
+            "infoEmpty": "Mostrando 0 resultados",
+            "emptyTable": "Ningún dato disponible en esta tabla"
+        }
+    });
+
+    // Anexar el formulario después del botón de exportar
+    $('#requests_wrapper').find('.dt-buttons').append(`
+		<center>
+		<form class="row p-3 align-items-center" id="GenReport">
+			<div class="col-md-4 d-flex align-items-center">
+				<label for="startDate" class="form-label me-2 mb-0 small">Inicio:</label>
+				<input type="date" id="startDate" name="startDate" class="form-input">
+			</div>
+			<div class="col-md-4 d-flex align-items-center">
+				<label for="endDate" class="form-label me-2 mb-0 small">Fin:</label>
+				<input type="date" id="endDate" name="endDate" class="form-input">
+			</div>
+			<div class="col-md-4 d-flex align-items-center mt-3 mt-md-0">
+				<button class="btn-report" type="submit">
+					<i class="bi bi-file-earmark-bar-graph"></i> Generar reporte
+				</button>
+			</div>
+		</form>
+		</center>
+    `);
 });
+
 
 // Manejar el clic del botón de edición
 $('#requests').on('click', '.edit-button', function() {
@@ -301,8 +292,8 @@ function showModalAndSetData(modalId, nameId, confirmButtonId, actionType, succe
 					}
 				});
 			} else {
-				console.log('Max: '+maxBudget);
-				console.log(approvedAmount);
+				// console.log('Max: '+maxBudget);
+				// console.log(approvedAmount);
 				$(`#${modalId}`).modal('hide');
 				var idBudget = $('input[name="budget"]').val();
 				showAlertBootstrap6('¡Atención!', 'La cantidad por aprobar no debe de superar el monto disponible mensual.', idRequest, idBudget);
@@ -618,7 +609,7 @@ function verificacion(idUser) {
 								var timeDifference = today.getTime() - responseDate.getTime();
 								var daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 					
-								console.log("Días transcurridos desde la respuesta:", daysDifference);
+								// console.log("Días transcurridos desde la respuesta:", daysDifference);
 								// Formatear como pesos
 								var formattedBudget = parseFloat(item.approvedAmount).toLocaleString('es-MX', {
 									style: 'currency',
@@ -729,6 +720,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                             <button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
                                 <i class="ri-delete-bin-6-line"></i>
                             </button>
+                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                                <i class="ri-file-paper-fill"></i>
+                            </button>
                         </div>
                     </div>
                 `;
@@ -743,6 +737,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 							<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
 								<i class="ri-close-line"></i>
 							</button>
+                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                                <i class="ri-file-paper-fill"></i>
+                            </button>
 						</div>
                     </div>
 					`;
@@ -767,6 +764,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <div class="container">
                             <div class="row" style="justify-content: center;">
                                 Presupuesto aprobado
+								<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+									<i class="ri-file-paper-fill"></i>
+								</button>
                             </div>
                         </div>
                     `;
@@ -777,6 +777,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                                 <button class="btn btn-success pendiente-button col-2" onclick="modalComprobar(${idRequest}, false)">
                                     Enviar comprobante
                                 </button>
+								<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+									<i class="ri-file-paper-fill"></i>
+								</button>
                             </div>
                         </div>
                     `;
@@ -792,6 +795,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                                 <i class="ri-calendar-event-line"></i>
                             </button>
 						</div>
+						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+							<i class="ri-file-paper-fill"></i>
+						</button>
 					</div>
                 `;
             } else if (userRequest != user && pagado == 1) {
@@ -800,6 +806,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <div class="row" style="justify-content: center;">
                             Esperando comprobante
                         </div>
+						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+							<i class="ri-file-paper-fill"></i>
+						</button>
                     </div>
                 `;
             } else {
@@ -811,8 +820,8 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                 return `
                     <div class="container">
                         <div class="row" style="justify-content: center;">
-                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, true)">
-                                Ver comprobante
+                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, true)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                                <i class="ri-file-paper-fill"></i>
                             </button>
                         </div>
                     </div>
@@ -822,6 +831,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                     <div class="container">
                         <div class="row" style="justify-content: center;">
                             Esperando respuesta
+                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                                <i class="ri-file-paper-fill"></i>
+                            </button>
                         </div>
                     </div>
                 `;
@@ -834,6 +846,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <button class="btn btn-danger pendiente-button col-2" onclick="verRespuesta(${idRequest}, false)">
                             Rechazado
                         </button>
+						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+							<i class="ri-file-paper-fill"></i>
+						</button>
                     </div>
                 </div>
             `;
@@ -844,6 +859,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <div class="row" style="justify-content: center;">
                             Esperando comprobante
                         </div>
+                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                                <i class="ri-file-paper-fill"></i>
+                            </button>
                     </div>
                 `;
             } else {
@@ -852,6 +870,9 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <div class="row" style="justify-content: center;">
                             <button class="btn btn-danger pendiente-button col-2" onclick="modalComprobar(${idRequest}, true)">
                                 Enviar comprobante
+                            </button>
+                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                                <i class="ri-file-paper-fill"></i>
                             </button>
                         </div>
                     </div>
@@ -862,9 +883,10 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
             return `
                 <div class="container">
                     <div class="row" style="justify-content: center;">
-                        <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)">
-                            Aprobado
-                        </button>
+						Finalizado
+						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+							<i class="ri-file-paper-fill"></i>
+						</button>
                     </div>
                 </div>
             `;
@@ -888,7 +910,6 @@ function verRespuesta(idRequest) {
 }
 
 function documentRequest(idRequest) {
-	
 	$.ajax({
 		type: 'POST',
 		url: 'controller/ajax/ajax.form.php', // URL actualizada si es necesario

@@ -847,7 +847,7 @@ if (isset($_POST['idPaymentRequest'])) {
         'idPaymentRequest' => $_POST['idPaymentRequest'],
         'file' => $_FILES['file']['name']
     );
-    $targetDir = "../../view/documents/" . $_POST['idPaymentRequest'] . "/";
+    $targetDir = "../../view/documents/requestTemp/" . $_POST['idRequest'] . "/";
     $fileName = basename($_FILES["file"]["name"]);
     $targetFilePath = $targetDir . $fileName;
     $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
@@ -948,7 +948,7 @@ if (isset($_POST['searchComprobante'])) {
 
 if (isset($_POST['getDocuments'])) {
 	$idRequest = $_POST['getDocuments'];
-	$directoryPath = "../../view/documents/" . $idRequest . "/";
+	$directoryPath = "../../view/documents/requestTemp/" . $idRequest . "/";
 	$files = [];
 
 	// Comprobar si la carpeta existe
