@@ -1549,13 +1549,12 @@ class FormsModels {
 	}
 	static public function mdlGetComprobante($idRequest){
 		$pdo = Conexion::conectar();
-        $sql = "SELECT r.*, br.*, a.nameArea, p.business_name 
-				FROM montrer_payment_requests r
+        $sql = "SELECT r.*, a.nameArea, p.business_name 
+				FROM montrer_budget_requests r
 					LEFT JOIN montrer_area a ON a.idArea = r.idArea
 					LEFT JOIN montrer_providers p ON p.idProvider = r.idProvider
-					LEFT JOIN montrer_budget_requests br ON br.idRequest = r.idRequest
 				WHERE r.idRequest = :idRequest
-				ORDER BY r.idPaymentRequest DESC";
+				ORDER BY r.idRequest DESC;";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
         $stmt->execute();

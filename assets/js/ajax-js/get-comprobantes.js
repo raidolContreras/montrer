@@ -47,7 +47,7 @@ function verComprobacion(idRequest, status){
             // Asignamos la fecha al elemento
             $('#fechaSolicitudGet').text(requestdate);
 
-            $('#nombreCompletoGet').text(response.nombreCompleto);
+            $('#nombreCompletoGet').text(response.solicitante_nombre);
             $('#idEmployerGet').text(response.idEmployer);
             $('#empresaGet').text(response.empresa);
             $('#areaGet').text(response.nameArea);
