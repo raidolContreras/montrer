@@ -36,9 +36,11 @@ function verComprobacion(idRequest, status){
         dataType: 'json',
         success: function (response) {
             // Supongamos que response.requestDate tiene el formato '2024-11-18 22:46:36'
-            let requestdate = formatearfecha(response.requestDate);
-            let paymentDate
+            let requestdate;
+            let paymentDate;
+
             if (response.pagado == 1) {
+                requestdate = formatearfecha(response.requestDate);
                 paymentDate = formatearfecha(response.paymentDate);
             }
 
