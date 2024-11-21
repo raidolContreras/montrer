@@ -1,3 +1,17 @@
+function formatearfecha(date) {
+    // Supongamos que response.requestDate tiene el formato '2024-11-18 22:46:36'
+    let fechaCompleta = date;
+
+    // Extraemos solo la parte de la fecha antes del espacio
+    let soloFecha = fechaCompleta.split(' ')[0];
+
+    // Dividimos la fecha en sus componentes (año, mes, día)
+    let [year, month, day] = soloFecha.split('-');
+
+    // Reorganizamos la fecha al formato 'día/mes/año'
+    let fechaFormatoNuevo = `${day}/${month}/${year}`;
+    return fechaFormatoNuevo;
+}
 
 function verComprobacion(idRequest, status){
     
@@ -21,11 +35,12 @@ function verComprobacion(idRequest, status){
         data: { searchComprobante: idRequest },
         dataType: 'json',
         success: function (response) {
-            let date = new Date(response.requestDate);
-            console.log(date);
-            let formattedDate = date.toISOString().split('T')[0];
+            // Supongamos que response.requestDate tiene el formato '2024-11-18 22:46:36'
+            let requestdate = formatearfecha(response.requestDate);
+            let paymentDate = formatearfecha(response.paymentDate);
 
-            $('#fechaSolicitudGet').text(formattedDate);
+            // Asignamos la fecha al elemento
+            $('#fechaSolicitudGet').text(requestdate);
 
             $('#nombreCompletoGet').text(response.nombreCompleto);
             $('#idEmployerGet').text(response.idEmployer);
@@ -53,7 +68,7 @@ function verComprobacion(idRequest, status){
             $('#numberPolizeGet').text(response.numberPolize);
             $('#cargoGet').text(response.cargo);
             $('#abonoGet').text(response.abono);
-            $('#fechaCargaGet').text(response.paymentDate);
+            $('#fechaCargaGet').text(paymentDate);
             
             if (response.pagado == 1) {
                 $('#estatusGet').text('pagado');
