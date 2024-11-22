@@ -44,7 +44,7 @@ function getAreas() {
                 // Construir el HTML para la nueva área
                 
             //     <div class="col-lg-3 col-md-6">
-            //     <a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto total del departamento ${areaName}">
+            //     <a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="top" title="Presupuesto total del departamento ${areaName}">
             //         <div class="single-features">
             //             <div class="row align-items-center">
             //                 <div class="col-xl-12">
@@ -61,7 +61,7 @@ function getAreas() {
                 var areaHtml = `
 
 					<div class="col-lg-4 col-md-6">
-						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto solicitado del departamento ${areaName}">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="top" title="Presupuesto solicitado del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
@@ -77,7 +77,7 @@ function getAreas() {
 					</div>
 
 					<div class="col-lg-4 col-md-6">
-						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto Comprobado del departamento ${areaName}">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="top" title="Presupuesto Comprobado del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
@@ -93,7 +93,7 @@ function getAreas() {
 					</div>
 
 					<div class="col-lg-4 col-md-6">
-						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto sin comprobar del departamento ${areaName}">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="top" title="Presupuesto sin comprobar del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
@@ -110,7 +110,9 @@ function getAreas() {
                 `;
 
                 // Agregar el HTML al div con la clase dashboard
-                $('.dashboard').append(areaHtml);
+                $('.dashboard').append(areaHtml);// Inicializa los tooltips para los nuevos elementos dinámicos
+                $('[data-bs-toggle="tooltip"]').tooltip();
+                
             });
 
         },
