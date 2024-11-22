@@ -42,30 +42,31 @@ function getAreas() {
                 usedBudgets(key, budgetsObj[key], response.name);
 
                 // Construir el HTML para la nueva área
+                
+            //     <div class="col-lg-3 col-md-6">
+            //     <a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto total del departamento ${areaName}">
+            //         <div class="single-features">
+            //             <div class="row align-items-center">
+            //                 <div class="col-xl-12">
+            //                     <div class="single-click-content">
+            //                         <span class="features-title depto-titles">${areaName}</span>
+            //                         <h3 class="deptos">${budget}</h3>
+            //                         <p class="deptos-message">${budgetMessage}.</p>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </a>
+            // </div>
                 var areaHtml = `
-                    <div class="col-lg-3 col-md-6">
-                        <a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto total del departamento ${areaName}">
-                            <div class="single-features">
-                                <div class="row align-items-center">
-                                    <div class="col-xl-12">
-                                        <div class="single-click-content">
-                                            <span class="features-title depto-titles">${areaName}</span>
-                                            <h3 class="deptos">${budget}</h3>
-                                            <p class="deptos-message">${budgetMessage}.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
-					<div class="col-lg-3 col-md-6">
+					<div class="col-lg-4 col-md-6">
 						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto solicitado del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
-										<span class="features-title">Presupuesto solicitado</span>
+										<span class="features-title">Presupuesto solicitado del departamento: ${areaName}</span>
 										<h3 class="total-use-${areaName}"></h3>
 										<p class="budget-message-uses-${areaName}"></p>
 									</div>
@@ -75,7 +76,7 @@ function getAreas() {
 						</a>
 					</div>
 
-					<div class="col-lg-3 col-md-6">
+					<div class="col-lg-4 col-md-6">
 						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto Comprobado del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
@@ -91,13 +92,13 @@ function getAreas() {
 						</a>
 					</div>
 
-					<div class="col-lg-3 col-md-6">
-						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto restante del departamento ${areaName}">
+					<div class="col-lg-4 col-md-6">
+						<a href="requestBudget" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto sin comprobar del departamento ${areaName}">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
-										<span class="features-title">Presupuesto restante</span>
+										<span class="features-title">Presupuesto sin comprobar</span>
 										<h3 class="rest-${areaName}"></h3>
 										<p class="budget-message-rest-${areaName}"></p>
 									</div>
@@ -127,7 +128,7 @@ function usedBudgets(idArea, budgetActive, exercise) {
         dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
         success: function (response) {
 
-            var budgetTotal = budgetActive - response.comp;
+            var budgetTotal = response.comp - response.compActive;
 
             var used = formatNumber(response.comp);
             var compActive = formatNumber(response.compActive);
@@ -140,9 +141,10 @@ function usedBudgets(idArea, budgetActive, exercise) {
             
             budgetUsedMessage = 'Presupuesto solicitado en el ejercicio ' + exercise;
             budgetCompMessage = 'Presupuesto comprobado en el ejercicio ' + exercise;
-            budgetRestMessage = 'Presupuesto restante en el ejercicio ' + exercise;
+            budgetRestMessage = 'Presupuesto sin comprobar en el ejercicio ' + exercise;
             $('.total-use-'+ response.nameArea).append(used);
             $('.total-comp-'+ response.nameArea).append(compActive);
+            // $('.rest-'+ response.nameArea).append(budgetTotal);
             $('.rest-'+ response.nameArea).append(budgetTotal);
             $('.budget-message-uses-'+ response.nameArea).append(budgetUsedMessage);
             $('.budget-message-comp-'+ response.nameArea).append(budgetCompMessage);
