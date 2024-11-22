@@ -1,3 +1,10 @@
+<style>
+    .form-check-input {
+        height: 1.6em;
+        background-color: #dfdfdf;
+        border: var(--bs-border-width) solid #5d5d5d;
+    }
+</style>
 <main class="main-content-wrap">
     <div class="card-box-style p-4 rounded shadow-sm bg-light">
         <center class="others-title mb-4 row">
@@ -65,8 +72,8 @@
 
                 <!-- Importe con letra -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="importeLetra" class="form-label col-2 fw-bold">Importe con letra:</label>
-                    <input type="text" id="importeLetra" name="importeLetra" class="form-control col bg-light border" disabled>
+                    <label for="importeLetra" class="form-label col-2 fw-bold">Importe con letra:<span class="required"></span></label>
+                    <input type="text" id="importeLetra" name="importeLetra" class="form-control col bg-white border" required>
                 </div>
 
                 <!-- Fecha compromiso de pago -->
@@ -86,32 +93,32 @@
                 <!-- Clave interbancaria -->
                  <div class="col-md-12 row mb-3 clabe" style="align-items: center;">
                     <label for="clabe" class="form-label col-2 fw-bold">Clabe interbancaria:</label>
-                    <input type="text" id="clabe" name="clabe" class="form-control col bg-light border" disabled>
+                    <input type="text" id="clabe" name="clabe" class="form-control col border" disabled>
                 </div>
 
                 <!-- Banco -->
                  <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="bank_name" class="form-label col-2 fw-bold">Banco:</label>
-                    <input type="text" id="bank_name" name="bank_name" class="form-control col bg-light border" disabled>
+                    <input type="text" id="bank_name" name="bank_name" class="form-control col border" disabled>
                 </div>
 
                 <!-- Numero de cuenta -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="account_number" class="form-label col-2 fw-bold">Número de cuenta:</label>
-                    <input type="text" id="account_number" name="account_number" class="form-control col bg-light border" disabled>
+                    <input type="text" id="account_number" name="account_number" class="form-control col border" disabled>
                 </div>
 
                 <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
                     <label for="swiftCode" class="form-label col-2 fw-bold">Código ABA/SWIFT</label>
-                    <input type="text" class="form-control col bg-light border" id="swiftCode" name="swiftCode" disabled>
+                    <input type="text" class="form-control col border" id="swiftCode" name="swiftCode" disabled>
                 </div>
                 <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
                     <label for="beneficiaryAddress" class="form-label col-2 fw-bold">Domicilio del beneficiario</label>
-                    <input type="text" class="form-control col bg-light border" id="beneficiaryAddress" name="beneficiaryAddress" disabled>
+                    <input type="text" class="form-control col border" id="beneficiaryAddress" name="beneficiaryAddress" disabled>
                 </div>
                 <div class="col-md-12 row mb-3 foreign-fields" style="display: none; align-items: center;">
                     <label for="currencyType" class="form-label col-2 fw-bold">Tipo de divisa de la cuenta</label>
-                    <input type="text" class="form-control col bg-light border" id="currencyType" name="currencyType" disabled>
+                    <input type="text" class="form-control col border" id="currencyType" name="currencyType" disabled>
                 </div>
 
                 <!-- Concepto Póliza Contable -->

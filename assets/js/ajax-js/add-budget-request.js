@@ -6,21 +6,21 @@ $(document).ready(function () {
     let timeout
 
     //El evento lo puedes reemplazar con keyup, keypress y el tiempo a tu necesidad
-    $comment.addEventListener('keydown', () => {
-        clearTimeout(timeout)
-        timeout = setTimeout(() => {
-            requestedAmount = $('#requestedAmount').val();
-            var inputValue = requestedAmount.replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
-            var numero = parseFloat(inputValue);
-            if (!isNaN(numero)) {
-                var textoEnLetras = numeroALetra(numero, true);
-                $('#importeLetra').val(textoEnLetras);
-            } else {
-                $('#importeLetra').val('');
-            }
-            clearTimeout(timeout)
-        },500)
-    });
+    // $comment.addEventListener('keydown', () => {
+    //     clearTimeout(timeout)
+    //     timeout = setTimeout(() => {
+    //         requestedAmount = $('#requestedAmount').val();
+    //         var inputValue = requestedAmount.replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
+    //         var numero = parseFloat(inputValue);
+    //         if (!isNaN(numero)) {
+    //             var textoEnLetras = numeroALetra(numero, true);
+    //             $('#importeLetra').val(textoEnLetras);
+    //         } else {
+    //             $('#importeLetra').val('');
+    //         }
+    //         clearTimeout(timeout)
+    //     },500)
+    // });
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {

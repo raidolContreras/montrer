@@ -29,7 +29,7 @@ $sheet = $spreadsheet->getActiveSheet();
 
 // Encabezados
 $headers = [
-    'FOLIO', 'SOLICITANTE', 'EMPRESA', 'CONCEPTO DE PAGO', 'MONTO', 'MONTO PAGADO',
+    'FOLIO', 'SOLICITANTE', 'PROVEEDOR', 'CONCEPTO DE PAGO', 'MONTO', 'MONTO PAGADO',
     'FECHA INGRESO', 'FECHA COMPROMISO', 'FECHA DE PAGO', 'BANCO', 'CLABE',
     'CUENTA CARGO', 'CUENTA ABONO', 'ESTATUS'
 ];
@@ -85,10 +85,12 @@ $totalSolicitudes = 0;
 foreach ($data as $record) {
     $sheet->setCellValue("A{$row}", $record['folio'] ?? '');
     $sheet->setCellValue("B{$row}", $record['solicitante_nombre'] ?? '');
-    $sheet->setCellValue("C{$row}", $record['empresa'] ?? '');
+    $sheet->setCellValue("C{$row}", $record['account_holder'] ?? '');
     $sheet->setCellValue("D{$row}", $record['concepto_pago'] ?? '');
-    $sheet->setCellValue("E{$row}", $record['cargo'] ?? '');
-    $sheet->setCellValue("F{$row}", $record['abono'] ?? '');
+    $sheet->setCellValue("E{$row}", $record['cargo'] ?? 0);
+    $sheet->getStyle("E{$row}")->getNumberFormat()->setFormatCode('$#,##0.00');
+    $sheet->setCellValue("F{$row}", $record['abono'] ?? 0);
+    $sheet->getStyle("F{$row}")->getNumberFormat()->setFormatCode('$#,##0.00');
     $sheet->setCellValue("G{$row}", $record['requestDate'] ?? '');
     $sheet->setCellValue("H{$row}", $record['fecha_pago'] ?? '');
     $sheet->setCellValue("I{$row}", $record['paymentDate'] ?? '');
@@ -110,6 +112,7 @@ foreach ($data as $record) {
 $sheet->setCellValue("D{$row}", 'TOTAL SOLICITUDES EN TRANSITO');
 $sheet->mergeCells("D{$row}:E{$row}"); // Combinar celdas
 $sheet->setCellValue("F{$row}", $totalSolicitudes); // Total calculado
+$sheet->getStyle("F{$row}")->getNumberFormat()->setFormatCode('$#,##0.00');
 
 // Aplicar estilo a la fila de totales
 $totalStyle = [

@@ -61,17 +61,18 @@ class FormsModels {
 	static public function mdlCountArea($idUser){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT 
-				JSON_OBJECTAGG(a.idArea, a.nameArea) AS areas,
-				JSON_OBJECTAGG(b.idArea, b.AuthorizedAmount) AS budgets,
-				(SELECT exerciseName FROM montrer_exercise WHERE status = 1 LIMIT 1) AS name,
-				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 AND idUser = :idUser), 0) AS comp,
-				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE idArea = a.idArea AND status <> 0 AND status <> 3), 0) AS amountUsed,
-				COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp
-			FROM 
-				montrer_area a
-			LEFT JOIN montrer_budgets b ON b.idArea = a.idArea
-			WHERE 
-				idUser = :idUser;";
+            CONCAT('{', GROUP_CONCAT(CONCAT('\"', a.idArea, '\":\"', a.nameArea, '\"')), '}') AS areas,
+            CONCAT('{', GROUP_CONCAT(CONCAT('\"', b.idArea, '\":', b.AuthorizedAmount)), '}') AS budgets,
+            (SELECT exerciseName FROM montrer_exercise WHERE status = 1 LIMIT 1) AS name,
+            COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE status = 5 AND active = 0 AND idUser = :idUser), 0) AS comp,
+            COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE idArea = a.idArea AND status <> 0 AND status <> 3), 0) AS amountUsed,
+            COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp
+        FROM 
+            montrer_area a
+        LEFT JOIN montrer_budgets b ON b.idArea = a.idArea
+        WHERE 
+            a.idUser = :idUser;";
+
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
@@ -1982,8 +1983,8 @@ class FormsModels {
 			$stmt->bindParam(":currencyType", $data['currencyType'], PDO::PARAM_STR);
 			$stmt->bindParam(":conceptoPago", $data['conceptoPago'], PDO::PARAM_STR);
 			$stmt->bindParam(":idRequest", $data['idRequest'], PDO::PARAM_INT);
-			$stmt->bindParam(":cuentaAfectadaCount", $data['cuentaAfectadaCount'], PDO::PARAM_INT);
-			$stmt->bindParam(":partidaAfectadaCount", $data['partidaAfectadaCount'], PDO::PARAM_INT);
+			$stmt->bindParam(":cuentaAfectadaCount", $data['cuentaAfectadaCount'], PDO::PARAM_STR);
+			$stmt->bindParam(":partidaAfectadaCount", $data['partidaAfectadaCount'], PDO::PARAM_STR);
 			$stmt->bindParam(":polizeType", $data['polizeType'], PDO::PARAM_STR);
 			$stmt->bindParam(":numberPolize", $data['numberPolize'], PDO::PARAM_STR);
 			$stmt->bindParam(":cargo", $data['cargo'], PDO::PARAM_STR);
@@ -2002,10 +2003,9 @@ class FormsModels {
 	static public function mdlGetReports($startDate, $endDate) {
 		$pdo = Conexion::conectar();
         $sql = "SELECT *, br.status AS statusBudgetRequest FROM montrer_budget_requests br
-                LEFT JOIN montrer_business b ON br.idEmployer = b.idBusiness
-                LEFT JOIN montrer_users_to_business ub ON ub.idBusiness = b.idBusiness
-                LEFT JOIN montrer_users u ON ub.idUser = u.idUsers
-                WHERE br.responseDate BETWEEN :startDate AND :endDate";
+                LEFT JOIN montrer_users u ON br.idUser = u.idUsers
+                LEFT JOIN montrer_providers p ON br.idProvider = p.idProvider
+                WHERE br.requestDate BETWEEN :startDate AND :endDate";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':startDate', $startDate, PDO::PARAM_STR);
         $stmt->bindParam(':endDate', $endDate, PDO::PARAM_STR);

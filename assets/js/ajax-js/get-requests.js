@@ -179,27 +179,28 @@ $(document).ready(function () {
             "emptyTable": "Ningún dato disponible en esta tabla"
         }
     });
-
-    // Anexar el formulario después del botón de exportar
-    $('#requests_wrapper').find('.dt-buttons').append(`
-		<center>
-		<form class="row p-3 align-items-center" id="GenReport">
-			<div class="col-md-4 d-flex align-items-center">
-				<label for="startDate" class="form-label me-2 mb-0 small">Inicio:</label>
-				<input type="date" id="startDate" name="startDate" class="form-input">
-			</div>
-			<div class="col-md-4 d-flex align-items-center">
-				<label for="endDate" class="form-label me-2 mb-0 small">Fin:</label>
-				<input type="date" id="endDate" name="endDate" class="form-input">
-			</div>
-			<div class="col-md-4 d-flex align-items-center mt-3 mt-md-0">
-				<button class="btn-report" type="submit">
-					<i class="bi bi-file-earmark-bar-graph"></i> Generar reporte
-				</button>
-			</div>
-		</form>
-		</center>
-    `);
+    if (level == 1){
+        // Anexar el formulario después del botón de exportar
+        $('#requests_wrapper').find('.text-end').after(`
+            <center>
+            <form class="row p-3 align-items-center" id="GenReport">
+                <div class="col-md-3 d-flex align-items-center">
+                    <label for="startDate" class="form-label me-2 mb-0 small">Inicio:</label>
+                    <input type="date" id="startDate" name="startDate" class="form-input">
+                </div>
+                <div class="col-md-3 d-flex align-items-center">
+                    <label for="endDate" class="form-label me-2 mb-0 small">Fin:</label>
+                    <input type="date" id="endDate" name="endDate" class="form-input">
+                </div>
+                <div class="col-md-3 d-flex align-items-center">
+                    <button class="btn-report" type="submit">
+                        <i class="bi bi-file-earmark-bar-graph"></i> Generar reporte
+                    </button>
+                </div>
+            </form>
+            </center>
+        `);
+    }
 });
 
 
@@ -720,7 +721,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                             <button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
                                 <i class="ri-delete-bin-6-line"></i>
                             </button>
-                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                            <button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
                                 <i class="ri-file-paper-fill"></i>
                             </button>
                         </div>
@@ -737,7 +738,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
 							<button class="btn btn-danger denegate-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar">
 								<i class="ri-close-line"></i>
 							</button>
-                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                            <button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
                                 <i class="ri-file-paper-fill"></i>
                             </button>
 						</div>
@@ -764,7 +765,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <div class="container">
                             <div class="row" style="justify-content: center;">
                                 Presupuesto aprobado
-								<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+								<button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
 									<i class="ri-file-paper-fill"></i>
 								</button>
                             </div>
@@ -774,10 +775,10 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                     return `
                         <div class="container">
                             <div class="row" style="justify-content: center;">
-                                <button class="btn btn-success pendiente-button col-2" onclick="modalComprobar(${idRequest}, false)">
+                                <button class="btn btn-success pendiente-button" onclick="modalComprobar(${idRequest}, false)">
                                     Enviar comprobante
                                 </button>
-								<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+								<button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
 									<i class="ri-file-paper-fill"></i>
 								</button>
                             </div>
@@ -788,14 +789,14 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                 return `
 					<div class="container">
 						<div class="btn-group" role="group" style="justify-content: center;">
-							<button class="btn btn-success pendiente-button col-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Marcar como pagado" onclick="marcarPago(${idRequest}, ${userRequest})">
+							<button class="btn btn-success pendiente-button" data-bs-toggle="tooltip" data-bs-placement="top" title="Marcar como pagado" onclick="marcarPago(${idRequest}, ${userRequest})">
 								<i class="ri-money-dollar-circle-line"></i>
 							</button>
                             <button class="btn btn-primary change-date-button col-2" data-id="${idRequest}" data-bs-toggle="tooltip" data-bs-placement="top" title="Cambiar fecha del pago" onclick="changePaymentDateModal(${idRequest}, '${paymentDate}')">
                                 <i class="ri-calendar-event-line"></i>
                             </button>
 						</div>
-						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+						<button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
 							<i class="ri-file-paper-fill"></i>
 						</button>
 					</div>
@@ -806,7 +807,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <div class="row" style="justify-content: center;">
                             Esperando comprobante
                         </div>
-						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+						<button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
 							<i class="ri-file-paper-fill"></i>
 						</button>
                     </div>
@@ -820,7 +821,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                 return `
                     <div class="container">
                         <div class="row" style="justify-content: center;">
-                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, true)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                            <button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, true)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
                                 <i class="ri-file-paper-fill"></i>
                             </button>
                         </div>
@@ -831,7 +832,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                     <div class="container">
                         <div class="row" style="justify-content: center;">
                             Esperando respuesta
-                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                            <button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
                                 <i class="ri-file-paper-fill"></i>
                             </button>
                         </div>
@@ -843,10 +844,10 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
             return `
                 <div class="container">
                     <div class="row" style="justify-content: center;">
-                        <button class="btn btn-danger pendiente-button col-2" onclick="verRespuesta(${idRequest}, false)">
+                        <button class="btn btn-danger pendiente-button" onclick="verRespuesta(${idRequest}, false)">
                             Rechazado
                         </button>
-						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+						<button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
 							<i class="ri-file-paper-fill"></i>
 						</button>
                     </div>
@@ -859,7 +860,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                         <div class="row" style="justify-content: center;">
                             Esperando comprobante
                         </div>
-                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                            <button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
                                 <i class="ri-file-paper-fill"></i>
                             </button>
                     </div>
@@ -868,10 +869,10 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                 return `
                     <div class="container">
                         <div class="row" style="justify-content: center;">
-                            <button class="btn btn-danger pendiente-button col-2" onclick="modalComprobar(${idRequest}, true)">
+                            <button class="btn btn-danger pendiente-button" onclick="modalComprobar(${idRequest}, true)">
                                 Enviar comprobante
                             </button>
-                            <button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+                            <button class="btn btn-success pendiente-button" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
                                 <i class="ri-file-paper-fill"></i>
                             </button>
                         </div>
@@ -884,7 +885,7 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
                 <div class="container">
                     <div class="row" style="justify-content: center;">
 						Finalizado
-						<button class="btn btn-success pendiente-button col-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
+						<button class="btn btn-success pendiente-button mx-2" data-bs-toggle="modal" data-bs-target="#verComprovacion" onclick="verComprobacion(${idRequest}, false)" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver comprobante">
 							<i class="ri-file-paper-fill"></i>
 						</button>
                     </div>

@@ -36,6 +36,13 @@
     .btn-report:hover {
         background-color: #085f12;
     }
+    .pendiente-button {
+        font-size: 12px !important;
+        width: 20% !important;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        padding: 3px !important;
+    }
 
 </style>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
