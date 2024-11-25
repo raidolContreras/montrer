@@ -71,8 +71,9 @@ function verComprobacion(idRequest, status){
             $('#partidaAfectadaCountGet').text(response.partidaAfectadaCount);
             $('#polizeTypeGet').text(response.polizeType);
             $('#numberPolizeGet').text(response.numberPolize);
-            $('#cargoGet').text(response.cargo);
-            $('#abonoGet').text(response.abono);
+            // Asignar el formato a los elementos
+            $('#cargoGet').text(formatCurrency(response.cargo));
+            $('#abonoGet').text(formatCurrency(response.abono));
             $('#fechaCargaGet').text(paymentDate);
             
             if (response.pagado == 1) {
@@ -168,6 +169,14 @@ function verComprobacion(idRequest, status){
         }
     });
 
+}
+// Función para formatear como moneda
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        minimumFractionDigits: 2
+    }).format(amount);
 }
 
 function denegate(idRequest){
