@@ -395,6 +395,17 @@
                 
                 // Llenar los campos del formulario con los datos de la respuesta
                 $('#budgetRequestForm input[name="solicitante_nombre"]').val(response.solicitante_nombre || '');
+                // Formatear la fecha antes de asignarla
+                const rawDate = response.requestDate || '';
+                let formattedDate = '';
+
+                if (rawDate) {
+                    const dateParts = rawDate.split(' ')[0]; // Tomar solo la parte de la fecha (YYYY-MM-DD)
+                    formattedDate = dateParts; // Directamente se usa ya que está en formato ISO
+                }
+
+                // Asignar el valor al input
+                $('#fechaSolicitud').val(formattedDate);
                 $('#solicitante_nombre').text(response.solicitante_nombre || '');
                 $('#idEmployer').val(response.idEmployer || '');
                 $('#empresa').val(response.empresa || '');
