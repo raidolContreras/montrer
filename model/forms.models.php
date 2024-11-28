@@ -1106,7 +1106,26 @@ class FormsModels {
 
 	static public function mdlUpdateProvider($data){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_providers SET representative_name = :representativeName, contact_phone = :contactPhone, email = :email, website = :website, business_name = :businessName, rfc = :rfc, fiscal_address_street = :fiscalAddressStreet, fiscal_address_colonia = :fiscalAddressColonia, fiscal_address_municipio = :fiscalAddressMunicipio, fiscal_address_estado = :fiscalAddressEstado, fiscal_address_cp = :fiscalAddressCP, bank_name = :bankName, account_holder = :accountHolder, account_number = :accountNumber, clabe = :clabe, description = :description WHERE provider_key = :providerKey";
+		$sql = "UPDATE montrer_providers SET 
+					representative_name = :representativeName,
+					contact_phone = :contactPhone,
+					email = :email,
+					website = :website,
+					business_name = :businessName,
+					rfc = :rfc,
+					fiscal_address_street = :fiscalAddressStreet,
+					fiscal_address_colonia = :fiscalAddressColonia,
+					fiscal_address_municipio = :fiscalAddressMunicipio,
+					fiscal_address_estado = :fiscalAddressEstado,
+					fiscal_address_cp = :fiscalAddressCP,
+					bank_name = :bankName,
+					account_holder = :accountHolder,
+					account_number = :accountNumber,
+					clabe = :clabe,
+					swiftCode = :swiftCode,
+					beneficiaryAddress = :beneficiaryAddress,
+					currencyType = :currencyType
+				WHERE provider_key = :providerKey";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':representativeName', $data['representativeName'], PDO::PARAM_STR);
@@ -1124,8 +1143,10 @@ class FormsModels {
 		$stmt->bindParam(':accountHolder', $data['accountHolder'], PDO::PARAM_STR);
 		$stmt->bindParam(':accountNumber', $data['accountNumber'], PDO::PARAM_STR);
 		$stmt->bindParam(':clabe', $data['clabe'], PDO::PARAM_STR);
-		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
 		$stmt->bindParam(':providerKey', $data['providerKey'], PDO::PARAM_STR);
+		$stmt->bindParam(':swiftCode', $data['swiftCode'], PDO::PARAM_STR);
+		$stmt->bindParam(':beneficiaryAddress', $data['beneficiaryAddress'], PDO::PARAM_STR);
+		$stmt->bindParam(':currencyType', $data['currencyType'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 			$result = 'ok';

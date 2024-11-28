@@ -712,12 +712,13 @@ function renderActionButtons(idRequest, status, userRequest, user, level, idBudg
     switch (status) {
         case 0:
             if (userRequest == user) {
+                
+            //     <button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-toggle="tooltip" data-placement="top" title="Editar">
+            //     <i class="ri-edit-line"></i>
+            // </button>
                 return `
                     <div class="container">
                         <div class="btn-group" role="group" style="justify-content: center;">
-                            <button class="btn btn-primary edit-button col-2" data-id="${idRequest}" data-toggle="tooltip" data-placement="top" title="Editar">
-                                <i class="ri-edit-line"></i>
-                            </button>
                             <button class="btn btn-danger delete-button col-2" data-id="${idRequest}" data-toggle="tooltip" data-placement="top" title="Eliminar">
                                 <i class="ri-delete-bin-6-line"></i>
                             </button>

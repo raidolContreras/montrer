@@ -5,6 +5,11 @@ $(document).ready(function () {
 
     // Llama a la función para obtener el proveedor con el valor de register
     getProvider(registerValue);
+
+    // Muestra u oculta los campos adicionales si el proveedor es extranjero
+    $('#foreignProvider').change(function () {
+        changeCheck();
+    });
 });
 
 function getProvider(registerValue) {
@@ -34,9 +39,29 @@ function getProvider(registerValue) {
             $('input[name="clabe"]').val(response.clabe);
             $('input[name="description"]').val(response.description);
 
+            if (isNaN(response.swiftCode)) {
+                $('#swiftCode').val(response.swiftCode);
+                $('#beneficiaryAddress').val(response.beneficiaryAddress);
+                $('#currencyType').val(response.currencyType);
+                // checkear $('#foreignProvider')
+                $('#foreignProvider').prop('checked', true);
+                changeCheck(); // Llama a la función para mostrar u ocultar los campos adicionales
+            }
+
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);
         }
     });
+}
+
+// funcion cambiar el check
+function changeCheck() {
+    if ($('#foreignProvider').is(':checked')) {
+        $('.foreign-fields').show(); // Muestra los campos adicionales
+        extrangero = true;
+    } else {
+        $('.foreign-fields').hide(); // Oculta los campos adicionales
+        extrangero = false;
+    }
 }

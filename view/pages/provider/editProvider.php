@@ -92,9 +92,39 @@
                     <label for="clabe" class="form-label">CLABE interbancaria</label>
                     <input type="text" class="form-control" id="clabe" name="clabe">
                 </div>
-                <div class="col-md-6">
-                    <label for="description" class="form-label">Describa el producto o servicio para este proveedor<span class="required"></span></label>
-                    <input type="text" class="form-control" id="description" name="description">
+
+                <!-- Checkbox para identificar si el proveedor es extranjero -->
+                <div class="col-md-6 mt-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="foreignProvider" name="foreignProvider">
+                        <label class="form-check-label" for="foreignProvider">
+                            ¿Proveedor extranjero?
+                        </label>
+                    </div>
+                </div>
+                <!-- Campos adicionales para proveedor extranjero -->
+                <div class="col-12 mt-4 foreign-fields" style="display: none;">
+                    <h4>Datos adicionales para proveedores extranjeros</h4>
+                </div>
+
+                <div class="col-md-6 foreign-fields" style="display: none;">
+                    <label for="swiftCode" class="form-label">Código ABA/SWIFT</label>
+                    <input type="text" class="form-control" id="swiftCode" name="swiftCode">
+                </div>
+                <div class="col-md-6 foreign-fields" style="display: none;">
+                    <label for="beneficiaryAddress" class="form-label">Domicilio del beneficiario</label>
+                    <input type="text" class="form-control" id="beneficiaryAddress" name="beneficiaryAddress">
+                </div>
+                <div class="col-md-6 foreign-fields" style="display: none;">
+                    <label for="currencyType" class="form-label">Tipo de divisa de la cuenta</label>
+                    <!-- <input type="text" class="form-control" id="currencyType" name="currencyType"> -->
+                    <select id="currencyType" name="currencyType" class="form-select form-control">
+                        <option value="" selected disabled>Seleccione una opción</option>
+                        <option value="USD" data-icon="💵">💵 US$ - Dólar estadounidense</option>
+                        <option value="CAD" data-icon="💵">💵 C$ - Dólar canadiense</option>
+                        <option value="EUR" data-icon="💶">💶 € - Euro</option>
+                        <option value="GBP" data-icon="💷">💷 £ - Libra esterlina</option>
+                    </select>
                 </div>
 
                 <div class="col-12 mt-2 text-end">

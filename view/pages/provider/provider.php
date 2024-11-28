@@ -18,7 +18,7 @@
                         <th>Representante</th>
                         <th>Dirección Fiscal</th>
                         <th>Datos bancarios</th>
-                        <th>Descripción</th>
+                        <!-- <th>Descripción</th> -->
                         <th>Cédula fiscal</th>
                         <th>Caratula Edo. de cuenta</th>
                         <th width="30%"></th>

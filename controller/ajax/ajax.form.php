@@ -664,8 +664,10 @@ if (
 		'bankName' => $_POST['updatebankName'],
 		'accountHolder' => $_POST['updateaccountHolder'],
 		'accountNumber' => $_POST['updateaccountNumber'],
-		'description' => $_POST['updatedescription'],
-		'clabe' => $_POST['updateclabe']
+		'clabe' => $_POST['updateclabe'],
+		'swiftCode' => ($_POST['updateswiftCode'] != '') ? $_POST['updateswiftCode'] : null,
+		'beneficiaryAddress' => ($_POST['updatebeneficiaryAddress']!= '') ? $_POST['updatebeneficiaryAddress'] : null,
+        'currencyType' => ($_POST['updatecurrencyType']!= '') ? $_POST['updatecurrencyType'] : null
 	);
 
 	$response = FormsController::ctrGetProviderByName($_POST['updaterfc'], $_POST['idUser']);

@@ -1,26 +1,29 @@
 var bandera = 0;
 var toggleDropzone = 0;
+var currency = 'MXN';
+var numero = 0;
+
 $(document).ready(function () {
 
     let $comment = document.getElementById("requestedAmount")
     let timeout
 
-    //El evento lo puedes reemplazar con keyup, keypress y el tiempo a tu necesidad
-    // $comment.addEventListener('keydown', () => {
-    //     clearTimeout(timeout)
-    //     timeout = setTimeout(() => {
-    //         requestedAmount = $('#requestedAmount').val();
-    //         var inputValue = requestedAmount.replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
-    //         var numero = parseFloat(inputValue);
-    //         if (!isNaN(numero)) {
-    //             var textoEnLetras = numeroALetra(numero, true);
-    //             $('#importeLetra').val(textoEnLetras);
-    //         } else {
-    //             $('#importeLetra').val('');
-    //         }
-    //         clearTimeout(timeout)
-    //     },500)
-    // });
+    // El evento lo puedes reemplazar con keyup, keypress y el tiempo a tu necesidad
+    $comment.addEventListener('keydown', () => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            requestedAmount = $('#requestedAmount').val();
+            var inputValue = requestedAmount.replace(/[^0-9.]/g, ''); // Eliminar todo excepto números y punto decimal
+            numero = parseFloat(inputValue);
+            if (!isNaN(numero)) {
+                var textoEnLetras = numeroALetra(numero, true, currency);
+                $('#importeLetra').val(textoEnLetras);
+            } else {
+                $('#importeLetra').val('');
+            }
+            clearTimeout(timeout)
+        },500)
+    });
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {
@@ -204,41 +207,70 @@ $('#area').on('change', function() {
 });
 
 // Manejador de eventos para el cambio en el select
-$('#provider').on('change', function() {
+$('#provider').on('change', function () {
     var selectedProviderId = $(this).val();
 
     // Verifica si se seleccionó un proveedor válido
     if (selectedProviderId && selectedProviderId !== "add_provider" && storedProviders) {
         // Busca el proveedor seleccionado en storedProviders
         var selectedProvider = storedProviders.find(provider => provider.idProvider == selectedProviderId);
-        
+
         if (selectedProvider) {
             $('#clabe').val(selectedProvider.clabe);
             $('#bank_name').val(selectedProvider.bank_name);
             $('#account_number').val(selectedProvider.account_number);
+
             if (selectedProvider.extrangero == 1) {
-                $('.foreign-fields').show(); 
+                $('.foreign-fields').show();
                 $('.clabe').hide();
                 $('#swiftCode').val(selectedProvider.swiftCode);
                 $('#beneficiaryAddress').val(selectedProvider.beneficiaryAddress);
                 $('#currencyType').val(selectedProvider.currencyType);
+                currency = selectedProvider.currencyType;
             } else {
                 $('.foreign-fields').hide();
                 $('.clabe').show();
                 $('#swiftCode').val('');
                 $('#beneficiaryAddress').val('');
                 $('#currencyType').val('');
+                currency = 'MXN';
             }
+
+            // Actualiza el símbolo de la moneda en el campo de entrada
+            let currencySymbol = '';
+            switch (currency) {
+                case 'USD':
+                    currencySymbol = '$ '; // Dólar americano
+                    break;
+                case 'CAD':
+                    currencySymbol = 'CA$ '; // Dólar canadiense
+                    break;
+                case 'EUR':
+                    currencySymbol = '€ '; // Euro
+                    break;
+                case 'GBP':
+                    currencySymbol = '£ '; // Libra esterlina
+                    break;
+                case 'MXN':
+                    currencySymbol = '$ '; // Peso mexicano
+                    break;
+                default:
+                    currencySymbol = '$ '; // Por defecto, peso mexicano
+            }
+
+            $('.currency').text(currencySymbol);
+            $('.currency-symbol').text(currencySymbol);
+
+            let textoEnLetras = numeroALetra(numero, true, currency);
+            $('#importeLetra').val(textoEnLetras);
         }
     } else {
         // Muestra u oculta los campos adicionales si el proveedor es extranjero
         $('#foreignProvider').change(function () {
             if ($(this).is(':checked')) {
                 $('.foreign-fields').show(); // Muestra los campos adicionales
-                extrangero = true;
             } else {
                 $('.foreign-fields').hide(); // Oculta los campos adicionales
-                extrangero = false;
             }
         });
     }
@@ -253,16 +285,14 @@ function updateMaxRequestedAmount(datos) {
         $('#requestedAmount').val('');
         $('.requestMax').text('En el presente ejercicio, no se ha asignado un presupuesto para el departamento correspondiente');
     } else {
-            
         $.ajax({
             type: 'POST',
-                url: 'controller/ajax/countAreaId.php',
-            data: {idArea: datos[0].idArea },
+            url: 'controller/ajax/countAreaId.php',
+            data: { idArea: datos[0].idArea },
             dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
             success: function (response) {
-
-                var totalBudget = 0;
-                var totalBudgetUsed = 0;
+                let totalBudget = 0;
+                let totalBudgetUsed = 0;
 
                 $.ajax({
                     type: 'POST',
@@ -270,46 +300,40 @@ function updateMaxRequestedAmount(datos) {
                     data: { areaId: datos[0].idArea },
                     dataType: 'json',
                     success: function (result) {
-                        // for (var i = 0; i < result.length; i++) {
-                        //     // Obtenemos la cantidad de cada objeto y la sumamos al total
-                            
-                        //     totalBudgetPendient += parseFloat(result[i].requestedAmount);
-                        // }
-
-                        for (var i = 0; i < mesActual; i++) {
+                        for (let i = 0; i < mesActual; i++) {
                             totalBudgetUsed += datos[i].budget_used;
                             totalBudget += datos[i].budget_month;
                         }
-                        
-                        // Mostramos la suma total
+
+                        // Calcula el presupuesto total restante
                         totalBudget = (totalBudget - totalBudgetUsed) - response.comp;
 
-                        formattedSum = totalBudget.toLocaleString('es-MX', {
+                        // Declara correctamente formattedSum
+                        const formattedSum = totalBudget.toLocaleString('es-MX', {
                             style: 'currency',
                             currency: 'MXN',
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
                         });
 
-                        // Aquí puedes colocar el código que depende de totalBudget
-                        var idBudget = datos[0].idBudget;
-                        if(datos[0].approvedAmount !== 0){
+                        // Actualiza el presupuesto en el DOM
+                        const idBudget = datos[0].idBudget;
+                        if (datos[0].approvedAmount !== 0) {
                             $("input[name='budget']").val(idBudget);
                             $("input[name='maxBudget']").val(totalBudget.toFixed(2));
-                            // $('#requestedAmount').val(totalBudget.toFixed(2));
-                            // $('.requestMax').text('Presupuesto maximo a solicitar es de: ' + formattedSum);
                             $('#modalBudgetDisplay').text(formattedSum);
                         } else {
                             $('#requestedAmount').prop('disabled', true);
                             $('.requestMax').text('No se puede solicitar un nuevo presupuesto porque no se ha justificado uno anterior.');
                         }
-                        
                     },
                     error: function (error) {
                         console.log('Error en la solicitud AJAX:', error);
                     }
                 });
-
+            },
+            error: function (error) {
+                console.log('Error en la solicitud AJAX:', error);
             }
         });
     }
@@ -434,73 +458,6 @@ function formatBusinessUserId(id) {
     return `${part1}-${part2}-${part3}-${part4}`;
 }
 
-function numeroALetra(numero, status) {
-    var unidades = ['', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
-    var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
-    var decenas = ['', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
-    var centenas = ['', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
-
-    var texto = '';
-
-    var entero = Math.floor(numero);
-    var decimal = Math.round((numero - entero) * 100);
-
-    if (entero === 0) {
-        texto = 'cero';
-    } else {
-        // Parte entera
-        if (entero >= 1000000) {
-            let millones = Math.floor(entero / 1000000);
-            texto += millones === 1 ? 'un millón ' : numeroALetra(millones, false) + ' millones ';
-            entero %= 1000000;
-        }
-
-        if (entero >= 1000) {
-            let miles = Math.floor(entero / 1000);
-            texto += miles === 1 ? 'mil ' : numeroALetra(miles, false) + ' mil ';
-            entero %= 1000;
-        }
-
-        if (entero >= 100) {
-            texto += (entero === 100 ? 'cien' : centenas[Math.floor(entero / 100)]) + ' ';
-            entero %= 100;
-        }
-
-        if (entero >= 20) {
-            texto += decenas[Math.floor(entero / 10)];
-            if (entero % 10 !== 0) {
-                texto += (entero >= 30 ? ' y ' : '') + unidades[entero % 10];
-            }
-            entero = 0; // Se procesó toda la parte de decenas
-        }
-
-        if (entero >= 10) {
-            texto += especiales[entero - 10];
-            entero = 0; // No hay centavos si el número es un número especial
-        }
-
-        if (entero > 0) {
-            texto += unidades[entero];
-        }
-    }
-
-    // Centavos
-    if (decimal > 0) {
-        texto += (texto ? ' ' : '') + (decimal === 1 ? 'pesos con un centavo' : 'pesos con ' + numeroALetra(decimal, false) + ' centavos');
-    } else {
-        if (status) {	
-            texto += ' pesos';
-        }
-    }
-    
-    // Ajustes de formato final: eliminar espacios duplicados y capitalizar
-    texto = texto.replace(/\s+/g, ' ').trim().replace(/^./, function(str) {
-        return str.toUpperCase();
-    });
-
-    return texto;
-}
-
 $('#toggleDropzone').on('change', function() {
     if ($(this).is(':checked')) {
         toggleDropzone = 1;
@@ -554,3 +511,96 @@ var myDropzone = new Dropzone("#documentDropzone", {
         });
     }
 });
+
+function numeroALetra(numero, status, currency) {
+    var unidades = ['', 'un', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    var especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+    var decenas = ['', 'diez', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    var centenas = ['', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
+
+    var texto = '';
+    var entero = Math.floor(numero);
+    var decimal = Math.round((numero - entero) * 100);
+
+    // Convertir parte entera
+    if (entero === 0) {
+        texto = 'cero';
+    } else {
+        if (entero >= 1000000) {
+            let millones = Math.floor(entero / 1000000);
+            texto += millones === 1 ? 'un millón ' : numeroALetra(millones, false) + ' millones ';
+            entero %= 1000000;
+        }
+
+        if (entero >= 1000) {
+            let miles = Math.floor(entero / 1000);
+            texto += miles === 1 ? 'mil ' : numeroALetra(miles, false) + ' mil ';
+            entero %= 1000;
+        }
+
+        if (entero >= 100) {
+            texto += (entero === 100 ? 'cien' : centenas[Math.floor(entero / 100)]) + ' ';
+            entero %= 100;
+        }
+
+        if (entero >= 20) {
+            texto += decenas[Math.floor(entero / 10)];
+            if (entero % 10 !== 0) {
+                texto += (entero >= 30 ? ' y ' : '') + unidades[entero % 10];
+            }
+            entero = 0;
+        }
+
+        if (entero >= 10) {
+            texto += especiales[entero - 10];
+            entero = 0;
+        }
+
+        if (entero > 0) {
+            texto += unidades[entero];
+        }
+    }
+
+    // Añadir moneda
+    if (status) {
+        let singular = '';
+        let plural = '';
+        switch (currency) {
+            case 'USD':
+                singular = 'dólar';
+                plural = 'dólares';
+                break;
+            case 'CAD':
+                singular = 'dólar canadiense';
+                plural = 'dólares canadienses';
+                break;
+            case 'EUR':
+                singular = 'euro';
+                plural = 'euros';
+                break;
+            case 'GBP':
+                singular = 'libra esterlina';
+                plural = 'libras esterlinas';
+                break;
+            case 'MXN':
+                singular = 'peso';
+                plural = 'pesos';
+                break;
+            default:
+                throw new Error('Moneda no soportada. Las monedas válidas son USD, CAD, EUR, GBP y MXN.');
+        }
+        texto += ` ${Math.abs(Math.floor(numero)) === 1 ? singular : plural}`;
+    }
+
+    // Añadir centavos si es necesario
+    if (decimal > 0) {
+        texto += ` con ${decimal === 1 ? 'un centavo' : numeroALetra(decimal, false) + ' centavos'}`;
+    }
+
+    // Ajuste final de formato
+    texto = texto.replace(/\s+/g, ' ').trim().replace(/^./, function(str) {
+        return str.toUpperCase();
+    });
+
+    return texto;
+}

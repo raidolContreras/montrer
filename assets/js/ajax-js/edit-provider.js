@@ -11,6 +11,13 @@ $(document).ready(function () {
 
         // Recoge los valores del formulario del proveedor
         var providerKey = $("input[name='providerKey']").val();
+        //revisa si $('#foreignProvider') esta checkeado y si lo esta que envie #swiftCode si no lo envie nulo
+        var foreignProvider = $('#foreignProvider').is(':checked');
+        var swiftCode = foreignProvider? $("#swiftCode").val() : null;
+        var beneficiaryAddress = foreignProvider? $("#beneficiaryAddress").val() : null;
+        var currencyType = foreignProvider? $("#currencyType").val() : null;
+
+
         var fields = {
             updaterepresentativeName: $("input[name='representativeName']").val(),
             updatecontactPhone: $("input[name='contactPhone']").val(),
@@ -27,7 +34,12 @@ $(document).ready(function () {
             updateaccountHolder: $("input[name='accountHolder']").val(),
             updateaccountNumber: $("input[name='accountNumber']").val(),
             updateclabe: $("input[name='clabe']").val(),
-            updatedescription: $("input[name='description']").val(),
+            // updatedescription: $("input[name='description']").val(),
+            updateswiftCode: swiftCode,
+            updatebeneficiaryAddress: beneficiaryAddress,
+            updatecurrencyType: currencyType,
+            // id user
+            idUser: $("#idUser").val()
         };
 
         // Función de validación

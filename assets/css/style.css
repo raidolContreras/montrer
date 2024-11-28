@@ -6168,3 +6168,22 @@ Template Sidebar CSS
 .deleteButton {
   cursor: pointer;
 }
+.form-label {
+  font-size: 12px;
+}
+
+.text-center {
+  vertical-align: middle;
+}
+.text-center thead tr th {
+  vertical-align: middle;
+  font-size: 12px;
+}
+.text-center tbody tr td {
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+.currency-symbol {
+  background-color: var(--bs-secondary-bg) !important;
+}

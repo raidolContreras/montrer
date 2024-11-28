@@ -24,7 +24,7 @@
                         <span><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
                     </div>
                     <input type="hidden" name="solicitante_nombre" value="<?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>">
-                    <input class="form-control col ms-2" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" disabled>
+                    <input class="form-control col" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" disabled>
                 </div>
 
                 <!-- Empresa -->
@@ -39,28 +39,28 @@
                     <select name="area" id="area" class="form-select form-control col" required>
                         <option value="">Seleccionar un área</option>
                     </select>
-                    <input class="form-control col ms-2" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" disabled>
+                    <input class="form-control col" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Cuenta que se afecta -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:<span class="required"></span></label>
                     <input class="form-control col bg-white border" type="text" id="cuentaAfectada" name="cuentaAfectada" placeholder="Ejemplo: Desfiles" required>
-                    <input class="form-control col ms-2" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" disabled>
+                    <input class="form-control col" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Partida que se afecta -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:<span class="required"></span></label>
                     <input class="form-control col bg-white border" type="text" id="partidaAfectada" name="partidaAfectada" placeholder="Ejemplo: 16-sep" required>
-                    <input class="form-control col ms-2" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" disabled>
+                    <input class="form-control col" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Concepto -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="concepto" class="form-label col-2 fw-bold">Concepto:<span class="required"></span></label>
                     <input class="form-control col bg-white border" type="text" id="concepto" name="concepto" placeholder="Ejemplo: Uniformes" required>
-                    <input class="form-control col ms-2" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" disabled>
+                    <input class="form-control col" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
                 <!-- Importe Solicitado -->
@@ -69,9 +69,9 @@
                     <input type="text" id="requestedAmount" name="requestedAmount" class="form-control inputmask col bg-white border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                 </div>
 
-                <!-- Fecha compromiso de pago -->
+                <!-- Favor de pagar en -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:<span class="required"></span></label>
+                    <label for="fechaPago" class="form-label col-2 fw-bold">Favor de pagar en:<span class="required"></span></label>
                     <input class="form-control col bg-white border" type="date" id="fechaPago" name="fechaPago" required>
                 </div>
 
@@ -125,13 +125,13 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <input class="form-control col ms-2" type="text" id="cuentaAfectadaCount" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000" disabled>
+                                        <input class="form-control col" type="text" id="cuentaAfectadaCount" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000" disabled>
                                     </td>
                                     <td>
-                                        <input class="form-control col ms-2" type="text" id="polizeType" name="polizeType" placeholder="EG" disabled>
+                                        <input class="form-control col" type="text" id="polizeType" name="polizeType" placeholder="EG" disabled>
                                     </td>
                                     <td>
-                                        <input class="form-control col ms-2" type="text" id="numberPolize" name="numberPolize" placeholder="Tipo de póliza" disabled>
+                                        <input class="form-control col" type="text" id="numberPolize" name="numberPolize" placeholder="Tipo de póliza" disabled>
                                     </td>
                                     <td>
                                         <input type="text" id="cargo" name="cargo" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true" disabled>
@@ -140,7 +140,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input class="form-control col ms-2" type="text" id="partidaAfectadaCount" name="partidaAfectadaCount" placeholder="1000-001-001-001" disabled>
+                                        <input class="form-control col" type="text" id="partidaAfectadaCount" name="partidaAfectadaCount" placeholder="1000-001-001-001" disabled>
                                     </td>
                                     <td></td>
                                     <td></td>

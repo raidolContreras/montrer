@@ -90,7 +90,7 @@
                                 <div style="height: 35px !important" class="form-control d-flex justify-content-between align-items-center col border">
                                     <span id="nombreCompletoGet"></span>
                                 </div>
-                                <span style="height: 35px !important" class="form-control col ms-2" id="idEmployerGet"></span>
+                                <span style="height: 35px !important" class="form-control col" id="idEmployerGet"></span>
                             </div>
 
                             <!-- Empresa -->
@@ -103,28 +103,28 @@
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="area" class="form-label col-2 fw-bold">Área de cargo:</label>
                                 <span style="height: 35px !important" class="form-control col border" id="areaGet"></span>
-                                <span style="height: 35px !important" class="form-control col ms-2" id="idAreaCargoGet"></span>
+                                <span style="height: 35px !important" class="form-control col" id="idAreaCargoGet"></span>
                             </div>
 
                             <!-- Cuenta que se afecta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:</label>
                                 <span style="height: 35px !important" class="form-control col border" id="cuentaAfectadaGet"></span>
-                                <span style="height: 35px !important" class="form-control col ms-2" id="idCuentaAfectadaGet"></span>
+                                <span style="height: 35px !important" class="form-control col" id="idCuentaAfectadaGet"></span>
                             </div>
 
                             <!-- Partida que se afecta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:</label>
                                 <span style="height: 35px !important" class="form-control col border" id="partidaAfectadaGet"></span>
-                                <span style="height: 35px !important" class="form-control col ms-2" id="idPartidaAfectadaGet"></span>
+                                <span style="height: 35px !important" class="form-control col" id="idPartidaAfectadaGet"></span>
                             </div>
 
                             <!-- Concepto -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="concepto" class="form-label col-2 fw-bold">Concepto:</label>
                                 <span style="height: 35px !important" class="form-control col border" id="conceptoGet"></span>
-                                <span style="height: 35px !important" class="form-control col ms-2" id="idConceptoGet"></span>
+                                <span style="height: 35px !important" class="form-control col" id="idConceptoGet"></span>
                             </div>
 
                             <!-- Importe Solicitado -->
@@ -139,9 +139,9 @@
                                 <span id="importeLetraGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
-                            <!-- Fecha compromiso de pago -->
+                            <!-- Favor de pagar en -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:</label>
+                                <label for="fechaPago" class="form-label col-2 fw-bold">Favor de pagar en:</label>
                                 <span id="fechaPagoGet" style="height: 35px !important" class="form-control col border"></span>
                             </div>
 
@@ -217,13 +217,13 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <span id="cuentaAfectadaCountGet" style="height: 35px !important" class="form-control col ms-2"></span>
+                                                    <span id="cuentaAfectadaCountGet" style="height: 35px !important" class="form-control col"></span>
                                                 </td>
                                                 <td>
-                                                    <span id="polizeTypeGet" style="height: 35px !important" class="form-control col ms-2"></span>
+                                                    <span id="polizeTypeGet" style="height: 35px !important" class="form-control col"></span>
                                                 </td>
                                                 <td>
-                                                    <span id="numberPolizeGet" style="height: 35px !important" class="form-control col ms-2"></span>
+                                                    <span id="numberPolizeGet" style="height: 35px !important" class="form-control col"></span>
                                                 </td>
                                                 <td>
                                                     <span id="cargoGet" style="height: 35px !important" class="form-control inputmask col border"></span>
@@ -232,7 +232,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span id="partidaAfectadaCountGet" style="height: 35px !important" class="form-control col ms-2"></span>
+                                                    <span id="partidaAfectadaCountGet" style="height: 35px !important" class="form-control col"></span>
                                                 </td>
                                                 <td></td>
                                                 <td></td>

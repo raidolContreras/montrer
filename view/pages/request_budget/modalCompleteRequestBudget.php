@@ -25,7 +25,7 @@
                                     <span id="solicitante_nombre"></span>
                                 </div>
                                 <input type="hidden" name="solicitante_nombre" value="">
-                                <input class="form-control col ms-2 auto-format" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" required>
+                                <input class="form-control col auto-format" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" required>
                             </div>
 
                             <!-- Empresa -->
@@ -38,28 +38,28 @@
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="area" class="form-label col-2 fw-bold">Área de cargo:<span class="required"></span></label>
                                 <input class="form-control col bg-white border" type="text" id="area" name="area" readonly>
-                                <input class="form-control col ms-2 auto-format2" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" required>
+                                <input class="form-control col auto-format2" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" required>
                             </div>
 
                             <!-- Cuenta que se afecta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:<span class="required"></span></label>
                                 <input class="form-control col bg-white border" type="text" id="cuentaAfectada" name="cuentaAfectada" placeholder="Ejemplo: Ejemplo: Desfiles" required>
-                                <input class="form-control col ms-2 auto-format2" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" required>
+                                <input class="form-control col auto-format2" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" required>
                             </div>
 
                             <!-- Partida que se afecta -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:<span class="required"></span></label>
                                 <input class="form-control col bg-white border" type="text" id="partidaAfectada" name="partidaAfectada" placeholder="Ejemplo: 16-sep" required>
-                                <input class="form-control col ms-2 auto-format2" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" required>
+                                <input class="form-control col auto-format2" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" required>
                             </div>
 
                             <!-- Concepto -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
                                 <label for="concepto" class="form-label col-2 fw-bold">Concepto:<span class="required"></span></label>
                                 <input class="form-control col bg-white border" type="text" id="concepto" name="concepto" placeholder="Ejemplo: Uniformes" required>
-                                <input class="form-control col ms-2 auto-format2" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" required>
+                                <input class="form-control col auto-format2" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" required>
                             </div>
 
                             <!-- Importe Solicitado -->
@@ -74,9 +74,9 @@
                                 <input type="text" id="importeLetra" name="importeLetra" class="form-control col bg-light border" required>
                             </div>
 
-                            <!-- Fecha compromiso de pago -->
+                            <!-- Favor de pagar en -->
                             <div class="col-md-12 row mb-3" style="align-items: center;">
-                                <label for="fechaPago" class="form-label col-2 fw-bold">Fecha compromiso de pago:<span class="required"></span></label>
+                                <label for="fechaPago" class="form-label col-2 fw-bold">Favor de pagar en:<span class="required"></span></label>
                                 <input class="form-control col bg-light border" type="date" id="fechaPago" name="fechaPago" required>
                             </div>
 
@@ -153,13 +153,13 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input class="form-control col ms-2 auto-format2" type="text" id="cuentaAfectadaCount" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000">
+                                                    <input class="form-control col auto-format2" type="text" id="cuentaAfectadaCount" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control col ms-2" type="text" id="polizeType" name="polizeType" placeholder="Tipo de póliza">
+                                                    <input class="form-control col" type="text" id="polizeType" name="polizeType" placeholder="Tipo de póliza">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control col ms-2" type="text" id="numberPolize" name="numberPolize" placeholder="Número de póliza">
+                                                    <input class="form-control col" type="text" id="numberPolize" name="numberPolize" placeholder="Número de póliza">
                                                 </td>
                                                 <td>
                                                     <input type="text" id="cargo" name="cargo" class="form-control inputmask col border" data-inputmask="'alias': 'currency', 'prefix': '$ ', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
@@ -168,7 +168,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input class="form-control col ms-2 auto-format" type="text" id="partidaAfectadaCount" name="partidaAfectadaCount" placeholder="1000-001-001-001">
+                                                    <input class="form-control col auto-format" type="text" id="partidaAfectadaCount" name="partidaAfectadaCount" placeholder="1000-001-001-001">
                                                 </td>
                                                 <td></td>
                                                 <td></td>
