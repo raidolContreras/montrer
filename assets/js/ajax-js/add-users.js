@@ -15,7 +15,7 @@ $(document).ready(function () {
         var level = $("select[name='level']").val();
         var area = $("select[name='area']").val();
 		
-        if (firstname == '' || lastname == '' || email == '' || area == '') {
+        if (firstname == '' || lastname == '' || email == '') {
             showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
         } else {
 			$.ajax({
@@ -82,7 +82,7 @@ function selectArea() {
         url: "controller/ajax/getAreas.php",
         dataType: "json",
         success: function (response) {
-            var html = `<option value="">Seleccione el departamento *</option>`;
+            var html = `<option value="">Seleccione el departamento</option>`;
             response.forEach(area => {
                 html += `<option value="${area.idArea}" data-idUser="${area.idUser}">${area.nameArea}</option>`;
             });

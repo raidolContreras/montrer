@@ -1,6 +1,11 @@
 <?php 
 
 require_once __DIR__ . '/../assets/vendor/PHP/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Asegúrate de incluir PHPMailer en tu proyecto
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -466,10 +471,160 @@ class FormsController {
 		return $requestBudget;
 	}
 
-	static public function ctrDeleteRequest($idRequests){
+	static public function ctrDeleteRequest($idRequests) {
+		// Obtener la solicitud antes de eliminarla
+		$request = FormsModels::mdlGetRequest($idRequests);
+		
+		// Intentar eliminar la solicitud
 		$deleteRequest = FormsModels::mdlDeleteRequest($idRequests);
+		
+		// Si la solicitud se eliminó correctamente
+		if ($deleteRequest == "ok") {
+			// Datos del correo electrónico
+			$emailRecipient = "acisneros@unimontrer.edu.mx";
+			$emailSubject = "Cancelación de Solicitud de Pago";
+			$emailBody = "La solicitud de pago con ID: $idRequests ha sido eliminada.";
+	
+			// Llamar a la función para enviar el correo
+			self::sendCancellationEmail($emailRecipient, $emailSubject, $request);
+		}
+	
 		return $deleteRequest;
 	}
+
+	// Función para enviar correos electrónicos
+	static private function sendCancellationEmail($recipient, $subject, $requestData) {
+		$mail = new PHPMailer(true);
+		try {
+			// Configuración del servidor SMTP
+			$mail->isSMTP();            
+			$mail->Host = 'smtp.gmail.com'; // Cambia esto al servidor SMTP que estés usando
+			$mail->SMTPAuth = true;
+			$mail->Username = 'no-reply@unimontrer.edu.mx'; // Cambia esto a tu dirección de correo electrónico real
+			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->Port = 587;    
+	
+			// Configuración del correo
+			$mail->setFrom('notificaciones@unimontrer.edu.mx', 'Universidad Montrer');
+			$mail->addAddress($recipient);
+	
+			// Título y diseño del correo
+			$subject = utf8_decode("Cancelación de Solicitud de Pago - Folio {$requestData['folio']}");
+			$mail->isHTML(true);
+			$mail->Subject = $subject;
+	
+			// Cuerpo del correo
+			$body = '
+			<html>
+			<head>
+				<style>
+					body {
+						font-family: Arial, sans-serif;
+						background-color: #f4f4f4;
+						color: #333;
+						padding: 20px;
+					}
+					.container {
+						background-color: #fff;
+						padding: 20px;
+						border-radius: 5px;
+						box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+					}
+					.header {
+						background-color: #01643d;
+						color: #fff;
+						padding: 10px;
+						text-align: center;
+						border-radius: 5px 5px 0 0;
+					}
+					.content {
+						padding: 20px;
+					}
+					.footer {
+						margin-top: 20px;
+						text-align: center;
+						font-size: 12px;
+						color: #777;
+					}
+					table {
+						width: 100%;
+						border-collapse: collapse;
+					}
+					table th, table td {
+						border: 1px solid #ddd;
+						padding: 8px;
+						text-align: left;
+					}
+					table th {
+						background-color: #f2f2f2;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="container">
+					<div class="header">
+						<h1>Cancelación de solicitud de pago</h1>
+					</div>
+					<div class="content">
+						<p>Se ha cancelado la siguiente solicitud de pago:</p>
+						<table>
+							<tr>
+								<th>Folio</th>
+								<td>' . htmlspecialchars($requestData['folio']) . '</td>
+							</tr>
+							<tr>
+								<th>Solicitante</th>
+								<td>' . htmlspecialchars($requestData['solicitante_nombre']) . '</td>
+							</tr>
+							<tr>
+								<th>Empresa</th>
+								<td>' . htmlspecialchars($requestData['empresa']) . '</td>
+							</tr>
+							<tr>
+								<th>Concepto</th>
+								<td>' . htmlspecialchars($requestData['concepto']) . '</td>
+							</tr>
+							<tr>
+								<th>Cuenta afectada</th>
+								<td>' . htmlspecialchars($requestData['cuentaAfectada']) . '</td>
+							</tr>
+							<tr>
+								<th>Importe solicitado</th>
+								<td>' . htmlspecialchars(number_format($requestData['importe_solicitado'], 2)) . '</td>
+							</tr>
+							<tr>
+								<th>Importe en letra</th>
+								<td>' . htmlspecialchars($requestData['importe_letra']) . '</td>
+							</tr>
+							<tr>
+								<th>Fecha de solicitud</th>
+								<td>' . htmlspecialchars(date("d/m/Y", strtotime($requestData['requestDate']))) . '</td>
+							</tr>
+						</table>
+					</div>
+					<div class="footer">
+						<p>Universidad Montrer</p>
+						<p>Este es un mensaje automático, por favor no respondas a este correo.</p>
+					</div>
+				</div>
+			</body>
+			</html>
+			';
+	
+			// Asignar el cuerpo al correo
+			$mail->Body = $body;
+	
+			// Enviar el correo
+			$mail->send();
+			return true;
+		} catch (Exception $e) {
+			// Manejo de errores
+			error_log("Error al enviar el correo: {$mail->ErrorInfo}");
+			return false;
+		}
+	}
+	
 
 	static public function ctrMonthBudget($idArea, $idBudget, $approvedAmount){
 		// Obtén el mes actual
@@ -559,7 +714,7 @@ class FormsController {
 			$subtitle = 'Detalles del presupuesto actualizado';
 	
 			// Envío del correo electrónico
-			// FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
+			FormsController::ctrSendEmail($email, $message, $subject, $title, $subtitle);
 		}
 
 		return $result;
@@ -771,9 +926,263 @@ class FormsController {
         return $response;
 	}
 
-	static public function ctrGetReports($startDate, $endDate) {
-		$reports = FormsModels::mdlGetReports($startDate, $endDate);
+	static public function ctrGetReports($startDate, $endDate, $context) {
+		$reports = FormsModels::mdlGetReports($startDate, $endDate, $context);
         return $reports;
+	}
+
+	static public function ctrSendPassword($userId, $password, $firstname, $lastname, $email) {
+		$mail = new PHPMailer(true);
+
+		try {
+			// Configuración del servidor SMTP
+			$mail->isSMTP();            
+			$mail->Host = 'smtp.gmail.com'; // Cambia esto al servidor SMTP que estés usando
+			$mail->SMTPAuth = true;
+			$mail->Username = 'no-reply@unimontrer.edu.mx'; // Cambia esto a tu dirección de correo electrónico real
+			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->Port = 587;    
+
+			// Configuración del remitente
+			$mail->setFrom('noreply@unimontrer.edu.mx', 'UNIMO (no responder)');
+			$mail->addAddress($email); // Destinatario
+
+			// Asunto del correo
+			$mail->Subject = "Bienvenido a la plataforma de presupuestos";
+
+			// Crear el contenido del correo en HTML
+			$message = '
+			<html>
+			<head>
+				<style>
+					/* Estilos generales */
+					body {
+						font-family: Arial, sans-serif;
+						color: #333333;
+						background-color: #f0f0f0;
+					}
+					.container {
+						width: 600px;
+						margin: 0 auto;
+						background-color: #ffffff;
+						border: 1px solid #cccccc;
+					}
+					.header {
+						padding: 20px;
+						text-align: center;
+						background-color: #eeeeee;
+						border-bottom: 1px solid #cccccc;
+					}
+					.content {
+						padding: 20px;
+					}
+					.footer {
+						padding: 20px;
+						text-align: center;
+						background-color: #eeeeee;
+						border-top: 1px solid #cccccc;
+					}
+					.logo {
+						width: 200px;
+					}
+					.greeting {
+						font-size: 18px;
+						text-align: justify;
+					}
+					.message {
+						font-size: 18px;
+						line-height: 1.5;
+						text-align: justify;
+					}
+					.password {
+						font-size: 20px;
+						font-weight: bold;
+						color: #ff0000;
+					}
+					.link {
+						font-size: 18px;
+						text-decoration: none;
+						color: #0000ff;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="container">
+					<div class="header">
+						<img src="https://montrer.devosco.io/assets/img/logo.png" alt="Logo" class="logo">
+					</div>
+					<div class="content">
+						<p class="greeting">Estimado(a) ' . htmlspecialchars($firstname) . ' ' . htmlspecialchars($lastname) . ', ha sido registrado(a) en la plataforma de asignación de presupuestos de Universidad Montrer.</p>
+						<p class="message">Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://montrer.devosco.io/" class="link">Ingresar a la plataforma</a>), su usuario es: ' . htmlspecialchars($email) . ' y su contraseña temporal:
+						<center><p class="password">' . htmlspecialchars($password) . '</p></center>
+						<p class="message">En el primer acceso, deberá cambiar su contraseña, respetando las siguientes condiciones: 10 caracteres (obligatorio: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo).</p>
+						<p>Gracias.</p>
+					</div>
+					<div class="footer">
+						<p>© 2024 UNIMO. Todos los derechos reservados.</p>
+					</div>
+				</div>
+			</body>
+			</html>';
+
+			// Configuración del contenido del correo
+			$mail->isHTML(true);
+			$mail->Body = $message;
+
+			// Enviar el correo
+			$mail->send();
+
+			// Encriptar la contraseña
+			$cryptPassword = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+			// Guardar la contraseña en la base de datos
+			return FormsModels::mdlRegisterPassword($userId, $cryptPassword);
+
+		} catch (Exception $e) {
+			// Manejo de errores
+			error_log("Error al enviar el correo: {$mail->ErrorInfo}");
+			return false;
+		}
+	}
+	
+	static public function ctrSendEmail($email, $message, $subject, $title, $subtitle) {
+		$mail = new PHPMailer(true);
+	
+		try {
+			// Configuración del servidor SMTP
+			$mail->isSMTP();            
+			$mail->Host = 'smtp.gmail.com'; // Cambia esto al servidor SMTP que estés usando
+			$mail->SMTPAuth = true;
+			$mail->Username = 'no-reply@unimontrer.edu.mx'; // Cambia esto a tu dirección de correo electrónico real
+			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->Port = 587;
+	
+			// Configuración del remitente
+			$mail->setFrom('no-reply@unimontrer.edu.mx', 'Universidad Montrer');
+			$mail->addAddress($email); // Destinatario
+	
+			// Configuración del correo
+			$mail->isHTML(true);
+			$mail->Subject = $subject;
+	
+			// Crear el contenido del correo en HTML
+			$templateHTML = '
+			<!DOCTYPE html>
+			<html lang="es">
+			<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>Reporte de Estado de Presupuestos</title>
+				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+				<style>
+					body {
+						font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif;
+						background-color: #f0f0f0;
+						color: #333;
+						line-height: 1.6;
+						margin: 0;
+						padding: 0;
+					}
+					.container {
+						min-height: 100vh;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+					}
+					.logo img {
+						width: 200px;
+						max-width: 100%;
+					}
+					.card {
+						border: none;
+						border-radius: 10px;
+						background-color: #fff;
+						box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+						width: 100%;
+						max-width: 600px;
+						animation: fadeIn 1s ease-out;
+					}
+					.header {
+						text-align: center;
+						background-color: #026f35;
+						color: #fff;
+						padding: 20px;
+						margin-bottom: 20px;
+					}
+					.header h1 {
+						font-size: 28px;
+						margin-bottom: 10px;
+					}
+					.header p {
+						font-size: 16px;
+						margin-bottom: 0;
+					}
+					.card-title {
+						font-size: 24px;
+						font-weight: bold;
+						color: #026f35;
+						margin-bottom: 20px;
+					}
+					.card-text {
+						font-size: 18px;
+						color: #555;
+						margin-bottom: 20px;
+					}
+					.footer {
+						text-align: center;
+						background-color: #666666;
+						padding-bottom: 10px;
+						border-radius: 0 0 10px 10px;
+						color: #fff;
+					}
+					.footer p {
+						font-size: 16px;
+						margin-bottom: 0;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="container">
+					<div class="card">
+						<div class="card-header logo text-center">
+							<img src="https://portal.unimontrer.edu.mx/wp-content/uploads/2021/04/universidad-montrer-logotipo-promocional-recortao-01.png" alt="Logo de UNIMO">
+						</div>
+						<div class="header">
+							<h1>' . htmlspecialchars($title) . '</h1>
+							<p>' . htmlspecialchars($subtitle) . '</p>
+						</div>
+						<div class="card-body">
+			';
+			foreach ($message as $key => $val) {
+				$templateHTML .= '<p class="card-text">' . htmlspecialchars($val) . '</p>';
+			}
+			$templateHTML .= '
+						</div>
+						<div class="footer">
+							<div class="logo">
+								<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiwYdc6JjvK8wto9xbuHcTAYFtzp0giLWm3pO6Gl6AlzUkVp2tM8E4ZGtbFUilQSJWACk_VAzzTpylpA-OleuC-Fs65QshR-Ud_Ua4gAWrxl00Ea1vDYA-mB2hovzOoC8t7tYQHBFUY0pEk5_JywC5y_Zg7HTtR8EN-NZfRztW9Gakn8yWjzHffaFkeeA/s1584/UNIMO-logotipo-2019-BLANCO.png" alt="Logo de UNIMO">
+							</div>
+							<p>© 2024 Universidad Montrer. Todos los derechos reservados.</p>
+						</div>
+					</div>
+				</div>
+			</body>
+			</html>';
+	
+			// Asignar el cuerpo del correo
+			$mail->Body = $templateHTML;
+	
+			// Enviar el correo
+			$mail->send();
+			return true;
+	
+		} catch (Exception $e) {
+			// Manejo de errores
+			error_log("Error al enviar el correo: {$mail->ErrorInfo}");
+			return false;
+		}
 	}
 
 }

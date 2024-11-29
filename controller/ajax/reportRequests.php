@@ -14,6 +14,7 @@ if (!isset($_POST['startDate']) || !isset($_POST['endDate'])) {
 
 $startDate = $_POST['startDate'];
 $endDate = $_POST['endDate'];
+$context = (isset($_POST['context'])) ? $_POST['context'] : null;
 
 if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $startDate) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $endDate)) {
     http_response_code(400);
@@ -21,7 +22,7 @@ if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $startDate) || !preg_match('/^\d{4}-\d{
 }
 
 // Obtener los datos desde el modelo
-$data = FormsController::ctrGetReports($startDate, $endDate);
+$data = FormsController::ctrGetReports($startDate, $endDate, $context);
 
 // Crear un nuevo objeto Spreadsheet
 $spreadsheet = new Spreadsheet();

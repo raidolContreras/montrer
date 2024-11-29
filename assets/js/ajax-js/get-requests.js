@@ -1008,42 +1008,52 @@ function deleteDocument(document, idRequest) {
 }
 
 $(document).ready(function () {
-	$('#GenReport').on('submit', function (e) {
-		e.preventDefault();
+    $('#GenReport').on('submit', function (e) {
+        e.preventDefault();
 
-		// Obtener las fechas
-		const startDate = $('#startDate').val();
-		const endDate = $('#endDate').val();
+        // Obtener las fechas
+        const startDate = $('#startDate').val();
+        const endDate = $('#endDate').val();
 
-		// Validar las fechas
-		if (!startDate || !endDate) {
-			alert("Por favor, selecciona ambas fechas.");
-			return;
-		}
+        // Validar las fechas
+        if (!startDate || !endDate) {
+            alert("Por favor, selecciona ambas fechas.");
+            return;
+        }
 
-		// Enviar la solicitud AJAX
-		$.ajax({
-			url: 'controller/ajax/reportRequests.php',
-			type: 'POST',
-			data: { startDate, endDate },
-			xhrFields: {
-				responseType: 'blob' // Especifica que el servidor devolverá un archivo
-			},
-			success: function (response, status, xhr) {
-				// Crear un enlace para descargar el archivo
-				const filename = xhr.getResponseHeader('Content-Disposition')
-					.split('filename=')[1]
-					.replace(/"/g, '');
+        // Obtener el valor del campo de búsqueda (context)
+        const contextField = $('input[type="search"].form-control.form-control-sm[aria-controls="requests"]');
+        const context = contextField.val().trim(); // Remover espacios al inicio y al final
 
-				const blob = new Blob([response], { type: xhr.getResponseHeader('Content-Type') });
-				const link = document.createElement('a');
-				link.href = window.URL.createObjectURL(blob);
-				link.download = filename;
-				link.click();
-			},
-			error: function () {
-				alert("Ocurrió un error al generar el reporte.");
-			}
-		});
-	});
+        // Crear el objeto de datos
+        let data = { startDate, endDate };
+        if (context !== "") {
+            data.context = context; // Solo incluir si no está vacío
+        }
+
+        // Enviar la solicitud AJAX
+        $.ajax({
+            url: 'controller/ajax/reportRequests.php',
+            type: 'POST',
+            data: data,
+            xhrFields: {
+                responseType: 'blob' // Especifica que el servidor devolverá un archivo
+            },
+            success: function (response, status, xhr) {
+                // Crear un enlace para descargar el archivo
+                const filename = xhr.getResponseHeader('Content-Disposition')
+                    .split('filename=')[1]
+                    .replace(/"/g, '');
+
+                const blob = new Blob([response], { type: xhr.getResponseHeader('Content-Type') });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+            },
+            error: function () {
+                alert("Ocurrió un error al generar el reporte.");
+            }
+        });
+    });
 });

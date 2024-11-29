@@ -1,7 +1,6 @@
 <?php 
 include "conection.php";
 
-
 function generarPassword() {
 	$caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	$password = '';
@@ -129,7 +128,7 @@ class FormsModels {
 			
 			if ($stmt->execute()) {
 				$userId = $pdo->lastInsertId();
-				$temporalPassword = FormsModels::mdlSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
+				$temporalPassword = FormsController::ctrSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
 				$settings = FormsModels::mdlSettingsUser($userId, $data['level'], 0);
 				if ($data['area'] != '') {
 					$area = FormsModels::mdlUpdateAreaUser($userId, $data['area']);
@@ -142,7 +141,7 @@ class FormsModels {
 					if($temporalPassword == 'ok' && $settings == 'ok'){
 						return $data['email'];
 					} else {
-						return 'Error';
+						return 'Error al enviar el correo';
 					}
 				}
 			} else {
@@ -211,102 +210,6 @@ class FormsModels {
 		} else {
 			print_r($pdo->errorInfo());
 		}
-
-	}
-	
-	static public function mdlSendPassword($userId, $password, $firstname, $lastname, $email){
-		
-			// enviar un correo electrónico al usuario creado
-			$to = $email; // la dirección de correo electrónico del usuario
-			$subject = "Bienvenido a la plataforma de presupuestos"; // el asunto del correo electrónico
-			// el cuerpo del correo electrónico en HTML
-			$message = '
-			<html>
-			<head>
-				<style>
-					/* Estilos generales */
-					body {
-						font-family: Arial, sans-serif;
-						color: #333333;
-						background-color: #f0f0f0;
-					}
-					.container {
-						width: 600px;
-						margin: 0 auto;
-						background-color: #ffffff;
-						border: 1px solid #cccccc;
-					}
-					.header {
-						padding: 20px;
-						text-align: center;
-						background-color: #eeeeee;
-						border-bottom: 1px solid #cccccc;
-					}
-					.content {
-						padding: 20px;
-					}
-					.footer {
-						padding: 20px;
-						text-align: center;
-						background-color: #eeeeee;
-						border-top: 1px solid #cccccc;
-					}
-					/* Estilos específicos */
-					.logo {
-						width: 200px;
-					}
-					.greeting {
-						font-size: 18px;
-						text-align: justify;
-					}
-					.message {
-						font-size: 18px;
-						line-height: 1.5;
-						text-align: justify;
-					}
-					.password {
-						font-size: 20px;
-						font-weight: bold;
-						color: #ff0000;
-					}
-					
-					.link {
-						font-size: 18px;
-						text-decoration: none;
-						color: #0000ff;
-					}
-				</style>
-			</head>
-			<body>
-				<div class="container">
-					<div class="header">
-						<img src="https://tests.hucco.com.mx/assets/img/logo.png" alt="Logo" class="logo">
-					</div>
-					<div class="content">
-						<p class="greeting">Estimado(a) '.$firstname.' '.$lastname.', ha sido registrado(a) en la plataforma de asignación de presupuestos de Universidad Montrer.</p>
-						<p class="message">Para acceder a la plataforma, de clic en el siguiente vinculo (<a href="https://tests.hucco.com.mx/" class="link">Ingresar a la plataforma</a>), su usuario es: '.$email.' y su contraseña temporal:
-						<center><p class="password">'.$password.'</p></center>
-						<p class="message">En el primer acceso, deberá cambiar su contraseña, respetando las siguientes condiciones: 10 caracteres (obligatorio: 1 letra mayúscula, 1 letra minúscula, 1 número y 1 símbolo).</p>
-						<p Gracias.</p>
-					</div>
-					<div class="footer">
-						<p>© 2024 UNIMO. Todos los derechos reservados.</p>
-					</div>
-				</div>
-			</body>
-			</html>';
-			// Nombre personalizado
-			$fromName = "UNIMO (no responder)";
-
-			// el encabezado De y el tipo de contenido
-			$headers = "From: $fromName <noreply@unimontrer.edu.mx>\r\n";
-			$headers .= "Content-type: text/html\r\n";
-			// llamar a la función mail ()
-			mail ($to, $subject, $message, $headers);
-
-			$cryptPassword = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
-
-			return FormsModels::mdlRegisterPassword($userId, $cryptPassword);
 
 	}
 	
@@ -1761,158 +1664,6 @@ class FormsModels {
         return $result;
 	}
 
-	static public function mdlSendEmail($email, $message, $subject, $title, $subtitle){
-				
-		// Destinatario
-		$para = $email;
-
-		// Asunto del correo
-		$asunto = $subject;
-
-		// Contenido HTML del correo
-		$templateHTML = '
-		<!DOCTYPE html>
-		<html lang="es">
-		<head>
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Reporte de Estado de Presupuestos</title>
-			<!-- Estilos de Bootstrap -->
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-			<!-- Estilos personalizados -->
-			<style>
-				body {
-					font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif;
-					background-color: #f0f0f0;
-					color: #333;
-					line-height: 1.6;
-					margin: 0;
-					padding: 0;
-				}
-				.container {
-					min-height: 100vh;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
-				.logo img {
-					width: 200px;
-					max-width: 100%;
-				}
-				.card {
-					border: none;
-					border-radius: 10px;
-					background-color: #fff;
-					box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-					width: 100%;
-					max-width: 600px;
-					animation: fadeIn 1s ease-out;
-				}
-				@keyframes fadeIn {
-					from {
-						opacity: 0;
-					}
-					to {
-						opacity: 1;
-					}
-				}
-				.card-header {
-					background-color: #fff;
-				}
-				.header {
-					text-align: center;
-					background-color: #026f35;
-					color: #fff;
-					padding: 20px;
-					margin-bottom: 20px;
-				}
-				.header h1 {
-					font-size: 28px;
-					margin-bottom: 10px;
-				}
-				.header p {
-					font-size: 16px;
-					margin-bottom: 0;
-				}
-				.card-title {
-					font-size: 24px;
-					font-weight: bold;
-					color: #026f35;
-					margin-bottom: 20px;
-				}
-				.card-text {
-					font-size: 18px;
-					color: #555;
-					margin-bottom: 20px;
-				}
-				.btn-primary {
-					background-color: #026f35;
-					border: none;
-					border-radius: 5px;
-					padding: 12px 24px;
-					color: #fff;
-					font-size: 18px;
-					text-decoration: none;
-					transition: background-color 0.3s ease;
-				}
-				.btn-primary:hover {
-					background-color: #025c2b;
-				}
-				.footer {
-					text-align: center;
-					background-color: #666666;
-					padding-bottom: 10px;
-					border-radius: 0 0 10px 10px;
-					color: #fff;
-				}
-				.footer p {
-					font-size: 16px;
-					margin-bottom: 0;
-				}
-			</style>
-		</head>
-		<body>
-			<div class="container">
-				<div class="card">
-					<!-- Logo -->
-					<div class="card-header logo text-center">
-						<img src="https://portal.unimontrer.edu.mx/wp-content/uploads/2021/04/universidad-montrer-logotipo-promocional-recortao-01.png" alt="Logo de UNIMO">
-					</div>
-					<!-- Encabezado -->
-					<div class="header">
-						<h1>'.$title.'</h1>
-						<p>'.$subtitle.'</p>
-					</div>
-					<!-- Contenido del Correo -->
-					<div class="card-body">
-		';
-		foreach ($message as $key => $val) {
-			$templateHTML.= '<p class="card-text">'.$val.'</p>';
-		}
-		$templateHTML .= '
-				</div>
-
-				<!-- Pie de Página -->
-				<div class="footer">
-					<div class="logo">
-						<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiwYdc6JjvK8wto9xbuHcTAYFtzp0giLWm3pO6Gl6AlzUkVp2tM8E4ZGtbFUilQSJWACk_VAzzTpylpA-OleuC-Fs65QshR-Ud_Ua4gAWrxl00Ea1vDYA-mB2hovzOoC8t7tYQHBFUY0pEk5_JywC5y_Zg7HTtR8EN-NZfRztW9Gakn8yWjzHffaFkeeA/s1584/UNIMO-logotipo-2019-BLANCO.png" alt="Logo de UNIMO">
-					</div>
-					<p>© 2024 Universidad Montrer. Todos los derechos reservados.</p>
-				</div>
-			</div>
-		</div>
-		</body>
-		</html>';
-
-		// Cabeceras del correo
-		$headers = "MIME-Version: 1.0" . "\r\n";
-		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-		$headers .= 'From: UNIMO <unimo@unimontrer.edu.mx>' . "\r\n";
-
-		// Envío del correo
-		mail($para, $asunto, $templateHTML, $headers);
-	}
-
 	static function mdlChangePaymentDate($idRequest,$paymentDate) {
 		$pdo = Conexion::conectar();
 		$sql = "UPDATE montrer_budget_requests SET paymentDate = :paymentDate WHERE idRequest = :idRequest";
@@ -2021,20 +1772,50 @@ class FormsModels {
 			return "error: " . $e->getMessage();
 		}
 	}
-	static public function mdlGetReports($startDate, $endDate) {
+
+	static public function mdlGetReports($startDate, $endDate, $context = null) {
 		$pdo = Conexion::conectar();
-        $sql = "SELECT *, br.status AS statusBudgetRequest FROM montrer_budget_requests br
-                LEFT JOIN montrer_users u ON br.idUser = u.idUsers
-                LEFT JOIN montrer_providers p ON br.idProvider = p.idProvider
-                WHERE br.requestDate BETWEEN :startDate AND :endDate";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':startDate', $startDate, PDO::PARAM_STR);
-        $stmt->bindParam(':endDate', $endDate, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        $result = $stmt->fetchAll();
 		
-        $stmt->closeCursor();
+		// Construir consulta básica
+		$sql = "SELECT *, br.status AS statusBudgetRequest 
+				FROM montrer_budget_requests br
+				LEFT JOIN montrer_users u ON br.idUser = u.idUsers
+				LEFT JOIN montrer_providers p ON br.idProvider = p.idProvider
+				WHERE br.requestDate BETWEEN :startDate AND :endDate";
+
+		// Agregar condición para el contexto si está definido
+		if (!empty($context)) {
+			$sql .= " AND (
+				br.folio LIKE :context OR 
+				CONCAT(u.firstname, ' ', u.lastname) LIKE :context OR 
+				p.account_holder LIKE :context OR 
+				br.concepto_pago LIKE :context OR 
+				br.cargo LIKE :context OR 
+				br.abono LIKE :context OR 
+				br.requestDate LIKE :context OR 
+				br.fecha_pago LIKE :context OR 
+				br.paymentDate LIKE :context OR 
+				br.banco LIKE :context OR 
+				br.clabe LIKE :context OR 
+				br.cuentaAfectada LIKE :context OR 
+				br.partidaAfectada LIKE :context
+			)";
+		}
+		
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':startDate', $startDate, PDO::PARAM_STR);
+		$stmt->bindParam(':endDate', $endDate, PDO::PARAM_STR);
+		
+		// Si hay contexto, bindear el parámetro con comodines
+		if (!empty($context)) {
+			$likeContext = "%$context%";
+			$stmt->bindParam(':context', $likeContext, PDO::PARAM_STR);
+		}
+
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		
+		$stmt->closeCursor();
 		$stmt = null;
 		return $result;
 	}
