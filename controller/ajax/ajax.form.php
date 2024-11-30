@@ -204,7 +204,7 @@ class AjaxForm
 		$status = '';
 		$area = '';
 		$request = FormsController::ctrGetAreaByUser($idUsers);
-		if (empty($request)) {
+		if (!empty($request)) {
 			foreach ($request as $value) {
 				$area = FormsController::ctrGetAreaBycheckup('idArea', $value['idArea']);
 				if ($area == false) {
@@ -214,7 +214,9 @@ class AjaxForm
 					break;
 				}
 			}
-        }
+        } else {
+			$status = 'ok';
+		}
 		if ($status == 'ok') {
 			$deleteUser = FormsController::ctrDeleteUser($idUsers);
 			if ($deleteUser == 'ok') {
