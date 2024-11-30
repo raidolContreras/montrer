@@ -12,7 +12,7 @@ function getArea(registerValue) {
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getArea.php',
-        data: {'register': registerValue}, // Agrega el valor de register a la solicitud
+        data: { 'register': registerValue }, // Agrega el valor de register a la solicitud
         dataType: 'json',
         success: function (response) {
             console.log('Respuesta del servidor:', response);
@@ -23,7 +23,12 @@ function getArea(registerValue) {
             // Rellena el formulario con los datos obtenidos
             $('input[name="areaName"]').val(response.nameArea);
             $('input[name="areaDescription"]').val(response.description);
-            $('select[name="user"]').val(response.idUsers);
+
+            // Establece los valores seleccionados en el select2
+            if (response.idUsers) {
+                const selectedUsers = response.idUsers; // Array de IDs de usuarios
+                $('#responsibleUser').val(selectedUsers).trigger('change'); // Selecciona los valores
+            }
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);
