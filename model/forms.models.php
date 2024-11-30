@@ -165,7 +165,7 @@ class FormsModels {
 	
 	static public function mdlUpdateAreaUser($idUser, $idArea){
 		$pdo = Conexion::conectar();
-		$sql = "INSERT INTO montrer_users_to_areas (idUser, idArea) VALUES ('$idUser','$idArea)";
+		$sql = "UPDATE montrer_areas SET idUser = :idUser WHERE idArea = :idArea ";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
