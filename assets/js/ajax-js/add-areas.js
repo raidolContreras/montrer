@@ -1,5 +1,7 @@
 var bandera = 0;
-$(document).ready(function () {
+
+
+$(document).ready(function() {
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {
@@ -9,13 +11,13 @@ $(document).ready(function () {
 	$("form.account-wrap").submit(function (event) {
 		// Evitar el envío del formulario por defecto
 		event.preventDefault();
-
+	
 		// Recoge los valores del formulario
 		var areaName = $("input[name='areaName']").val();
 		var areaDescription = $("input[name='areaDescription']").val();
-		var user = $("select[name='user']").val();
-
-		if (areaName !== '' && user !== null) {
+		var users = $("select[name='users[]']").val(); // Recoge un array de IDs seleccionados
+	
+		if (areaName !== '' && users !== null && users.length > 0) {
 			// Realiza la solicitud Ajax
 			$.ajax({
 				type: "POST",
@@ -23,27 +25,26 @@ $(document).ready(function () {
 				data: {
 					areaName: areaName,
 					areaDescription: areaDescription,
-					user: user
+					users: users // Envía el array de IDs
 				},
 				success: function (response) {
-
 					if (response === 'ok') {
 						bandera = 0;
 						$("input[name='areaName']").val('');
 						$("input[name='areaDescription']").val('');
-						$("select[name='user']").val('');
-						$('.sidenav').removeAttr('onclick');
-
-						showAlertBootstrap3('Departamento registrado', '¿Agregar otro departamento?', 'registerArea' , 'areas');
-
-					} else if(response === 'Error: El departamento ya existe') {
-
-						showAlertBootstrap('!Atención¡', 'El departamento ya existe.');
-
+						$("select[name='users[]']").val(null).trigger('change'); // Limpia el select
+	
+						showAlertBootstrap3(
+							'Departamento registrado',
+							'¿Agregar otro departamento?',
+							'registerArea',
+							'areas'
+						);
+	
+					} else if (response === 'Error: El departamento ya existe') {
+						showAlertBootstrap('¡Atención!', 'El departamento ya existe.');
 					} else {
-						
-						showAlertBootstrap('!Atención¡', 'Error al registrar el departamento.');
-
+						showAlertBootstrap('¡Atención!', 'Error al registrar el departamento.');
 					}
 				},
 				error: function (error) {
@@ -51,11 +52,13 @@ $(document).ready(function () {
 				}
 			});
 		} else {
-
-            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
-			
+			showAlertBootstrap(
+				'¡Atención!',
+				'Por favor, introduzca la información solicitada en todos los campos señalados con un (*).'
+			);
 		}
 	});
+	
 });
 
 // Esperar a que el documento esté listo

@@ -344,17 +344,16 @@ class FormsModels {
 	
 	static public function mdlAddArea($data){
 	   $pdo = Conexion::conectar();
-	   $sql = "INSERT INTO montrer_area(nameArea, description, idUser) VALUES (:nameArea, :description, :idUser)";
+	   $sql = "INSERT INTO montrer_area(nameArea, description) VALUES (:nameArea, :description)";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->bindParam(':nameArea', $data['nameArea'], PDO::PARAM_STR);
 	   $stmt->bindParam(':description', $data['areaDescription'], PDO::PARAM_STR);
-	   $stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
 	   if($stmt->execute()){
-		return "ok";
+		return $pdo->lastInsertId();
 		// $result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
 		// return $result;
 	   } else {
-		print_r($pdo->errorInfo());
+		return 'Error';
 	   }
 		$stmt->closeCursor();
 		$stmt = null;

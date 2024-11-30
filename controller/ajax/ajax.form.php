@@ -48,7 +48,7 @@ class AjaxForm
 	static function AddArea($data)
 	{
 		$addArea = FormsController::ctrAddArea($data);
-		if ($addArea == 'ok') {
+		if ($addArea != 'Error') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
 			FormsModels::mdlLog($_SESSION['idUser'], 'Add departament', $ip);
@@ -373,19 +373,38 @@ if (isset($_POST['updateActualPassword']) && isset($_POST['updateNewPassword']) 
 	}
 }
 
-if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POST['user'])) {
-	$require = FormsController::ctrGetAreaByName($_POST['areaName']);
-	if ($require == false) {
-		$data = array(
-			'nameArea' =>  $_POST['areaName'],
-			'areaDescription' =>  $_POST['areaDescription'],
-			'user' => $_POST['user']
-		);
-		$addArea = AjaxForm::AddArea($data);
-		echo $addArea;
-	} else {
-		echo 'Error: El departamento ya existe';
-	}
+if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POST['users'])) {
+    // Verifica si el área ya existe
+    $require = FormsController::ctrGetAreaByName($_POST['areaName']);
+    if ($require == false) {
+        // Preparar datos para registrar el área
+        $data = array(
+            'nameArea' => $_POST['areaName'],
+            'areaDescription' => $_POST['areaDescription']
+        );
+
+        // Registrar el área
+        $addArea = AjaxForm::AddArea($data);
+
+        if ($addArea != 'Error') {
+            // Asociar colaboradores al área
+            foreach ($_POST['users'] as $userId) {
+				$idArea = $addArea;
+                $assignUser = FormsModels::mdlUpdateAreaUser($userId, $idArea);
+                if ($assignUser != 'ok') {
+                    echo 'Error: No se pudo asignar el usuario con ID ' . $userId . ' al área.';
+                    exit;
+                }
+            }
+            echo 'ok';
+        } else {
+            echo 'Error: No se pudo registrar el área.';
+        }
+    } else {
+        echo 'Error: El departamento ya existe';
+    }
+} else {
+    echo 'Error: Faltan datos.';
 }
 
 if (isset($_POST['companyName']) && isset($_POST['companyDescription'])) {

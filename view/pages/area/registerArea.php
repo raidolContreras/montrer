@@ -5,6 +5,10 @@
 <?php
     $users = FormsController::ctrGetUsers();
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- Start Main Content Area -->
 <main class="main-content-wrap">
 
@@ -27,7 +31,7 @@
                     <label for="responsibleUser" class="form-label">Colaboradores responsables<span class="required"></span></label>
                     <select id="responsibleUser" name="users[]" class="form-select form-control required-field" multiple>
                         <?php foreach ($users as $user): ?>
-                            <option value="<?php echo $user['idUsers']; ?>"><?php echo $user['firstname']." ".$user['lastname']; ?></option>
+                            <option value="<?php echo $user['idUsers']; ?>"><?php echo $user['firstname'] . " " . $user['lastname']; ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -48,6 +52,13 @@
 </main>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-areas.js"></script>
+<script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function() {
+        $j('#responsibleUser').select2();
+    });
+
+</script>
 
 <?php else: ?>
 	<script>
