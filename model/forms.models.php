@@ -154,7 +154,7 @@ class FormsModels {
 				return 'Error: Email duplicado';
 			} else {
 				// Otra excepción
-				return 'Error';
+				return 'Error extra';
 			}
 		} finally {
 			// Asegúrate de cerrar la conexión en el bloque finally
