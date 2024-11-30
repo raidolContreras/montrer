@@ -11,7 +11,11 @@ $(document).ready(function () {
             dataSrc: ''
         },
         columns: [
-            { data: 'idArea' },
+            { data: null,
+                render: function (data, type, row) {
+                    return row.DT_RowId;
+                }
+            },
             {
                 data: null,
                 render: function (data, type, row) {
