@@ -6199,6 +6199,7 @@ Template Sidebar CSS
   width: 100%;
   transition: all ease 0.5s;
 }
+
 .select2-container--default .select2-selection--multiple {
   height: 60px;
   color: #292d32;
@@ -6210,6 +6211,8 @@ Template Sidebar CSS
   width: 100%;
   transition: all ease 0.5s;
 }
+
+
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   background-color: #F1F5FF;
 }

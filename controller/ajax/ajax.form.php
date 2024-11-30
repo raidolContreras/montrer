@@ -526,7 +526,7 @@ if (isset($_POST['deleteUser'])) {
 
 if (isset($_POST['deleteArea'])) {
 	$request = FormsController::ctrGetAreaBycheckup('idArea', $_POST['deleteArea']);
-	if ($request == false) {
+	if (!empty($request)) {
 		$deleteArea = AjaxForm::deleteArea($_POST['deleteArea']);
 		echo $deleteArea;
 	} else {
