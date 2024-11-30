@@ -225,7 +225,7 @@ class AjaxForm
 			}
 			return $deleteUser;
 		} else {
-			return 'Error: Presupuestos ';
+			return $status;
 		}
 	}
 
