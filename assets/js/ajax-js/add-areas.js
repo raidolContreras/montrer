@@ -2,6 +2,12 @@ var bandera = 0;
 
 
 $(document).ready(function() {
+    // Inicializa select2 antes de realizar cualquier operación
+    $('#responsibleUser').select2({
+        placeholder: "Selecciona los usuarios responsables",
+        allowClear: true,
+        width: '100%'
+    });
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
     $("form.account-wrap input, form.account-wrap select").change(function() {

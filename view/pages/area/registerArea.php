@@ -49,13 +49,6 @@
 </main>
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/add-areas.js"></script>
-<script>
-    var $j = jQuery.noConflict();
-    $j(document).ready(function() {
-        $j('#responsibleUser').select2();
-    });
-
-</script>
 
 <?php else: ?>
 	<script>
