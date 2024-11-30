@@ -19,8 +19,16 @@ $(document).ready(function () {
                 }
             },
             { data: 'description' },
-            {
-                data: 'usuarios'
+            { 
+                data: 'usuarios',
+                render: function(data, type, row) {
+                    if (data) {
+                        // Convertir la cadena separada por comas a una lista
+                        const usuarios = data.split(', ');
+                        return '<ul>' + usuarios.map(usuario => `<li>${usuario}</li>`).join('') + '</ul>';
+                    }
+                    return '';
+                }
             },
             {
                 data: null,
