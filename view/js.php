@@ -29,7 +29,7 @@
 		<script src="assets\vendor\DataTables\pdfmake-0.2.7\pdfmake.min.js"></script>
 		<script src="assets\vendor\DataTables\pdfmake-0.2.7\vfs_fonts.js"></script>
 		
-		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script><link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 		<script>
 			
