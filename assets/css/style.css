@@ -6188,7 +6188,18 @@ Template Sidebar CSS
   background-color: var(--bs-secondary-bg) !important;
 }
 
-.select2-container--default.select2-container--focus .select2-selection--multiple {
+.select2-container--default{
+  height: 60px;
+  color: #292d32;
+  border: 1px solid #F1F5FF;
+  background-color: #F1F5FF;
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 10px 20px;
+  width: 100%;
+  transition: all ease 0.5s;
+}
+.select2-container--default{
   height: 60px;
   color: #292d32;
   border: 1px solid #F1F5FF;
