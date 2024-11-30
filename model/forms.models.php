@@ -584,7 +584,21 @@ class FormsModels {
 
 	static public function mdlGetArea($register){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_area a LEFT JOIN montrer_users u ON u.idUsers = a.idUser WHERE idArea = :idArea";
+		$sql = "SELECT 
+					a.idArea, 
+					a.nameArea, 
+					IFNULL(a.description, '') AS description, 
+					IFNULL(GROUP_CONCAT(DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '') AS usuarios, 
+					JSON_ARRAYAGG(IF(ua.idUser IS NOT NULL, ua.idUser, NULL)) AS idUser, 
+					a.status
+				FROM 
+					montrer_area a
+				LEFT JOIN 
+					montrer_users_to_areas ua ON ua.idArea = a.idArea
+				LEFT JOIN 
+					montrer_users u ON u.idUsers = ua.idUser
+				WHERE 
+					a.idArea = :idArea";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $register, PDO::PARAM_INT);
 		$stmt->execute();
