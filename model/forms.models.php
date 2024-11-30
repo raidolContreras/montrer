@@ -128,7 +128,8 @@ class FormsModels {
 			
 			if ($stmt->execute()) {
 				$userId = $pdo->lastInsertId();
-				$temporalPassword = FormsController::ctrSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
+				// $temporalPassword = FormsController::ctrSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
+				$temporalPassword = 'ok';
 				$settings = FormsModels::mdlSettingsUser($userId, $data['level'], 0);
 				if ($data['area'] != '') {
 					$area = FormsModels::mdlUpdateAreaUser($userId, $data['area']);
