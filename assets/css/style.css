@@ -6212,8 +6212,4 @@ Template Sidebar CSS
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   background-color: #F1F5FF;
-  color: #292d32;
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin-right: 5px;
 }
