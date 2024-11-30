@@ -24,10 +24,14 @@ function getArea(registerValue) {
             $('input[name="areaName"]').val(response.nameArea);
             $('input[name="areaDescription"]').val(response.description);
 
-            // Establece los valores seleccionados en el select2
+            // Verifica si idUser existe y convierte la cadena JSON a un array
             if (response.idUser) {
-                const selectedUsers = response.idUser; // Array de IDs de usuarios
-                $('#responsibleUser').val(selectedUsers).trigger('change'); // Selecciona los valores
+                try {
+                    const selectedUsers = JSON.parse(response.idUser); // Convierte "[66,67]" a [66,67]
+                    $('#responsibleUser').val(selectedUsers).trigger('change'); // Selecciona los valores
+                } catch (error) {
+                    console.error('Error al procesar idUser:', error);
+                }
             }
         },
         error: function (error) {
