@@ -379,6 +379,10 @@ class FormsController {
 		$updateArea = FormsModels::mdlUpdateArea($data);
 		return $updateArea;
 	}
+	static public function ctrUpdateUsersArea($data) {
+		$updateUsersArea = FormsModels::mdlUpdateUsersArea($data);
+        return $updateUsersArea;
+	}
 
 	static public function ctrUpdateExercise($data){
 		$updateExercise = FormsModels::mdlUpdateExercise($data);

@@ -682,11 +682,10 @@ class FormsModels {
 	
 	static public function mdlUpdateArea($data){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_area SET nameArea = :nameArea, description = :description, idUser = :idUser WHERE idArea = :idArea ";
+		$sql = "UPDATE montrer_area SET nameArea = :nameArea, description = :description WHERE idArea = :idArea ";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':nameArea', $data['nameArea'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
-		$stmt->bindParam(':idUser', $data['idUser'], PDO::PARAM_INT);
 		$stmt->bindParam(':idArea', $data['idArea'], PDO::PARAM_INT);
 		if($stmt->execute()){
 			return "ok";
@@ -696,6 +695,42 @@ class FormsModels {
 		$stmt->closeCursor();
 		$stmt = null;
 	}
+	
+	static public function mdlUpdateUsersArea($data) {
+		try {
+			$pdo = Conexion::conectar();
+	
+			// Construir el SQL dinámico para eliminar e insertar en un solo paso
+			$values = [];
+			foreach ($data['users'] as $idUser) {
+				$values[] = "({$data['idArea']}, {$idUser})";
+			}
+			$valuesSQL = implode(", ", $values);
+	
+			$sql = "
+				DELETE FROM montrer_users_to_areas WHERE idArea = :idArea;
+				INSERT INTO montrer_users_to_areas (idArea, idUser) VALUES $valuesSQL;
+			";
+	
+			$stmt = $pdo->prepare($sql);
+	
+			// Vincula los parámetros
+			$stmt->bindParam(":idArea", $data['idArea'], PDO::PARAM_INT);
+	
+			// Ejecuta el SQL
+			if ($stmt->execute()) {
+				return "ok";
+			} else {
+				return "error: No se pudo actualizar el área.";
+			}
+	
+		} catch (Exception $e) {
+			return "error: " . $e->getMessage();
+		} finally {
+			$stmt = null;
+			$pdo = null;
+		}
+	}	
 
 	static public function mdlUpdateExercise($data){
 		$pdo = Conexion::conectar();

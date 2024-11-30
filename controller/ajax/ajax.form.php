@@ -148,6 +148,7 @@ class AjaxForm
 	{
 		$updateArea = FormsController::ctrUpdateArea($data);
 		if ($updateArea == 'ok') {
+			$updateUsersArea = FormsController::ctrUpdateUsersArea($data);
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
 			FormsModels::mdlLog($_SESSION['idUser'], 'Update departament: ' . $data['idArea'], $ip);
@@ -472,11 +473,11 @@ if (isset($_POST['enableArea'])) {
 	echo $enableArea;
 }
 
-if (isset($_POST['updateAreaName']) && isset($_POST['updateAreaDescription']) && isset($_POST['updateUser']) && isset($_POST['updateArea'])) {
+if (isset($_POST['updateAreaName']) && isset($_POST['updateAreaDescription']) && isset($_POST['updateUsers']) && isset($_POST['updateArea'])) {
 	$data = array(
 		'nameArea' => $_POST['updateAreaName'],
 		'description' => $_POST['updateAreaDescription'],
-		'idUser' => $_POST['updateUser'],
+		'idUser' => $_POST['updateUsers'],
 		'idArea' => $_POST['updateArea'],
 	);
 	$updateArea = AjaxForm::UpdateArea($data);
