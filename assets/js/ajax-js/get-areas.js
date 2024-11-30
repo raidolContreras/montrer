@@ -12,8 +12,9 @@ $(document).ready(function () {
         },
         columns: [
             { data: null,
-                render: function (data, type, row) {
-                    return row.DT_RowId;
+                render: function (data, type, row, meta) {
+                    // Utilizando el contador proporcionado por DataTables
+                    return meta.row + 1;
                 }
             },
             {
