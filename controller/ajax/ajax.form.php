@@ -204,8 +204,7 @@ class AjaxForm
 		$status = '';
 		$area = '';
 		$request = FormsController::ctrGetAreaByUser($idUsers);
-		echo json_encode($request);
-		if ($request == false) {
+		if (empty($request)) {
 			foreach ($request as $value) {
 				$area = FormsController::ctrGetAreaBycheckup('idArea', $value['idArea']);
 				if ($area == false) {
@@ -225,7 +224,7 @@ class AjaxForm
 			}
 			return $deleteUser;
 		} else {
-			return json_encode($request);
+			return 'Error: Presupuestos ';
 		}
 	}
 
