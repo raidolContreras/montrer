@@ -229,8 +229,10 @@ class FormsModels {
 					montrer_users u
 				LEFT JOIN 
 					montrer_settings s ON s.idUser = u.idUsers
+                LEFT JOIN
+                	montrer_users_to_areas ua ON ua.idUser = u.idUsers
 				LEFT JOIN 
-					montrer_area a ON a.idUser = u.idUsers
+					montrer_area a ON ua.idArea = a.idArea
 				WHERE u.deleted = 0
 				GROUP BY 
 					u.idUsers;";
