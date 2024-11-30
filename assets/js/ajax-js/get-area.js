@@ -28,7 +28,10 @@ function getArea(registerValue) {
             if (response.idUser) {
                 try {
                     const selectedUsers = JSON.parse(response.idUser); // Convierte "[66,67]" a [66,67]
-                    $('#responsibleUser').val(selectedUsers).trigger('change'); // Selecciona los valores
+                    // Limpia valores anteriores
+                    $('#responsibleUser').val(null).trigger('change');
+                    // Establece los valores y fuerza el renderizado de etiquetas
+                    $('#responsibleUser').val(selectedUsers).trigger('change');
                 } catch (error) {
                     console.error('Error al procesar idUser:', error);
                 }
