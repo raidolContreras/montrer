@@ -373,7 +373,7 @@ if (isset($_POST['updateActualPassword']) && isset($_POST['updateNewPassword']) 
 	}
 }
 
-if (isset($_POST['areaName']) && isset($_POST['areaDescription']) && isset($_POST['users'])) {
+if (isset($_POST['areaName']) && isset($_POST['areaDescription'])) {
     // Verifica si el área ya existe
     $require = FormsController::ctrGetAreaByName($_POST['areaName']);
     if ($require == false) {
