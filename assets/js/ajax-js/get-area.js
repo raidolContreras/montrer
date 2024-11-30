@@ -18,6 +18,7 @@ function getArea(registerValue) {
             console.log('Respuesta del servidor:', response);
             if (response == false) {
                 window.location.href = "registers";
+                return;
             }
 
             // Rellena el formulario con los datos obtenidos
@@ -28,10 +29,9 @@ function getArea(registerValue) {
             if (response.idUser) {
                 try {
                     const selectedUsers = JSON.parse(response.idUser); // Convierte "[66,67]" a [66,67]
-                    // Limpia valores anteriores
-                    $('#responsibleUser').val(null).trigger('change');
-                    // Establece los valores y fuerza el renderizado de etiquetas
-                    $('#responsibleUser').val(selectedUsers).trigger('change');
+                    // Limpia el select y luego establece los valores
+                    $('#responsibleUser').val(null).trigger('change'); // Limpia valores previos
+                    $('#responsibleUser').val(selectedUsers).trigger('change'); // Selecciona y actualiza visualmente
                 } catch (error) {
                     console.error('Error al procesar idUser:', error);
                 }
