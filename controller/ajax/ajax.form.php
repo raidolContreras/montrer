@@ -404,8 +404,6 @@ if (isset($_POST['areaName']) && isset($_POST['areaDescription'])) {
     } else {
         echo 'Error: El departamento ya existe';
     }
-} else {
-    echo 'Error: Faltan datos.';
 }
 
 if (isset($_POST['companyName']) && isset($_POST['companyDescription'])) {
