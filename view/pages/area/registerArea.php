@@ -24,9 +24,8 @@
                     <input type="text" class="form-control" id="areaDescription" name="areaDescription">
                 </div>
                 <div class="col-md-6">
-                    <label for="responsibleUser" class="form-label">Colaborador responsable<span class="required"></span></label>
-                    <select id="responsibleUser" name="user" class="form-select form-control required-field">
-                        <option selected disabled>Seleccionar...</option>
+                    <label for="responsibleUser" class="form-label">Colaboradores responsables<span class="required"></span></label>
+                    <select id="responsibleUser" name="users[]" class="form-select form-control required-field" multiple>
                         <?php foreach ($users as $user): ?>
                             <option value="<?php echo $user['idUsers']; ?>"><?php echo $user['firstname']." ".$user['lastname']; ?></option>
                         <?php endforeach ?>
