@@ -25,8 +25,8 @@ function getArea(registerValue) {
             $('input[name="areaDescription"]').val(response.description);
 
             // Establece los valores seleccionados en el select2
-            if (response.idUsers) {
-                const selectedUsers = response.idUsers; // Array de IDs de usuarios
+            if (response.idUser) {
+                const selectedUsers = response.idUser; // Array de IDs de usuarios
                 $('#responsibleUser').val(selectedUsers).trigger('change'); // Selecciona los valores
             }
         },
