@@ -374,6 +374,7 @@ class FormsModels {
 					montrer_users_to_areas ua ON a.idArea = ua.idArea
 				LEFT JOIN 
 					montrer_users u ON u.idUsers = ua.idUser
+				WHERE a.active = 1
 				GROUP BY 
 					a.idArea, a.nameArea, a.description, a.status;
 				";
