@@ -225,7 +225,7 @@ class AjaxForm
 			}
 			return $deleteUser;
 		} else {
-			return $request;
+			return json_encode($request);
 		}
 	}
 
