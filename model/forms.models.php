@@ -135,7 +135,7 @@ class FormsModels {
 					if($temporalPassword == 'ok' && $settings == 'ok' && $area == 'ok'){
 						return $data['email'];
 					} else {
-						return 'Error Area';
+						return 'Error';
 					}
 				} else {
 					if($temporalPassword == 'ok' && $settings == 'ok'){
@@ -154,7 +154,7 @@ class FormsModels {
 				return 'Error: Email duplicado';
 			} else {
 				// Otra excepción
-				return 'Error extra';
+				return 'Error';
 			}
 		} finally {
 			// Asegúrate de cerrar la conexión en el bloque finally
@@ -165,7 +165,7 @@ class FormsModels {
 	
 	static public function mdlUpdateAreaUser($idUser, $idArea){
 		$pdo = Conexion::conectar();
-		$sql = "INSERT INTO montrer_users_to_areas SET idUser = :idUser WHERE idArea = :idArea ";
+		$sql = "INSERT INTO montrer_users_to_areas (idUser, idArea) VALUES ('$idUser','$idArea)";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
