@@ -135,7 +135,7 @@ class FormsModels {
 					if($temporalPassword == 'ok' && $settings == 'ok' && $area == 'ok'){
 						return $data['email'];
 					} else {
-						return 'Error';
+						return 'Error Area';
 					}
 				} else {
 					if($temporalPassword == 'ok' && $settings == 'ok'){
