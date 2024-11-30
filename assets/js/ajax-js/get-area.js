@@ -1,5 +1,11 @@
-// En tu script JavaScript
 $(document).ready(function () {
+    // Inicializa select2 antes de realizar cualquier operación
+    $('#responsibleUser').select2({
+        placeholder: "Selecciona los usuarios responsables",
+        allowClear: true,
+        width: '100%'
+    });
+
     // Obtén el valor de register desde el elemento HTML
     var registerValue = $('#register-value').data('register');
 
@@ -29,7 +35,9 @@ function getArea(registerValue) {
             if (response.idUser) {
                 try {
                     const selectedUsers = JSON.parse(response.idUser); // Convierte "[66,67]" a [66,67]
-                    // Limpia el select y luego establece los valores
+                    console.log('Usuarios seleccionados:', selectedUsers);
+
+                    // Asegúrate de que select2 esté inicializado antes de asignar valores
                     $('#responsibleUser').val(null).trigger('change'); // Limpia valores previos
                     $('#responsibleUser').val(selectedUsers).trigger('change'); // Selecciona y actualiza visualmente
                 } catch (error) {

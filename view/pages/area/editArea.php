@@ -53,17 +53,6 @@
 <!-- End Main Content Area -->
 <script src="assets/js/ajax-js/get-area.js"></script>
 <script src="assets/js/ajax-js/edit-area.js"></script>
-<script>
-    var $j = jQuery.noConflict();
-    $j(document).ready(function() {
-        $j('#responsibleUser').select2({
-            placeholder: "Selecciona los usuarios responsables",
-            allowClear: true,
-            width: '100%'
-        });
-    });
-
-</script>
 
 <?php else: ?>
 	<script>
