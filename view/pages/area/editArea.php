@@ -56,10 +56,7 @@
 <script>
     var $j = jQuery.noConflict();
     $j(document).ready(function() {
-        $j('#responsibleUser').select2({
-            placeholder: "Selecciona usuarios responsables",
-            allowClear: true
-        });
+        $j('#responsibleUser').select2();
     });
 
 </script>
