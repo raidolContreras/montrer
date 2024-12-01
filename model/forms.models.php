@@ -1220,9 +1220,10 @@ class FormsModels {
 	static public function mdlGetAreaManager($idUser){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT a.idArea, a.nameArea, b.AuthorizedAmount FROM montrer_exercise e
-				LEFT JOIN montrer_budgets b ON b.idExercise = e.idExercise
-				LEFT JOIN montrer_area a ON a.idArea = b.idArea
-				WHERE b.status = 1 AND e.status = 1 AND a.idUser = :idUser";
+					LEFT JOIN montrer_budgets b ON b.idExercise = e.idExercise
+					LEFT JOIN montrer_area a ON a.idArea = b.idArea
+					LEFT JOIN montrer_users_to_areas ua ON a.idArea = ua.idArea
+				WHERE b.status = 1 AND e.status = 1 AND ua.idUser = :idUser";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
