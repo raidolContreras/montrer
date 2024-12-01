@@ -1591,8 +1591,9 @@ class FormsModels {
 	static public function mdlVerificacionArea($idUser){
 		$pdo = Conexion::conectar();
 		$sql = "SELECT *
-				FROM montrer_area
-				WHERE idUser = :idUser";
+				FROM montrer_area a
+                LEFT JOIN montrer_users_to_areas ua ON ua.idArea = a.idArea
+				WHERE ua.idUser = :idUser";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
