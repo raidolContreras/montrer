@@ -544,9 +544,13 @@ function numeroALetra(numero, status, currency) {
         }
 
         if (entero >= 20) {
-            texto += decenas[Math.floor(entero / 10)];
-            if (entero % 10 !== 0) {
-                texto += (entero >= 30 ? ' y ' : '') + unidades[entero % 10];
+            if (entero >= 21 && entero <= 29) {
+                texto += 'veinti' + unidades[entero % 10];
+            } else {
+                texto += decenas[Math.floor(entero / 10)];
+                if (entero % 10 !== 0) {
+                    texto += (entero >= 30 ? ' y ' : '') + unidades[entero % 10];
+                }
             }
             entero = 0;
         }

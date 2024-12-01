@@ -25,13 +25,13 @@
                         <span><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
                     </div>
                     <input type="hidden" name="solicitante_nombre" value="<?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>">
-                    <input class="form-control col" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" disabled>
+                    <input class="form-control col" type="text" id="idEmployer" name="idEmployer" placeholder="1000-001-001-001" value="<?php echo $_SESSION['employerCode']; ?>" disabled>
                 </div>
 
                 <!-- Empresa -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="empresa" class="form-label col-2 fw-bold">Empresa:</label>
-                    <input class="form-control col bg-white border" type="text" id="empresa" name="empresa" placeholder="" disabled>
+                    <input class="form-control col" type="text" id="empresa" name="empresa" placeholder="" disabled>
                 </div>
 
                 <!-- Área de Cargo -->
@@ -94,7 +94,7 @@
                 <!-- Importe con letra -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="importeLetra" class="form-label col-2 fw-bold">Importe con letra:<span class="required"></span></label>
-                    <input type="text" id="importeLetra" name="importeLetra" class="form-control col bg-white border" disabled>
+                    <input type="text" id="importeLetra" name="importeLetra" class="form-control col" disabled>
                 </div>
 
                 <!-- Favor de pagar en -->

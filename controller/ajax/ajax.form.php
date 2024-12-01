@@ -294,6 +294,7 @@ if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['ema
 		'lastname' => $_POST['lastname'],
 		'email' => $_POST['email'],
 		'level' => $_POST['level'],
+		'employerCode' => $_POST['employerCode'],
 		'area' => $_POST['area']
 	);
 
@@ -327,6 +328,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 			$_SESSION['lastname'] = $loginUser['lastname'];
 			$_SESSION['email'] = $loginUser['email'];
 			$_SESSION['level'] = $loginUser['level'];
+			$_SESSION['employerCode'] = $loginUser['employerCode'];
 			$_SESSION['changedPass'] = $loginUser['changedPass'];
 		}
 

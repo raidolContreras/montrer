@@ -35,6 +35,10 @@
 								<option value="1">Administrador</option>
 							</select>
 						</div>
+						<div class="form-group mb-24 icon">
+							<input class="form-control col auto-format" type="text" id="employerCode" name="employerCode" placeholder="1000-001-001-001" required>
+							<img src="assets/img/svg/book.svg">
+                        </div>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon3">
 								<button type="button" class="btn btn-danger btn-circle question-btn" id="questionBtn" data-bs-toggle="tooltip" data-bs-placement="top" title="Si el departamento no está listado, deje el campo vacío.">!</button>

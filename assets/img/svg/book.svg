@@ -1,11 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <g id="vuesax_linear_book" data-name="vuesax/linear/book" transform="translate(-492 -188)">
-    <g id="book">
-      <path id="Vector" d="M0,16V5C0,1,1,0,5,0h7c4,0,5,1,5,5V15c0,.14,0,.28-.01.42" transform="translate(495.5 190)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-      <path id="Vector-2" data-name="Vector" d="M2.85,0H17V3.5A3.5,3.5,0,0,1,13.5,7H3.5A3.5,3.5,0,0,1,0,3.5V2.85A2.855,2.855,0,0,1,2.85,0Z" transform="translate(495.5 203)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-      <path id="Vector-3" data-name="Vector" d="M0,0H8" transform="translate(500 195)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-      <path id="Vector-4" data-name="Vector" d="M0,0H5" transform="translate(500 198.5)" fill="none" stroke="#292d32" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-      <path id="Vector-5" data-name="Vector" d="M0,0H24V24H0Z" transform="translate(516 212) rotate(180)" fill="none" opacity="0"/>
-    </g>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+<g id="surface1">
+<path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(9.019608%,39.607844%,99.215686%);stroke-opacity:1;stroke-miterlimit:4;" d="M 495.5 206 L 495.5 195 C 495.5 191 496.5 190 500.5 190 L 507.5 190 C 511.5 190 512.5 191 512.5 195 L 512.5 205 C 512.5 205.101562 512.5 205.300781 512.5 205.398438 " transform="matrix(1,0,0,1,-492,-188)"/>
+<path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(9.019608%,39.607844%,99.215686%);stroke-opacity:1;stroke-miterlimit:4;" d="M 498.398438 203 L 512.5 203 L 512.5 206.5 C 512.5 208.398438 510.898438 210 509 210 L 499 210 C 497.101562 210 495.5 208.398438 495.5 206.5 L 495.5 205.898438 C 495.5 204.300781 496.800781 203 498.398438 203 Z M 498.398438 203 " transform="matrix(1,0,0,1,-492,-188)"/>
+<path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(9.019608%,39.607844%,99.215686%);stroke-opacity:1;stroke-miterlimit:4;" d="M 500 195 L 508 195 " transform="matrix(1,0,0,1,-492,-188)"/>
+<path style="fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(9.019608%,39.607844%,99.215686%);stroke-opacity:1;stroke-miterlimit:4;" d="M 500 198.5 L 505 198.5 " transform="matrix(1,0,0,1,-492,-188)"/>
+</g>
 </svg>

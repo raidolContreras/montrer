@@ -118,18 +118,18 @@ class FormsModels {
 	static public function mdlCreateUser($data){
 		try {
 			$pdo = Conexion::conectar();
-			$sql = "INSERT INTO montrer_users(firstname, lastname, email) VALUES (:firstname, :lastname, :email)";
+			$sql = "INSERT INTO montrer_users(firstname, lastname, email, employerCode) VALUES (:firstname, :lastname, :email, :employerCode)";
 
 			$stmt = $pdo->prepare($sql);
 
 			$stmt->bindParam(':firstname', $data['firstname'], PDO::PARAM_STR);
 			$stmt->bindParam(':lastname', $data['lastname'], PDO::PARAM_STR);
 			$stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+			$stmt->bindParam(':employerCode', $data['employerCode'], PDO::PARAM_STR);
 			
 			if ($stmt->execute()) {
 				$userId = $pdo->lastInsertId();
-				// $temporalPassword = FormsController::ctrSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
-				$temporalPassword = 'ok';
+				$temporalPassword = FormsController::ctrSendPassword($userId, generarPassword(), $data['firstname'], $data['lastname'], $data['email']);
 				$settings = FormsModels::mdlSettingsUser($userId, $data['level'], 0);
 				if ($data['area'] != '') {
 					$area = FormsModels::mdlUpdateAreaUser($userId, $data['area']);
@@ -366,7 +366,7 @@ class FormsModels {
 					a.nameArea, 
 					IFNULL(a.description, '') AS description, 
 					IFNULL(GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '') AS usuarios, 
-					IFNULL(JSON_ARRAYAGG(IF(ua.idUser IS NOT NULL, ua.idUser, NULL)), '[]') AS idUser, 
+					IFNULL(CONCAT('[', GROUP_CONCAT(IF(ua.idUser IS NOT NULL, ua.idUser, NULL)), ']'), '[]') AS idUser, 
 					a.status
 				FROM 
 					montrer_area a
@@ -374,7 +374,8 @@ class FormsModels {
 					montrer_users_to_areas ua ON a.idArea = ua.idArea
 				LEFT JOIN 
 					montrer_users u ON u.idUsers = ua.idUser
-				WHERE a.active = 1
+				WHERE 
+					a.active = 1
 				GROUP BY 
 					a.idArea, a.nameArea, a.description, a.status;
 				";
@@ -590,7 +591,7 @@ class FormsModels {
 					a.nameArea, 
 					IFNULL(a.description, '') AS description, 
 					IFNULL(GROUP_CONCAT(DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '') AS usuarios, 
-					JSON_ARRAYAGG(IF(ua.idUser IS NOT NULL, ua.idUser, NULL)) AS idUser, 
+					CONCAT('[', GROUP_CONCAT(DISTINCT IF(ua.idUser IS NOT NULL, ua.idUser, NULL)), ']') AS idUser, 
 					a.status
 				FROM 
 					montrer_area a

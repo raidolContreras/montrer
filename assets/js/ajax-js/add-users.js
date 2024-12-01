@@ -13,8 +13,9 @@ $(document).ready(function () {
         var lastname = $("input[name='lastname']").val();
         var email = $("input[name='email']").val();
         var level = $("select[name='level']").val();
+        var employerCode = $("#employerCode").val();
         var area = $("select[name='area']").val();
-		
+		console.log(employerCode);
         if (firstname == '' || lastname == '' || email == '') {
             showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
         } else {
@@ -26,6 +27,7 @@ $(document).ready(function () {
 					lastname: lastname,
 					email: email,
 					level: level,
+                    employerCode: employerCode,
 					area: area
 				},
 				success: function (response) {				
@@ -37,6 +39,7 @@ $(document).ready(function () {
 						$("input[name='lastname']").val('');
 						$("input[name='email']").val('');
 						$("select[name='level']").val('2');
+						$("select[name='employerCode']").val('');
 						$("select[name='area']").val('');
 
 						showAlertBootstrap3(response+' creado exitosamente', '¿Agregar otro usuario?', 'register' , 'registers');
@@ -93,11 +96,11 @@ function selectArea() {
                 var selectedArea = $(this).find("option:selected");
                 var idUser = selectedArea.data("iduser");
 
-                // Verificar si el idUser está asignado o no es null
-                if (idUser !== null) {
-					console.log(idUser);
-                    showAlertBootstrap7('¡Atención!', '¿Está seguro que desea cambiar al usuario responsable del departamento?');
-                }
+                // // Verificar si el idUser está asignado o no es null
+                // if (idUser !== null) {
+				// 	console.log(idUser);
+                //     showAlertBootstrap7('¡Atención!', '¿Está seguro que desea cambiar al usuario responsable del departamento?');
+                // }
             });
         },
         error: function (error) {
@@ -117,3 +120,28 @@ function showAlertBootstrap7(title, message) {
 function selectDefault() {
 	selectArea();
 }
+
+$('.auto-format').on('input', function () {
+    let input = $(this).val().replace(/\D/g, ''); // Elimina cualquier carácter no numérico
+    let formatted = '';
+
+    // Aplica el formato 1000-001-001-001
+    if (input.length > 4) {
+        formatted += input.substring(0, 4) + '-';
+        if (input.length > 7) {
+            formatted += input.substring(4, 7) + '-';
+            if (input.length > 10) {
+                formatted += input.substring(7, 10) + '-';
+                formatted += input.substring(10, 13);
+            } else {
+                formatted += input.substring(7);
+            }
+        } else {
+            formatted += input.substring(4);
+        }
+    } else {
+        formatted = input;
+    }
+
+    $(this).val(formatted);
+});
