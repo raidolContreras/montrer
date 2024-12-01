@@ -68,9 +68,10 @@ class FormsModels {
             COALESCE((SELECT SUM(approvedAmount) FROM montrer_budget_requests WHERE active = 1 AND idUser = :idUser), 0) AS nocomp
         FROM 
             montrer_area a
-        LEFT JOIN montrer_budgets b ON b.idArea = a.idArea
+        LEFT JOIN montrer_users_to_areas ua ON ua.idArea = a.idArea
+        LEFT JOIN montrer_budgets b ON b.idArea = ua.idArea
         WHERE 
-            a.idUser = :idUser;";
+            ua.idUser = :idUser;";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
@@ -84,7 +85,7 @@ class FormsModels {
 	static public function mdlCountAreaId($idArea){
 		$pdo = Conexion::conectar();
 
-		$sql = "SELECT nameArea,
+		$sql = "SELECT nameArea, areaCode,
 		COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
 					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise

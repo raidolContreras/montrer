@@ -143,7 +143,6 @@ function getArea(registerValue) {
         dataType: 'json',
         success: function (response) {
             $('select[name="area"]').val(response.nameArea);
-
             // Llena el select de áreas
             fillAreaSelect('area', response, 'departamento');
 
@@ -293,7 +292,8 @@ function updateMaxRequestedAmount(datos) {
             success: function (response) {
                 let totalBudget = 0;
                 let totalBudgetUsed = 0;
-
+                
+                $('#idAreaCargo').val(response.areaCode);
                 $.ajax({
                     type: 'POST',
                     url: 'controller/ajax/getAmountPendient.php',

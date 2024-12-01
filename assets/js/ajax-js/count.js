@@ -67,8 +67,8 @@ function getAreas() {
 								<div class="col-xl-12">
 									<div class="single-click-content">
 										<span class="features-title">Presupuesto solicitado del departamento: ${areaName}</span>
-										<h3 class="total-use-${areaName}"></h3>
-										<p class="budget-message-uses-${areaName}"></p>
+										<h3 class="total-use-${key}"></h3>
+										<p class="budget-message-uses-${key}"></p>
 									</div>
 								</div>
 							</div>
@@ -83,8 +83,8 @@ function getAreas() {
 								<div class="col-xl-12">
 									<div class="single-click-content">
 										<span class="features-title">Presupuesto comprobado</span>
-										<h3 class="total-comp-${areaName}"></h3>
-										<p class="budget-message-comp-${areaName}"></p>
+										<h3 class="total-comp-${key}"></h3>
+										<p class="budget-message-comp-${key}"></p>
 									</div>
 								</div>
 							</div>
@@ -99,8 +99,8 @@ function getAreas() {
 								<div class="col-xl-12">
 									<div class="single-click-content">
 										<span class="features-title">Presupuesto sin comprobar</span>
-										<h3 class="rest-${areaName}"></h3>
-										<p class="budget-message-rest-${areaName}"></p>
+										<h3 class="rest-${key}"></h3>
+										<p class="budget-message-rest-${key}"></p>
 									</div>
 								</div>
 							</div>
@@ -144,13 +144,12 @@ function usedBudgets(idArea, budgetActive, exercise) {
             budgetUsedMessage = 'Presupuesto solicitado en el ejercicio ' + exercise;
             budgetCompMessage = 'Presupuesto comprobado en el ejercicio ' + exercise;
             budgetRestMessage = 'Presupuesto sin comprobar en el ejercicio ' + exercise;
-            $('.total-use-'+ response.nameArea).append(used);
-            $('.total-comp-'+ response.nameArea).append(compActive);
-            // $('.rest-'+ response.nameArea).append(budgetTotal);
-            $('.rest-'+ response.nameArea).append(budgetTotal);
-            $('.budget-message-uses-'+ response.nameArea).append(budgetUsedMessage);
-            $('.budget-message-comp-'+ response.nameArea).append(budgetCompMessage);
-            $('.budget-message-rest-'+ response.nameArea).append(budgetRestMessage);
+            $('.total-use-'+ idArea).append(used);
+            $('.total-comp-'+ idArea).append(compActive);
+            $('.rest-'+ idArea).append(budgetTotal);
+            $('.budget-message-uses-'+ idArea).append(budgetUsedMessage);
+            $('.budget-message-comp-'+ idArea).append(budgetCompMessage);
+            $('.budget-message-rest-'+ idArea).append(budgetRestMessage);
         }
     });
     
