@@ -384,6 +384,10 @@
 	});
 
 	function completeRequest(idRequest) {
+
+		cuentas();
+		partidas();
+
 		$.ajax({
 			type: 'POST',
 			url: 'controller/ajax/getRequest.php',
@@ -463,4 +467,97 @@
 			}
 		});
 	}
+
+	// Buscar cuentas
+function cuentas() {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getAccounts.php',
+        dataType: 'json',
+        success: function(response) {
+            if (response && Array.isArray(response)) {
+                const selectElement = $('#cuentaAfectada'); // Asegúrate de que este ID coincide con tu select
+                selectElement.empty(); // Limpiar opciones anteriores
+
+                // Agregar una opción por defecto
+                selectElement.append('<option value="">Seleccione una cuenta</option>');
+
+                // Iterar sobre la respuesta y agregar opciones al select
+                response.forEach(account => {
+                    selectElement.append(`<option value="${account.cuenta}" data-id="${account.numeroCuenta}">${account.cuenta}</option>`);
+                });
+
+                // Configurar evento change para actualizar #idCuentaAfectada
+                selectElement.change(function () {
+                    const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
+                    const numeroCuenta = selectedOption.data('id') || $('#idEmployer').val(); // Usar idEmployer si numeroCuenta es vacío o null
+
+                    // Actualizar los valores correspondientes
+                    $('#idCuentaAfectada').val(numeroCuenta);
+                    actualizarConceptoYPartida(numeroCuenta);
+                });
+            } else {
+                console.log('La respuesta del servidor no es válida:', response);
+            }
+        },
+        error: function(error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+// Buscar partidas
+function partidas() {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getPartidas.php',
+        dataType: 'json',
+        success: function(response) {
+            if (response && Array.isArray(response)) {
+                const selectElement = $('#partidaAfectada'); // Asegúrate de que este ID coincide con tu select
+                selectElement.empty(); // Limpiar opciones anteriores
+
+                // Agregar una opción por defecto
+                selectElement.append('<option value="">Seleccione una partida</option>');
+
+                // Iterar sobre la respuesta y agregar opciones al select
+                response.forEach(partida => {
+                    selectElement.append(`<option value="${partida.Partida}" data-id="${partida.numeroPartida}">${partida.Partida}</option>`);
+                });
+
+                // Configurar evento change para actualizar #idPartidaAfectada
+                selectElement.change(function () {
+                    const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
+                    const numeroPartida = selectedOption.data('id') || $('#idCuentaAfectada').val(); // Usar idCuentaAfectada si numeroPartida es vacío o null
+
+                    // Actualizar los valores correspondientes
+                    $('#idPartidaAfectada').val(numeroPartida);
+                    actualizarConceptoYPartida(numeroPartida);
+                });
+            } else {
+                console.log('La respuesta del servidor no es válida:', response);
+            }
+        },
+        error: function(error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+// Función para actualizar idConcepto, idCuentaAfectada y idPartidaAfectada
+function actualizarConceptoYPartida(valor) {
+    const idEmployer = $('#idEmployer').val();
+
+    if (!valor || valor.trim() === '') {
+        valor = idEmployer; // Usar idEmployer si valor es vacío o null
+    }
+
+    // Actualizar valores en los campos ocultos
+	if ($('#idCuentaAfectada').val() == valor) {
+		$('#idCuentaAfectada').val(valor);
+	}
+    $('#idPartidaAfectada').val(valor);
+    $('#idConcepto').val(valor);
+}
+
 </script>
