@@ -58,7 +58,7 @@ function verComprobacion(idRequest, status){
             $('#idPartidaAfectadaGet').text(response.idPartidaAfectada);
             $('#conceptoGet').text(response.concepto);
             $('#idConceptoGet').text(response.idConcepto);
-            $('#requestedAmountGet').text(response.approvedAmount);
+            $('#requestedAmountGet').text(formatCurrency(response.importe_solicitado));
             $('#importeLetraGet').text(response.importe_letra);
             $('#fechaPagoGet').text(response.paymentDate);
             $('#providerGet').text(response.business_name);

@@ -43,15 +43,17 @@
 
 							<!-- Cuenta que se afecta -->
 							<div class="col-md-12 row mb-3" style="align-items: center;">
-								<label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:<span class="required"></span></label>
+								<label for="cuentaAfectada" class="form-label col-2 fw-bold">Cuenta que se afecta:</label>
 								<select id="cuentaAfectada" name="cuentaAfectada" class="form-select form-control col bg-white border"></select>
 								<input class="form-control col auto-format2" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" disabled>
 							</div>
 
 							<!-- Partida que se afecta -->
 							<div class="col-md-12 row mb-3" style="align-items: center;">
-								<label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:<span class="required"></span></label>
-								<select id="partidaAfectada" name="partidaAfectada" class="form-select form-control col bg-white border"></select>
+								<label for="partidaAfectada" class="form-label col-2 fw-bold">Partida que se afecta:</label>
+								<select id="partidaAfectada" name="partidaAfectada" class="form-select form-control col bg-white border" disabled>
+									<option value="" selected>Seleccione una cuenta primero</option>
+								</select>
 								<input class="form-control col auto-format2" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" disabled>
 							</div>
 
@@ -83,7 +85,7 @@
 							<!-- Proveedor -->
 							<div class="col-md-12 row mb-3" style="align-items: center;">
 								<label for="provider" class="form-label col-2 fw-bold">Proveedor:<span class="required"></span></label>
-								<select name="provider" id="provider" class="form-select form-control col" readonly>
+								<select name="provider" id="provider" class="form-select form-control col" disabled>
 									<option value="">Seleccionar proveedor</option>
 								</select>
 							</div>
@@ -348,11 +350,18 @@
 	}
 
 	$('.completeRequest').on('click', function() {
-
 		// Capturamos todos los campos habilitados usando serialize()
 		var formData = $('#completeRequestForm').serializeArray();
 
-		// Añadir "idUser" del atributo "data-register" de #register-value
+		// Capturar también campos deshabilitados
+		$('#completeRequestForm :disabled').each(function() {
+			formData.push({
+				name: this.name,
+				value: $(this).val()
+			});
+		});
+
+		// Añadir "idRequest" del atributo "data-register" de #register-value
 		formData.push({
 			name: 'idRequest',
 			value: $('#idRequest').val()
@@ -363,7 +372,33 @@
 			acc[field.name] = field.value;
 			return acc;
 		}, {});
+		empresa = $('#empresa').val();
+		concepto = $('#concepto').val();
+		requestedAmount = $('#requestedAmount').val();
+		importeLetra = $('#importeLetra').val();
+		fechaPago = $('#fechaPago').val();
+		conceptoPago = $('#conceptoPago').val();
+		cuentaAfectadaCount = $('#cuentaAfectadaCount').val();
+		partidaAfectadaCount = $('#partidaAfectadaCount').val();
+		polizeType = $('#polizeType').val();
+		numberPolize = $('#numberPolize').val();
+		cargo = $('#cargo').val();
+		abono = $('#abono').val();
 
+		if (empresa == '' ||
+		concepto == '' || 
+		requestedAmount == '' || 
+		importeLetra == '' || fechaPago == '' || 
+	    conceptoPago == '' || 
+        cuentaAfectadaCount == '' || 
+        partidaAfectadaCount == '' || 
+        polizeType == '' || 
+        numberPolize == '' ||
+	    cargo == '' || 
+        abono == '') {
+            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
+            return false;
+        }
 		// Llamar a la función que envía la solicitud AJAX
 		$.ajax({
 			type: 'POST',
@@ -378,15 +413,15 @@
 					// reiniciar datatable
 					$('#requests').DataTable().ajax.reload();
 				}
+			},
+			error: function(error) {
+				console.log('Error en la solicitud AJAX:', error);
 			}
 		});
-
 	});
 
-	function completeRequest(idRequest) {
 
-		cuentas();
-		partidas();
+	function completeRequest(idRequest) {
 
 		$.ajax({
 			type: 'POST',
@@ -415,7 +450,10 @@
 				$('#solicitante_nombre').text(response.solicitante_nombre || '');
 				$('#idEmployer').val(response.idEmployer || '');
 				$('#empresa').val(response.empresa || '');
-				$('#idAreaCargo').val(response.idAreaCargo || '');
+				$('#idAreaCargo').val(response.idAreaCargo + '-000-000-000' || '');
+				
+				cuentas(response.idAreaCargo);
+
 				$('#cuentaAfectada').val(response.cuentaAfectada || '');
 				$('#idCuentaAfectada').val(response.idCuentaAfectada || '');
 				$('#partidaAfectada').val(response.partidaAfectada || '');
@@ -468,15 +506,15 @@
 		});
 	}
 
-	// Buscar cuentas
-function cuentas() {
+// Buscar cuentas
+function cuentas(areaCode) {
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getAccounts.php',
         dataType: 'json',
         success: function(response) {
             if (response && Array.isArray(response)) {
-                const selectElement = $('#cuentaAfectada'); // Asegúrate de que este ID coincide con tu select
+                const selectElement = $('#cuentaAfectada');
                 selectElement.empty(); // Limpiar opciones anteriores
 
                 // Agregar una opción por defecto
@@ -487,14 +525,37 @@ function cuentas() {
                     selectElement.append(`<option value="${account.cuenta}" data-id="${account.numeroCuenta}">${account.cuenta}</option>`);
                 });
 
-                // Configurar evento change para actualizar #idCuentaAfectada
+				$('#idCuentaAfectada').val($('#idEmployer').val());
+				$('#idPartidaAfectada').val($('#idEmployer').val());
+				$('#idConcepto').val($('#idEmployer').val());
+                // Configurar evento change para actualizar #idCuentaAfectada y habilitar partidaAfectada
                 selectElement.change(function () {
                     const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
-                    const numeroCuenta = selectedOption.data('id') || $('#idEmployer').val(); // Usar idEmployer si numeroCuenta es vacío o null
+                    const numeroCuenta = selectedOption.data('id') || '000'; // Usar idEmployer si numeroCuenta es vacío o null
 
-                    // Actualizar los valores correspondientes
-                    $('#idCuentaAfectada').val(numeroCuenta);
-                    actualizarConceptoYPartida(numeroCuenta);
+					if ($('#cuentaAfectada').val() != ''){
+						if (numeroCuenta) {
+							// Habilitar el select de partidaAfectada y actualizar el placeholder
+							$('#partidaAfectada').prop('disabled', false)
+								.find('option:first').val('Seleccione una partida');
+
+							// Generar el formato para idCuentaAfectada
+							const numeroCuentaI = areaCode + '-' + numeroCuenta;
+							$('#idCuentaAfectada').val(numeroCuentaI + '-000-000');
+							$('#idConcepto').val(numeroCuentaI + '-000-000');
+
+							// Cargar las partidas correspondientes
+							partidas(numeroCuentaI);
+						}
+					} else {
+						// Deshabilitar el select de partidaAfectada y mostrar mensaje de selección
+                        $('#partidaAfectada').prop('disabled', true)
+                            .find('option:first').val('');
+						
+						$('#idCuentaAfectada').val($('#idEmployer').val());
+						$('#idPartidaAfectada').val($('#idEmployer').val());
+						$('#idConcepto').val($('#idEmployer').val());
+					}
                 });
             } else {
                 console.log('La respuesta del servidor no es válida:', response);
@@ -507,14 +568,14 @@ function cuentas() {
 }
 
 // Buscar partidas
-function partidas() {
+function partidas(numeroCuenta) {
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getPartidas.php',
         dataType: 'json',
         success: function(response) {
             if (response && Array.isArray(response)) {
-                const selectElement = $('#partidaAfectada'); // Asegúrate de que este ID coincide con tu select
+                const selectElement = $('#partidaAfectada');
                 selectElement.empty(); // Limpiar opciones anteriores
 
                 // Agregar una opción por defecto
@@ -524,15 +585,17 @@ function partidas() {
                 response.forEach(partida => {
                     selectElement.append(`<option value="${partida.Partida}" data-id="${partida.numeroPartida}">${partida.Partida}</option>`);
                 });
+				
+                $('#idPartidaAfectada').val(numeroCuenta + '-000-000');
 
                 // Configurar evento change para actualizar #idPartidaAfectada
                 selectElement.change(function () {
                     const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
-                    const numeroPartida = selectedOption.data('id') || $('#idCuentaAfectada').val(); // Usar idCuentaAfectada si numeroPartida es vacío o null
-
+                    const numeroPartida = selectedOption.data('id') || '000-000'; // Usar idCuentaAfectada si numeroPartida es vacío o null
+					
                     // Actualizar los valores correspondientes
-                    $('#idPartidaAfectada').val(numeroPartida);
-                    actualizarConceptoYPartida(numeroPartida);
+                    $('#idPartidaAfectada').val(numeroCuenta + '-' + numeroPartida);
+                    $('#idConcepto').val(numeroCuenta + '-' + numeroPartida);
                 });
             } else {
                 console.log('La respuesta del servidor no es válida:', response);
@@ -544,20 +607,5 @@ function partidas() {
     });
 }
 
-// Función para actualizar idConcepto, idCuentaAfectada y idPartidaAfectada
-function actualizarConceptoYPartida(valor) {
-    const idEmployer = $('#idEmployer').val();
-
-    if (!valor || valor.trim() === '') {
-        valor = idEmployer; // Usar idEmployer si valor es vacío o null
-    }
-
-    // Actualizar valores en los campos ocultos
-	if ($('#idCuentaAfectada').val() == valor) {
-		$('#idCuentaAfectada').val(valor);
-	}
-    $('#idPartidaAfectada').val(valor);
-    $('#idConcepto').val(valor);
-}
 
 </script>

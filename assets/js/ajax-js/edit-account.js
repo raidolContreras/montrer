@@ -63,24 +63,8 @@ $('.auto-format').on('input', function() {
     let formatted = '';
 
     // Aplica el formato 1000-001-001-001
-    if (input.length > 4) {
-        formatted += input.substring(0, 4) + '-';
-        if (input.length > 7) {
-            formatted += input.substring(4, 7) + '-';
-            if (input.length > 10) {
-                formatted += input.substring(7, 10) + '-';
-                if (input.length > 13) {
-                    formatted += input.substring(10, 13) + '-';
-                    formatted += input.substring(13, 16);
-                } else {
-                    formatted += input.substring(10);
-                }
-            } else {
-                formatted += input.substring(7);
-            }
-        } else {
-            formatted += input.substring(4);
-        }
+    if (input.length > 3) {
+        formatted += input.substring(0, 3);
     } else {
         formatted = input;
     }
