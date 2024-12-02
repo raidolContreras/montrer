@@ -12,6 +12,7 @@ $(document).ready(function () {
         // Recoge los valores del formulario
         var areaName = $("input[name='areaName']").val();
         var areaDescription = $("input[name='areaDescription']").val();
+        var areaCode = $("input[name='areaCode']").val();
         var users = $("select[name='users[]']").val(); // Recoge un array de IDs seleccionados
         var area = $('#register-value').data('register'); // ID del área a actualizar
 
@@ -25,6 +26,7 @@ $(document).ready(function () {
                 data: {
                     updateAreaName: areaName,
                     updateAreaDescription: areaDescription,
+                    updateAreaCode: areaCode,
                     updateUsers: users, // Envía el array de IDs
                     updateArea: area // ID del área
                 },
@@ -65,3 +67,34 @@ function confirmExit(event, destination) {
 		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
 	}
 }
+
+$('.auto-format').on('input', function() {
+    console.log('a');
+    let input = $(this).val().replace(/\D/g, ''); // Elimina cualquier carácter no numérico
+    let formatted = '';
+
+    // Aplica el formato 1000-001-001-001
+    if (input.length > 4) {
+        formatted += input.substring(0, 4) + '-';
+        if (input.length > 7) {
+            formatted += input.substring(4, 7) + '-';
+            if (input.length > 10) {
+                formatted += input.substring(7, 10) + '-';
+                if (input.length > 13) {
+                    formatted += input.substring(10, 13) + '-';
+                    formatted += input.substring(13, 16);
+                } else {
+                    formatted += input.substring(10);
+                }
+            } else {
+                formatted += input.substring(7);
+            }
+        } else {
+            formatted += input.substring(4);
+        }
+    } else {
+        formatted = input;
+    }
+
+    $(this).val(formatted);
+});

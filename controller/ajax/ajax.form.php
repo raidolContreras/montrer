@@ -383,7 +383,8 @@ if (isset($_POST['areaName']) && isset($_POST['areaDescription'])) {
         // Preparar datos para registrar el área
         $data = array(
             'nameArea' => $_POST['areaName'],
-            'areaDescription' => $_POST['areaDescription']
+            'areaDescription' => $_POST['areaDescription'],
+			'areaCode' => $_POST['areaCode']
         );
 
         // Registrar el área
@@ -447,6 +448,7 @@ if (isset($_POST['updateFirstname']) && isset($_POST['updateLastname']) && isset
 		'lastname' => $_POST['updateLastname'],
 		'email' => $_POST['updateEmail'],
 		'level' => $_POST['updateLevel'],
+		'employerCode' => $_POST['updateEmployerCode'],
 		'user' => $_POST['updateUser'],
 	);
 	$updateUser = AjaxForm::UpdateUser($data);
@@ -477,6 +479,7 @@ if (isset($_POST['updateAreaName']) && isset($_POST['updateAreaDescription']) &&
 	$data = array(
 		'nameArea' => $_POST['updateAreaName'],
 		'description' => $_POST['updateAreaDescription'],
+		'areaCode' => $_POST['updateAreaCode'],
 		'users' => $_POST['updateUsers'],
 		'idArea' => $_POST['updateArea'],
 	);

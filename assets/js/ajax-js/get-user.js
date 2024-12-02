@@ -24,6 +24,7 @@ function getUser(registerValue) {
             $('input[name="firstname"]').val(response.firstname);
             $('input[name="lastname"]').val(response.lastname);
             $('input[name="email"]').val(response.email);
+            $('input[name="employerCode"]').val(response.employerCode);
             $('select[name="level"]').val(response.level); // Asumiendo que el campo se llama "level"
         },
         error: function (error) {

@@ -345,10 +345,11 @@ class FormsModels {
 	
 	static public function mdlAddArea($data){
 	   $pdo = Conexion::conectar();
-	   $sql = "INSERT INTO montrer_area(nameArea, description) VALUES (:nameArea, :description)";
+	   $sql = "INSERT INTO montrer_area(nameArea, description, areaCode) VALUES (:nameArea, :description, :areaCode)";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->bindParam(':nameArea', $data['nameArea'], PDO::PARAM_STR);
 	   $stmt->bindParam(':description', $data['areaDescription'], PDO::PARAM_STR);
+	   $stmt->bindParam(':areaCode', $data['areaCode'], PDO::PARAM_STR);
 	   if($stmt->execute()){
 		return $pdo->lastInsertId();
 		// $result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
@@ -573,7 +574,7 @@ class FormsModels {
 
 	static public function mdlGetUser($register){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT u.idUsers, u.firstname, u.lastname, s.level, u.email FROM montrer_users u
+		$sql = "SELECT u.idUsers, u.firstname, u.lastname, s.level, u.email, u.employerCode FROM montrer_users u
 				LEFT JOIN montrer_settings s ON s.idUser = u.idUsers
 				WHERE u.idUsers = :idUsers";
 		$stmt = $pdo->prepare($sql);
@@ -589,7 +590,8 @@ class FormsModels {
 		$pdo = Conexion::conectar();
 		$sql = "SELECT 
 					a.idArea, 
-					a.nameArea, 
+					a.nameArea,
+					a.areaCode,
 					IFNULL(a.description, '') AS description, 
 					IFNULL(GROUP_CONCAT(DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '') AS usuarios, 
 					CONCAT('[', GROUP_CONCAT(DISTINCT IF(ua.idUser IS NOT NULL, ua.idUser, NULL)), ']') AS idUser, 
@@ -625,12 +627,13 @@ class FormsModels {
 
 	static public function mdlUpdateUser($data){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_users SET firstname = :firstname, lastname = :lastname, email = :email WHERE idUsers = :idUsers ";
+		$sql = "UPDATE montrer_users SET firstname = :firstname, lastname = :lastname, email = :email, employerCode = :employerCode WHERE idUsers = :idUsers ";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':firstname', $data['firstname'], PDO::PARAM_STR);
 		$stmt->bindParam(':lastname', $data['lastname'], PDO::PARAM_STR);
 		$stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
 		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_STR);
+		$stmt->bindParam(':employerCode', $data['employerCode'], PDO::PARAM_STR);
 		if($stmt->execute()){
 			return "ok";
 		} else {
@@ -713,11 +716,12 @@ class FormsModels {
 	
 	static public function mdlUpdateArea($data){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE montrer_area SET nameArea = :nameArea, description = :description WHERE idArea = :idArea ";
+		$sql = "UPDATE montrer_area SET nameArea = :nameArea, description = :description, areaCode = :areaCode WHERE idArea = :idArea ";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':nameArea', $data['nameArea'], PDO::PARAM_STR);
 		$stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
 		$stmt->bindParam(':idArea', $data['idArea'], PDO::PARAM_INT);
+		$stmt->bindParam(':areaCode', $data['areaCode'], PDO::PARAM_STR);
 		if($stmt->execute()){
 			return "ok";
 		} else {

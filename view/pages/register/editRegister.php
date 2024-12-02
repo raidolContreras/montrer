@@ -31,6 +31,10 @@
 							<img src="assets/img/svg/sms.svg">
 						</div>
 						<div class="form-group mb-24 icon">
+							<input class="form-control col auto-format" type="text" id="employerCode" name="employerCode" placeholder="1000-001-001-001" required>
+							<img src="assets/img/svg/book.svg">
+                        </div>
+						<div class="form-group mb-24 icon">
 							<img src="assets/img/svg/level.svg">
 							<select class="form-select form-control" name="level">
 								<option value="1">Administrador</option>

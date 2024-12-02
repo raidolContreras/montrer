@@ -30,6 +30,7 @@ function getArea(registerValue) {
             // Rellena el formulario con los datos obtenidos
             $('input[name="areaName"]').val(response.nameArea);
             $('input[name="areaDescription"]').val(response.description);
+            $('input[name="areaCode"]').val(response.areaCode);
 
             // Verifica si idUser existe y convierte la cadena JSON a un array
             if (response.idUser) {

@@ -32,6 +32,10 @@
                         <?php endforeach ?>
                     </select>
                 </div>
+                <div class="col-md-6">
+                    <label for="areaCode" class="form-label">Código del area<span class="required"></span></label>
+                    <input class="form-control col auto-format" type="text" id="areaCode" name="areaCode" placeholder="5000-001-001-001-001" required>
+                </div>
 
                 <div class="col-12">
                     <input type="hidden" name="user" value="<?php echo $_SESSION['idUser'] ?>">
