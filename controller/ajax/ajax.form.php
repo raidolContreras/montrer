@@ -1149,3 +1149,33 @@ if (
 	$response = FormsController::ctrRequestBudget($data);
 	echo $response;
 }
+
+if (isset($_POST['cuenta']) && isset($_POST['numeroCuenta'])) {
+	$response = FormsController::ctrCreateAccount($_POST['cuenta'], $_POST['numeroCuenta']);
+	echo $response;
+}
+
+if (isset($_POST['partida']) && isset($_POST['codigoPartida'])) {
+	$response = FormsController::ctrCreatePartida($_POST['partida'], $_POST['codigoPartida']);
+	echo $response;
+}
+
+if (isset($_POST['deleteCuenta']) ) {
+	$response = FormsController::ctrDeleteAccount($_POST['deleteCuenta']);
+    echo $response;
+}
+
+if (isset($_POST['deletePartida']) ) {
+    $response = FormsController::ctrDeletePartida($_POST['deletePartida']);
+    echo $response;
+}
+
+if (isset($_POST['editAccountId']) ) {
+	$response = FormsController::ctrEditAccount($_POST['editAccountId'], $_POST['editCuenta'], $_POST['editNumeroCuenta']);
+    echo $response;
+}
+
+if (isset($_POST['editPartidaId']) ) {
+	$response = FormsController::ctrEditPartida($_POST['editPartidaId'], $_POST['editPartida'], $_POST['editCodigoPartida']);
+    echo $response;
+}

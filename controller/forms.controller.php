@@ -1189,4 +1189,43 @@ class FormsController {
 		}
 	}
 
+	static public function ctrCreateAccount($cuenta, $numeroCuenta) {
+		$result = FormsModels::mdlCreateAccount($cuenta, $numeroCuenta);
+		return $result;
+	}
+
+	static public function ctrGetAccounts() {
+		$result = FormsModels::mdlGetAccounts();
+        return $result;
+	}
+
+	static public function ctrCreatePartida($partida, $numeroPartida) {
+		$result = FormsModels::mdlCreatePartida($partida, $numeroPartida);
+        return $result;
+	}
+
+	static public function ctrGetPartidas() {
+		$result = FormsModels::mdlGetPartidas();
+        return $result;
+	}
+
+	static public function ctrDeleteAccount($idCuenta) {
+		$result = FormsModels::mdlDeleteAccount($idCuenta);
+        return $result;
+	}
+
+	static public function ctrDeletePartida($idPartida) {
+        $result = FormsModels::mdlDeletePartida($idPartida);
+        return $result;
+    }
+
+	static public function ctrEditAccount($idCuenta, $cuenta, $numeroCuenta) {
+		$result = FormsModels::mdlEditAccount($idCuenta, $cuenta, $numeroCuenta);
+        return $result;
+	}
+
+	static public function ctrEditPartida($idPartida, $Partida, $codigoPartida) {
+		$result = FormsModels::mdlEditPartida($idPartida, $Partida, $codigoPartida);
+        return $result;
+	}
 }

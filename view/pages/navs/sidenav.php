@@ -25,7 +25,7 @@
             <?php
                 // $activeCompany = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerCompany' || $_GET['pagina'] == 'company' || $_GET['pagina'] == 'editCompany')) ? 'active' : '';
             ?>
-            <li class="list-group-item main-grid <?php echo $activeCompany; ?>">
+            <li class="list-group-item main-grid <?php // echo $activeCompany; ?>">
                 <a href="company" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Empresas" onclick="confirmExit(event, 'company')">
                 <img src="assets/img/svg/company.svg" width='25px' alt="business">
                 </a>
@@ -37,6 +37,24 @@
             <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
                 <a href="areas" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Departamentos" onclick="confirmExit(event, 'areas')">
                 <img src="assets/img/svg/areas.svg" width='25px' alt="areas">
+                </a>
+            </li>
+
+            <?php
+                $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerCuenta' || $_GET['pagina'] == 'cuentas' || $_GET['pagina'] == 'editCuenta')) ? 'active' : '';
+            ?>
+            <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
+                <a href="cuentas" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Cuentas" onclick="confirmExit(event, 'cuentas')">
+                <img src="assets/img/svg/accounts.svg" width='25px' alt="cuentas">
+                </a>
+            </li>
+
+            <?php
+                $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerPartidas' || $_GET['pagina'] == 'partidas' || $_GET['pagina'] == 'editPartidas')) ? 'active' : '';
+            ?>
+            <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
+                <a href="partidas" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Partidas" onclick="confirmExit(event, 'cuentas')">
+                <img src="assets/img/svg/partidas.svg" width='25px' alt="partidas">
                 </a>
             </li>
 

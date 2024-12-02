@@ -1904,4 +1904,132 @@ class FormsModels {
         return $result;
 	}
 
+	static public function mdlCreateAccount($cuenta, $numeroCuenta) {
+		$pdo = Conexion::conectar();
+        $sql = "INSERT INTO montrer_cuentas (cuenta, numeroCuenta) VALUES (:cuenta, :numeroCuenta)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':cuenta', $cuenta, PDO::PARAM_STR);
+        $stmt->bindParam(':numeroCuenta', $numeroCuenta, PDO::PARAM_STR);
+        
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlCreatePartida($partida, $numeroPartida) {
+		$pdo = Conexion::conectar();
+        $sql = "INSERT INTO montrer_partidas (partida, numeroPartida) VALUES (:partida, :numeroPartida)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':partida', $partida, PDO::PARAM_STR);
+        $stmt->bindParam(':numeroPartida', $numeroPartida, PDO::PARAM_STR);
+        
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlGetAccounts() {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_cuentas where status = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll();
+        
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
+
+	static public function mdlGetPartidas() {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_partidas where status = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll();
+        
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
+
+	static public function mdlDeleteAccount($idCuenta) {
+		$pdo = Conexion::conectar();
+        $sql = "UPDATE montrer_cuentas SET status = 0 WHERE idCuenta = :idCuenta";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlDeletePartida($idPartida) {
+		$pdo = Conexion::conectar();
+        $sql = "UPDATE montrer_partidas SET status = 0 WHERE idPartida = :idPartida";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlEditAccount($idCuenta, $cuenta, $numeroCuenta) {
+		$pdo = Conexion::conectar();
+        $sql = "UPDATE montrer_cuentas SET cuenta = :cuenta, numeroCuenta = :numeroCuenta WHERE idCuenta = :idCuenta";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
+        $stmt->bindParam(':cuenta', $cuenta, PDO::PARAM_STR);
+        $stmt->bindParam(':numeroCuenta', $numeroCuenta, PDO::PARAM_STR);
+        
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlEditPartida($idPartida, $partida, $numeroPartida) {
+		$pdo = Conexion::conectar();
+        $sql = "UPDATE montrer_partidas SET partida = :partida, numeroPartida = :numeroPartida WHERE idPartida = :idPartida";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
+        $stmt->bindParam(':partida', $partida, PDO::PARAM_STR);
+        $stmt->bindParam(':numeroPartida', $numeroPartida, PDO::PARAM_STR);
+        
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
 }

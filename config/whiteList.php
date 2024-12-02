@@ -27,6 +27,12 @@
 		'solicitudSendBudget',
 		'editRequest',
 		'logs',
+		'registerCuenta',
+		'editCuenta',
+		'cuentas',
+		'registerPartida',
+		'editPartida',
+		'partidas',
 	];
 
 
@@ -44,6 +50,10 @@
 			include "view/pages/login/$pagina.php";
 		} elseif ($pagina == 'registerArea' || $pagina == 'areas' || $pagina == 'editArea') {
 			include "view/pages/area/$pagina.php";
+		} elseif ($pagina == 'registerCuenta' || $pagina == 'cuentas' || $pagina == 'editCuenta') {
+			include "view/pages/cuentas/$pagina.php";
+		} elseif ($pagina == 'registerPartida' || $pagina == 'partidas' || $pagina == 'editPartida') {
+			include "view/pages/partidas/$pagina.php";
 		} elseif ($pagina == 'company' || $pagina == 'registerCompany') {
 			include "view/pages/company/$pagina.php";
 		} elseif ($pagina == 'exercise' || $pagina == 'registerExercise' || $pagina == 'editExercise') {
