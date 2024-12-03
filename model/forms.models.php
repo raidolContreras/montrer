@@ -1860,11 +1860,11 @@ class FormsModels {
 				br.status AS statusBudgetRequest, 
 				br.pagado AS pagado,
 				CASE 
-					WHEN br.status IS NULL THEN 'Sin Responder'
-					WHEN br.status = 1 AND br.pagado = 0 THEN 'Pendiente de Pago'
-					WHEN br.status = 1 AND br.pagado = 1 THEN 'Pagado'
-					WHEN br.status = 0 AND br.pagado = 1 THEN 'Finalizado'
-					ELSE 'Estado Desconocido'
+					WHEN br.active IS NULL THEN 'Sin Responder'
+					WHEN br.active = 1 AND br.pagado = 0 THEN 'Pendiente de Pago'
+					WHEN br.active = 1 AND br.pagado = 1 THEN 'Pagado'
+					WHEN br.active = 0 AND br.pagado = 1 THEN 'Finalizado'
+					ELSE 'Rechazado'
 				END AS estadoPago
 				FROM montrer_budget_requests br
 				LEFT JOIN montrer_users u ON br.idUser = u.idUsers

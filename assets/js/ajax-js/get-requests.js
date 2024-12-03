@@ -89,11 +89,17 @@ $(document).ready(function () {
 			{
 				data: null,
 				render: function (data) {
-                    if (data.pagado == 0) {
+                    if (data.pagado == 0 && data.active == 1) {
 						return 'Pendiente de pago';
-					} else {
-						return 'Pagado';
-					}
+					} else if (isNaN(data.active)){
+                        return 'Sin Responder';
+                    } else if (data.active == 1 && data.pagado == 1) {
+                        return 'Pagado';
+                    } else if (data.active == 0 && data.pagado == 1) {
+                        return 'Finalizado';
+                    } else {
+                        return 'Rechazado';
+                    }
                 }
 			},
             {
