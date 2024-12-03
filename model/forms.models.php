@@ -1872,19 +1872,24 @@ class FormsModels {
 		// Agregar condición para el contexto si está definido
 		if (!empty($context)) {
 		$sql .= " AND (
-				br.folio LIKE :context OR 
-				CONCAT(u.firstname, ' ', u.lastname) LIKE :context OR 
-				p.account_holder LIKE :context OR 
-				br.concepto_pago LIKE :context OR 
-				br.cargo LIKE :context OR 
-				br.abono LIKE :context OR 
-				br.requestDate LIKE :context OR 
-				br.fecha_pago LIKE :context OR 
-				br.paymentDate LIKE :context OR 
-				br.banco LIKE :context OR 
-				br.clabe LIKE :context OR 
-				br.cuentaAfectada LIKE :context OR 
-				br.partidaAfectada LIKE :context
+					br.folio LIKE :context OR 
+					CONCAT(u.firstname, ' ', u.lastname) LIKE :context OR 
+					p.account_holder LIKE :context OR 
+					br.concepto_pago LIKE :context OR 
+					br.cargo LIKE :context OR 
+					br.abono LIKE :context OR 
+					br.requestDate LIKE :context OR 
+					br.fecha_pago LIKE :context OR 
+					br.paymentDate LIKE :context OR 
+					br.banco LIKE :context OR 
+					br.clabe LIKE :context OR 
+					br.cuentaAfectada LIKE :context OR 
+					br.partidaAfectada LIKE :context OR
+					CASE 
+						WHEN br.pagado = 0 THEN 'Pendiente de Pago'
+						WHEN br.pagado = 1 THEN 'Pagado'
+						ELSE 'Rechazado'
+					END LIKE :context
 				)";
 		}
 
