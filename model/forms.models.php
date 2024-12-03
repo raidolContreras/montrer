@@ -1860,10 +1860,8 @@ class FormsModels {
 				br.status AS statusBudgetRequest, 
 				br.pagado AS pagado,
 				CASE 
-					WHEN br.active IS NULL THEN 'Sin Responder'
-					WHEN br.active = 1 AND br.pagado = 0 THEN 'Pendiente de Pago'
-					WHEN br.active = 1 AND br.pagado = 1 THEN 'Pagado'
-					WHEN br.active = 0 AND br.pagado = 1 THEN 'Finalizado'
+					WHEN br.pagado = 0 THEN 'Pendiente de Pago'
+					WHEN br.pagado = 1 THEN 'Pagado'
 					ELSE 'Rechazado'
 				END AS estadoPago
 				FROM montrer_budget_requests br
