@@ -63,8 +63,8 @@
 
                 <!-- Concepto -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="concepto" class="form-label col-2 fw-bold">Concepto:<span class="required"></span></label>
-                    <input class="form-control col bg-white border" type="text" id="concepto" name="concepto" placeholder="Ejemplo: Uniformes" required>
+                    <label for="concepto" class="form-label col-2 fw-bold">Concepto:></span></label>
+                    <input class="form-control col bg-white border" type="text" id="concepto" name="concepto" placeholder="Ejemplo: Uniformes" disabled>
                     <input class="form-control col" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" disabled>
                 </div>
 
