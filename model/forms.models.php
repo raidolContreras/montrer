@@ -1278,7 +1278,8 @@ class FormsModels {
 							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
 						FROM montrer_budget_requests r
 							LEFT JOIN montrer_area a ON a.idArea = r.idArea
-							LEFT JOIN montrer_users u ON u.idUsers = a.idUser
+                            LEFT JOIN montrer_users_to_areas ua ON a.idArea = ua.idArea
+							LEFT JOIN montrer_users u ON u.idUsers = ua.idUser
 							LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
 						WHERE a.status = 1 AND u.deleted = 0;";
@@ -1289,7 +1290,8 @@ class FormsModels {
 							a.nameArea, u.idUsers, u.firstname, u.lastname, r.pagado, e.exerciseName, e.idExercise
 						FROM montrer_budget_requests r
 							LEFT JOIN montrer_area a ON a.idArea = r.idArea
-							LEFT JOIN montrer_users u ON u.idUsers = a.idUser
+                            LEFT JOIN montrer_users_to_areas ua ON a.idArea = ua.idArea
+							LEFT JOIN montrer_users u ON u.idUsers = ua.idUser
 							LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
 						WHERE a.status = 1 AND u.idUsers = :idUser AND u.deleted = 0;";
