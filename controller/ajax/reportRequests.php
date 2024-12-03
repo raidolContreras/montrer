@@ -86,7 +86,7 @@ foreach ($data as $record) {
     $sheet->setCellValue("B{$row}", $record['solicitante_nombre'] ?? '');
     $sheet->setCellValue("C{$row}", $record['account_holder'] ?? '');
     $sheet->setCellValue("D{$row}", $record['concepto_pago'] ?? '');
-    $sheet->setCellValue("E{$row}", $record['cargo'] ?? 0);
+    $sheet->setCellValue("E{$row}", $record['importe_solicitado'] ?? 0);
     $sheet->getStyle("E{$row}")->getNumberFormat()->setFormatCode('$#,##0.00');
     $sheet->setCellValue("F{$row}", $record['abono'] ?? 0);
     $sheet->getStyle("F{$row}")->getNumberFormat()->setFormatCode('$#,##0.00');
