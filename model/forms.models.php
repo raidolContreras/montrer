@@ -1851,9 +1851,21 @@ class FormsModels {
 
 	static public function mdlGetReports($startDate, $endDate, $context = null) {
 		$pdo = Conexion::conectar();
-		
 		// Construir consulta básica
-		$sql = "SELECT *, br.status AS statusBudgetRequest 
+		$sql = "SELECT 
+				br.*, 
+				u.firstname, 
+				u.lastname, 
+				p.account_holder, 
+				br.status AS statusBudgetRequest, 
+				br.pagado AS pagado,
+				CASE 
+					WHEN br.status IS NULL THEN 'Sin Responder'
+					WHEN br.status = 1 AND br.pagado = 0 THEN 'Pendiente de Pago'
+					WHEN br.status = 1 AND br.pagado = 1 THEN 'Pagado'
+					WHEN br.status = 0 AND br.pagado = 1 THEN 'Finalizado'
+					ELSE 'Estado Desconocido'
+				END AS estadoPago
 				FROM montrer_budget_requests br
 				LEFT JOIN montrer_users u ON br.idUser = u.idUsers
 				LEFT JOIN montrer_providers p ON br.idProvider = p.idProvider
@@ -1861,7 +1873,7 @@ class FormsModels {
 
 		// Agregar condición para el contexto si está definido
 		if (!empty($context)) {
-			$sql .= " AND (
+		$sql .= " AND (
 				br.folio LIKE :context OR 
 				CONCAT(u.firstname, ' ', u.lastname) LIKE :context OR 
 				p.account_holder LIKE :context OR 
@@ -1875,8 +1887,9 @@ class FormsModels {
 				br.clabe LIKE :context OR 
 				br.cuentaAfectada LIKE :context OR 
 				br.partidaAfectada LIKE :context
-			)";
+				)";
 		}
+
 		
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':startDate', $startDate, PDO::PARAM_STR);

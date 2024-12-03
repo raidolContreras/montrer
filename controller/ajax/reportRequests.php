@@ -67,13 +67,11 @@ function getStatus($statusBudgetRequest, $active, $pagado)
     if (is_null($active)) {
         return "No respondido";
     } elseif ($active == 1 && $pagado == 0) {
-        return "Envió de comprobante";
+        return "Pendiente de pago";
     } elseif ($active == 1 && $pagado == 1) {
-        return "Aprobado el comprobante";
-    } elseif ($active == 0 && $pagado == 0) {
-        return "Denegado el comprobante";
+        return "Aprobado sin comprobar";
     } elseif ($active == 0 && $pagado == 1) {
-        return "Aprobado";
+        return "Finalizado";
     }
 
     return "Rechazado"; // Valor predeterminado en caso de error
