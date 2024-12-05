@@ -1866,6 +1866,7 @@ class FormsModels {
 				FROM montrer_budget_requests br
 				LEFT JOIN montrer_users u ON br.idUser = u.idUsers
 				LEFT JOIN montrer_providers p ON br.idProvider = p.idProvider
+                LEFT JOIN montrer_area a ON a.idArea = br.idArea
 				WHERE br.requestDate BETWEEN :startDate AND :endDate";
 
 		// Agregar condición para el contexto si está definido
@@ -1884,6 +1885,7 @@ class FormsModels {
 					br.clabe LIKE :context OR 
 					br.cuentaAfectada LIKE :context OR 
 					br.partidaAfectada LIKE :context OR
+					a.nameArea LIKE :context OR
 					CASE 
 						WHEN br.pagado = 0 THEN 'Pendiente de Pago'
 						WHEN br.pagado = 1 THEN 'Pagado'
