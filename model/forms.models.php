@@ -1885,7 +1885,7 @@ class FormsModels {
 					br.clabe LIKE :context OR 
 					br.cuentaAfectada LIKE :context OR 
 					br.partidaAfectada LIKE :context OR
-					a.nameArea LIKE ':context OR
+					a.nameArea LIKE :context OR
 					CASE 
 						WHEN br.pagado = 0 THEN 'Pendiente de Pago'
 						WHEN br.pagado = 1 THEN 'Pagado'
