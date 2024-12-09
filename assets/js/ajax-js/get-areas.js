@@ -26,9 +26,11 @@ $(document).ready(function () {
             { 
                 data: null,
                 render: function(data, type, row) {
-                    return `
-                    ${data.areaCode}-000-000-000
-                    `;
+                    if (data.areaCode != '') {
+                        return '<span class="badge bg-info">' + data.areaCode + '-000-000-000 </span>';
+                    } else {
+                        return '<span class="badge bg-danger">N/A</span>';
+                    }
                 }
             },
             { data: 'description' },
