@@ -293,7 +293,7 @@ function updateMaxRequestedAmount(datos) {
                 let totalBudget = 0;
                 let totalBudgetUsed = 0;
                 
-                $('#idAreaCargo').val(response.areaCode);
+                $('#idAreaCargo').val(response.areaCode+'-000-000-000');
                 $.ajax({
                     type: 'POST',
                     url: 'controller/ajax/getAmountPendient.php',

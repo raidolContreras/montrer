@@ -1199,13 +1199,13 @@ class FormsController {
         return $result;
 	}
 
-	static public function ctrCreatePartida($partida, $numeroPartida) {
-		$result = FormsModels::mdlCreatePartida($partida, $numeroPartida);
+	static public function ctrCreatePartida($partida, $numeroPartida, $idCuenta) {
+		$result = FormsModels::mdlCreatePartida($partida, $numeroPartida, $idCuenta);
         return $result;
 	}
 
-	static public function ctrGetPartidas() {
-		$result = FormsModels::mdlGetPartidas();
+	static public function ctrGetPartidas($idPartida) {
+		$result = FormsModels::mdlGetPartidas($idPartida);
         return $result;
 	}
 
@@ -1224,8 +1224,43 @@ class FormsController {
         return $result;
 	}
 
-	static public function ctrEditPartida($idPartida, $Partida, $codigoPartida) {
-		$result = FormsModels::mdlEditPartida($idPartida, $Partida, $codigoPartida);
+	static public function ctrEditPartida($idPartida, $Partida, $codigoPartida, $idCuenta) {
+		$result = FormsModels::mdlEditPartida($idPartida, $Partida, $codigoPartida, $idCuenta);
+        return $result;
+	}
+
+	static public function ctrGetConceptos($idPartida) {
+		$result = FormsModels::mdlGetConceptos($idPartida);
+        return $result;
+	}
+
+	static public function ctrGetConcepto($idConcepto) {
+		$result = FormsModels::mdlGetConcepto($idConcepto);
+        return $result;
+	}
+
+	static public function ctrEditConcepto($idConcepto, $concepto, $numeroConcepto) {
+		$result = FormsModels::mdlEditConcepto($idConcepto, $concepto, $numeroConcepto);
+        return $result;
+	}
+
+	static public function ctrAddConcepto($idPartida, $concepto, $numeroConcepto) {
+		$result = FormsModels::mdlAddConcepto($idPartida, $concepto, $numeroConcepto);
+        return $result;
+	}
+
+	static public function ctrDeleteConcepto($idConcepto) {
+		$result = FormsModels::mdlDeleteConcepto($idConcepto);
+        return $result;
+	}
+
+	static public function ctrSelectAccounts($idArea) {
+		$result = FormsModels::mdlSelectAccounts($idArea);
+        return $result;
+	}
+
+	static public function ctrSelectPartidas($idCuenta) {
+		$result = FormsModels::mdlSelectPartidas($idCuenta);
         return $result;
 	}
 }

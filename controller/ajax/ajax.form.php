@@ -1158,8 +1158,8 @@ if (isset($_POST['cuenta']) && isset($_POST['numeroCuenta']) && isset($_POST['ar
 	echo $response;
 }
 
-if (isset($_POST['partida']) && isset($_POST['codigoPartida'])) {
-	$response = FormsController::ctrCreatePartida($_POST['partida'], $_POST['codigoPartida']);
+if ( isset($_POST['partida']) && isset($_POST['codigoPartida']) && isset($_POST['cuenta']) ) {
+	$response = FormsController::ctrCreatePartida($_POST['partida'], $_POST['codigoPartida'], $_POST['cuenta']);
 	echo $response;
 }
 
@@ -1179,6 +1179,16 @@ if (isset($_POST['editAccountId']) ) {
 }
 
 if (isset($_POST['editPartidaId']) ) {
-	$response = FormsController::ctrEditPartida($_POST['editPartidaId'], $_POST['editPartida'], $_POST['editCodigoPartida']);
+	$response = FormsController::ctrEditPartida($_POST['editPartidaId'], $_POST['editPartida'], $_POST['editCodigoPartida'], $_POST['editCuenta']);
     echo $response;
+}
+
+if (isset($_POST['partidas'])) {
+	$response = FormsController::ctrGetPartidas($_POST['partidas']);
+    echo json_encode($response);
+}
+
+if (isset($_POST['concepto'])) {
+	$response = FormsController::ctrGetConcepto($_POST['concepto']);
+    echo json_encode($response);
 }

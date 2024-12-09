@@ -1946,12 +1946,13 @@ class FormsModels {
         $stmt = null;
 	}
 
-	static public function mdlCreatePartida($partida, $numeroPartida) {
+	static public function mdlCreatePartida($partida, $numeroPartida, $idCuenta) {
 		$pdo = Conexion::conectar();
-        $sql = "INSERT INTO montrer_partidas (partida, numeroPartida) VALUES (:partida, :numeroPartida)";
+        $sql = "INSERT INTO montrer_partidas (partida, numeroPartida, idCuenta) VALUES (:partida, :numeroPartida, :idCuenta)";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':partida', $partida, PDO::PARAM_STR);
         $stmt->bindParam(':numeroPartida', $numeroPartida, PDO::PARAM_STR);
+		$stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
             return "ok";
@@ -1976,13 +1977,23 @@ class FormsModels {
         return $result;
 	}
 
-	static public function mdlGetPartidas() {
+	static public function mdlGetPartidas($idPartida) {
 		$pdo = Conexion::conectar();
-        $sql = "SELECT * FROM montrer_partidas where status = 1";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        
-        $result = $stmt->fetchAll();
+        $sql = "SELECT * FROM montrer_partidas p 
+					LEFT JOIN montrer_cuentas c ON c.idCuenta = p.idCuenta 
+					LEFT JOIN montrer_area a ON c.idArea = a.idArea 
+				where p.status = 1";
+		if($idPartida != null) {
+			$sql.= " AND p.idPartida = :idPartida";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetch();
+		} else {
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute();
+			$result = $stmt->fetchAll();
+		}
         
         $stmt->closeCursor();
         $stmt = null;
@@ -2040,13 +2051,14 @@ class FormsModels {
         $stmt = null;
 	}
 
-	static public function mdlEditPartida($idPartida, $partida, $numeroPartida) {
+	static public function mdlEditPartida($idPartida, $partida, $numeroPartida, $idCuenta) {
 		$pdo = Conexion::conectar();
-        $sql = "UPDATE montrer_partidas SET partida = :partida, numeroPartida = :numeroPartida WHERE idPartida = :idPartida";
+        $sql = "UPDATE montrer_partidas SET partida = :partida, numeroPartida = :numeroPartida, idCuenta = :idCuenta WHERE idPartida = :idPartida";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
         $stmt->bindParam(':partida', $partida, PDO::PARAM_STR);
         $stmt->bindParam(':numeroPartida', $numeroPartida, PDO::PARAM_STR);
+		$stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
             return "ok";
@@ -2056,6 +2068,114 @@ class FormsModels {
         
         $stmt->closeCursor();
         $stmt = null;
+	}
+
+	static public function mdlGetConceptos($idPartida) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_conceptos WHERE idPartida = :idPartida";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll();
+        
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
+
+	static public function mdlGetConcepto($idConcepto) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_conceptos WHERE idConcepto = :idConcepto";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idConcepto', $idConcepto, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $result = $stmt->fetch();
+        
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
+
+	static public function mdlEditConcepto($idConcepto, $concepto, $numeroConcepto) {
+		$pdo = Conexion::conectar();
+        $sql = "UPDATE montrer_conceptos SET concepto = :concepto, numeroConcepto = :numeroConcepto WHERE idConcepto = :idConcepto";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idConcepto', $idConcepto, PDO::PARAM_INT);
+        $stmt->bindParam(':concepto', $concepto, PDO::PARAM_STR);
+        $stmt->bindParam(':numeroConcepto', $numeroConcepto, PDO::PARAM_STR);
+        
+        if ($stmt->execute()) {
+            return ["success" => "ok"];
+        } else {
+			return ["error" => "Error al editar concepto"];
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlAddConcepto($idPartida, $concepto, $numeroConcepto) {
+		$pdo = Conexion::conectar();
+        $sql = "INSERT INTO montrer_conceptos (concepto, numeroConcepto, idPartida) VALUES (:concepto, :numeroConcepto, :idPartida)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':concepto', $concepto, PDO::PARAM_STR);
+        $stmt->bindParam(':numeroConcepto', $numeroConcepto, PDO::PARAM_STR);
+        $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            return ["success" => "ok", "id" => $pdo->lastInsertId()];
+        } else {
+            return ["error" => "Error al agregar concepto"];
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlDeleteConcepto($idConcepto) {
+		$pdo = Conexion::conectar();
+        $sql = "DELETE FROM montrer_conceptos WHERE idConcepto = :idConcepto";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idConcepto', $idConcepto, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+			return ["success" => "ok"];
+        } else {
+			return ["error" => "Error al eliminar concepto"];
+        }
+        
+        $stmt->closeCursor();
+        $stmt = null;
+	}
+
+	static public function mdlSelectAccounts($idArea) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea where c.idArea = :idArea AND c.status = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll();
+        
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
+	}
+
+	static public function mdlSelectPartidas($idCuenta) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_partidas p LEFT JOIN montrer_cuentas c ON c.idCuenta = p.idCuenta LEFT JOIN montrer_area a ON c.idArea = a.idArea where p.idCuenta = :idCuenta AND p.status = 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $result = $stmt->fetchAll();
+        
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
 	}
 
 }

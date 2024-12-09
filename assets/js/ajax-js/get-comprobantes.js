@@ -39,8 +39,9 @@ function verComprobacion(idRequest, status){
             let requestdate;
             let paymentDate;
 
+            requestdate = formatearfecha(response.requestDate);
+
             if (response.pagado == 1) {
-                requestdate = formatearfecha(response.requestDate);
                 paymentDate = formatearfecha(response.paymentDate);
             }
 
@@ -52,11 +53,8 @@ function verComprobacion(idRequest, status){
             $('#empresaGet').text(response.empresa);
             $('#areaGet').text(response.nameArea);
             $('#idAreaCargoGet').text(response.idAreaCargo);
-            $('#cuentaAfectadaGet').text(response.cuentaAfectada);
             $('#idCuentaAfectadaGet').text(response.idCuentaAfectada);
-            $('#partidaAfectadaGet').text(response.partidaAfectada);
             $('#idPartidaAfectadaGet').text(response.idPartidaAfectada);
-            $('#conceptoGet').text(response.concepto);
             $('#idConceptoGet').text(response.idConcepto);
             $('#requestedAmountGet').text(formatCurrency(response.importe_solicitado));
             $('#importeLetraGet').text(response.importe_letra);
@@ -76,9 +74,13 @@ function verComprobacion(idRequest, status){
             $('#abonoGet').text(formatCurrency(response.abono));
             $('#fechaCargaGet').text(paymentDate);
             
+            let partidaAfectada = response.partidaAfectada;
+            let concepto = response.concepto;
+            getPartidas(partidaAfectada, concepto);
+            
             if (response.pagado == 1) {
                 $('#estatusGet').text('pagado');
-            } else if (response.status == 2 && response.pagado == 0) {
+            } else if (response.status == 0 && response.pagado == 0) {
                 $('#estatusGet').text('pendiente');
             } else {
                 $('#estatusGet').text('denegado');
@@ -229,6 +231,34 @@ function comments(idRequest) {
         dataType: 'json',
         success: function (response) {
             $('input[id="comentario"]').val(response.comentarios);
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+function getPartidas(idPartida, idConcepto) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/ajax.form.php',
+        data: {partidas: idPartida},
+        dataType: 'json',
+        success: function (response) {
+            $('#cuentaAfectadaGet').text(response.cuenta);
+            $('#partidaAfectadaGet').text(response.Partida);
+            $.ajax({
+                type: 'POST',
+                url: 'controller/ajax/ajax.form.php',
+                data: {concepto: idConcepto},
+                dataType: 'json',
+                success: function (response) {
+                    $('#conceptoGet').text(response.concepto);
+                },
+                error: function (error) {
+                    console.log('Error en la solicitud AJAX:', error);
+                }
+            })
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);

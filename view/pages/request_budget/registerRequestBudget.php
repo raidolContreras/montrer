@@ -40,7 +40,7 @@
                     <select name="area" id="area" class="form-select form-control col" required>
                         <option value="">Seleccionar un área</option>
                     </select>
-                    <input class="form-control col" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="5000-001-000-000-000" disabled>
+                    <input class="form-control col" type="text" id="idAreaCargo" name="idAreaCargo" placeholder="" disabled>
                 </div>
 
                 <!-- Cuenta que se afecta -->
@@ -49,7 +49,7 @@
                     <select id="cuentaAfectada" name="cuentaAfectada" class="form-select form-control col" disabled>
                         <option value="">Seleccionar cuenta</option>
                     </select>
-                    <input class="form-control col" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="5000-001-000-000-000" disabled>
+                    <input class="form-control col" type="text" id="idCuentaAfectada" name="idCuentaAfectada" placeholder="" disabled>
                 </div>
 
                 <!-- Partida que se afecta -->
@@ -58,14 +58,16 @@
                     <select id="partidaAfectada" name="partidaAfectada" class="form-select form-control col" disabled>
                         <option value="">Seleccionar partida</option>
                     </select>
-                    <input class="form-control col" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="5000-001-000-000-000" disabled>
+                    <input class="form-control col" type="text" id="idPartidaAfectada" name="idPartidaAfectada" placeholder="" disabled>
                 </div>
 
                 <!-- Concepto -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="concepto" class="form-label col-2 fw-bold">Concepto:></span></label>
-                    <input class="form-control col" type="text" id="concepto" name="concepto" disabled>
-                    <input class="form-control col" type="text" id="idConcepto" name="idConcepto" placeholder="5000-001-000-000-000" disabled>
+                    <select id="concepto" name="concepto" class="form-select form-control col" disabled>
+                        <option value="">Seleccionar concepto</option>
+                    </select>
+                    <input class="form-control col" type="text" id="idConcepto" name="idConcepto" placeholder="" disabled>
                 </div>
 
                 <!-- Proveedor -->
