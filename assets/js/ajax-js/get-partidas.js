@@ -319,7 +319,8 @@ $('#addConceptButton').on('click', function () {
 $('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
     const row = $(this).closest('tr');
     const newName = row.find('.new-concept-name').val();
-    const newNumber = row.find('.new-concept-number').val();
+    let newNumber = row.find('.new-concept-number').val();
+    newNumber = '000';
 
     if (!newName || !newNumber) {
         alert('Por favor, complete ambos campos antes de guardar.');
@@ -336,13 +337,16 @@ $('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
             if (response.success) {
                 alert('Concepto agregado correctamente.');
 
+                let partidaCode = $('#partidaCode').val();
                 // Actualizar la fila con los datos guardados
                 row.html(`
                     <td class="concept-name">${newName}</td>
-                    <td class="concept-number">${newNumber}</td>
+                    <td class="concept-number">${partidaCode}-${newNumber}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm edit-concept-button" data-id="${response.id}" data-concept="${newName}" data-number="${newNumber}"><i class="ri-edit-line"></i></button>
-                        <button class="btn btn-danger btn-sm delete-concept-button" data-id="${response.id}"><i class="ri-delete-bin-6-line"></i></button>
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-sm edit-concept-button" data-id="${response.id}" data-concept="${newName}" data-number="${newNumber}"><i class="ri-edit-line"></i></button>
+                            <button class="btn btn-danger btn-sm delete-concept-button" data-id="${response.id}"><i class="ri-delete-bin-6-line"></i></button>
+                        </div>
                     </td>
                 `);
             } else {
