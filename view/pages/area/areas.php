@@ -18,6 +18,7 @@
 						<tr>
 							<th>#</th>
 							<th>Departamento</th>
+							<th>Código del departamento</th>
 							<th>Descripción</th>
 							<th>Encargado</th>
                                 <th width="15%"></th>

@@ -23,6 +23,14 @@ $(document).ready(function () {
                     return '<a href="">' + data.nameArea + '</a>';
                 }
             },
+            { 
+                data: null,
+                render: function(data, type, row) {
+                    return `
+                    ${data.areaCode}-000-000-000
+                    `;
+                }
+            },
             { data: 'description' },
             { 
                 data: 'usuarios',
