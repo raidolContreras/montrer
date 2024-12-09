@@ -348,11 +348,11 @@ $('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
                     </td>
                 `);
             } else {
-                alert('Hubo un error al intentar guardar el concepto.');
+                showAlertBootstrap('!Error', 'Hubo un error al intentar guardar el concepto.');
             }
         },
         error: function () {
-            alert('Hubo un error al intentar guardar el concepto.');
+            showAlertBootstrap('!Error', 'Hubo un error al intentar guardar el concepto.');
         }
     });
 });
