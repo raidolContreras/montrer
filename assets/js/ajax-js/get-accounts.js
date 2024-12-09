@@ -34,13 +34,15 @@ $(document).ready(function () {
                 data: null,
                 title: 'Acciones',
                 render: function (data, type, row) {
-                    return `
-						<button class="btn btn-primary edit-button col-2" data-id="${row.idCuenta}" data-cuenta="${row.cuenta}" data-numero="${row.numeroCuenta}" data-areaCode="${row.areaCode}" data-area="${row.idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-							<i class="ri-edit-line"></i>
-						</button>
-						<button class="btn btn-danger delete-button col-2" data-id="${row.idCuenta}" data-cuenta="${row.cuenta}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-							<i class="ri-delete-bin-6-line"></i>
-						</button>
+                    return `g
+                        <div class="btn-group">
+                            <button class="btn btn-primary edit-button col-2" data-id="${row.idCuenta}" data-cuenta="${row.cuenta}" data-numero="${row.numeroCuenta}" data-areaCode="${row.areaCode}" data-area="${row.idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                <i class="ri-edit-line"></i>
+                            </button>
+                            <button class="btn btn-danger delete-button col-2" data-id="${row.idCuenta}" data-cuenta="${row.cuenta}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                <i class="ri-delete-bin-6-line"></i>
+                            </button>
+                        </div>
                     `;
                 }
             }
