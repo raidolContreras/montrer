@@ -34,7 +34,10 @@
                 </div>
                 <div class="col-md-6">
                     <label for="areaCode" class="form-label">Código del area<span class="required"></span></label>
-                    <input class="form-control col auto-format" type="text" id="areaCode" name="areaCode" required>
+                    <div class="input-group">
+                        <input class="form-control col auto-format" type="text" id="areaCode" name="areaCode" required>
+                        <span class="input-group-text endCode">-000-000-000</span>
+                    </div>
                 </div>
 
                 <div class="col-12">
