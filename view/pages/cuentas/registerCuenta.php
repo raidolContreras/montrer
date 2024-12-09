@@ -15,8 +15,18 @@
                 </div>
 
                 <div class="col-md-6">
+                    <label for="area" class="form-label">Departamento<span class="required"></span></label>
+                    <select name="area" id="area" class="form-select form-control required-field"></select>
+                </div>
+
+                <div class="col-md-6">
                     <label for="numeroCuenta" class="form-label">Número de cuenta<span class="required"></span></label>
-                    <input type="text" class="form-control auto-format" id="numeroCuenta" name="numeroCuenta" placeholder="Número de cuenta">
+                    <!-- div de un grupo de /span /input /span -->
+                    <div class="input-group">
+                        <span class="input-group-text areaCode"></span>
+                        <input type="text" class="form-control auto-format" id="numeroCuenta" name="numeroCuenta" placeholder="Número de cuenta" disabled>
+                        <span class="input-group-text endCode"></span>
+                    </div>
                 </div>
 
                 <div class="col-12 mt-2 text-end">

@@ -1189,8 +1189,8 @@ class FormsController {
 		}
 	}
 
-	static public function ctrCreateAccount($cuenta, $numeroCuenta) {
-		$result = FormsModels::mdlCreateAccount($cuenta, $numeroCuenta);
+	static public function ctrCreateAccount($cuenta, $numeroCuenta, $idArea) {
+		$result = FormsModels::mdlCreateAccount($cuenta, $numeroCuenta, $idArea);
 		return $result;
 	}
 
@@ -1219,8 +1219,8 @@ class FormsController {
         return $result;
     }
 
-	static public function ctrEditAccount($idCuenta, $cuenta, $numeroCuenta) {
-		$result = FormsModels::mdlEditAccount($idCuenta, $cuenta, $numeroCuenta);
+	static public function ctrEditAccount($idCuenta, $cuenta, $numeroCuenta, $idArea) {
+		$result = FormsModels::mdlEditAccount($idCuenta, $cuenta, $numeroCuenta, $idArea);
         return $result;
 	}
 

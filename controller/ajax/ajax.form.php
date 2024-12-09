@@ -1153,8 +1153,8 @@ if (
 	echo $response;
 }
 
-if (isset($_POST['cuenta']) && isset($_POST['numeroCuenta'])) {
-	$response = FormsController::ctrCreateAccount($_POST['cuenta'], $_POST['numeroCuenta']);
+if (isset($_POST['cuenta']) && isset($_POST['numeroCuenta']) && isset($_POST['area'])){
+	$response = FormsController::ctrCreateAccount($_POST['cuenta'], $_POST['numeroCuenta'], $_POST['area']);
 	echo $response;
 }
 
@@ -1174,7 +1174,7 @@ if (isset($_POST['deletePartida']) ) {
 }
 
 if (isset($_POST['editAccountId']) ) {
-	$response = FormsController::ctrEditAccount($_POST['editAccountId'], $_POST['editCuenta'], $_POST['editNumeroCuenta']);
+	$response = FormsController::ctrEditAccount($_POST['editAccountId'], $_POST['editCuenta'], $_POST['editNumeroCuenta'], $_POST['editArea']);
     echo $response;
 }
 

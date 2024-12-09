@@ -366,6 +366,7 @@ class FormsModels {
 		$sql = "SELECT 
 					a.idArea, 
 					a.nameArea, 
+					a.areaCode,
 					IFNULL(a.description, '') AS description, 
 					IFNULL(GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '') AS usuarios, 
 					IFNULL(CONCAT('[', GROUP_CONCAT(IF(ua.idUser IS NOT NULL, ua.idUser, NULL)), ']'), '[]') AS idUser, 
@@ -1927,12 +1928,13 @@ class FormsModels {
         return $result;
 	}
 
-	static public function mdlCreateAccount($cuenta, $numeroCuenta) {
+	static public function mdlCreateAccount($cuenta, $numeroCuenta, $idArea) {
 		$pdo = Conexion::conectar();
-        $sql = "INSERT INTO montrer_cuentas (cuenta, numeroCuenta) VALUES (:cuenta, :numeroCuenta)";
+        $sql = "INSERT INTO montrer_cuentas (cuenta, numeroCuenta, idArea) VALUES (:cuenta, :numeroCuenta, :idArea)";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':cuenta', $cuenta, PDO::PARAM_STR);
         $stmt->bindParam(':numeroCuenta', $numeroCuenta, PDO::PARAM_STR);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
             return "ok";
@@ -1963,7 +1965,7 @@ class FormsModels {
 
 	static public function mdlGetAccounts() {
 		$pdo = Conexion::conectar();
-        $sql = "SELECT * FROM montrer_cuentas where status = 1";
+        $sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea where c.status = 1";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         
@@ -2019,13 +2021,14 @@ class FormsModels {
         $stmt = null;
 	}
 
-	static public function mdlEditAccount($idCuenta, $cuenta, $numeroCuenta) {
+	static public function mdlEditAccount($idCuenta, $cuenta, $numeroCuenta, $idArea) {
 		$pdo = Conexion::conectar();
-        $sql = "UPDATE montrer_cuentas SET cuenta = :cuenta, numeroCuenta = :numeroCuenta WHERE idCuenta = :idCuenta";
+        $sql = "UPDATE montrer_cuentas SET cuenta = :cuenta, numeroCuenta = :numeroCuenta, idArea = :idArea WHERE idCuenta = :idCuenta";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
         $stmt->bindParam(':cuenta', $cuenta, PDO::PARAM_STR);
         $stmt->bindParam(':numeroCuenta', $numeroCuenta, PDO::PARAM_STR);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
             return "ok";

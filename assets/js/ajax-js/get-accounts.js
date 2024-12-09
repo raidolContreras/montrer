@@ -22,13 +22,20 @@ $(document).ready(function () {
                 }
             },
             { data: 'cuenta', title: 'Cuenta' },
-            { data: 'numeroCuenta', title: 'Número de cuenta' },
+            { 
+                data: null,
+                title: 'Número de cuenta',
+                render: function (data, type, row) {
+                    return `${row.areaCode}-${row.numeroCuenta}-000-000`;;
+                }
+            },
+            { data: 'nameArea', title: 'Departamento' },
             {
                 data: null,
                 title: 'Acciones',
                 render: function (data, type, row) {
                     return `
-						<button class="btn btn-primary edit-button col-2" data-id="${row.idCuenta}" data-cuenta="${row.cuenta}" data-numero="${row.numeroCuenta}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+						<button class="btn btn-primary edit-button col-2" data-id="${row.idCuenta}" data-cuenta="${row.cuenta}" data-numero="${row.numeroCuenta}" data-areaCode="${row.areaCode}" data-area="${row.idArea}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
 							<i class="ri-edit-line"></i>
 						</button>
 						<button class="btn btn-danger delete-button col-2" data-id="${row.idCuenta}" data-cuenta="${row.cuenta}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
@@ -89,6 +96,8 @@ $(document).ready(function () {
         const accountId = $(this).data('id');
         const accountName = $(this).data('cuenta');
         const accountNumber = $(this).data('numero');
+        const areaId = $(this).data('area');
+        const areaCode = $(this).data('areacode');
 
         // Crear un formulario dinámico
         const form = $('<form>', {
@@ -100,6 +109,8 @@ $(document).ready(function () {
         form.append($('<input>', { type: 'hidden', name: 'id', value: accountId }));
         form.append($('<input>', { type: 'hidden', name: 'cuenta', value: accountName }));
         form.append($('<input>', { type: 'hidden', name: 'numeroCuenta', value: accountNumber }));
+        form.append($('<input>', { type: 'hidden', name: 'area', value: areaId }));
+        form.append($('<input>', { type: 'hidden', name: 'areaCode', value: areaCode }));
 
         // Agregar el formulario al DOM y enviarlo
         $('body').append(form);
