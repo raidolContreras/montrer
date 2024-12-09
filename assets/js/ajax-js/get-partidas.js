@@ -335,8 +335,6 @@ $('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
         dataType: 'json',
         success: function (response) {
             if (response.success) {
-                alert('Concepto agregado correctamente.');
-
                 let partidaCode = $('#partidaCode').val();
                 // Actualizar la fila con los datos guardados
                 row.html(`
