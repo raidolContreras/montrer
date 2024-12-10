@@ -11,7 +11,7 @@ $data = array(
     'idCuentaAfectada' => $_POST['idCuentaAfectada'],
     'partidaAfectada' => $_POST['partidaAfectada'],
     'idPartidaAfectada' => $_POST['idPartidaAfectada'],
-    'concepto' => $_POST['concepto'],
+    'concepto' => ($_POST['concepto'] != '') ? $_POST['concepto'] : $_POST['conceptoInput'],
     'idConcepto' => $_POST['idConcepto'],
     'requestedAmount' => $_POST['requestedAmount'],
     'importeLetra' => $_POST['importeLetra'],
