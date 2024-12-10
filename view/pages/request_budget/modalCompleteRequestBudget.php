@@ -329,7 +329,7 @@
 
 		cuentaAfectada = $('#cuentaAfectada').val();
 		partidaAfectada = $('#partidaAfectada').val();
-		
+
 		// si esta vacio que tome #conceptoInput
 		if (concepto == '') {
             concepto = $('#conceptoInput').val();
@@ -601,7 +601,7 @@ function conceptos(idPartida, code) {
                 selectElement.html('<option value="" selected>Seleccione un concepto</option>');
                 selectElement.hide().prop('disabled', true);
                 inputElement.show().prop('disabled', false).val(''); // Mostrar el input y limpiar su valor
-                $('#idConcepto').val(''); // Limpiar el valor de #idConcepto
+                $('#idConcepto').val(code+'-000'); // Limpiar el valor de #idConcepto
             }
         },
         error: function() {
