@@ -329,7 +329,13 @@
 
 		cuentaAfectada = $('#cuentaAfectada').val();
 		partidaAfectada = $('#partidaAfectada').val();
-		concepto = $('#concepto').val();
+		
+		// si esta vacio que tome #conceptoInput
+		if (concepto == '') {
+            concepto = $('#conceptoInput').val();
+        } else {
+			concepto = $('#concepto').val();
+		}
 
 		polizeType = $('#polizeType').val();
 		numberPolize = $('#numberPolize').val();
