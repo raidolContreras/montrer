@@ -63,6 +63,8 @@
 								<select id="concepto" name="concepto" class="form-select form-control col bg-white border" disabled>
 									<option value="" selected>Seleccione una partida primero</option>
 								</select>
+								<input class="form-control col bg-white border" type="text" id="conceptoInput" name="conceptoInput" disabled style="display: none;">
+
 								<input class="form-control col auto-format2" type="text" id="idConcepto" name="idConcepto" disabled>
 							</div>
 
@@ -582,12 +584,9 @@ function conceptos(idPartida, code) {
                     $('#idConcepto').val(numeroConcepto);
                 });
 			} else {
-				// si esta vacio colocar un input en lugar de el select
-				$('#concepto').val('');
-                $('#concepto').attr('disabled', 'disabled');
-                let selectElement = $('#concepto');
-                selectElement.empty(); // Limpiar opciones anteriores
-                selectElement.append('<option value="" selected>No hay conceptos para esta partida</option>');
+				// si esta vacio colocar un input text y eliminar el select
+				$('#concepto').hide();
+                $('#conceptoInput').show().val(idConcepto);
 			}
 		}
 	});
