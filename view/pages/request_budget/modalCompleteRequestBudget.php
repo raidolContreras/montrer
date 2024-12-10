@@ -581,6 +581,13 @@ function conceptos(idPartida, code) {
                     // Actualizar los valores correspondientes
                     $('#idConcepto').val(numeroConcepto);
                 });
+			} else {
+				// si esta vacio colocar un input en lugar de el select
+				$('#concepto').val('');
+                $('#concepto').attr('disabled', 'disabled');
+                let selectElement = $('#concepto');
+                selectElement.empty(); // Limpiar opciones anteriores
+                selectElement.append('<option value="" selected>No hay conceptos para esta partida</option>');
 			}
 		}
 	});
