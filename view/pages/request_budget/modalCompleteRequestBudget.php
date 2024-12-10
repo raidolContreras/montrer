@@ -63,8 +63,7 @@
 								<select id="concepto" name="concepto" class="form-select form-control col bg-white border" disabled>
 									<option value="" selected>Seleccione una partida primero</option>
 								</select>
-								<input class="form-control col bg-white border" type="text" id="conceptoInput" name="conceptoInput" disabled style="display: none;">
-
+								<input class="form-control col bg-white border" type="text" id="conceptoInput" name="conceptoInput" style="display: none;" disabled>
 								<input class="form-control col auto-format2" type="text" id="idConcepto" name="idConcepto" disabled>
 							</div>
 
@@ -560,38 +559,47 @@ function partidas(idCuenta) {
 }
 
 function conceptos(idPartida, code) {
-	$.ajax({
-		type: 'POST',
+    $.ajax({
+        type: 'POST',
         url: 'controller/ajax/getConceptos.php',
-        data: {'idPartida': idPartida},
+        data: { 'idPartida': idPartida },
         dataType: 'json',
-		success: function(response) {
-			if (response && Array.isArray(response)) {
-				const selectElement = $('#concepto');
-                selectElement.empty(); // Limpiar opciones anteriores
-                // Agregar una opción por defecto
+        success: function(response) {
+            const selectElement = $('#concepto');
+            const inputElement = $('#conceptoInput');
+            
+            if (response && Array.isArray(response) && response.length > 0) {
+                // Mostrar el select y ocultar el input
+                selectElement.show().prop('disabled', false);
+                inputElement.hide().prop('disabled', true);
+                
+                // Limpiar opciones anteriores y agregar las nuevas
+                selectElement.empty();
                 selectElement.append('<option value="">Seleccione un concepto</option>');
-                // Iterar sobre la respuesta y agregar opciones al select
                 response.forEach(concepto => {
                     selectElement.append(`<option value="${concepto.idConcepto}" data-numeroConcepto="${code}-${concepto.numeroConcepto}">${concepto.concepto}</option>`);
                 });
-                // Configurar evento change para actualizar #idConcepto
-                selectElement.change(function () {
+
+                // Evento change para actualizar #idConcepto
+                selectElement.off('change').on('change', function () {
                     const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
                     const idConcepto = selectedOption.val() || '';
-					const numeroConcepto = selectedOption.attr('data-numeroConcepto') || '';
+                    const numeroConcepto = selectedOption.attr('data-numeroConcepto') || '';
                     // Actualizar los valores correspondientes
                     $('#idConcepto').val(numeroConcepto);
                 });
-			} else {
-				// si esta vacio colocar un input text y eliminar el select
-				$('#concepto').hide();
-                $('#conceptoInput').show().val(idConcepto);
-			}
-		}
-	});
+            } else {
+                // Si la respuesta está vacía, mostrar el input y ocultar el select
+                selectElement.hide().prop('disabled', true);
+                inputElement.show().prop('disabled', false).val(''); // Mostrar el input y limpiar su valor
+                $('#idConcepto').val(''); // Limpiar el valor de #idConcepto
+            }
+        },
+        error: function() {
+            alert('Hubo un error al intentar obtener los conceptos.');
+        }
+    });
 }
-
 
 $('.auto-format').on('input', function() {
 		let input = $(this).val().replace(/\D/g, ''); // Elimina cualquier carácter no numérico
