@@ -590,6 +590,9 @@ function conceptos(idPartida, code) {
                 });
             } else {
                 // Si la respuesta está vacía, mostrar el input y ocultar el select
+				// select default vacio
+				selectElement.empty(); // Limpiar opciones anteriores
+                selectElement.html('<option value="" selected>Seleccione un concepto</option>');
                 selectElement.hide().prop('disabled', true);
                 inputElement.show().prop('disabled', false).val(''); // Mostrar el input y limpiar su valor
                 $('#idConcepto').val(''); // Limpiar el valor de #idConcepto
