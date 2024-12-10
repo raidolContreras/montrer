@@ -319,8 +319,7 @@ $('#addConceptButton').on('click', function () {
 $('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
     const row = $(this).closest('tr');
     const newName = row.find('.new-concept-name').val();
-    let newNumber = row.find('.new-concept-number').val();
-    newNumber = '000';
+    let newNumber = row.find('.new-concept-number').val().trim() || '000';
 
     if (!newName || !newNumber) {
         alert('Por favor, complete ambos campos antes de guardar.');
