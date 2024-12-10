@@ -253,7 +253,11 @@ function getPartidas(idPartida, idConcepto) {
                 data: {concepto: idConcepto},
                 dataType: 'json',
                 success: function (response) {
-                    $('#conceptoGet').text(response.concepto);
+                    if (response){
+                        $('#conceptoGet').text(response.concepto);
+                    } else {
+                        $('#conceptoGet').text(idConcepto);
+                    }
                 },
                 error: function (error) {
                     console.log('Error en la solicitud AJAX:', error);
