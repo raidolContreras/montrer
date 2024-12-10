@@ -50,7 +50,7 @@
             </li>
 
             <?php
-                $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerPartidas' || $_GET['pagina'] == 'partidas' || $_GET['pagina'] == 'editPartidas')) ? 'active' : '';
+                $activeAreas = (isset($_GET['pagina']) && ($_GET['pagina'] == 'registerPartida' || $_GET['pagina'] == 'partidas' || $_GET['pagina'] == 'editPartida')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeAreas; ?>">
                 <a href="partidas" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Partidas" onclick="confirmExit(event, 'cuentas')">
