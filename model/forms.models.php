@@ -26,11 +26,14 @@ class FormsModels {
 		$stmt->bindParam(':ip', $ip, PDO::PARAM_STR);
 		
 		if ($stmt->execute()){
-			return 'ok';
+			$result = 'ok';
 		} else {
 			print_r($pdo->errorInfo());
 		}
-
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+		
 	}
 
 	// Inicio de Contadores
@@ -135,33 +138,34 @@ class FormsModels {
 				if ($data['area'] != '') {
 					$area = FormsModels::mdlUpdateAreaUser($userId, $data['area']);
 					if($temporalPassword == 'ok' && $settings == 'ok' && $area == 'ok'){
-						return $data['email'];
+						$result = $data['email'];
 					} else {
-						return 'Error';
+						$result = 'Error';
 					}
 				} else {
 					if($temporalPassword == 'ok' && $settings == 'ok'){
-						return $data['email'];
+						$result = $data['email'];
 					} else {
-						return 'Error al enviar el correo';
+						$result = 'Error al enviar el correo';
 					}
 				}
 			} else {
-				return 'Error';
+				$result = 'Error';
 			}
 		} catch (PDOException $e) {
 			// Verifica si la excepción es por una violación de la restricción de integridad
 			if ($e->getCode() == '23000') {
 				// Violación de restricción de integridad (clave duplicada)
-				return 'Error: Email duplicado';
+				$result = 'Error: Email duplicado';
 			} else {
 				// Otra excepción
-				return 'Error';
+				$result = 'Error';
 			}
 		} finally {
 			// Asegúrate de cerrar la conexión en el bloque finally
 			$stmt->closeCursor();
 			$stmt = null;
+			return $result;
 		}
 	}
 	
@@ -172,12 +176,13 @@ class FormsModels {
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlRegisterPassword($userId, $cryptPassword){
@@ -190,10 +195,14 @@ class FormsModels {
 		$stmt->bindParam(':User_idUser', $userId, PDO::PARAM_INT);
 		
 		if ($stmt->execute()){
-			return 'ok';
+			$result = 'ok';
 		} else {
 			print_r($pdo->errorInfo());
 		}
+		
+        $stmt->closeCursor();
+		$stmt = null;
+		return $result;
 
 	}
 	
@@ -208,10 +217,14 @@ class FormsModels {
 		$stmt->bindParam(':root', $root, PDO::PARAM_INT);
 		
 		if ($stmt->execute()){
-			return 'ok';
+			$result = 'ok';
 		} else {
 			print_r($pdo->errorInfo());
 		}
+		
+        $stmt->closeCursor();
+		$stmt = null;
+		return $result;
 
 	}
 	
@@ -241,7 +254,7 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		
 		if ($stmt->execute()){
-			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		} else {
 			print_r($pdo->errorInfo());
 		}
@@ -249,6 +262,7 @@ class FormsModels {
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlSelectUser($email){
@@ -300,13 +314,14 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 		
 	}
 
@@ -318,13 +333,14 @@ class FormsModels {
 		$stmt->bindParam(':idUser', $data['user'], PDO::PARAM_INT);
 		$stmt->bindParam(':temporal_password', $data['actualPassword'], PDO::PARAM_STR);
 		if($stmt->execute()){
-			return true;
+			$result = true;
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 
 	}
 
@@ -335,12 +351,13 @@ class FormsModels {
 		$stmt->bindParam(':newPassword', $data['newPassword'], PDO::PARAM_STR);
 		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_INT);
 	   if($stmt->execute()){
-		return true;
+		$result = true;
 	   } else {
 		print_r($pdo->errorInfo());
 	   }
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlAddArea($data){
@@ -351,14 +368,15 @@ class FormsModels {
 	   $stmt->bindParam(':description', $data['areaDescription'], PDO::PARAM_STR);
 	   $stmt->bindParam(':areaCode', $data['areaCode'], PDO::PARAM_STR);
 	   if($stmt->execute()){
-		return $pdo->lastInsertId();
+		$result = $pdo->lastInsertId();
 		// $result = FormsModels::mdlAddAreaUser($data['user'], $pdo->lastInsertId());
 		// return $result;
 	   } else {
-		return 'Error';
+		$result = 'Error';
 	   }
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetAreas(){
@@ -385,13 +403,14 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		
 		if ($stmt->execute()){
-			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		// Asegúrate de cerrar la conexión en el bloque finally
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetCompanies(){
@@ -399,13 +418,14 @@ class FormsModels {
 	   $sql = "SELECT * FROM montrer_business";
 	   $stmt = $pdo->prepare($sql);
 	   if ($stmt->execute()){
-		   return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	   } else {
 		   print_r($pdo->errorInfo());
 	   }
 	   // Asegúrate de cerrar la conexión en el bloque finally
 	   $stmt->closeCursor();
 	   $stmt = null;
+	   return $result;
 	}
 
 	static public function mdlAddCompany($data){
@@ -417,15 +437,16 @@ class FormsModels {
 		if($stmt->execute()){
 			if (($pdo -> lastInsertId() != 0)){
 				$idCompany = $pdo -> lastInsertId();
-				return $idCompany;
+				$result = $idCompany;
 			} else {
-				return 'Error';
+				$result = 'Error';
 			}
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		 $stmt->closeCursor();
 		 $stmt = null;
+		 return $result;
 	}
 	
 	static public function mdlGetExercise(){
@@ -518,7 +539,10 @@ class FormsModels {
 	   $sql = "SELECT budget, idExercise, exerciseName FROM montrer_exercise WHERE status = 1";
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->execute();
-	   return $stmt->fetch();
+	   $result = $stmt->fetch();
+	   $stmt->closeCursor();
+	   $stmt = null;
+	   return $result;
 	}
 
 	static public function mdlUpdateActiveExercise($idExercise){
@@ -528,12 +552,13 @@ class FormsModels {
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
 	   if($stmt->execute()){
-		return "ok";
+		$result = "ok";
 	   } else {
 		print_r($pdo->errorInfo());
 	   }
 	   $stmt->closeCursor();
 	   $stmt = null;
+	   return $result;
 	}
 	
 	static public function mdlAddBudgets($data){
@@ -636,12 +661,13 @@ class FormsModels {
 		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_STR);
 		$stmt->bindParam(':employerCode', $data['employerCode'], PDO::PARAM_STR);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlUpdateLevelUser($data){
@@ -651,12 +677,13 @@ class FormsModels {
 		$stmt->bindParam(':level', $data['level'], PDO::PARAM_INT);
 		$stmt->bindParam(':idUsers', $data['user'], PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlDeleteRegister($idUsers){
@@ -665,12 +692,13 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUsers, PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlEnableRegister($idUsers){
@@ -679,12 +707,13 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUsers, PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlDisableArea($idArea){
@@ -693,12 +722,13 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlEnableArea($idArea){
@@ -707,12 +737,13 @@ class FormsModels {
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlUpdateArea($data){
@@ -724,12 +755,13 @@ class FormsModels {
 		$stmt->bindParam(':idArea', $data['idArea'], PDO::PARAM_INT);
 		$stmt->bindParam(':areaCode', $data['areaCode'], PDO::PARAM_STR);
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlUpdateUsersArea($data) {
@@ -755,16 +787,17 @@ class FormsModels {
 	
 			// Ejecuta el SQL
 			if ($stmt->execute()) {
-				return "ok";
+				$result = "ok";
 			} else {
-				return "error: No se pudo actualizar el área.";
+				$result = "error: No se pudo actualizar el área.";
 			}
 	
 		} catch (Exception $e) {
-			return "error: " . $e->getMessage();
+			$result = "error: " . $e->getMessage();
 		} finally {
 			$stmt = null;
 			$pdo = null;
+			return $result;
 		}
 	}	
 
@@ -787,12 +820,13 @@ class FormsModels {
 		$stmt->bindParam(':idExercise', $data['idExercise'], PDO::PARAM_INT);
 		
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlDisableExercise($idExercise){
@@ -805,12 +839,13 @@ class FormsModels {
 		$stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlEnableExercise($idExercise){
@@ -823,12 +858,13 @@ class FormsModels {
 		$stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlDeleteExercise($idExercise){
@@ -859,14 +895,15 @@ class FormsModels {
 			// Commit the transaction
 			$pdo->commit();
 	
-			return "ok";
+			$result = "ok";
 		} catch (PDOException $e) {
 			// Rollback the transaction if an error occurred
 			$pdo->rollBack();
-			return "Error: " . $e->getMessage();
+			$result = "Error: " . $e->getMessage();
 		} finally {
 			// Close the connection
 			$pdo = null;
+			return $result;
 		}
 	}
 
@@ -879,12 +916,13 @@ class FormsModels {
 		$stmt->bindParam(':idUsers', $idUsers, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlSelectAreaUser($idUsers){
@@ -905,12 +943,13 @@ class FormsModels {
 	   $stmt = $pdo->prepare($sql);
 	   $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 	   if($stmt->execute()){
-		return "ok";
+		$result = "ok";
 	   } else {
 		print_r($pdo->errorInfo());
 	   }
 	   $stmt->closeCursor();
 	   $stmt = null;
+	   return $result;
 	}
 
 	static public function mdlDeleteArea($idArea){
@@ -921,12 +960,13 @@ class FormsModels {
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlDeleteBudget($idBudget){
@@ -938,12 +978,13 @@ class FormsModels {
 		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlEnableBudget($idBudget){
@@ -956,12 +997,13 @@ class FormsModels {
 		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlDisableBudget($idBudget){
@@ -974,12 +1016,13 @@ class FormsModels {
 		$stmt->bindParam(':idBudget', $idBudget, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlUpdateBudget($data){
@@ -995,12 +1038,13 @@ class FormsModels {
 		$stmt->bindParam(':idBudget', $data['idBudget'], PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetProviders($provider_idUser){
@@ -1156,12 +1200,13 @@ class FormsModels {
 		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlEnableProvider($idProvider){
@@ -1174,12 +1219,13 @@ class FormsModels {
 		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlDeleteProvider($idProvider){
@@ -1191,12 +1237,13 @@ class FormsModels {
 		$stmt->bindParam(':idProvider', $idProvider, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlGetProvider($idProvider){
@@ -1405,12 +1452,13 @@ class FormsModels {
 		$stmt->bindParam(':idRequest', $idRequest, PDO::PARAM_INT);
 
 		if($stmt->execute()){
-			return "ok";
+			$result = "ok";
 		} else {
 			print_r($pdo->errorInfo());
 		}
 		$stmt->closeCursor();
 		$stmt = null;
+		return $result;
 	}
 	
 	static public function mdlGetRequest($idRequest){
@@ -1839,14 +1887,17 @@ class FormsModels {
 			$stmt->bindParam(":abono", $data['abono'], PDO::PARAM_STR);
 	
 			if ($stmt->execute()) {
-				return "success";
+				$result = "success";
 			} else {
-				return "error";
+				$result = "error";
 			}
 	
 		} catch (PDOException $e) {
-			return "error: " . $e->getMessage();
+			$result = "error: " . $e->getMessage();
 		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetReports($startDate, $endDate, $context = null) {
@@ -1937,13 +1988,14 @@ class FormsModels {
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            return "ok";
+            $result = "ok";
         } else {
-            return "error";
+            $result = "error";
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlCreatePartida($partida, $numeroPartida, $idCuenta) {
@@ -1955,13 +2007,14 @@ class FormsModels {
 		$stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            return "ok";
+            $result = "ok";
         } else {
-            return "error";
+            $result = "error";
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetAccounts() {
@@ -2007,13 +2060,14 @@ class FormsModels {
         $stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            return "ok";
+            $result = "ok";
         } else {
-            return "error";
+            $result = "error";
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlDeletePartida($idPartida) {
@@ -2023,13 +2077,14 @@ class FormsModels {
         $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            return "ok";
+            $result = "ok";
         } else {
-            return "error";
+            $result = "error";
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlEditAccount($idCuenta, $cuenta, $numeroCuenta, $idArea) {
@@ -2042,13 +2097,14 @@ class FormsModels {
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            return "ok";
+            $result = "ok";
         } else {
-            return "error";
+            $result = "error";
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlEditPartida($idPartida, $partida, $numeroPartida, $idCuenta) {
@@ -2061,13 +2117,14 @@ class FormsModels {
 		$stmt->bindParam(':idCuenta', $idCuenta, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            return "ok";
+            $result = "ok";
         } else {
-            return "error";
+            $result = "error";
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlGetConceptos($idPartida) {
@@ -2107,13 +2164,14 @@ class FormsModels {
         $stmt->bindParam(':numeroConcepto', $numeroConcepto, PDO::PARAM_STR);
         
         if ($stmt->execute()) {
-            return ["success" => "ok"];
+            $result = ["success" => "ok"];
         } else {
-			return ["error" => "Error al editar concepto"];
+			$result = ["error" => "Error al editar concepto"];
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlAddConcepto($idPartida, $concepto, $numeroConcepto) {
@@ -2125,13 +2183,14 @@ class FormsModels {
         $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-            return ["success" => "ok", "id" => $pdo->lastInsertId()];
+            $result = ["success" => "ok", "id" => $pdo->lastInsertId()];
         } else {
-            return ["error" => "Error al agregar concepto"];
+            $result = ["error" => "Error al agregar concepto"];
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlDeleteConcepto($idConcepto) {
@@ -2141,13 +2200,14 @@ class FormsModels {
         $stmt->bindParam(':idConcepto', $idConcepto, PDO::PARAM_INT);
         
         if ($stmt->execute()) {
-			return ["success" => "ok"];
+			$result = ["success" => "ok"];
         } else {
-			return ["error" => "Error al eliminar concepto"];
+			$result = ["error" => "Error al eliminar concepto"];
         }
         
         $stmt->closeCursor();
         $stmt = null;
+		return $result;
 	}
 
 	static public function mdlSelectAccounts($idArea) {
