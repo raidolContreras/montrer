@@ -342,22 +342,32 @@
 		cargo = $('#cargo').val();
 		abono = $('#abono').val();
 
-		if (empresa == '' ||
-		concepto == '' || 
-		requestedAmount == '' || 
-		importeLetra == '' || fechaPago == '' || 
-	    conceptoPago == '' || 
-        cuentaAfectadaCount == '' || 
-        partidaAfectadaCount == '' || 
-        cuentaAfectada == '' || 
-        partidaAfectada == '' || 
-        polizeType == '' || 
-        numberPolize == '' ||
-	    cargo == '' || 
-        abono == '') {
-            showAlertBootstrap('¡Atención!', 'Por favor, introduzca la información solicitada en todos lo campos señalados con un (*).');
-            return false;
-        }
+		let missingFields = [];
+
+		if (empresa == '') missingFields.push('Empresa');
+		if (concepto == '') missingFields.push('Concepto');
+		if (requestedAmount == '') missingFields.push('Monto solicitado');
+		if (importeLetra == '') missingFields.push('Importe en letra');
+		if (fechaPago == '') missingFields.push('Fecha de pago');
+		if (conceptoPago == '') missingFields.push('Concepto de pago');
+		if (cuentaAfectadaCount == '') missingFields.push('Cuenta afectada (conteo)');
+		if (partidaAfectadaCount == '') missingFields.push('Partida afectada (conteo)');
+		if (cuentaAfectada == '') missingFields.push('Cuenta afectada');
+		if (partidaAfectada == '') missingFields.push('Partida afectada');
+		if (polizeType == '') missingFields.push('Tipo de póliza');
+		if (numberPolize == '') missingFields.push('Número de póliza');
+		if (cargo == '') missingFields.push('Cargo');
+		if (abono == '') missingFields.push('Abono');
+
+		// Si hay campos vacíos, mostrar alerta
+		if (missingFields.length > 0) {
+			showAlertBootstrap(
+				'¡Atención!',
+				`Por favor, introduzca la información en los siguientes campos: ${missingFields.join(', ')}.`
+			);
+			return false;
+		}
+
 		// Llamar a la función que envía la solicitud AJAX
 		$.ajax({
 			type: 'POST',
