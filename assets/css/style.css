@@ -313,8 +313,8 @@ Main Content Wrap Style
 =====================================================*/
 .main-content-wrap {
   padding-top: 148px;
-  padding-right: 15%;
-  padding-left: 20%;
+  padding-right: 1%;
+  padding-left: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
