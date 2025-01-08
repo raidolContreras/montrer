@@ -26,7 +26,7 @@ $(document).ready(function () {
                 data: null, 
                 title: 'Código de partida',
                 render: function (data, type, row) {
-                    return `${row.areaCode}-${row.numeroCuenta}-${row.numeroPartida}-000`;
+                    return `<span class="badge bg-success" style="color: #fff;">${row.areaCode}-${row.numeroCuenta}-${row.numeroPartida}-000</span>`;
                 }
             },
             { data: 'cuenta', title: 'Cuenta'},
