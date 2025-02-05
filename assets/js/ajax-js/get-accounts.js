@@ -26,7 +26,8 @@ $(document).ready(function () {
                 data: null,
                 title: 'Número de cuenta',
                 render: function (data, type, row) {
-                    return `${row.areaCode}-${row.numeroCuenta}-000-000`;;
+
+                    return `<span class="badge bg-success" style="color: #fff;">${row.areaCode}-${row.numeroCuenta}-000-000</span>`;
                 }
             },
             { data: 'nameArea', title: 'Departamento' },

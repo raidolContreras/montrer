@@ -27,7 +27,7 @@ $(document).ready(function () {
                 data: null,
                 render: function(data, type, row) {
                     if (data.areaCode != '') {
-                        return '<span class="badge bg-info">' + data.areaCode + '-000-000-000 </span>';
+                        return '<span class="badge bg-success" style="color: #fff;">' + data.areaCode + '-000-000-000 </span>';
                     } else {
                         return '<span class="badge bg-danger">N/A</span>';
                     }

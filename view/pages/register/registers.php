@@ -22,7 +22,7 @@
 							<th width="15%">Fecha de creación</th>
 							<th width="15%">Última conexión</th>
 							<?php if ($level != 0): ?>
-								<th width="15%"></th>
+								<th width="30%"></th>
 							<?php endif ?>
 						</tr>
 					</thead>
