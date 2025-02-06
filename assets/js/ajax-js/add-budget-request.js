@@ -2,6 +2,9 @@ var bandera = 0;
 var toggleDropzone = 0;
 var currency = 'MXN';
 var numero = 0;
+var level = $('#level').val();
+
+levelUser(level);
 
 $(document).ready(function () {
 
@@ -22,11 +25,11 @@ $(document).ready(function () {
                 $('#importeLetra').val('');
             }
             clearTimeout(timeout)
-        },500)
+        }, 500)
     });
 
     // Detectar cambios en cualquier campo del formulario y establecer la bandera a 1
-    $("form.account-wrap input, form.account-wrap select").change(function() {
+    $("form.account-wrap input, form.account-wrap select").change(function () {
         bandera = 1;
     });
 
@@ -71,7 +74,7 @@ $(document).ready(function () {
         }
 
         // showAlertBootstrap('¡Éxito!', 'Presupuesto asignado');
-        
+
         // Hacer la solicitud AJAX si el monto es válido
         $.ajax({
             type: "POST",
@@ -99,12 +102,12 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     // Configuración del evento 'sending' del Dropzone
-    myDropzone.on("sending", function(file, xhr, formData) {
+    myDropzone.on("sending", function (file, xhr, formData) {
         formData.append("idPaymentRequestTemp", idPaymentRequestTemp);
     });
-    
+
     // Variable de control para mostrar el modal solo una vez
     // let hasModalShown = false;
 
@@ -118,14 +121,14 @@ $(document).ready(function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-	var cancelButton = document.getElementById('cancelButton');
+    var cancelButton = document.getElementById('cancelButton');
 
-	cancelButton.addEventListener('click', function (event) {
+    cancelButton.addEventListener('click', function (event) {
 
-		event.preventDefault();
-		showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'requestBudget');
+        event.preventDefault();
+        showAlertBootstrap2('Cancelar', '¿Seguro que desea cancelar?', 'requestBudget');
 
-	});
+    });
 });
 
 $(document).ready(function () {
@@ -139,12 +142,13 @@ function getArea(registerValue) {
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getAreasManager.php',
-        data: {user: registerValue},
+        data: { user: registerValue },
         dataType: 'json',
         success: function (response) {
             $('select[name="area"]').val(response.nameArea);
             // Llena el select de áreas
             fillAreaSelect('area', response, 'departamento');
+            
 
         },
         error: function (error) {
@@ -172,6 +176,7 @@ function fillAreaSelect(select, datas, message) {
                 data: { areaId: data[0] },
                 dataType: 'json',
                 success: function (response) {
+                    cuentas(data[0]);
                     updateMaxRequestedAmount(response);
                 },
                 error: function (error) {
@@ -184,10 +189,10 @@ function fillAreaSelect(select, datas, message) {
 }
 
 // Luego, agrega el evento change al select de áreas
-$('#area').on('change', function() {
+$('#area').on('change', function () {
     var selectedAreaId = $(this).val();
     var selectedAreaText = $(this).find('option:selected').text();
-    
+
     createFolio(selectedAreaText);
 
     $.ajax({
@@ -292,8 +297,8 @@ function updateMaxRequestedAmount(datos) {
             success: function (response) {
                 let totalBudget = 0;
                 let totalBudgetUsed = 0;
-                
-                $('#idAreaCargo').val(response.areaCode+'-000-000-000');
+
+                $('#idAreaCargo').val(response.areaCode + '-000-000-000');
                 $.ajax({
                     type: 'POST',
                     url: 'controller/ajax/getAmountPendient.php',
@@ -360,10 +365,10 @@ function openAddProviderModal() {
 }
 
 function confirmExit(event, destination) {
-	if (bandera == 1){
-		event.preventDefault();
-		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
-	}
+    if (bandera == 1) {
+        event.preventDefault();
+        showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
+    }
 }
 
 $(document).ready(function () {
@@ -395,7 +400,7 @@ function createFolio(nameArea) {
 
 // function getBusiness() {
 //     var registerValue = $('#register-value').data('register');
-    
+
 //     $.ajax({
 //         type: 'POST',
 //         url: 'controller/ajax/getBusiness.php',
@@ -430,7 +435,7 @@ function createFolio(nameArea) {
 //                     .attr('name', 'empresa')
 //                     .attr('id', 'empresa')
 //                     .addClass('form-select form-control');
-                
+
 //                 response.forEach(function(item) {
 //                     var option = $('<option>')
 //                         .attr('value', item.idBusiness)
@@ -446,7 +451,7 @@ function createFolio(nameArea) {
 
 function formatBusinessUserId(id) {
     // Convierte el ID a una cadena para asegurarse de que pueda usar .substring()
-    id = id.toString(); 
+    id = id.toString();
 
     // Divide el string en partes según el formato que deseas
     let part1 = id.substring(0, 4);
@@ -458,7 +463,7 @@ function formatBusinessUserId(id) {
     return `${part1}-${part2}-${part3}-${part4}`;
 }
 
-$('#toggleDropzone').on('change', function() {
+$('#toggleDropzone').on('change', function () {
     if ($(this).is(':checked')) {
         toggleDropzone = 1;
         $('#dropzoneContainer').show();
@@ -478,7 +483,7 @@ var myDropzone = new Dropzone("#documentDropzone", {
     autoProcessQueue: false,
     dictInvalidFileType: "Archivo no está permitido. Por favor, sube archivos en formato PDF o XML.",
     dictFileTooBig: "El archivo es demasiado grande ({{filesize}}MB). Tamaño máximo permitido: {{maxFilesize}}MB.",
-    errorPlacement: function(error, element) {
+    errorPlacement: function (error, element) {
         var $element = $(element),
             errContent = $(error).text();
         $element.attr('data-toggle', 'tooltip');
@@ -490,18 +495,18 @@ var myDropzone = new Dropzone("#documentDropzone", {
 
         // Agregar botón de eliminar archivo
         var removeButton = Dropzone.createElement('<button style="margin-top: 5px; cursor: pointer;">Eliminar archivo</button>');
-        removeButton.addEventListener("click", function(e) {
+        removeButton.addEventListener("click", function (e) {
             e.preventDefault();
             e.stopPropagation();
             myDropzone.removeFile(element);
         });
         $element.parent().append(removeButton); // Agregar el botón al contenedor del input
     },
-    init: function() {
-        this.on("addedfile", function(file) {
+    init: function () {
+        this.on("addedfile", function (file) {
             var removeButton = Dropzone.createElement('<button class="rounded-button">&times;</button>');
             var _this = this;
-            removeButton.addEventListener("click", function(e) {
+            removeButton.addEventListener("click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -602,9 +607,225 @@ function numeroALetra(numero, status, currency) {
     }
 
     // Ajuste final de formato
-    texto = texto.replace(/\s+/g, ' ').trim().replace(/^./, function(str) {
+    texto = texto.replace(/\s+/g, ' ').trim().replace(/^./, function (str) {
         return str.toUpperCase();
     });
 
     return texto;
 }
+
+function levelUser(level) {
+
+    if (level === '1') {
+        // Desbloquea los campos del formulario
+        $('#empresa, #area, #cuentaAfectada, #partidaAfectada, #concepto, #provider, #requestedAmount, #importeLetra, #fechaPago, #conceptoPago, #estatus, #fechaCarga, #cuentaAfectadaCount, #partidaAfectadaCount, #polizeType, #numberPolize, #cargo, #abono')
+            .prop('disabled', false);
+
+        // cargar las cuentas de su area a cargo
+
+
+    }
+}
+
+
+
+// Buscar cuentas
+function cuentas(idArea) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/selectAccounts.php',
+        data: { 'idArea': idArea },
+        dataType: 'json',
+        success: function (response) {
+            if (response && Array.isArray(response)) {
+                const selectElement = $('#cuentaAfectada');
+                selectElement.empty(); // Limpiar opciones anteriores
+                // Agregar una opción por defecto
+                selectElement.append('<option value="">Seleccione una cuenta</option>');
+                // Iterar sobre la respuesta y agregar opciones al select
+                response.forEach(cuenta => {
+                    selectElement.append(`<option value="${cuenta.idCuenta}" data-numeroCuenta="${cuenta.areaCode}-${cuenta.numeroCuenta}-000-000">${cuenta.cuenta}</option>`);
+                });
+                // Configurar evento change para actualizar #idCuentaAfectada
+                selectElement.change(function () {
+                    const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
+                    const numeroCuentaAfectada = selectedOption.attr('data-numeroCuenta') || '';
+                    console.log(numeroCuentaAfectada);
+                    // Actualizar los valores correspondientes
+                    $('#idCuentaAfectada').val(numeroCuentaAfectada);
+                    if ($(this).val() !== '') {
+                        partidas(selectedOption.val());
+                        // eliminar disabled del select 
+                        $('#partidaAfectada').removeAttr('disabled');
+                    } else {
+                        // Actualizar los valores correspondientes
+                        $('#idPartidaAfectada').val('');
+                        $('#idConcepto').val('');
+                        // agregar disabled al select 
+                        $('#partidaAfectada').attr('disabled', 'disabled');
+                        let selectElement = $('#partidaAfectada');
+                        selectElement.empty(); // Limpiar opciones anteriores
+                        selectElement.append('<option value="" selected>Seleccione una cuenta primero</option>');
+                        // agregar disabled al select 
+                        $('#concepto').attr('disabled', 'disabled');
+                        selectElement = $('#concepto');
+                        selectElement.empty(); // Limpiar opciones anteriores
+                        selectElement.append('<option value="" selected>Seleccione una partida primero</option>');
+                    }
+                });
+            }
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+// Buscar partidas
+function partidas(idCuenta) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/selectPartidas.php',
+        data: { 'idCuenta': idCuenta },
+        dataType: 'json',
+        success: function (response) {
+            if (response && Array.isArray(response)) {
+                const selectElement = $('#partidaAfectada');
+                selectElement.empty(); // Limpiar opciones anteriores
+                // Agregar una opción por defecto
+                selectElement.append('<option value="">Seleccione una partida</option>');
+                // Iterar sobre la respuesta y agregar opciones al select
+                response.forEach(partida => {
+                    selectElement.append(`<option value="${partida.idPartida}" data-numeroPartida="${partida.areaCode}-${partida.numeroCuenta}-${partida.numeroPartida}">${partida.Partida}</option>`);
+                });
+                // Configurar evento change para actualizar #idPartidaAfectada
+                selectElement.change(function () {
+                    const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
+                    const numeroPartidaAfectada = selectedOption.attr('data-numeroPartida') || '';
+
+                    if ($(this).val() !== '') {
+                        // Actualizar los valores correspondientes
+                        $('#idPartidaAfectada').val(numeroPartidaAfectada + '-000');
+                        conceptos(selectedOption.val(), numeroPartidaAfectada);
+                        // eliminar disabled del select 
+                        $('#concepto').removeAttr('disabled');
+                    } else {
+                        // Actualizar los valores correspondientes
+                        $('#idPartidaAfectada').val('');
+                        $('#idConcepto').val('');
+                        // agregar disabled al select 
+                        $('#concepto').attr('disabled', 'disabled');
+                        const selectElement = $('#concepto');
+                        selectElement.empty(); // Limpiar opciones anteriores
+                        selectElement.append('<option value="" selected>Seleccione una partida primero</option>');
+                    }
+                });
+            }
+        },
+        error: function (error) {
+            console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+function conceptos(idPartida, code) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getConceptos.php',
+        data: { 'idPartida': idPartida },
+        dataType: 'json',
+        success: function (response) {
+            const selectElement = $('#concepto');
+            const inputElement = $('#conceptoInput');
+
+            if (response && Array.isArray(response) && response.length > 0) {
+                // Mostrar el select y ocultar el input
+                selectElement.show().prop('disabled', false);
+                inputElement.hide().prop('disabled', true);
+
+                // Limpiar opciones anteriores y agregar las nuevas
+                selectElement.empty();
+                selectElement.append('<option value="">Seleccione un concepto</option>');
+                response.forEach(concepto => {
+                    selectElement.append(`<option value="${concepto.idConcepto}" data-numeroConcepto="${code}-${concepto.numeroConcepto}">${concepto.concepto}</option>`);
+                });
+
+                // Evento change para actualizar #idConcepto
+                selectElement.off('change').on('change', function () {
+                    const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
+                    const idConcepto = selectedOption.val() || '';
+                    const numeroConcepto = selectedOption.attr('data-numeroConcepto') || '';
+                    // Actualizar los valores correspondientes
+                    $('#idConcepto').val(numeroConcepto);
+                });
+            } else {
+                // Si la respuesta está vacía, mostrar el input y ocultar el select
+                // select default vacio
+                selectElement.empty(); // Limpiar opciones anteriores
+                selectElement.html('<option value="" selected>Seleccione un concepto</option>');
+                selectElement.hide().prop('disabled', true);
+                inputElement.show().prop('disabled', false).val(''); // Mostrar el input y limpiar su valor
+                $('#idConcepto').val(code + '-000'); // Limpiar el valor de #idConcepto
+            }
+        },
+        error: function () {
+            alert('Hubo un error al intentar obtener los conceptos.');
+        }
+    });
+}
+
+$('.auto-format').on('input', function () {
+    let input = $(this).val().replace(/\D/g, ''); // Elimina cualquier carácter no numérico
+    let formatted = '';
+
+    // Aplica el formato 1000-001-001-001
+    if (input.length > 4) {
+        formatted += input.substring(0, 4) + '-';
+        if (input.length > 7) {
+            formatted += input.substring(4, 7) + '-';
+            if (input.length > 10) {
+                formatted += input.substring(7, 10) + '-';
+                formatted += input.substring(10, 13);
+            } else {
+                formatted += input.substring(7);
+            }
+        } else {
+            formatted += input.substring(4);
+        }
+    } else {
+        formatted = input;
+    }
+
+    $(this).val(formatted);
+});
+
+$('.auto-format2').on('input', function () {
+    console.log('a');
+    let input = $(this).val().replace(/\D/g, ''); // Elimina cualquier carácter no numérico
+    let formatted = '';
+
+    // Aplica el formato 1000-001-001-001
+    if (input.length > 4) {
+        formatted += input.substring(0, 4) + '-';
+        if (input.length > 7) {
+            formatted += input.substring(4, 7) + '-';
+            if (input.length > 10) {
+                formatted += input.substring(7, 10) + '-';
+                if (input.length > 13) {
+                    formatted += input.substring(10, 13) + '-';
+                    formatted += input.substring(13, 16);
+                } else {
+                    formatted += input.substring(10);
+                }
+            } else {
+                formatted += input.substring(7);
+            }
+        } else {
+            formatted += input.substring(4);
+        }
+    } else {
+        formatted = input;
+    }
+
+    $(this).val(formatted);
+});

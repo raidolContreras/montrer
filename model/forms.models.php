@@ -1082,12 +1082,12 @@ class FormsModels {
 		(provider_key, representative_name, contact_phone, email, website, business_name, rfc, 
 		fiscal_address_street, fiscal_address_colonia, fiscal_address_municipio, fiscal_address_estado, 
 		fiscal_address_cp, bank_name, account_holder, account_number, clabe, description, created_at, updated_at, provider_idUser,
-		extrangero, swiftCode, beneficiaryAddress, currencyType, status) 
+		extrangero, swiftCode, beneficiaryAddress, currencyType) 
 		VALUES 
 		(:providerKey, :representativeName, :contactPhone, :email, :website, :businessName, :rfc, 
 		:fiscalAddressStreet, :fiscalAddressColonia, :fiscalAddressMunicipio, :fiscalAddressEstado, 
 		:fiscalAddressCP, :bankName, :accountHolder, :accountNumber, :clabe, :description, NOW(), NOW(), :idUser,
-		:extrangero, :swiftCode, :beneficiaryAddress, :currencyType, 1)";
+		:extrangero, :swiftCode, :beneficiaryAddress, :currencyType)";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':providerKey', $data['providerKey'], PDO::PARAM_STR);
