@@ -63,7 +63,7 @@
 
                 <!-- Concepto -->
                 <div class="col-md-12 row mb-3" style="align-items: center;">
-                    <label for="concepto" class="form-label col-2 fw-bold">Concepto:</span></label>
+                    <label for="concepto" class="form-label col-2 fw-bold">Concepto:></span></label>
                     <select id="concepto" name="concepto" class="form-select form-control col" disabled>
                         <option value="">Seleccionar concepto</option>
                     </select>
@@ -185,7 +185,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <input class="form-control col auto-format2" type="text" id="cuentaAfectadaCount" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000" disabled>
+                                        <input class="form-control col" type="text" id="cuentaAfectadaCount" name="cuentaAfectadaCount" placeholder="5000-001-000-000-000" disabled>
                                     </td>
                                     <td>
                                         <input class="form-control col" type="text" id="polizeType" name="polizeType" placeholder="EG" disabled>
@@ -203,7 +203,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input class="form-control col auto-format" type="text" id="partidaAfectadaCount" name="partidaAfectadaCount" placeholder="1000-001-001-001" disabled>
+                                        <input class="form-control col" type="text" id="partidaAfectadaCount" name="partidaAfectadaCount" placeholder="1000-001-001-001" disabled>
                                     </td>
                                     <td></td>
                                     <td></td>
@@ -291,7 +291,6 @@ include 'view/pages/request_budget/modalProvider.php';
     $j(document).ready(function() {
         $j('.inputmask').inputmask();
     });
-    
 </script>
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
 <script src="assets/js/ajax-js/request_provider.js"></script>

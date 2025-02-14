@@ -83,11 +83,9 @@
 				$('#alertModal').modal('show');
 			}
 			
-			function showAlertBootstrap3(title, message, adress, cancel, subtitle = null) {
+			function showAlertBootstrap3(title, message, adress, cancel) {
 				$('#modalLabel').text(title);
-				
-				let bodyContent = subtitle ? `<span>${subtitle}</span></br><center>${message}</center>` : message;
-				$('.modal-body-extra').html(bodyContent);
+				$('.modal-body-extra').text(message);
 				$('.modal-footer-extra').html('<button type="button" class="btn btn-danger" onclick="window.location.href=\''+ cancel +'\'">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
 				$('#alertModal').modal('show');
 			}

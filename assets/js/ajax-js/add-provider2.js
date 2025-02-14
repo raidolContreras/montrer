@@ -98,7 +98,6 @@ function sendForm() {
 
                 getNextIdProvider();
                 restartSelectProvider();
-                showAlertBootstrap('!Éxito¡', 'El alta de su proveedor esta en proceso de autorización, una vez autorizado podrá proceder a realizar su solicitud correspondiente.');
 
             } else if (response == 'Error: RFC ya registrado') {
                 

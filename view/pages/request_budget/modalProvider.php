@@ -123,13 +123,7 @@
                 </div>
                 <div class="col-md-6 foreign-fields" style="display: none;">
                     <label for="currencyType" class="form-label">Tipo de divisa de la cuenta</label>
-                    <select id="currencyType" name="currencyType" class="form-select form-control">
-                        <option value="" selected disabled>Seleccione una opción</option>
-                        <option value="USD" data-icon="💵">💵 US$ - Dólar estadounidense</option>
-                        <option value="CAD" data-icon="💵">💵 C$ - Dólar canadiense</option>
-                        <option value="EUR" data-icon="💶">💶 € - Euro</option>
-                        <option value="GBP" data-icon="💷">💷 £ - Libra esterlina</option>
-                    </select>
+                    <input type="text" class="form-control" id="currencyType" name="currencyType">
                 </div>
             </div>
         </form>
