@@ -2212,9 +2212,15 @@ class FormsModels {
 
 	static public function mdlSelectAccounts($idArea) {
 		$pdo = Conexion::conectar();
-        $sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea where c.idArea = :idArea AND c.status = 1";
+		if ($idArea == null) {
+			$sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea WHERE c.status = 1";
+		} else {
+			$sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea WHERE c.idArea = :idArea AND c.status = 1";
+		}
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		if ($idArea!= null) {
+            $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+        }
         $stmt->execute();
         
         $result = $stmt->fetchAll();

@@ -4,15 +4,36 @@
         background-color: #dfdfdf;
         border: var(--bs-border-width) solid #5d5d5d;
     }
+
+    #cuentaAfectada {
+        font-size: 14px;
+        /* Ajuste del tamaño del texto */
+        max-width: 100%;
+        /* Evita que el select se expanda demasiado */
+        white-space: nowrap;
+        /* Mantiene la línea sin saltos */
+    }
+
+    #cuentaAfectada option {
+        padding: 5px;
+        font-size: 14px;
+        color: #333;
+        /* Color del texto */
+    }
+
+    #cuentaAfectada option:hover {
+        background-color: #e6f7ff;
+        /* Color al pasar el cursor */
+    }
 </style>
 <main class="main-content-wrap">
     <div class="card-box-style p-4 rounded shadow-sm bg-light">
         <center class="others-title mb-4 row">
             <h3 class="text-primary col-9">SOLICITUD DE PAGO</h3>
-                <!-- Fecha de solicitud -->
-                <div class="col row mb-3" style="align-items: center;">
-                    <input type="date" id="fechaSolicitud" name="fechaSolicitud" class="form-control col bg-light border" value="<?php echo date('Y-m-d'); ?>" readonly>
-                </div>
+            <!-- Fecha de solicitud -->
+            <div class="col row mb-3" style="align-items: center;">
+                <input type="date" id="fechaSolicitud" name="fechaSolicitud" class="form-control col bg-light border" value="<?php echo date('Y-m-d'); ?>" readonly>
+            </div>
         </center>
 
         <form class="account-wrap" id="budgetRequestForm">
@@ -86,7 +107,7 @@
                     </label>
                     <div class="input-group col px-0">
                         <span class="input-group-text bg-white border currency-symbol">$</span>
-                        <input type="text" id="requestedAmount" name="requestedAmount" 
+                        <input type="text" id="requestedAmount" name="requestedAmount"
                             class="form-control inputmask bg-white border"
                             data-inputmask="'alias': 'currency', 'prefix': '', 'placeholder': '0', 'autoUnmask': true, 'removeMaskOnSubmit': true">
                     </div>
@@ -107,13 +128,13 @@
 
 
                 <!-- Clave interbancaria -->
-                 <div class="col-md-12 row mb-3 clabe" style="align-items: center;">
+                <div class="col-md-12 row mb-3 clabe" style="align-items: center;">
                     <label for="clabe" class="form-label col-2 fw-bold">Clabe interbancaria:</label>
                     <input type="text" id="clabe" name="clabe" class="form-control col border" disabled>
                 </div>
 
                 <!-- Banco -->
-                 <div class="col-md-12 row mb-3" style="align-items: center;">
+                <div class="col-md-12 row mb-3" style="align-items: center;">
                     <label for="bank_name" class="form-label col-2 fw-bold">Banco:</label>
                     <input type="text" id="bank_name" name="bank_name" class="form-control col border" disabled>
                 </div>
@@ -219,17 +240,17 @@
                                     <td>
                                         ESTATUS:
                                     </td>
-                                        <td colspan="2">
-                                            <select id="estatus" name="estatus" class="form-select col border" disabled>
-                                                <option value="pendiente_de_pago">Pendiente de pago</option>
-                                                <option value="denegado">Denegado</option>
-                                                <option value="pagado">Pagado</option>
-                                            </select>
+                                    <td colspan="2">
+                                        <select id="estatus" name="estatus" class="form-select col border" disabled>
+                                            <option value="pendiente_de_pago">Pendiente de pago</option>
+                                            <option value="denegado">Denegado</option>
+                                            <option value="pagado">Pagado</option>
+                                        </select>
                                     </td>
-                                        <td>FECHA DE CARGO</td>
-                                        <td>
+                                    <td>FECHA DE CARGO</td>
+                                    <td>
                                         <input class="form-control col border" type="date" id="fechaCarga" name="fechaCarga" disabled>
-                                        </td>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -246,7 +267,7 @@
             <input type="hidden" name="maxBudget" id="maxBudget">
             <input type="hidden" class="form-control" id="idBudget" name="idBudget">
             <input type="hidden" name="budget">
-            
+
         </form>
     </div>
 </main>
@@ -291,7 +312,6 @@ include 'view/pages/request_budget/modalProvider.php';
     $j(document).ready(function() {
         $j('.inputmask').inputmask();
     });
-    
 </script>
 <script src="assets/js/ajax-js/add-budget-request.js"></script>
 <script src="assets/js/ajax-js/request_provider.js"></script>

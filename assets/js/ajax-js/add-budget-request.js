@@ -201,6 +201,21 @@ $('#area').on('change', function () {
         data: { areaId: selectedAreaId },
         dataType: 'json',
         success: function (response) {
+            cuentas(selectedAreaId);
+            $('#idCuentaAfectada').val('');
+            $('#idPartidaAfectada').val('');
+            // formatear partidaAfectada a option vacio
+            $('#partidaAfectada').empty();
+            $('#partidaAfectada').append($('<option>').val('').text('Seleccione una cuenta'));
+            $('#idConcepto').val('');
+            // formatear concepto a option vacio
+            $('#concepto').empty();
+            $('#concepto').append($('<option>').val('').text('Seleccione una partida'));
+            // quitar el style display: none de concepto
+            $('#concepto').css('display', 'block');
+            // quitar disable de concepto
+            $('#concepto').prop('disabled', false);
+            
             updateMaxRequestedAmount(response);
         },
         error: function (error) {
@@ -621,9 +636,6 @@ function levelUser(level) {
         $('#empresa, #area, #cuentaAfectada, #partidaAfectada, #concepto, #provider, #requestedAmount, #importeLetra, #fechaPago, #conceptoPago, #estatus, #fechaCarga, #cuentaAfectadaCount, #partidaAfectadaCount, #polizeType, #numberPolize, #cargo, #abono')
             .prop('disabled', false);
 
-        // cargar las cuentas de su area a cargo
-
-
     }
 }
 
@@ -634,7 +646,6 @@ function cuentas(idArea) {
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/selectAccounts.php',
-        data: { 'idArea': idArea },
         dataType: 'json',
         success: function (response) {
             if (response && Array.isArray(response)) {
@@ -644,16 +655,34 @@ function cuentas(idArea) {
                 selectElement.append('<option value="">Seleccione una cuenta</option>');
                 // Iterar sobre la respuesta y agregar opciones al select
                 response.forEach(cuenta => {
-                    selectElement.append(`<option value="${cuenta.idCuenta}" data-numeroCuenta="${cuenta.areaCode}-${cuenta.numeroCuenta}-000-000">${cuenta.cuenta}</option>`);
-                });
+                    const numeroCuenta = `${cuenta.areaCode}-${cuenta.numeroCuenta}-000-000`;
+                    selectElement.append(`
+                        <option value="${cuenta.idCuenta}" data-numeroCuenta="${numeroCuenta}" title="${numeroCuenta}">
+                            ${cuenta.cuenta} (${numeroCuenta})
+                        </option>
+                    `);
+                });                
                 // Configurar evento change para actualizar #idCuentaAfectada
                 selectElement.change(function () {
                     const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
                     const numeroCuentaAfectada = selectedOption.attr('data-numeroCuenta') || '';
-                    console.log(numeroCuentaAfectada);
+
                     // Actualizar los valores correspondientes
                     $('#idCuentaAfectada').val(numeroCuentaAfectada);
                     if ($(this).val() !== '') {
+                        
+                        // formatear partidaAfectada a option vacio
+                        $('#partidaAfectada').empty();
+                        $('#partidaAfectada').append($('<option>').val('').text('Seleccione una cuenta'));
+                        $('#idConcepto').val('');
+                        // formatear concepto a option vacio
+                        $('#concepto').empty();
+                        $('#concepto').append($('<option>').val('').text('Seleccione una partida'));
+                        // quitar el style display: none de concepto
+                        $('#concepto').css('display', 'block');
+                        // quitar disable de concepto
+                        $('#concepto').prop('disabled', false);
+
                         partidas(selectedOption.val());
                         // eliminar disabled del select 
                         $('#partidaAfectada').removeAttr('disabled');
@@ -706,6 +735,14 @@ function partidas(idCuenta) {
                     if ($(this).val() !== '') {
                         // Actualizar los valores correspondientes
                         $('#idPartidaAfectada').val(numeroPartidaAfectada + '-000');
+                        $('#idConcepto').val('');
+                        // formatear concepto a option vacio
+                        $('#concepto').empty();
+                        $('#concepto').append($('<option>').val('').text('Seleccione una partida'));
+                        // quitar el style display: none de concepto
+                        $('#concepto').css('display', 'block');
+                        // quitar disable de concepto
+                        $('#concepto').prop('disabled', false);
                         conceptos(selectedOption.val(), numeroPartidaAfectada);
                         // eliminar disabled del select 
                         $('#concepto').removeAttr('disabled');
