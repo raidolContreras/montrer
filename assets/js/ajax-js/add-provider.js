@@ -75,12 +75,12 @@ $(document).ready(function () {
 				...fields
 			},
 			success: function (response) {
-				if (response !== 'Error: RFC ya registrado' || response !== 'Error') {
+				if (response !== 'Error: RFC ya registrado' && response !== 'Error') {
 					idProvider = response;
 					cedulaDropzone.processQueue();
 					caratulaDropzone.processQueue();
 					bandera = 0;
-					showAlertBootstrap3('Proveedor creado exitosamente.', '¿Agregar otro proveedor?', 'registerProvider' , 'provider');
+					showAlertBootstrap3('Proveedor creado exitosamente.', '¿Agregar otro proveedor?', 'registerProvider' , 'provider', 'El alta de su proveedor esta en proceso de autorización, una vez autorizado podrá proceder a realizar su solicitud correspondiente');
 
 				} else if (response == 'Error: RFC ya registrado') {
                 

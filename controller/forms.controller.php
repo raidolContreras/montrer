@@ -505,10 +505,12 @@ class FormsController {
 			$mail->Host = 'smtp.hostinger.com'; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
 			$mail->Username = 'montrer@devosco.io'; // Cambia esto a tu dirección de correo electrónico real
-			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->Password = 'u+IhStU?OEV1'; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-			$mail->Port = 587;
-			$mail->setFrom('montrer@devosco.io', 'UNIMO (no responder)');
+			$mail->Port = 465;    
+	
+			// Configuración del correo
+			$mail->setFrom('montrer@devosco.io', 'Universidad Montrer');
 			$mail->addAddress($recipient);
 	
 			// Título y diseño del correo
@@ -942,11 +944,12 @@ class FormsController {
 			$mail->Host = 'smtp.hostinger.com'; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
 			$mail->Username = 'montrer@devosco.io'; // Cambia esto a tu dirección de correo electrónico real
-			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->Password = 'u+IhStU?OEV1'; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-			$mail->Port = 587;
-            $mail->setFrom('montrer@devosco.io', 'UNIMO (no responder)');
+			$mail->Port = 465;    
 
+			// Configuración del remitente
+			$mail->setFrom('montrer@devosco.io', 'UNIMO (no responder)');
 			$mail->addAddress($email); // Destinatario
 
 			// Asunto del correo
@@ -1056,11 +1059,12 @@ class FormsController {
 			$mail->Host = 'smtp.hostinger.com'; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
 			$mail->Username = 'montrer@devosco.io'; // Cambia esto a tu dirección de correo electrónico real
-			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->Password = 'u+IhStU?OEV1'; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-			$mail->Port = 587;
-			$mail->setFrom('montrer@devosco.io', 'UNIMO (no responder)');
+			$mail->Port = 465;
 	
+			// Configuración del remitente
+			$mail->setFrom('montrer@devosco.io', 'Universidad Montrer');
 			$mail->addAddress($email); // Destinatario
 	
 			// Configuración del correo
