@@ -2,7 +2,7 @@
 // test-mail.php
 
 // 1. Autoload de Composer
-require __DIR__ . 'controller/vendor/autoload.php';
+require __DIR__ . '/controller/vendor/autoload.php';
 
 // 2. Usos de las clases de PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
