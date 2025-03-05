@@ -605,12 +605,12 @@ if (
 		$extrangero = 1;
 		$swiftCode = $_POST['swiftCode'];
 		$beneficiaryAddress = $_POST['beneficiaryAddress'];
-		$currencyType = $_POST['currencyType'];
+		$currencyType = (isset($_POST['currencyType'])) ? $_POST['currencyType'] : 'MXN';
 	} else {
 		$extrangero = 0;
 		$swiftCode = '';
         $beneficiaryAddress = '';
-        $currencyType = '';
+        $currencyType = 'MXN';
 	}
 
 	$data = array(
@@ -947,25 +947,40 @@ if (isset($_POST['idPaymentRequestTemp'])) {
 }
 
 if (isset($_POST['newProvider'])) {
-	$targetDir = "../../view/providers/" . $_POST['newProvider'] . "/";
-	$fileName = basename($_POST['document'].'.pdf');
-	$targetFilePath = $targetDir . $fileName;
-	$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-
-	if (!file_exists($targetDir)) {
-		mkdir($targetDir, 0777, true);
-	}
-
-		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
-
-			session_start();
-			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Send files providers: '.$fileName, $ip);
-			
-			echo 'ok';
-		} else {
-			echo 'Error';
-		}
+    // Configurar el directorio
+    $targetDir = "../../view/providers/" . $_POST['newProvider'] . "/";
+    
+    // Verificar y crear el directorio solo si no existe
+    if (!is_dir($targetDir)) {
+        try {
+            if (!mkdir($targetDir, 0777, true)) {
+                throw new Exception("Error al crear el directorio");
+            }
+        } catch (Exception $e) {
+            // Si hay un error al crear el directorio, verificar si ya existe
+            if (!is_dir($targetDir)) {
+                die("No se pudo crear el directorio y no existe: " . $e->getMessage());
+            }
+            // Si el directorio existe, continuamos silenciosamente
+        }
+    }
+    
+    // Configurar el nombre del archivo y la ruta
+    $fileName = basename($_POST['document'] . '.pdf');
+    $targetFilePath = $targetDir . $fileName;
+    
+    // Verificar que el archivo sea un PDF
+    $fileType = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
+    if ($fileType == "pdf") {
+        // Intentar subir el archivo
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+            echo "El archivo " . $fileName . " se ha subido correctamente.";
+        } else {
+            echo "Lo siento, hubo un error al subir tu archivo.";
+        }
+    } else {
+        echo "Solo se permiten archivos PDF.";
+    }
 }
 
 if (isset($_POST['searchComprobante'])) {

@@ -11,9 +11,9 @@ function getNextIdProvider() {
         url: 'controller/ajax/getNextIdProvider.php',
         dataType: 'json',
         success: function (response) {
-            var currentYear = new Date().getFullYear().toString().substr(2);
+            // var currentYear = new Date().getFullYear().toString().substr(2);
             providerKey = response.nextIdProvider;
-            providerKey += currentYear;
+            // providerKey += currentYear;
     
             $('#providerKey').val(providerKey);
         },

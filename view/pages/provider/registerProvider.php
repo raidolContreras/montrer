@@ -94,9 +94,9 @@
                 </div>
                 <div class="col-md-6">
                     <label for="clabe" class="form-label">CLABE interbancaria</label>
-                    <input type="text" class="form-control" id="clabe" name="clabe">
+                    <input type="text" class="form-control" id="clabe" name="clabe" placeholder="xxx xxx xxxxxxxxxxx x">
                 </div>
-                
+
                 <div class="col-md-6">
                     <label for="cedula" class="form-label">Cédula fiscal<span class="required"></span></label>
                     <div class="dropzone cedula"></div>
@@ -155,3 +155,32 @@
 <script src="assets/vendor/dropzone/dropzone-min.js"></script>
 <script src="assets/js/ajax-js/add-provider.js"></script>
 <script src="assets/js/ajax-js/get-nextIdProvider.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#clabe').on('input', function() {
+            // Elimina cualquier carácter que no sea número
+            let digits = $(this).val().replace(/\D/g, '');
+
+            // Limita la cadena a 18 dígitos
+            if (digits.length > 18) {
+                digits = digits.substring(0, 18);
+            }
+
+            // Alinea los dígitos a la derecha rellenando con 'x' a la izquierda
+            let padded = digits.padStart(18, '-');
+
+            // Separamos en grupos: 3 dígitos, 3 dígitos, 11 dígitos y 1 dígito
+            let group1 = padded.substring(0, 3);
+            let group2 = padded.substring(3, 6);
+            let group3 = padded.substring(6, 17);
+            let group4 = padded.substring(17, 18);
+
+            // Formamos el resultado con espacios intermedios
+            let formatted = group1 + ' ' + group2 + ' ' + group3 + ' ' + group4;
+
+            // Actualiza el valor del input con la máscara aplicada
+            $(this).val(formatted);
+        });
+    });
+</script>

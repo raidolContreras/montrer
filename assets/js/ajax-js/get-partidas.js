@@ -1,37 +1,29 @@
 $(document).ready(function () {
-    // Inicializar DataTable
-    const partidasTable = $('#partidas').DataTable({
-		// tus otras opciones de configuración aquí...
-		initComplete: function(settings, json) {
-			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		},
-		drawCallback: function(settings) {
-			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		},
-        ajax: {
-            url: 'controller/ajax/getPartidas.php', // Ruta al backend que devuelve las partidas
-            method: 'POST',
-            dataSrc: ''
-        },
-        columns: [
-            { data: null, title: '#',
+    $(document).ready(function () {
+        // Definir las columnas básicas
+        let columnas = [
+            {
+                data: null,
+                title: '#',
                 render: function (data, type, row, meta) {
                     return meta.row + 1;
                 }
             },
             { data: 'Partida', title: 'Partida' },
-            { 
-                data: null, 
+            {
+                data: null,
                 title: 'Código de partida',
                 render: function (data, type, row) {
                     return `<span class="badge bg-success" style="color: #fff;">${row.areaCode}-${row.numeroCuenta}-${row.numeroPartida}-000</span>`;
                 }
             },
-            { data: 'cuenta', title: 'Cuenta'},
-            { data: 'nameArea', title: 'Departamento'},
-            {
+            { data: 'cuenta', title: 'Cuenta' },
+            { data: 'nameArea', title: 'Departamento' }
+        ];
+
+        // Agregar la columna de botones solo si el nivel es distinto de 0
+        if ($('#level').val() != 0) {
+            columnas.push({
                 data: null,
                 title: '',
                 render: function (data, type, row) {
@@ -47,26 +39,45 @@ $(document).ready(function () {
                             <i class="ri-search-line"></i>
                         </button>
                     </div>
-                    `;
+                `;
                 }
-            }
-        ],
-        responsive: true,
-        language: {
-            "paginate": {
-                "first": "<<",
-                "last": ">>",
-                "next": ">",
-                "previous": "<"
-            },
-            "search": "Buscar:",
-            "lengthMenu": "Ver _MENU_ resultados",
-            "loadingRecords": "Cargando...",
-            "info": "Mostrando _START_ de _END_ en _TOTAL_ resultados",
-            "infoEmpty": "Mostrando 0 resultados",
-			"emptyTable":	  "Ningún dato disponible en esta tabla"
+            });
         }
+
+        // Inicializar DataTable con la configuración definida
+        const partidasTable = $('#partidas').DataTable({
+            ajax: {
+                url: 'controller/ajax/getPartidas.php',
+                method: 'POST',
+                dataSrc: ''
+            },
+            columns: columnas,
+            responsive: true,
+            initComplete: function (settings, json) {
+                // Inicializar tooltips tras cargar los datos
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            },
+            drawCallback: function (settings) {
+                // Reinicializar tooltips en cada redraw (paginación, etc.)
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            },
+            language: {
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: ">",
+                    previous: "<"
+                },
+                search: "Buscar:",
+                lengthMenu: "Ver _MENU_ resultados",
+                loadingRecords: "Cargando...",
+                info: "Mostrando _START_ de _END_ en _TOTAL_ resultados",
+                infoEmpty: "Mostrando 0 resultados",
+                emptyTable: "Ningún dato disponible en esta tabla"
+            }
+        });
     });
+
 
     // Manejar el clic en el botón "Eliminar partida"
     $('#partidas').on('click', '.delete-button', function () {
@@ -97,7 +108,7 @@ $(document).ready(function () {
             });
         });
     });
-    
+
     // Manejar el clic en el botón "Editar partida"
     $('#partidas').on('click', '.edit-button', function () {
         const partidaId = $(this).data('id');
@@ -105,7 +116,7 @@ $(document).ready(function () {
         const codigoPartida = $(this).data('codigo');
         const areaCode = $(this).data('areacode');
         const cuenta = $(this).data('cuenta');
-        
+
         // Crear un formulario dinámico
         const form = $('<form>', {
             action: 'editPartida', // URL donde se enviarán los datos
@@ -124,40 +135,40 @@ $(document).ready(function () {
         form.submit();
     });
 
-// Manejar el clic en el botón "Ver conceptos"
-$('#partidas').on('click', '.view-concepts-button', function () {
-    const partidaId = $(this).data('id');
-    const areacode = $(this).data('areacode');
-    $('#partidaId').val(partidaId);
-    $('#partidaCode').val(areacode);
-    const partidaName = $(this).data('partida');
+    // Manejar el clic en el botón "Ver conceptos"
+    $('#partidas').on('click', '.view-concepts-button', function () {
+        const partidaId = $(this).data('id');
+        const areacode = $(this).data('areacode');
+        $('#partidaId').val(partidaId);
+        $('#partidaCode').val(areacode);
+        const partidaName = $(this).data('partida');
 
-    // Mostrar el nombre de la partida en el modal
-    $('#viewConceptsName').text(partidaName);
-    $('#viewConceptsModal').modal('show');
+        // Mostrar el nombre de la partida en el modal
+        $('#viewConceptsName').text(partidaName);
+        $('#viewConceptsModal').modal('show');
 
-    // Cargar la lista de conceptos en el modal
-    $.ajax({
-        url: 'controller/ajax/getConceptos.php', // Ruta al backend que devuelve los conceptos
-        method: 'POST',
-        data: { idPartida: partidaId },
-        dataType: 'json',
-        success: function (response) {
-            $('#conceptosTableBody').empty(); // Limpiar la tabla
-            if (response.length === 0) {
-                // Mostrar mensaje si no hay conceptos
-                $('#noConceptsMessage').show();
-                $('#conceptosTable').hide();
-                $('#conceptosContainer').hide();
-            } else {
-                $('#noConceptsMessage').hide();
-                $('#conceptosTable').show();
-                $('#conceptosContainer').show();
+        // Cargar la lista de conceptos en el modal
+        $.ajax({
+            url: 'controller/ajax/getConceptos.php', // Ruta al backend que devuelve los conceptos
+            method: 'POST',
+            data: { idPartida: partidaId },
+            dataType: 'json',
+            success: function (response) {
+                $('#conceptosTableBody').empty(); // Limpiar la tabla
+                if (response.length === 0) {
+                    // Mostrar mensaje si no hay conceptos
+                    $('#noConceptsMessage').show();
+                    $('#conceptosTable').hide();
+                    $('#conceptosContainer').hide();
+                } else {
+                    $('#noConceptsMessage').hide();
+                    $('#conceptosTable').show();
+                    $('#conceptosContainer').show();
 
-                // Agregar filas a la tabla con botones de editar y eliminar
-                let tableRows = '';
-                response.forEach(function (concepto) {
-                    tableRows += `
+                    // Agregar filas a la tabla con botones de editar y eliminar
+                    let tableRows = '';
+                    response.forEach(function (concepto) {
+                        tableRows += `
                         <tr>
                             <td class="concept-name">${concepto.concepto}</td>
                             <td class="concept-number">${areacode}-${concepto.numeroConcepto}</td>
@@ -168,131 +179,131 @@ $('#partidas').on('click', '.view-concepts-button', function () {
                                 </div>
                             </td>
                         </tr>`;
-                });
-                $('#conceptosTableBody').html(tableRows);
+                    });
+                    $('#conceptosTableBody').html(tableRows);
+                }
+            },
+            error: function () {
+                alert('Hubo un error al intentar cargar la lista de conceptos.');
             }
-        },
-        error: function () {
-            alert('Hubo un error al intentar cargar la lista de conceptos.');
-        }
+        });
     });
-});
 
-// Manejar el clic en el botón de editar concepto
-$('#conceptosTableBody').on('click', '.edit-concept-button', function () {
-    let partidaCode = $('#partidaCode').val();
-    const conceptName = $(this).data('concept');
-    const conceptNumber = $(this).data('number');
+    // Manejar el clic en el botón de editar concepto
+    $('#conceptosTableBody').on('click', '.edit-concept-button', function () {
+        let partidaCode = $('#partidaCode').val();
+        const conceptName = $(this).data('concept');
+        const conceptNumber = $(this).data('number');
 
-    // Obtener la fila actual
-    const row = $(this).closest('tr');
+        // Obtener la fila actual
+        const row = $(this).closest('tr');
 
-    // Convertir los campos en inputs
-    row.find('.concept-name').html(`<input type="text" class="form-control edit-concept-name" value="${conceptName}">`);
-    row.find('.concept-number').html(`
+        // Convertir los campos en inputs
+        row.find('.concept-name').html(`<input type="text" class="form-control edit-concept-name" value="${conceptName}">`);
+        row.find('.concept-number').html(`
                     <div class="input-group">
                         <span class="input-group-text">${partidaCode}</span>
                         <input type="text" class="form-control edit-concept-number auto-format" value="${conceptNumber}">
                     </div>
                     `);
 
-    // Ocultar los botones de editar y eliminar, y agregar botones de aceptar y cancelar
-    $(this).siblings('.delete-concept-button').hide();
-    $(this).hide();
-    row.find('td:last-child').append(`
+        // Ocultar los botones de editar y eliminar, y agregar botones de aceptar y cancelar
+        $(this).siblings('.delete-concept-button').hide();
+        $(this).hide();
+        row.find('td:last-child').append(`
                 <div class="btn-group editGroup">
                     <button class="btn btn-success btn-sm accept-edit-button"><i class="ri-check-line"></i></button>
                     <button class="btn btn-danger btn-sm cancel-edit-button">&times</button>
                 </div>
             `);
-});
-
-// Manejar el clic en el botón de aceptar edición
-$('#conceptosTableBody').on('click', '.accept-edit-button', function () {
-    const row = $(this).closest('tr');
-    const conceptId = row.find('.edit-concept-button').data('id');
-    const updatedName = row.find('.edit-concept-name').val();
-    const updatedNumber = row.find('.edit-concept-number').val();
-    
-    let partidaCode = $('#partidaCode').val();
-
-    // Realizar solicitud AJAX para actualizar los datos
-    $.ajax({
-        url: 'controller/ajax/updateConcepto.php', // Ruta al backend para actualizar el concepto
-        method: 'POST',
-        data: { idConcepto: conceptId, concepto: updatedName, numeroConcepto: updatedNumber },
-        dataType: 'json',
-        success: function (response) {
-            if (response.success) {
-                // Actualizar la fila con los nuevos datos
-                row.find('.concept-name').text(updatedName);
-                row.find('.concept-number').text(partidaCode + '-' +updatedNumber);
-                row.find('.accept-edit-button, .cancel-edit-button').remove();
-                //eliminar .editGroup 
-                row.find('.editGroup').remove();
-                // Mostrar los botones de editar y eliminar
-                row.find('.edit-concept-button, .delete-concept-button').show();
-            } else {
-                alert('Hubo un error al actualizar el concepto.');
-            }
-        },
-        error: function () {
-            alert('Hubo un error al intentar actualizar el concepto.');
-        }
     });
-});
 
-// Manejar el clic en el botón de cancelar edición
-$('#conceptosTableBody').on('click', '.cancel-edit-button', function () {
-    const row = $(this).closest('tr');
-    const conceptName = row.find('.edit-concept-button').data('concept');
-    const conceptNumber = row.find('.edit-concept-button').data('number');
-    let partidaCode = $('#partidaCode').val();
+    // Manejar el clic en el botón de aceptar edición
+    $('#conceptosTableBody').on('click', '.accept-edit-button', function () {
+        const row = $(this).closest('tr');
+        const conceptId = row.find('.edit-concept-button').data('id');
+        const updatedName = row.find('.edit-concept-name').val();
+        const updatedNumber = row.find('.edit-concept-number').val();
 
-    // Restaurar los valores originales
-    row.find('.concept-name').text(conceptName);
-    row.find('.concept-number').text(partidaCode + '-' +conceptNumber);
+        let partidaCode = $('#partidaCode').val();
 
-    row.find('.editGroup').remove();
-
-    row.find('.edit-concept-button, .delete-concept-button').show();
-});
-
-// Manejar el clic en el botón de eliminar concepto
-$('#conceptosTableBody').on('click', '.delete-concept-button', function () {
-    const row = $(this).closest('tr'); // Obtener la fila actual
-    const conceptId = $(this).data('id'); // Obtener el ID del concepto
-
-    // Confirmar eliminación
-    if (confirm('¿Estás seguro de que deseas eliminar este concepto?')) {
+        // Realizar solicitud AJAX para actualizar los datos
         $.ajax({
-            url: 'controller/ajax/deleteConcepto.php', // Ruta al backend para eliminar el concepto
+            url: 'controller/ajax/updateConcepto.php', // Ruta al backend para actualizar el concepto
             method: 'POST',
-            data: { idConcepto: conceptId },
+            data: { idConcepto: conceptId, concepto: updatedName, numeroConcepto: updatedNumber },
             dataType: 'json',
             success: function (response) {
                 if (response.success) {
-                    alert('Concepto eliminado correctamente.');
-                    row.remove(); // Eliminar la fila actual de la tabla
+                    // Actualizar la fila con los nuevos datos
+                    row.find('.concept-name').text(updatedName);
+                    row.find('.concept-number').text(partidaCode + '-' + updatedNumber);
+                    row.find('.accept-edit-button, .cancel-edit-button').remove();
+                    //eliminar .editGroup 
+                    row.find('.editGroup').remove();
+                    // Mostrar los botones de editar y eliminar
+                    row.find('.edit-concept-button, .delete-concept-button').show();
                 } else {
-                    alert('Hubo un error al intentar eliminar el concepto.');
+                    alert('Hubo un error al actualizar el concepto.');
                 }
             },
             error: function () {
-                alert('Hubo un error al intentar eliminar el concepto.');
+                alert('Hubo un error al intentar actualizar el concepto.');
             }
         });
-    }
-});
+    });
 
-// Manejar el clic en el botón "Agregar nuevo concepto"
-$('#addConceptButton').on('click', function () {
-    $('#conceptosContainer').show();
-    $('#conceptosTable').show();
-    $('#noConceptsMessage').hide();
-    let partidaCode = $('#partidaCode').val();
-    // Crear una nueva fila con dos campos de entrada
-    const newRow = `
+    // Manejar el clic en el botón de cancelar edición
+    $('#conceptosTableBody').on('click', '.cancel-edit-button', function () {
+        const row = $(this).closest('tr');
+        const conceptName = row.find('.edit-concept-button').data('concept');
+        const conceptNumber = row.find('.edit-concept-button').data('number');
+        let partidaCode = $('#partidaCode').val();
+
+        // Restaurar los valores originales
+        row.find('.concept-name').text(conceptName);
+        row.find('.concept-number').text(partidaCode + '-' + conceptNumber);
+
+        row.find('.editGroup').remove();
+
+        row.find('.edit-concept-button, .delete-concept-button').show();
+    });
+
+    // Manejar el clic en el botón de eliminar concepto
+    $('#conceptosTableBody').on('click', '.delete-concept-button', function () {
+        const row = $(this).closest('tr'); // Obtener la fila actual
+        const conceptId = $(this).data('id'); // Obtener el ID del concepto
+
+        // Confirmar eliminación
+        if (confirm('¿Estás seguro de que deseas eliminar este concepto?')) {
+            $.ajax({
+                url: 'controller/ajax/deleteConcepto.php', // Ruta al backend para eliminar el concepto
+                method: 'POST',
+                data: { idConcepto: conceptId },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        alert('Concepto eliminado correctamente.');
+                        row.remove(); // Eliminar la fila actual de la tabla
+                    } else {
+                        alert('Hubo un error al intentar eliminar el concepto.');
+                    }
+                },
+                error: function () {
+                    alert('Hubo un error al intentar eliminar el concepto.');
+                }
+            });
+        }
+    });
+
+    // Manejar el clic en el botón "Agregar nuevo concepto"
+    $('#addConceptButton').on('click', function () {
+        $('#conceptosContainer').show();
+        $('#conceptosTable').show();
+        $('#noConceptsMessage').hide();
+        let partidaCode = $('#partidaCode').val();
+        // Crear una nueva fila con dos campos de entrada
+        const newRow = `
         <tr>
             <td>
                 <input type="text" class="form-control new-concept-name" placeholder="Nombre del concepto">
@@ -311,32 +322,32 @@ $('#addConceptButton').on('click', function () {
             </td>
         </tr>`;
 
-    // Agregar la nueva fila al cuerpo de la tabla
-    $('#conceptosTableBody').append(newRow);
-});
+        // Agregar la nueva fila al cuerpo de la tabla
+        $('#conceptosTableBody').append(newRow);
+    });
 
-// Manejar el clic en el botón "Guardar" para guardar el nuevo concepto
-$('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
-    const row = $(this).closest('tr');
-    const newName = row.find('.new-concept-name').val();
-    let newNumber = row.find('.new-concept-number').val().trim() || '000';
+    // Manejar el clic en el botón "Guardar" para guardar el nuevo concepto
+    $('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
+        const row = $(this).closest('tr');
+        const newName = row.find('.new-concept-name').val();
+        let newNumber = row.find('.new-concept-number').val().trim() || '000';
 
-    if (!newName || !newNumber) {
-        alert('Por favor, complete ambos campos antes de guardar.');
-        return;
-    }
+        if (!newName || !newNumber) {
+            alert('Por favor, complete ambos campos antes de guardar.');
+            return;
+        }
 
-    // Realizar solicitud AJAX para guardar el nuevo concepto
-    $.ajax({
-        url: 'controller/ajax/addConcepto.php', // Ruta al backend para guardar el concepto
-        method: 'POST',
-        data: { concepto: newName, numeroConcepto: newNumber, idPartida: $('#partidaId').val() },
-        dataType: 'json',
-        success: function (response) {
-            if (response.success) {
-                let partidaCode = $('#partidaCode').val();
-                // Actualizar la fila con los datos guardados
-                row.html(`
+        // Realizar solicitud AJAX para guardar el nuevo concepto
+        $.ajax({
+            url: 'controller/ajax/addConcepto.php', // Ruta al backend para guardar el concepto
+            method: 'POST',
+            data: { concepto: newName, numeroConcepto: newNumber, idPartida: $('#partidaId').val() },
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    let partidaCode = $('#partidaCode').val();
+                    // Actualizar la fila con los datos guardados
+                    row.html(`
                     <td class="concept-name">${newName}</td>
                     <td class="concept-number">${partidaCode}-${newNumber}</td>
                     <td>
@@ -346,25 +357,25 @@ $('#conceptosTableBody').on('click', '.save-new-concept-button', function () {
                         </div>
                     </td>
                 `);
-            } else {
+                } else {
+                    showAlertBootstrap('!Error', 'Hubo un error al intentar guardar el concepto.');
+                }
+            },
+            error: function () {
                 showAlertBootstrap('!Error', 'Hubo un error al intentar guardar el concepto.');
             }
-        },
-        error: function () {
-            showAlertBootstrap('!Error', 'Hubo un error al intentar guardar el concepto.');
-        }
+        });
     });
+
+    // Manejar el clic en el botón "Cancelar" para eliminar la fila sin guardar
+    $('#conceptosTableBody').on('click', '.cancel-new-concept-button', function () {
+        $(this).closest('tr').remove();
+    });
+
+
 });
 
-// Manejar el clic en el botón "Cancelar" para eliminar la fila sin guardar
-$('#conceptosTableBody').on('click', '.cancel-new-concept-button', function () {
-    $(this).closest('tr').remove();
-});
-
-
-});
-
-$(document).on('input', '.auto-format', function() {
+$(document).on('input', '.auto-format', function () {
     let input = $(this).val().replace(/\D/g, ''); // Elimina caracteres no numéricos
     let formatted = '';
 

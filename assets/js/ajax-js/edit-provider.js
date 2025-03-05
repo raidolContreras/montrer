@@ -67,6 +67,12 @@ $(document).ready(function () {
         ) {
             return;
         }
+        // Validar que la CLABE contenga exactamente 18 dígitos (ignorando espacios y otros caracteres)
+        var clabeDigits = fields.updateclabe.replace(/\D/g, '');
+        if (clabeDigits.length !== 18) {
+            showAlertBootstrap('¡Atención!', 'La CLABE debe contener 18 dígitos.');
+            return;
+        }
 
         // Realizar la solicitud Ajax
         $.ajax({

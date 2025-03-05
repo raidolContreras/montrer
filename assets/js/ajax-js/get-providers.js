@@ -124,7 +124,7 @@ $(document).ready(function () {
             },
             {
                 data: null,
-                visible: (level == 1), // Hace visible la columna solo si level es igual a 1
+                visible: (level != 0), // Hace visible la columna solo si level es igual a 1
                 render: function (data) {
                     return renderActionButtons(data.idProvider, data.status);
                 }
@@ -338,7 +338,7 @@ $(document).ready(function () {
 
 function renderActionButtons(idProvider, status) {
 
-    if (status == 1) {
+    if (level == 1 && status == 1) {
         return `
             <div class="container" style="justify-content: center;">
                 <div class="row btn-group" role="group" style="flex-wrap: nowrap;">
@@ -368,21 +368,33 @@ function renderActionButtons(idProvider, status) {
             </div>
         `;
     } else {
-        return `
-            <div class="container" style="justify-content: center;">
-                <div class="row btn-group" role="group" style="flex-wrap: nowrap;">
-                    <button class="btn btn-primary edit-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                        <i class="ri-edit-line"></i>
-                    </button>
-                    <button class="btn btn-success enable-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
-                        <i class="ri-forbid-line"></i>
-                    </button>
-                    <button class="btn btn-danger delete-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                        <i class="ri-delete-bin-6-line"></i> 
-                    </button>
+        if (level == 2) {
+            return `
+                <div class="container" style="justify-content: center;">
+                    <div class="row btn-group" role="group" style="flex-wrap: nowrap;">
+                        <button class="btn btn-primary edit-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                            <i class="ri-edit-line"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        } else {
+            return `
+                <div class="container" style="justify-content: center;">
+                    <div class="row btn-group" role="group" style="flex-wrap: nowrap;">
+                        <button class="btn btn-primary edit-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                            <i class="ri-edit-line"></i>
+                        </button>
+                        <button class="btn btn-success enable-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar">
+                            <i class="ri-forbid-line"></i>
+                        </button>
+                        <button class="btn btn-danger delete-button" data-id="${idProvider}" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                            <i class="ri-delete-bin-6-line"></i> 
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
     }
 
 }

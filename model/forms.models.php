@@ -239,13 +239,13 @@ class FormsModels {
 					s.level,
 					u.lastConection,
 					u.createDate,
-					GROUP_CONCAT(a.nameArea SEPARATOR ', ') AS nameArea
+					GROUP_CONCAT(DISTINCT a.nameArea SEPARATOR ', ') AS nameArea
 				FROM 
 					montrer_users u
 				LEFT JOIN 
 					montrer_settings s ON s.idUser = u.idUsers
-                LEFT JOIN
-                	montrer_users_to_areas ua ON ua.idUser = u.idUsers
+				LEFT JOIN
+					montrer_users_to_areas ua ON ua.idUser = u.idUsers
 				LEFT JOIN 
 					montrer_area a ON ua.idArea = a.idArea
 				WHERE u.deleted = 0
@@ -386,8 +386,8 @@ class FormsModels {
 					a.nameArea, 
 					a.areaCode,
 					IFNULL(a.description, '') AS description, 
-					IFNULL(GROUP_CONCAT(CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '') AS usuarios, 
-					IFNULL(CONCAT('[', GROUP_CONCAT(IF(ua.idUser IS NOT NULL, ua.idUser, NULL)), ']'), '[]') AS idUser, 
+					IFNULL(GROUP_CONCAT(DISTINCT CONCAT(u.firstname, ' ', u.lastname) SEPARATOR ', '), '') AS usuarios, 
+					IFNULL(CONCAT('[', GROUP_CONCAT(DISTINCT IF(ua.idUser IS NOT NULL, ua.idUser, NULL)), ']'), '[]') AS idUser, 
 					a.status
 				FROM 
 					montrer_area a
@@ -399,6 +399,7 @@ class FormsModels {
 					a.active = 1
 				GROUP BY 
 					a.idArea, a.nameArea, a.description, a.status;
+
 				";
 		$stmt = $pdo->prepare($sql);
 		
@@ -1273,11 +1274,22 @@ class FormsModels {
 	
 	static public function mdlGetAreaManager($idUser){
 		$pdo = Conexion::conectar();
-		$sql = "SELECT a.idArea, a.nameArea, b.AuthorizedAmount FROM montrer_exercise e
-					LEFT JOIN montrer_budgets b ON b.idExercise = e.idExercise
-					LEFT JOIN montrer_area a ON a.idArea = b.idArea
-					LEFT JOIN montrer_users_to_areas ua ON a.idArea = ua.idArea
-				WHERE b.status = 1 AND e.status = 1 AND ua.idUser = :idUser";
+		$sql = "SELECT DISTINCT 
+					a.idArea, 
+					a.nameArea, 
+					b.AuthorizedAmount 
+				FROM 
+					montrer_exercise e
+				LEFT JOIN 
+					montrer_budgets b ON b.idExercise = e.idExercise
+				LEFT JOIN 
+					montrer_area a ON a.idArea = b.idArea
+				LEFT JOIN 
+					montrer_users_to_areas ua ON a.idArea = ua.idArea
+				WHERE 
+					b.status = 1 
+					AND e.status = 1 
+					AND ua.idUser = :idUser;				";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		$stmt->execute();
@@ -2212,9 +2224,15 @@ class FormsModels {
 
 	static public function mdlSelectAccounts($idArea) {
 		$pdo = Conexion::conectar();
-        $sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea where c.idArea = :idArea AND c.status = 1";
+		if ($idArea == null) {
+			$sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea WHERE c.status = 1";
+		} else {
+			$sql = "SELECT * FROM montrer_cuentas c LEFT JOIN montrer_area a ON c.idArea = a.idArea WHERE c.idArea = :idArea AND c.status = 1";
+		}
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		if ($idArea!= null) {
+            $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+        }
         $stmt->execute();
         
         $result = $stmt->fetchAll();

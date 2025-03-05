@@ -1,13 +1,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/locale/es.js"></script>
-<?php if ($level  == 1 || $level == 0):?>
+<?php if ($level == 1 || $level == 0):?>
 <!-- Start Main Content Area -->
 	<main class="main-content-wrap">
 		<div class="col-xl-12">
 			<div class="total-browse-content card-box-style single-features">
 				<div class="main-title d-flex justify-content-between align-items-center">
 					<h3>Lista de usuarios</h3>
-					<?php if ($level  == 1): ?>
+					<?php if ($level == 1): ?>
 						<a class="btn btn-primary" href="register">Nuevo usuario</a>
 					<?php endif ?>
 				</div>

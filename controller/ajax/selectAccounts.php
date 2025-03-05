@@ -2,6 +2,6 @@
 
     require_once "../forms.controller.php";
     require_once "../../model/forms.models.php";
-
-    $getAccounts = FormsController::ctrSelectAccounts($_POST['idArea']);
+    $idArea = (isset($_POST['idArea']) ? $_POST['idArea'] : null);
+    $getAccounts = FormsController::ctrSelectAccounts($idArea);
     echo json_encode($getAccounts);

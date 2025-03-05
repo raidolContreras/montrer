@@ -1,4 +1,4 @@
-<?php if ($level  == 1):?>
+<?php if ($level == 1):?>
 <?php
     $areas = FormsController::ctrGetAreas();
     $exercises = FormsController::ctrGetExercise();

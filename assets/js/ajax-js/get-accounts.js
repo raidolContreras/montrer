@@ -1,22 +1,10 @@
 $(document).ready(function () {
-    // Inicializar DataTable
-    const accountsTable = $('#accounts').DataTable({
-		// tus otras opciones de configuración aquí...
-		initComplete: function(settings, json) {
-			// Esto inicializa los tooltips después de que DataTables ha terminado de cargar los datos por primera vez
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		},
-		drawCallback: function(settings) {
-			// Esto reinicializa los tooltips cada vez que DataTables redibuja la tabla (ej., paginación)
-			$('[data-bs-toggle="tooltip"]').tooltip();
-		},
-        ajax: {
-            url: 'controller/ajax/getAccounts.php', // Ruta al backend que devuelve las cuentas
-            method: 'GET',
-            dataSrc: ''
-        },
-        columns: [
-            { data: null, title: '#',
+    $(document).ready(function(){
+        // Definir las columnas que siempre se mostrarán
+        let columnas = [
+            { 
+                data: null, 
+                title: '#',
                 render: function (data, type, row, meta) {
                     return meta.row + 1;
                 }
@@ -26,12 +14,15 @@ $(document).ready(function () {
                 data: null,
                 title: 'Número de cuenta',
                 render: function (data, type, row) {
-
                     return `<span class="badge bg-success" style="color: #fff;">${row.areaCode}-${row.numeroCuenta}-000-000</span>`;
                 }
             },
-            { data: 'nameArea', title: 'Departamento' },
-            {
+            { data: 'nameArea', title: 'Departamento' }
+        ];
+    
+        // Agregar la columna "Acciones" solo si el valor de #level es distinto de 0
+        if ($('#level').val() != 0) {
+            columnas.push({
                 data: null,
                 title: 'Acciones',
                 render: function (data, type, row) {
@@ -46,24 +37,43 @@ $(document).ready(function () {
                         </div>
                     `;
                 }
-            }
-        ],
-        responsive: true,
-        language: {
-            "paginate": {
-                "first": "<<",
-                "last": ">>",
-                "next": ">",
-                "previous": "<"
-            },
-            "search": "Buscar:",
-            "lengthMenu": "Ver _MENU_ resultados",
-            "loadingRecords": "Cargando...",
-            "info": "Mostrando _START_ de _END_ en _TOTAL_ resultados",
-            "infoEmpty": "Mostrando 0 resultados",
-			"emptyTable":	  "Ningún dato disponible en esta tabla"
+            });
         }
+    
+        // Inicializar DataTable con la configuración definida
+        const accountsTable = $('#accounts').DataTable({
+            ajax: {
+                url: 'controller/ajax/getAccounts.php', // Ruta al backend que devuelve las cuentas
+                method: 'GET',
+                dataSrc: ''
+            },
+            columns: columnas,
+            responsive: true,
+            initComplete: function(settings, json) {
+                // Inicializar tooltips tras cargar los datos
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            },
+            drawCallback: function(settings) {
+                // Reinicializar tooltips en cada redraw (paginación, etc.)
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            },
+            language: {
+                paginate: {
+                    first: "<<",
+                    last: ">>",
+                    next: ">",
+                    previous: "<"
+                },
+                search: "Buscar:",
+                lengthMenu: "Ver _MENU_ resultados",
+                loadingRecords: "Cargando...",
+                info: "Mostrando _START_ de _END_ en _TOTAL_ resultados",
+                infoEmpty: "Mostrando 0 resultados",
+                emptyTable: "Ningún dato disponible en esta tabla"
+            }
+        });
     });
+    
 
     // Manejar el clic en el botón "Eliminar cuenta"
     $('#accounts').on('click', '.delete-button', function () {

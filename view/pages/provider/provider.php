@@ -4,9 +4,13 @@
         <div class="total-browse-content card-box-style single-features">
             <div class="main-title d-flex justify-content-between align-items-center">
                 <h3>Lista de proveedores</h3>
-                <?php //if ($level == 1): ?>
-                    <a class="btn btn-primary" href="registerProvider">Nuevo proveedor</a>
-                <?php //endif ?>
+                <?php
+                if ($level != 0): 
+                ?>
+                <a class="btn btn-primary" href="registerProvider">Nuevo proveedor</a>
+                <?php 
+                    endif 
+                ?>
             </div>
 
             <table class="table table-responsive" id="provider">
@@ -21,7 +25,13 @@
                         <!-- <th>Descripción</th> -->
                         <th>Cédula fiscal</th>
                         <th>Caratula Edo. de cuenta</th>
+                <?php
+                if ($level != 0): 
+                ?>
                         <th width="30%"></th>
+                <?php 
+                    endif 
+                ?>
                     </tr>
                 </thead>
             </table>
@@ -84,4 +94,3 @@
     </div>
 </div>
 <script src="assets/js/ajax-js/get-providers.js"></script>
-
