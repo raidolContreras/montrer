@@ -514,7 +514,7 @@ class FormsController {
 			$mail->SMTPAuth = true;
 			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
 			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port = $_ENV['PORT_MAIL'];    
 	
 			// Configuración del correo
@@ -957,7 +957,7 @@ class FormsController {
 			$mail->SMTPAuth = true;
 			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
 			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port = $_ENV['PORT_MAIL'];    
 	
 			// Configuración del correo
@@ -1076,7 +1076,7 @@ class FormsController {
 			$mail->SMTPAuth = true;
 			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
 			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port = $_ENV['PORT_MAIL'];    
 	
 			// Configuración del correo

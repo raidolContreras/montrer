@@ -32,15 +32,15 @@ if (isset($_POST['enviar_correo'])) {
     try {
         // Configuración SMTP
         $mail->isSMTP();
-        $mail->Host       = $_ENV['HOST_MAIL'] ?? 'smtp.gmail.com';
+        $mail->Host       = $_ENV['HOST_MAIL'];
         $mail->SMTPAuth   = true;
-        $mail->Username   = $_ENV['USER_MAIL'] ?? 'tu-correo@gmail.com';
-        $mail->Password   = $_ENV['PASS_MAIL'] ?? 'password';
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = $_ENV['PORT_MAIL'] ?? 587;
+        $mail->Username   = $_ENV['USER_MAIL'];
+        $mail->Password   = $_ENV['PASS_MAIL'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = $_ENV['PORT_MAIL'];
 
         // Configuración del correo
-        $mail->setFrom($mail->Username, 'Nombre Remitente');
+        $mail->setFrom($mail->Username, 'Montrer devosco');
         $mail->addAddress($destinatario);
 
         // Contenido del correo
