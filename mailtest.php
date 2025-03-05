@@ -92,7 +92,7 @@ if (isset($_POST['enviar_correo'])) {
         <p class="error"><?= $mensajeError ?></p>
     <?php endif; ?>
 
-    <form method="POST" action="test-mail.php">
+    <form method="POST" action="mailtest.php">
         <label for="destinatario">Correo destinatario:</label>
         <input type="text" name="destinatario" id="destinatario" placeholder="ejemplo@dominio.com" required>
 
