@@ -3,6 +3,10 @@
 require_once __DIR__ . '/../assets/vendor/PHP/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
+//env
+use Dotenv\Dotenv;
+
+
 // Asegúrate de incluir PHPMailer en tu proyecto
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -498,19 +502,23 @@ class FormsController {
 
 	// Función para enviar correos electrónicos
 	static private function sendCancellationEmail($recipient, $subject, $requestData) {
+		
+		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+		$dotenv->load();
+
 		$mail = new PHPMailer(true);
 		try {
 			// Configuración del servidor SMTP
 			$mail->isSMTP();            
-			$mail->Host = 'smtp.gmail.com'; // Cambia esto al servidor SMTP que estés usando
+			$mail->Host = $_ENV['HOST_MAIL']; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
-			$mail->Username = 'no-reply@unimontrer.edu.mx'; // Cambia esto a tu dirección de correo electrónico real
-			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
+			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-			$mail->Port = 587;    
+			$mail->Port = $_ENV['PORT_MAIL'];    
 	
 			// Configuración del correo
-			$mail->setFrom('notificaciones@unimontrer.edu.mx', 'Universidad Montrer');
+			$mail->setFrom($_ENV['USER_MAIL'], 'Universidad Montrer');
 			$mail->addAddress($recipient);
 	
 			// Título y diseño del correo
@@ -938,18 +946,22 @@ class FormsController {
 	static public function ctrSendPassword($userId, $password, $firstname, $lastname, $email) {
 		$mail = new PHPMailer(true);
 
+		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+		$dotenv->load();
+
+		$mail = new PHPMailer(true);
 		try {
 			// Configuración del servidor SMTP
 			$mail->isSMTP();            
-			$mail->Host = 'smtp.gmail.com'; // Cambia esto al servidor SMTP que estés usando
+			$mail->Host = $_ENV['HOST_MAIL']; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
-			$mail->Username = 'no-reply@unimontrer.edu.mx'; // Cambia esto a tu dirección de correo electrónico real
-			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
+			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-			$mail->Port = 587;    
-
-			// Configuración del remitente
-			$mail->setFrom('noreply@unimontrer.edu.mx', 'UNIMO (no responder)');
+			$mail->Port = $_ENV['PORT_MAIL'];    
+	
+			// Configuración del correo
+			$mail->setFrom($_ENV['USER_MAIL'], 'Universidad Montrer');
 			$mail->addAddress($email); // Destinatario
 
 			// Asunto del correo
@@ -1053,18 +1065,22 @@ class FormsController {
 	static public function ctrSendEmail($email, $message, $subject, $title, $subtitle) {
 		$mail = new PHPMailer(true);
 	
+		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+		$dotenv->load();
+
+		$mail = new PHPMailer(true);
 		try {
 			// Configuración del servidor SMTP
 			$mail->isSMTP();            
-			$mail->Host = 'smtp.gmail.com'; // Cambia esto al servidor SMTP que estés usando
+			$mail->Host = $_ENV['HOST_MAIL']; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
-			$mail->Username = 'no-reply@unimontrer.edu.mx'; // Cambia esto a tu dirección de correo electrónico real
-			$mail->Password = 'Unimo2024$'; // Cambia esto a tu contraseña de correo electrónico real
+			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
+			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-			$mail->Port = 587;
+			$mail->Port = $_ENV['PORT_MAIL'];    
 	
-			// Configuración del remitente
-			$mail->setFrom('no-reply@unimontrer.edu.mx', 'Universidad Montrer');
+			// Configuración del correo
+			$mail->setFrom($_ENV['USER_MAIL'], 'Universidad Montrer');
 			$mail->addAddress($email); // Destinatario
 	
 			// Configuración del correo
