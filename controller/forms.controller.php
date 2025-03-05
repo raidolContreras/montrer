@@ -1036,7 +1036,7 @@ class FormsController {
 						<p>Gracias.</p>
 					</div>
 					<div class="footer">
-						<p>© 2024 UNIMO. Todos los derechos reservados.</p>
+						<p>© 2025 UNIMO. Todos los derechos reservados.</p>
 					</div>
 				</div>
 			</body>
@@ -1184,7 +1184,7 @@ class FormsController {
 							<div class="logo">
 								<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiwYdc6JjvK8wto9xbuHcTAYFtzp0giLWm3pO6Gl6AlzUkVp2tM8E4ZGtbFUilQSJWACk_VAzzTpylpA-OleuC-Fs65QshR-Ud_Ua4gAWrxl00Ea1vDYA-mB2hovzOoC8t7tYQHBFUY0pEk5_JywC5y_Zg7HTtR8EN-NZfRztW9Gakn8yWjzHffaFkeeA/s1584/UNIMO-logotipo-2019-BLANCO.png" alt="Logo de UNIMO">
 							</div>
-							<p>© 2024 Universidad Montrer. Todos los derechos reservados.</p>
+							<p>© 2025 Universidad Montrer. Todos los derechos reservados.</p>
 						</div>
 					</div>
 				</div>
