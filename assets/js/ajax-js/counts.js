@@ -27,12 +27,12 @@ function getAreas() {
                     currency: 'MXN'
                 });
 
-                var comp = parseFloat(response.comp).toLocaleString('es-MX', {
+                var spent = parseFloat(response.spent).toLocaleString('es-MX', {
                     style: 'currency',
                     currency: 'MXN'
                 });
 
-                var nocomp = parseFloat(response.nocomp).toLocaleString('es-MX', {
+                var exercisable_budget = parseFloat(response.exercisable_budget).toLocaleString('es-MX', {
                     style: 'currency',
                     currency: 'MXN'
                 });
@@ -46,9 +46,9 @@ function getAreas() {
 
                 $('.budget').text(formattedBudget);
 
-                $('.comp').text(comp);
+                $('.spent').text(spent);
 
-                $('.nocomp').text(nocomp);
+                $('.exercisable_budget').text(exercisable_budget);
                 
                 $('.rest').html(formattedRest + ' <span>' + (100 - formattedPercentageUsed).toFixed(2) + '%</span>');
 
@@ -61,8 +61,8 @@ function getAreas() {
                 $('.budget-message-uses').text('Presupuesto utilizado en el ' + response.name + '.');
                 $('.budget-message-rest').text('Presupuesto restante en el ' + response.name + '.');
                 $('.budget-message-soli').text('Presupuesto solicitado en el ' + response.name + '.');
-                $('.budget-message-compr').text('Presupuesto comprobado en el ' + response.name + '.');
-                $('.budget-message-no-compr').text('Presupuesto sin comprobar en el ' + response.name + '.');
+                $('.budget-message-spent').text('Presupuesto ejercido en el ' + response.name + '.');
+                $('.budget-message-exercisable-budget').text('Presupuesto por comprobar en el ' + response.name+ '.');
             } else {
                 console.log('La respuesta del servidor no contiene respuestas válidas.');
             }

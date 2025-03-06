@@ -51,15 +51,15 @@
 					</a>
 				</div>
 
-				<!-- <div class="col-lg-6 col-md-6">
-					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Asignación de presupuestos">
+				<div class="col-lg-6 col-md-6">
+					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto ejercido">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
-										<span class="features-title">Presupuesto comprobado</span>
-										<h3 class="comp"></h3>
-										<p class="budget-message-compr"></p>
+										<span class="features-title">Presupuesto ejercido</span>
+										<h3 class="spent"></h3>
+										<p class="budget-message-spent"></p>
 									</div>
 								</div>
 							</div>
@@ -68,20 +68,20 @@
 				</div>
 
 				<div class="col-lg-6 col-md-6">
-					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Asignación de presupuestos">
+					<a href="budgets" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Presupuesto por ejercer">
 						<div class="single-features">
 							<div class="row align-items-center">
 								<div class="col-xl-12">
 									<div class="single-click-content">
-										<span class="features-title">Presupuesto sin comprobar</span>
-										<h3 class="nocomp"></h3>
-										<p class="budget-message-no-compr"></p>
+										<span class="features-title">Presupuesto por ejercer</span>
+										<h3 class="exercisable_budget"></h3>
+										<p class="budget-message-exercisable-budget"></p>
 									</div>
 								</div>
 							</div>
 						</div>
 					</a>
-				</div> -->
+				</div>
 			<?php else: ?>
 				<div class="overview-area">
 					<div class="container-fluid">
