@@ -21,8 +21,13 @@ $(document).ready(function () {
             if (!isNaN(numero)) {
                 var textoEnLetras = numeroALetra(numero, true, currency);
                 $('#importeLetra').val(textoEnLetras);
+                console.log(textoEnLetras, numero);
+                $('#cargo').val(numero);
+                $('#abono').val(numero);
             } else {
                 $('#importeLetra').val('');
+                $('#cargo').val(0);
+                $('#abono').val(0);
             }
             clearTimeout(timeout)
         }, 500)
@@ -148,7 +153,7 @@ function getArea(registerValue) {
             $('select[name="area"]').val(response.nameArea);
             // Llena el select de áreas
             fillAreaSelect('area', response, 'departamento');
-            
+
 
         },
         error: function (error) {
@@ -215,7 +220,7 @@ $('#area').on('change', function () {
             $('#concepto').css('display', 'block');
             // quitar disable de concepto
             $('#concepto').prop('disabled', false);
-            
+
             updateMaxRequestedAmount(response);
         },
         error: function (error) {
@@ -661,7 +666,7 @@ function cuentas(idArea) {
                             ${cuenta.cuenta} (${numeroCuenta})
                         </option>
                     `);
-                });                
+                });
                 // Configurar evento change para actualizar #idCuentaAfectada
                 selectElement.change(function () {
                     const selectedOption = $(this).find('option:selected'); // Obtener la opción seleccionada
@@ -670,7 +675,7 @@ function cuentas(idArea) {
                     // Actualizar los valores correspondientes
                     $('#idCuentaAfectada').val(numeroCuentaAfectada);
                     if ($(this).val() !== '') {
-                        
+
                         // formatear partidaAfectada a option vacio
                         $('#partidaAfectada').empty();
                         $('#partidaAfectada').append($('<option>').val('').text('Seleccione una cuenta'));
