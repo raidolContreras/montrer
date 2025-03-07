@@ -161,9 +161,48 @@ class FormsController {
 	}
 
 	static public function ctrUpdateProvider($data){
+		
+		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+		$dotenv->load();
+
 		$UpdateProvider = FormsModels::mdlUpdateProvider($data);
-    	return $UpdateProvider;
-	}
+		if ($UpdateProvider == 'ok') {
+			// Mensaje del correo electrónico
+			$folio = $data['providerKey'];
+			
+			$emailRecipient = $_ENV['CURRENT_MAIL_EMAIL'];
+			$emailSubject = "Actualización de Proveedor - Folio {$folio}";
+			
+			// Creamos el mensaje del correo con información adicional
+			$message = [];
+			$message[] = "El proveedor con folio {$folio} ha sido actualizado correctamente.";
+			$message[] = "Datos actualizados del proveedor:";
+			$message[] = "Representante: " . $data['representativeName'];
+			$message[] = "Teléfono de contacto: " . $data['contactPhone'];
+			$message[] = "Correo electrónico: " . $data['email'];
+			$message[] = "Sitio web: " . $data['website'];
+			$message[] = "Razón social: " . $data['businessName'];
+			$message[] = "RFC: " . $data['rfc'];
+			$message[] = "Dirección Fiscal: " . $data['fiscalAddressStreet'] . ", " 
+									. $data['fiscalAddressColonia'] . ", " 
+									. $data['fiscalAddressMunicipio'] . ", " 
+									. $data['fiscalAddressEstado'] . " (CP: " . $data['fiscalAddressCP'] . ")";
+			$message[] = "Banco: " . $data['bankName'];
+			$message[] = "Titular de la cuenta: " . $data['accountHolder'];
+			$message[] = "Número de cuenta: " . $data['accountNumber'];
+			$message[] = "CLABE: " . $data['clabe'];
+			$message[] = "Código SWIFT: " . $data['swiftCode'];
+			$message[] = "Dirección del beneficiario: " . $data['beneficiaryAddress'];
+			$message[] = "Tipo de moneda: " . $data['currencyType'];
+			
+			$title = "Proveedor Actualizado";
+			$subtitle = "Confirmación de actualización de datos del proveedor";
+			
+			// Envío del correo electrónico utilizando la función existente
+			self::ctrSendEmail($emailRecipient, $message, $emailSubject, $title, $subtitle);
+		}
+		return $UpdateProvider;
+	}	
 
 	static public function ctrDenegateRequest($idRequest, $idAdmin, $comentRechazo){
 		$result = FormsModels::mdlDenegateRequest($idRequest, $idAdmin, $comentRechazo);
@@ -480,6 +519,10 @@ class FormsController {
 	}
 
 	static public function ctrDeleteRequest($idRequests) {
+
+		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+		$dotenv->load();
+		
 		// Obtener la solicitud antes de eliminarla
 		$request = FormsModels::mdlGetRequest($idRequests);
 		
@@ -489,7 +532,7 @@ class FormsController {
 		// Si la solicitud se eliminó correctamente
 		if ($deleteRequest == "ok") {
 			// Datos del correo electrónico
-			$emailRecipient = "acisneros@unimontrer.edu.mx";
+			$emailRecipient = $_ENV['CURRENT_MAIL_EMAIL'];
 			$emailSubject = "Cancelación de Solicitud de Pago";
 			$emailBody = "La solicitud de pago con ID: $idRequests ha sido eliminada.";
 	
@@ -636,7 +679,6 @@ class FormsController {
 			return false;
 		}
 	}
-	
 
 	static public function ctrMonthBudget($idArea, $idBudget, $approvedAmount){
 		// Obtén el mes actual
