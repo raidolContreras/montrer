@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once __DIR__ . '/../assets/vendor/PHP/autoload.php';
 require_once __DIR__ . '/vendor/autoload.php';
@@ -27,152 +27,180 @@ use PhpOffice\PhpSpreadsheet\Chart\PlotArea;
 use PhpOffice\PhpSpreadsheet\Chart\Legend;
 use PhpOffice\PhpSpreadsheet\Chart\Title;
 
-class FormsController {
+class FormsController
+{
 	// Inicio de Contadores
-	static public function ctrCountAreas(){
+	static public function ctrCountAreas()
+	{
 		return FormsModels::mdlCountAreas();
 	}
 
-	static public function ctrCountArea($idUser){
+	static public function ctrCountArea($idUser)
+	{
 		return FormsModels::mdlCountArea($idUser);
 	}
 
-	static public function ctrCountAreaId($idArea){
+	static public function ctrCountAreaId($idArea)
+	{
 		return FormsModels::mdlCountAreaId($idArea);
 	}
 	// Fin de Contadores
 
-	static public function ctrActiveExercise(){
+	static public function ctrActiveExercise()
+	{
 		return FormsModels::mdlActiveExercise();
 	}
 
-	static public function ctrUpdateActiveExercise($idExercise){
+	static public function ctrUpdateActiveExercise($idExercise)
+	{
 		return FormsModels::mdlUpdateActiveExercise($idExercise);
 	}
 
-	static public function ctrCreateUser($data){
+	static public function ctrCreateUser($data)
+	{
 		return FormsModels::mdlCreateUser($data);
 	}
 
-	static public function ctrGetUsers(){
+	static public function ctrGetUsers()
+	{
 		$getUser = FormsModels::mdlGetUsers();
-    	return $getUser;
+		return $getUser;
 	}
 
-	static public function ctrGetAreas(){
+	static public function ctrGetAreas()
+	{
 		$getAreas = FormsModels::mdlGetAreas();
-    	return $getAreas;
+		return $getAreas;
 	}
 
-	static public function ctrGetCompanies(){
+	static public function ctrGetCompanies()
+	{
 		$getCompanies = FormsModels::mdlGetCompanies();
-    	return $getCompanies;
+		return $getCompanies;
 	}
 
-	static public function ctrGetExercise(){
+	static public function ctrGetExercise()
+	{
 		$getExercise = FormsModels::mdlGetExercise();
-    	return $getExercise;
+		return $getExercise;
 	}
 
-	static public function ctrGetExercises($idExercise){
+	static public function ctrGetExercises($idExercise)
+	{
 		$getExercise = FormsModels::mdlGetExercises($idExercise);
-    	return $getExercise;
+		return $getExercise;
 	}
 
-	static public function ctrGetBudgets($idExercise){
+	static public function ctrGetBudgets($idExercise)
+	{
 		$getBudgets = FormsModels::mdlGetBudgets($idExercise);
-    	return $getBudgets;
+		return $getBudgets;
 	}
 
-	static public function ctrAddCompany($data){
+	static public function ctrAddCompany($data)
+	{
 		$addCompany = FormsModels::mdlAddCompany($data);
-    	return $addCompany;
+		return $addCompany;
 	}
 
-	static public function ctrAddExercise($data){
+	static public function ctrAddExercise($data)
+	{
 		$addExercise = FormsModels::mdlAddExercise($data);
-    	return $addExercise;
+		return $addExercise;
 	}
 
-	static public function ctrGetUser($register){
+	static public function ctrGetUser($register)
+	{
 		$getUser = FormsModels::mdlGetUser($register);
-    	return $getUser;
+		return $getUser;
 	}
 
-	static public function ctrGetArea($register){
+	static public function ctrGetArea($register)
+	{
 		$getArea = FormsModels::mdlGetArea($register);
-    	return $getArea;
+		return $getArea;
 	}
 
-	static public function ctrGetAreaByName($name){
+	static public function ctrGetAreaByName($name)
+	{
 		$getArea = FormsModels::mdlGetAreaByName($name);
-    	return $getArea;
+		return $getArea;
 	}
 
-	static public function ctrGetAreaManager($register){
+	static public function ctrGetAreaManager($register)
+	{
 		$getArea = FormsModels::mdlGetAreaManager($register);
-    	return $getArea;
+		return $getArea;
 	}
 
-	static public function ctrGetAuthorizedAmount($register){
+	static public function ctrGetAuthorizedAmount($register)
+	{
 		$getAuthorizedAmount = FormsModels::mdlGetAuthorizedAmount($register);
-    	return $getAuthorizedAmount;
+		return $getAuthorizedAmount;
 	}
 
-	static public function ctrGetAmountPendient($register){
+	static public function ctrGetAmountPendient($register)
+	{
 		$getAuthorizedAmount = FormsModels::mdlGetAmountPendient($register);
-    	return $getAuthorizedAmount;
+		return $getAuthorizedAmount;
 	}
 
-	static public function ctrGetProviders($provider_idUser){
+	static public function ctrGetProviders($provider_idUser)
+	{
 		$getProvider = FormsModels::mdlGetProviders($provider_idUser);
-    	return $getProvider;
+		return $getProvider;
 	}
 
-	static public function ctrGetRequests($idUser){
+	static public function ctrGetRequests($idUser)
+	{
 		$user = FormsModels::mdlGetUser($idUser);
-		if($user['level'] == 1 || $user['level'] == 0) {
+		if ($user['level'] == 1 || $user['level'] == 0) {
 			$selection = 1;
 		} else {
 			$selection = 2;
 		}
 		$getRequests = FormsModels::mdlGetRequests($idUser, $selection);
-    	return $getRequests;
+		return $getRequests;
 	}
-	
-	static public function ctrGetRequestComprobar($idRequest){
+
+	static public function ctrGetRequestComprobar($idRequest)
+	{
 		$getRequests = FormsModels::mdlGetRequestComprobar($idRequest);
-    	return $getRequests;
+		return $getRequests;
 	}
 
-	static public function ctrGetProviderON(){
+	static public function ctrGetProviderON()
+	{
 		$getProvider = FormsModels::mdlGetProviderON();
-    	return $getProvider;
+		return $getProvider;
 	}
 
-	static public function ctrRegisterProvider($data){
+	static public function ctrRegisterProvider($data)
+	{
 		$registerProvider = FormsModels::mdlRegisterProvider($data);
-    	return $registerProvider;
+		return $registerProvider;
 	}
 
-	static public function ctrNextIdProvider(){
+	static public function ctrNextIdProvider()
+	{
 		$nextIdProvider = FormsModels::mdlNextIdProvider();
-    	return $nextIdProvider;
+		return $nextIdProvider;
 	}
 
-	static public function ctrUpdateProvider($data){
-		
-		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+	static public function ctrUpdateProvider($data)
+	{
+
+		$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 		$dotenv->load();
 
 		$UpdateProvider = FormsModels::mdlUpdateProvider($data);
 		if ($UpdateProvider == 'ok') {
 			// Mensaje del correo electrónico
 			$folio = $data['providerKey'];
-			
+
 			$emailRecipient = $_ENV['CURRENT_MAIL_EMAIL'];
 			$emailSubject = "Actualización de Proveedor - Folio {$folio}";
-			
+
 			// Creamos el mensaje del correo con información adicional
 			$message = [];
 			$message[] = "El proveedor con folio {$folio} ha sido actualizado correctamente.";
@@ -183,10 +211,10 @@ class FormsController {
 			$message[] = "Sitio web: " . $data['website'];
 			$message[] = "Razón social: " . $data['businessName'];
 			$message[] = "RFC: " . $data['rfc'];
-			$message[] = "Dirección Fiscal: " . $data['fiscalAddressStreet'] . ", " 
-									. $data['fiscalAddressColonia'] . ", " 
-									. $data['fiscalAddressMunicipio'] . ", " 
-									. $data['fiscalAddressEstado'] . " (CP: " . $data['fiscalAddressCP'] . ")";
+			$message[] = "Dirección Fiscal: " . $data['fiscalAddressStreet'] . ", "
+				. $data['fiscalAddressColonia'] . ", "
+				. $data['fiscalAddressMunicipio'] . ", "
+				. $data['fiscalAddressEstado'] . " (CP: " . $data['fiscalAddressCP'] . ")";
 			$message[] = "Banco: " . $data['bankName'];
 			$message[] = "Titular de la cuenta: " . $data['accountHolder'];
 			$message[] = "Número de cuenta: " . $data['accountNumber'];
@@ -194,76 +222,80 @@ class FormsController {
 			$message[] = "Código SWIFT: " . $data['swiftCode'];
 			$message[] = "Dirección del beneficiario: " . $data['beneficiaryAddress'];
 			$message[] = "Tipo de moneda: " . $data['currencyType'];
-			
+
 			$title = "Proveedor Actualizado";
 			$subtitle = "Confirmación de actualización de datos del proveedor";
-			
+
 			// Envío del correo electrónico utilizando la función existente
 			self::ctrSendEmail($emailRecipient, $message, $emailSubject, $title, $subtitle);
 		}
 		return $UpdateProvider;
-	}	
-
-	static public function ctrDenegateRequest($idRequest, $idAdmin, $comentRechazo){
-		$result = FormsModels::mdlDenegateRequest($idRequest, $idAdmin, $comentRechazo);
-    	return $result;
 	}
 
-	static public function ctrEnableRequest($idRequest, $idAdmin, $approvedAmount){
+	static public function ctrDenegateRequest($idRequest, $idAdmin, $comentRechazo)
+	{
+		$result = FormsModels::mdlDenegateRequest($idRequest, $idAdmin, $comentRechazo);
+		return $result;
+	}
+
+	static public function ctrEnableRequest($idRequest, $idAdmin, $approvedAmount)
+	{
 		$result = FormsModels::mdlEnableRequest($idRequest, $idAdmin, $approvedAmount);
 
 		$request = FormsController::ctrGetRequest($idRequest);
-		
+
 		$user = FormsController::ctrGetUser($request['idUser']);
 		if ($result == 'ok') {
 			// Mensaje del correo electrónico
 			$message = array(
 				0 => 'Estimados colaboradores:',
 				1 => 'El estado del presupuesto con el siguiente folio ha sido actualizado:',
-				2 => 'Folio del presupuesto: '.$request['folio'],
-				3 => 'Monto aprobado: $'.$request['approvedAmount']
+				2 => 'Folio del presupuesto: ' . $request['folio'],
+				3 => 'Monto aprobado: $' . $request['approvedAmount']
 			);
-	
+
 			// Dirección de correo electrónico del destinatario
 			$email = $user['email'];
-	
+
 			// Asunto del correo electrónico
 			$subject = 'Actualización del estado del presupuesto';
-	
+
 			// Título del correo electrónico
 			$title = 'Actualización del estado del presupuesto';
-	
+
 			// Subtítulo del correo electrónico
 			$subtitle = 'Detalles del presupuesto actualizado';
-	
+
 			// Envío del correo electrónico
 			// FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
 		}
 		return $result;
 	}
-	
 
-	static public function ctrGetRequest($idRequest){
+
+	static public function ctrGetRequest($idRequest)
+	{
 		$result = FormsModels::mdlGetRequest($idRequest);
-    	return $result;
+		return $result;
 	}
 
-	static public function ctrAddBudgets($data){
+	static public function ctrAddBudgets($data)
+	{
 		$getBudgets = FormsModels::mdlGetBudgets('all');
 		$value = true;
-		foreach ($getBudgets as $budgets){
-			if($budgets['idArea'] == $data['area'] && $budgets['idExercise'] == $data['exercise']){
+		foreach ($getBudgets as $budgets) {
+			if ($budgets['idArea'] == $data['area'] && $budgets['idExercise'] == $data['exercise']) {
 				$value = false;
 			}
 		}
-		if ($value){
+		if ($value) {
 			$Budget = FormsModels::mdlAddBudgets($data);
 			$exercise = FormsController::ctrGetExercises($data['exercise']);
-			
+
 			// Convertir las fechas a objetos DateTime para facilitar el cálculo
 			$initialDate = new DateTime($exercise['initialDate']);
 			$finalDate = new DateTime($exercise['finalDate']);
-			
+
 			$initialMonth = (int)$initialDate->format('n');
 			$finalMonth = (int)$finalDate->format('n');
 			$months = 0;
@@ -283,28 +315,27 @@ class FormsController {
 				$addBudgetMonth = FormsModels::mdlAddBudgetsMonths($i, $datos);
 			}
 
-			if ($addBudgetMonth == 'ok'){
+			if ($addBudgetMonth == 'ok') {
 				return $addBudgetMonth;
 			} else {
 				$result = 'Error: Presupuesto ya asignado';
 			}
-
-
 		} else {
 			$result = 'Error: Presupuesto ya asignado';
 		}
-    	return $result;
+		return $result;
 	}
 
-	static public function ctrLoginUser($data){
+	static public function ctrLoginUser($data)
+	{
 		$value = '';
 		$selectUser = FormsModels::mdlSelectUser($data['email']);
-		
+
 		$cryptPassword = crypt($data['password'], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
-		if (!empty($selectUser) && $selectUser['password'] == ''){
+		if (!empty($selectUser) && $selectUser['password'] == '') {
 			$loginUser = FormsModels::mdlFirstLoginUser($selectUser['idUsers']);
-			if($loginUser['temporal_password'] == $cryptPassword){
+			if ($loginUser['temporal_password'] == $cryptPassword) {
 				$changedPass = 1;
 				FormsModels::mdlUpdateLog($selectUser['idUsers']);
 				$value = "ok";
@@ -329,14 +360,15 @@ class FormsController {
 			$value = "error";
 			$selectUser = "Error: datos incorrectos";
 		}
-		
+
 		return $selectUser;
 	}
 
-	static public function ctrChangePassword($data){
+	static public function ctrChangePassword($data)
+	{
 
 		$searchPassword = FormsModels::mdlDelTemporalPassword($data);
-		if ($searchPassword){
+		if ($searchPassword) {
 			$updatePassword = FormsModels::mdlUpdatePassword($data);
 			if ($updatePassword) {
 				return "ok";
@@ -346,10 +378,10 @@ class FormsController {
 		} else {
 			return "Error: Password";
 		}
-	   
 	}
 
-	static public function ctrChangePasswordAdmin($data){
+	static public function ctrChangePasswordAdmin($data)
+	{
 
 		$temporal = FormsModels::mdlFirstLoginUser($data['user']);
 
@@ -367,13 +399,13 @@ class FormsController {
 		} else {
 			return "Error: Inexistente";
 		}
-	   
 	}
 
-	static public function ctrChangeNewPassword($data){
+	static public function ctrChangeNewPassword($data)
+	{
 
 		$searchPassword = FormsModels::mdlSelectPasswordUser($data['user']);
-		if ($searchPassword['password'] === $data['ActualPassword']){
+		if ($searchPassword['password'] === $data['ActualPassword']) {
 			$updatePassword = FormsModels::mdlUpdatePassword($data);
 			if ($updatePassword) {
 				return "ok";
@@ -383,71 +415,83 @@ class FormsController {
 		} else {
 			return "Error: Password";
 		}
-	   
-	}
-	
-	static public function ctrAddArea($data){
-	   $addArea = FormsModels::mdlAddArea($data);
-	   return $addArea;
 	}
 
-	static public function ctrUpdateUser($data){
+	static public function ctrAddArea($data)
+	{
+		$addArea = FormsModels::mdlAddArea($data);
+		return $addArea;
+	}
+
+	static public function ctrUpdateUser($data)
+	{
 		$updateUser = FormsModels::mdlUpdateUser($data);
 		FormsModels::mdlUpdateLevelUser($data);
-		
+
 		return $updateUser;
 	}
 
-	static public function ctrDeleteRegister($idUsers){
+	static public function ctrDeleteRegister($idUsers)
+	{
 		$deleteRegister = FormsModels::mdlDeleteRegister($idUsers);
 		return $deleteRegister;
 	}
 
-	static public function ctrEnableRegister($idUsers){
+	static public function ctrEnableRegister($idUsers)
+	{
 		$enableRegister = FormsModels::mdlEnableRegister($idUsers);
 		return $enableRegister;
 	}
 
-	static public function ctrDisableArea($idArea){
+	static public function ctrDisableArea($idArea)
+	{
 		$disableArea = FormsModels::mdlDisableArea($idArea);
 		return $disableArea;
 	}
 
-	static public function ctrEnableArea($idArea){
+	static public function ctrEnableArea($idArea)
+	{
 		$enableArea = FormsModels::mdlEnableArea($idArea);
 		return $enableArea;
 	}
 
-	static public function ctrUpdateArea($data){
+	static public function ctrUpdateArea($data)
+	{
 		$updateArea = FormsModels::mdlUpdateArea($data);
 		return $updateArea;
 	}
-	static public function ctrUpdateUsersArea($data) {
+	static public function ctrUpdateUsersArea($data)
+	{
 		$updateUsersArea = FormsModels::mdlUpdateUsersArea($data);
-        return $updateUsersArea;
+		return $updateUsersArea;
 	}
 
-	static public function ctrUpdateExercise($data){
+	static public function ctrUpdateExercise($data)
+	{
 		$updateExercise = FormsModels::mdlUpdateExercise($data);
 		return $updateExercise;
 	}
 
-	static public function ctrDisableExercise($idExercise){
+	static public function ctrDisableExercise($idExercise)
+	{
 		$disableExercise = FormsModels::mdlDisableExercise($idExercise);
 		return $disableExercise;
 	}
 
-	static public function ctrEnableExercise($idExercise){
+	static public function ctrEnableExercise($idExercise)
+	{
 		$enableExercise = FormsModels::mdlEnableExercise($idExercise);
 		return $enableExercise;
 	}
 
-	static public function ctrDeleteExercise($idExercise){
+	static public function ctrDeleteExercise($idExercise)
+	{
 		$deleteExercise = FormsModels::mdlDeleteExercise($idExercise);
 		return $deleteExercise;
 	}
 
-	static public function ctrDeleteUser($idUsers){
+	static public function ctrDeleteUser($idUsers)
+	{
 		$selectArea = FormsModels::mdlSelectAreaUser($idUsers);
 		if (!empty($selectArea)) {
 			foreach ($selectArea as $area) {
@@ -458,117 +502,131 @@ class FormsController {
 		return $deleteUser;
 	}
 
-	static public function ctrDeleteArea($idArea){
+	static public function ctrDeleteArea($idArea)
+	{
 		$deleteArea = FormsModels::mdlDeleteArea($idArea);
 		return $deleteArea;
 	}
 
-	static public function ctrDeleteBudget($idBudget){
+	static public function ctrDeleteBudget($idBudget)
+	{
 		$deleteBudget = FormsModels::mdlDeleteBudget($idBudget);
 		return $deleteBudget;
 	}
 
-	static public function ctrEnableBudget($idBudget){
+	static public function ctrEnableBudget($idBudget)
+	{
 		$enableBudget = FormsModels::mdlEnableBudget($idBudget);
 		return $enableBudget;
 	}
 
-	static public function ctrDisableBudget($idBudget){
+	static public function ctrDisableBudget($idBudget)
+	{
 		$disableBudget = FormsModels::mdlDisableBudget($idBudget);
 		return $disableBudget;
 	}
 
-	static public function ctrGetBudget($idBudget){
+	static public function ctrGetBudget($idBudget)
+	{
 		$getBudget = FormsModels::mdlGetBudget($idBudget);
 		return $getBudget;
 	}
 
-	static public function ctrUpdateBudget($data){
+	static public function ctrUpdateBudget($data)
+	{
 		$updateBudget = FormsModels::mdlUpdateBudget($data);
 		return $updateBudget;
 	}
 
-	static public function ctrDisableProvider($idProvider){
+	static public function ctrDisableProvider($idProvider)
+	{
 		$disableProvider = FormsModels::mdlDisableProvider($idProvider);
 		return $disableProvider;
 	}
 
-	static public function ctrEnableProvider($idProvider){
+	static public function ctrEnableProvider($idProvider)
+	{
 		$enableProvider = FormsModels::mdlEnableProvider($idProvider);
 		return $enableProvider;
 	}
 
-	static public function ctrDeleteProvider($idProvider){
+	static public function ctrDeleteProvider($idProvider)
+	{
 		$deleteProvider = FormsModels::mdlDeleteProvider($idProvider);
 		return $deleteProvider;
 	}
 
-	static public function ctrGetProvider($idProvider){
+	static public function ctrGetProvider($idProvider)
+	{
 		$getProvider = FormsModels::mdlGetProvider($idProvider);
 		return $getProvider;
 	}
 
-	static public function ctrGetProviderByName($rfc, $idUser){
+	static public function ctrGetProviderByName($rfc, $idUser)
+	{
 		$getProvider = FormsModels::mdlGetProviderByName($rfc, $idUser);
 		return $getProvider;
 	}
 
-	static public function ctrRequestBudget($data){
+	static public function ctrRequestBudget($data)
+	{
 		$requestBudget = FormsModels::mdlRequestBudget($data);
 		return $requestBudget;
 	}
 
-	static public function ctrDeleteRequest($idRequests) {
+	static public function ctrDeleteRequest($idRequests)
+	{
 
-		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+		$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 		$dotenv->load();
-		
+
 		// Obtener la solicitud antes de eliminarla
 		$request = FormsModels::mdlGetRequest($idRequests);
-		
+
 		// Intentar eliminar la solicitud
 		$deleteRequest = FormsModels::mdlDeleteRequest($idRequests);
-		
+
 		// Si la solicitud se eliminó correctamente
 		if ($deleteRequest == "ok") {
 			// Datos del correo electrónico
 			$emailRecipient = $_ENV['CURRENT_MAIL_EMAIL'];
 			$emailSubject = "Cancelación de Solicitud de Pago";
 			$emailBody = "La solicitud de pago con ID: $idRequests ha sido eliminada.";
-	
+
 			// Llamar a la función para enviar el correo
 			self::sendCancellationEmail($emailRecipient, $emailSubject, $request);
 		}
-	
+
 		return $deleteRequest;
 	}
 
 	// Función para enviar correos electrónicos
-	static private function sendCancellationEmail($recipient, $subject, $requestData) {
-		
-		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+	static private function sendCancellationEmail($recipient, $subject, $requestData)
+	{
+
+		$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 		$dotenv->load();
 
 		$mail = new PHPMailer(true);
 		try {
 			// Configuración del servidor SMTP
-			$mail->isSMTP();            
+			$mail->isSMTP();
 			$mail->Host = $_ENV['HOST_MAIL']; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
 			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
 			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-			$mail->Port = $_ENV['PORT_MAIL'];    
-	
+			$mail->Port = $_ENV['PORT_MAIL'];
+
 			// Configuración del correo
 			$mail->setFrom($_ENV['USER_MAIL'], 'Universidad Montrer');
 			$mail->addAddress($recipient);
-	
+
 			// Título y diseño del correo
 			$subject = utf8_decode("Cancelación de Solicitud de Pago - Folio {$requestData['folio']}");
 			$mail->isHTML(true);
 			$mail->Subject = $subject;
-	
+
 			// Cuerpo del correo
 			$body = '
 			<html>
@@ -666,10 +724,10 @@ class FormsController {
 			</body>
 			</html>
 			';
-	
+
 			// Asignar el cuerpo al correo
 			$mail->Body = $body;
-	
+
 			// Enviar el correo
 			$mail->send();
 			return true;
@@ -680,31 +738,32 @@ class FormsController {
 		}
 	}
 
-	static public function ctrMonthBudget($idArea, $idBudget, $approvedAmount){
+	static public function ctrMonthBudget($idArea, $idBudget, $approvedAmount)
+	{
 		// Obtén el mes actual
 		$currentMonth = date('n'); // n devuelve el número del mes sin ceros iniciales
-	
+
 		// Obtiene los datos de la base de datos
 		$month_budgets = FormsModels::mdlGetMonthBudget($idBudget);
-	
+
 		// Inicializa la suma de los presupuestos hasta el mes actual
 		$sumaBudgetMonth = 0;
-		
+
 		// Recorre los datos para calcular la suma de los presupuestos hasta el mes actual
 		foreach ($month_budgets as $month_budget) {
 			if ($month_budget['month'] <= $currentMonth) {
 				$budgetMonth = floatval($month_budget['budget_month']);
 				$budgetUsed = floatval($month_budget['budget_used']);
-				
+
 				$sumaBudgetMonth = ($budgetMonth - $budgetUsed);
-				if($approvedAmount >= $sumaBudgetMonth) {
+				if ($approvedAmount >= $sumaBudgetMonth) {
 					$budget = FormsModels::mdlFillBudgetMouth($month_budget['idMensualBudget'], $month_budget['budget_month']);
-					if($budget == 'ok') {
+					if ($budget == 'ok') {
 						$approvedAmount = $approvedAmount - $sumaBudgetMonth;
 					}
-				} elseif($approvedAmount < $sumaBudgetMonth) {
+				} elseif ($approvedAmount < $sumaBudgetMonth) {
 					$budget = FormsModels::mdlFillBudgetMouth($month_budget['idMensualBudget'], $approvedAmount);
-					if($budget == 'ok') {
+					if ($budget == 'ok') {
 						$approvedAmount = 0;
 					}
 				}
@@ -712,38 +771,46 @@ class FormsController {
 		}
 	}
 
-	static public function ctrSendComprobation($data){
-        $sendComprobation = FormsModels::mdlSendComprobation($data);
-        return $sendComprobation;
-    }
+	static public function ctrSendComprobation($data)
+	{
+		$sendComprobation = FormsModels::mdlSendComprobation($data);
+		return $sendComprobation;
+	}
 
-	static public function ctrGetComprobante($idRequest){
-        $getComprobante = FormsModels::mdlGetComprobante($idRequest);
-        return $getComprobante;
-    }
+	static public function ctrGetComprobante($idRequest)
+	{
+		$getComprobante = FormsModels::mdlGetComprobante($idRequest);
+		return $getComprobante;
+	}
 
-	static public function ctrResponceRequest($idRequest, $responce, $comentario){
-        return FormsModels::mdlResponceRequest($idRequest, $responce, $comentario);
-    }
-	static public function ctrCommentsRequest($idRequest){
-        return json_encode(FormsModels::mdlCommentsRequest($idRequest));
-    }
-	
-	static public function ctrVerificacionArea($idUser){
-        return json_encode(FormsModels::mdlVerificacionArea($idUser));
-    }
-	
-	static public function ctrVerificacionDeudas($idUser){
-        return json_encode(FormsModels::mdlVerificacionDeudas($idUser));
-    }
-	
-	static public function ctrGetLogs($idUser){
-        return FormsModels::mdlGetLogs($idUser);
-    }
-	
-	static public function ctrMarcarPago($idRequest,$idUser){
-        $result = FormsModels::mdlMarcarPago($idRequest,$idUser);
-		
+	static public function ctrResponceRequest($idRequest, $responce, $comentario)
+	{
+		return FormsModels::mdlResponceRequest($idRequest, $responce, $comentario);
+	}
+	static public function ctrCommentsRequest($idRequest)
+	{
+		return json_encode(FormsModels::mdlCommentsRequest($idRequest));
+	}
+
+	static public function ctrVerificacionArea($idUser)
+	{
+		return json_encode(FormsModels::mdlVerificacionArea($idUser));
+	}
+
+	static public function ctrVerificacionDeudas($idUser)
+	{
+		return json_encode(FormsModels::mdlVerificacionDeudas($idUser));
+	}
+
+	static public function ctrGetLogs($idUser)
+	{
+		return FormsModels::mdlGetLogs($idUser);
+	}
+
+	static public function ctrMarcarPago($idRequest, $idUser)
+	{
+		$result = FormsModels::mdlMarcarPago($idRequest, $idUser);
+
 		$request = FormsController::ctrGetRequest($idRequest);
 		$user = FormsController::ctrGetUser($request['idUser']);
 		if ($result == 'ok') {
@@ -751,52 +818,56 @@ class FormsController {
 			$message = array(
 				0 => 'Estimados colaboradores:',
 				1 => 'El estado del presupuesto con el siguiente folio ha sido marcado como pagado:',
-				2 => 'Folio del presupuesto: '.$request['folio'],
-				3 => 'Monto pagado: $'.$request['approvedAmount']
+				2 => 'Folio del presupuesto: ' . $request['folio'],
+				3 => 'Monto pagado: $' . $request['approvedAmount']
 			);
-	
+
 			// Dirección de correo electrónico del destinatario
 			$email = $user['email'];
-	
+
 			// Asunto del correo electrónico
 			$subject = 'Actualización del estado del presupuesto';
-	
+
 			// Título del correo electrónico
 			$title = 'Actualización del estado del presupuesto';
-	
+
 			// Subtítulo del correo electrónico
 			$subtitle = 'Detalles del presupuesto actualizado';
-	
+
 			// Envío del correo electrónico
 			FormsController::ctrSendEmail($email, $message, $subject, $title, $subtitle);
 		}
 
 		return $result;
-    }
-	
-	static public function ctrSearchRequest($idRequest){
-        return FormsModels::mdlSearchRequest($idRequest);
-    }
+	}
 
-	static public function ctrUpdateRequest($datos){
-        return FormsModels::mdlUpdateRequest($datos);
-    }
+	static public function ctrSearchRequest($idRequest)
+	{
+		return FormsModels::mdlSearchRequest($idRequest);
+	}
 
-	static public function ctrMaxRequestBudgets(){
-        return FormsModels::mdlMaxRequestBudgets();
-    }
+	static public function ctrUpdateRequest($datos)
+	{
+		return FormsModels::mdlUpdateRequest($datos);
+	}
 
-    static public function ctrDownloadProviders() {
+	static public function ctrMaxRequestBudgets()
+	{
+		return FormsModels::mdlMaxRequestBudgets();
+	}
+
+	static public function ctrDownloadProviders()
+	{
 		// Obtener los proveedores desde el modelo
 		$providers = FormsModels::mdlGetProviders(null);
-	
+
 		// Crear un nuevo objeto Spreadsheet
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
-	
+
 		// Definir los encabezados de las columnas
 		$columnHeaders = ['Clave del proveedor', 'Contacto', 'Teléfono', 'Email', 'Página web', 'Razón social', 'RFC', 'Dirección fiscal', 'Banco', 'Titular', 'N° cuenta', 'CLABE'];
-	
+
 		// Insertar los encabezados de las columnas y aplicar estilo
 		$columnIndex = 65; // ASCII para 'A'
 		foreach ($columnHeaders as $header) {
@@ -807,13 +878,13 @@ class FormsController {
 			]);
 			$columnIndex++;
 		}
-	
+
 		// Iterar sobre los proveedores y agregar sus datos al archivo Excel
 		$row = 2; // Empezar en la segunda fila
 		foreach ($providers as $provider) {
 			// Construir la dirección fiscal
 			$fiscalAddress = "{$provider['fiscal_address_street']}, {$provider['fiscal_address_colonia']}, {$provider['fiscal_address_municipio']}, {$provider['fiscal_address_estado']}, {$provider['fiscal_address_cp']}";
-	
+
 			// Asignar valores a las celdas
 			$sheet->setCellValue("A{$row}", $provider['provider_key']);
 			$sheet->setCellValue("B{$row}", $provider['representative_name']);
@@ -841,10 +912,10 @@ class FormsController {
 			foreach (range('A', 'L') as $columnID) {
 				$sheet->getColumnDimension($columnID)->setAutoSize(true);
 			}
-	
+
 			$row++; // Moverse a la siguiente fila
 		}
-	
+
 		// Ajustar el alto de las filas que contienen datos bancarios
 		$highestRow = $sheet->getHighestRow();
 		for ($r = 2; $r <= $highestRow; $r++) {
@@ -853,46 +924,47 @@ class FormsController {
 				$sheet->getRowDimension($r)->setRowHeight(-1);
 			}
 		}
-	
+
 		// Ajustar el ancho de las columnas
 		foreach (range('A', 'I') as $columnID) {
 			$sheet->getColumnDimension($columnID)->setAutoSize(true);
 		}
-	
+
 		// Definir la ruta y el nombre del archivo de destino
 		$directory = '../../assets/documents/';
 		$filename = 'proveedores.xlsx';
-	
+
 		// Guardar el archivo Excel en la ruta especificada
 		$writer = new Xlsx($spreadsheet);
 		$writer->save($directory . $filename);
-	
+
 		// Devolver el nombre del archivo para su descarga
 		return $filename;
 	}
 
-	static public function ctrDownloadProvidersPDF() {
+	static public function ctrDownloadProvidersPDF()
+	{
 		// Obtener los proveedores desde el modelo
 		$providers = FormsModels::mdlGetProviders(null);
-	
+
 		// Crear un nuevo objeto TCPDF
 		$pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
-	
+
 		// Establecer información del documento
 		$pdf->SetCreator(PDF_CREATOR);
 		$pdf->SetTitle('Proveedores');
 		$pdf->SetHeaderData('', 0, '', '');
-	
+
 		// Agregar una página
 		$pdf->AddPage();
-	
+
 		// Agregar logo en la parte superior
 		$logo = __DIR__ . '/../assets/img/logo300px.png';
 		$pdf->Image($logo, 10, 10, 30, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-	
+
 		// Definir el contenido del PDF
 		$content = '<h1 style="text-align: center; font-size: 20px; margin-bottom: 20px;">Proveedores</h1>';
-	
+
 		// Aplicar estilos CSS a la tabla
 		$content .= '<style>';
 		$content .= '.table { width: 100%; border-collapse: collapse; }';
@@ -900,7 +972,7 @@ class FormsController {
 		$content .= '.table th { background-color: #f2f2f2; }';
 		$content .= '.table tr { font-size:7px; }';
 		$content .= '</style>';
-	
+
 		// Construir la tabla de proveedores
 		$content .= '<table class="table">';
 		$content .= '<thead>';
@@ -920,7 +992,7 @@ class FormsController {
 		$content .= '</tr>';
 		$content .= '</thead>';
 		$content .= '<tbody>';
-	
+
 		foreach ($providers as $provider) {
 			$content .= '<tr>';
 			$content .= '<td>' . $provider['provider_key'] . '</td>';
@@ -937,71 +1009,78 @@ class FormsController {
 			$content .= '<td>' . $provider['clabe'] . '</td>';
 			$content .= '</tr>';
 		}
-	
+
 		$content .= '</tbody>';
 		$content .= '</table>';
-	
+
 		// Escribir el contenido en el PDF
 		$pdf->writeHTML($content, true, false, true, false, '');
-	
+
 		// Definir la ruta y el nombre del archivo de destino
 		$directory = __DIR__ . '/../assets/documents/';
 		$filename = 'proveedores.pdf';
-	
+
 		// Guardar el archivo PDF en la ruta especificada
 		$pdf->Output($directory . $filename, 'F');
-	
+
 		// Devolver el nombre del archivo para su descarga
 		return $filename;
 	}
 
-	static public function ctrGetAreaBycheckup($item,$value) {
-		$area = FormsModels::mdlGetAreaBycheckup($item,$value);
-        return $area;
+	static public function ctrGetAreaBycheckup($item, $value)
+	{
+		$area = FormsModels::mdlGetAreaBycheckup($item, $value);
+		return $area;
 	}
 
-	static public function ctrGetAreaByUser($idUser) {
+	static public function ctrGetAreaByUser($idUser)
+	{
 		$area = FormsModels::mdlGetAreaByUser($idUser);
-        return $area;
+		return $area;
 	}
 
-	static public function ctrChangePaymentDate($idRequest, $paymentDate) {
-		$response = FormsModels::mdlChangePaymentDate($idRequest,$paymentDate);
+	static public function ctrChangePaymentDate($idRequest, $paymentDate)
+	{
+		$response = FormsModels::mdlChangePaymentDate($idRequest, $paymentDate);
 		return $response;
-    }
+	}
 
-	static public function ctrGetBusiness($idUser) {
+	static public function ctrGetBusiness($idUser)
+	{
 		$business = FormsModels::mdlGetBusiness($idUser);
-        return $business;
+		return $business;
 	}
 
-	static public function ctrCompleteRequest($data) {
+	static public function ctrCompleteRequest($data)
+	{
 		$response = FormsModels::mdlCompleteRequest($data);
-        return $response;
+		return $response;
 	}
 
-	static public function ctrGetReports($startDate, $endDate, $context) {
+	static public function ctrGetReports($startDate, $endDate, $context)
+	{
 		$reports = FormsModels::mdlGetReports($startDate, $endDate, $context);
-        return $reports;
+		return $reports;
 	}
 
-	static public function ctrSendPassword($userId, $password, $firstname, $lastname, $email) {
+	static public function ctrSendPassword($userId, $password, $firstname, $lastname, $email)
+	{
 		$mail = new PHPMailer(true);
 
-		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+		$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 		$dotenv->load();
 
 		$mail = new PHPMailer(true);
 		try {
 			// Configuración del servidor SMTP
-			$mail->isSMTP();            
+			$mail->isSMTP();
 			$mail->Host = $_ENV['HOST_MAIL']; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
 			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
 			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-			$mail->Port = $_ENV['PORT_MAIL'];    
-	
+			$mail->Port = $_ENV['PORT_MAIL'];
+
 			// Configuración del correo
 			$mail->setFrom($_ENV['USER_MAIL'], 'Universidad Montrer');
 			$mail->addAddress($email); // Destinatario
@@ -1096,39 +1175,41 @@ class FormsController {
 
 			// Guardar la contraseña en la base de datos
 			return FormsModels::mdlRegisterPassword($userId, $cryptPassword);
-
 		} catch (Exception $e) {
 			// Manejo de errores
 			error_log("Error al enviar el correo: {$mail->ErrorInfo}");
 			return false;
 		}
 	}
-	
-	static public function ctrSendEmail($email, $message, $subject, $title, $subtitle) {
+
+	static public function ctrSendEmail($email, $message, $subject, $title, $subtitle)
+	{
 		$mail = new PHPMailer(true);
-	
-		$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+
+		$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 		$dotenv->load();
 
 		$mail = new PHPMailer(true);
 		try {
 			// Configuración del servidor SMTP
-			$mail->isSMTP();            
+			$mail->isSMTP();
 			$mail->Host = $_ENV['HOST_MAIL']; // Cambia esto al servidor SMTP que estés usando
 			$mail->SMTPAuth = true;
 			$mail->Username = $_ENV['USER_MAIL']; // Cambia esto a tu dirección de correo electrónico real
 			$mail->Password = $_ENV['PASS_MAIL']; // Cambia esto a tu contraseña de correo electrónico real
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-			$mail->Port = $_ENV['PORT_MAIL'];    
-	
+			$mail->Port = $_ENV['PORT_MAIL'];
+
 			// Configuración del correo
 			$mail->setFrom($_ENV['USER_MAIL'], 'Universidad Montrer');
 			$mail->addAddress($email); // Destinatario
-	
+
 			// Configuración del correo
 			$mail->isHTML(true);
+			$mail->CharSet = 'UTF-8';
+			$mail->Encoding = 'base64';
 			$mail->Subject = $subject;
-	
+
 			// Crear el contenido del correo en HTML
 			$templateHTML = '
 			<!DOCTYPE html>
@@ -1232,14 +1313,13 @@ class FormsController {
 				</div>
 			</body>
 			</html>';
-	
+
 			// Asignar el cuerpo del correo
 			$mail->Body = $templateHTML;
-	
+
 			// Enviar el correo
 			$mail->send();
 			return true;
-	
 		} catch (Exception $e) {
 			// Manejo de errores
 			error_log("Error al enviar el correo: {$mail->ErrorInfo}");
@@ -1247,78 +1327,93 @@ class FormsController {
 		}
 	}
 
-	static public function ctrCreateAccount($cuenta, $numeroCuenta, $idArea) {
+	static public function ctrCreateAccount($cuenta, $numeroCuenta, $idArea)
+	{
 		$result = FormsModels::mdlCreateAccount($cuenta, $numeroCuenta, $idArea);
 		return $result;
 	}
 
-	static public function ctrGetAccounts() {
+	static public function ctrGetAccounts()
+	{
 		$result = FormsModels::mdlGetAccounts();
-        return $result;
+		return $result;
 	}
 
-	static public function ctrCreatePartida($partida, $numeroPartida, $idCuenta) {
+	static public function ctrCreatePartida($partida, $numeroPartida, $idCuenta)
+	{
 		$result = FormsModels::mdlCreatePartida($partida, $numeroPartida, $idCuenta);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrGetPartidas($idPartida) {
+	static public function ctrGetPartidas($idPartida)
+	{
 		$result = FormsModels::mdlGetPartidas($idPartida);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrDeleteAccount($idCuenta) {
+	static public function ctrDeleteAccount($idCuenta)
+	{
 		$result = FormsModels::mdlDeleteAccount($idCuenta);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrDeletePartida($idPartida) {
-        $result = FormsModels::mdlDeletePartida($idPartida);
-        return $result;
-    }
+	static public function ctrDeletePartida($idPartida)
+	{
+		$result = FormsModels::mdlDeletePartida($idPartida);
+		return $result;
+	}
 
-	static public function ctrEditAccount($idCuenta, $cuenta, $numeroCuenta, $idArea) {
+	static public function ctrEditAccount($idCuenta, $cuenta, $numeroCuenta, $idArea)
+	{
 		$result = FormsModels::mdlEditAccount($idCuenta, $cuenta, $numeroCuenta, $idArea);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrEditPartida($idPartida, $Partida, $codigoPartida, $idCuenta) {
+	static public function ctrEditPartida($idPartida, $Partida, $codigoPartida, $idCuenta)
+	{
 		$result = FormsModels::mdlEditPartida($idPartida, $Partida, $codigoPartida, $idCuenta);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrGetConceptos($idPartida) {
+	static public function ctrGetConceptos($idPartida)
+	{
 		$result = FormsModels::mdlGetConceptos($idPartida);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrGetConcepto($idConcepto) {
+	static public function ctrGetConcepto($idConcepto)
+	{
 		$result = FormsModels::mdlGetConcepto($idConcepto);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrEditConcepto($idConcepto, $concepto, $numeroConcepto) {
+	static public function ctrEditConcepto($idConcepto, $concepto, $numeroConcepto)
+	{
 		$result = FormsModels::mdlEditConcepto($idConcepto, $concepto, $numeroConcepto);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrAddConcepto($idPartida, $concepto, $numeroConcepto) {
+	static public function ctrAddConcepto($idPartida, $concepto, $numeroConcepto)
+	{
 		$result = FormsModels::mdlAddConcepto($idPartida, $concepto, $numeroConcepto);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrDeleteConcepto($idConcepto) {
+	static public function ctrDeleteConcepto($idConcepto)
+	{
 		$result = FormsModels::mdlDeleteConcepto($idConcepto);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrSelectAccounts($idArea) {
+	static public function ctrSelectAccounts($idArea)
+	{
 		$result = FormsModels::mdlSelectAccounts($idArea);
-        return $result;
+		return $result;
 	}
 
-	static public function ctrSelectPartidas($idCuenta) {
+	static public function ctrSelectPartidas($idCuenta)
+	{
 		$result = FormsModels::mdlSelectPartidas($idCuenta);
-        return $result;
+		return $result;
 	}
 }
