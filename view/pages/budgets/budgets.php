@@ -16,10 +16,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Departamento</th>
+                                    <th>Partida</th>
                                     <th>Presupuesto autorizado</th>
-                                    <th>Presupuesto solicitado</th>
+                                    <!-- <th>Presupuesto solicitado</th>
                                     <th>Presupuesto comprobado</th>
-                                    <th>Presupuesto sin comprobar</th>
+                                    <th>Presupuesto sin comprobar</th> -->
                                     <th>Ejercicio</th>
                                     <th width="15%"></th>
                                 </tr>

@@ -123,32 +123,41 @@ class FormsModels
 		return $result;
 	}
 
-	static public function mdlCountAreaId($idArea)
+	static public function mdlCountAreaId($idArea, $idPartida)
 	{
 		$pdo = Conexion::conectar();
 
-		$sql = "SELECT nameArea, areaCode,
-		COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
-					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
-					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-				WHERE e.status = 1 AND r.idArea = :idArea), 0) AS comp,
-
-		COALESCE((SELECT SUM(r.approvedAmount) FROM montrer_budget_requests r
-					LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
-					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-				WHERE e.status = 1 AND r.idArea = :idArea AND r.status = 5 AND r.active = 0), 0) AS compActive,
-
-		(SELECT b.AuthorizedAmount FROM montrer_budgets b
-					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-				WHERE e.status = 1 AND b.idArea = :idArea) AS total
-
-        FROM 
-            montrer_area 
-        WHERE 
-            idArea = :idArea;";
+		$sql = "SELECT 
+    nameArea, 
+    areaCode,
+    COALESCE(
+        (SELECT SUM(r.approvedAmount)
+         FROM montrer_budget_requests r
+         LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
+         LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+         WHERE e.status = 1 AND r.idArea = :idArea AND b.idPartida = :idPartida), 0
+    ) AS comp,
+    COALESCE(
+        (SELECT SUM(r.approvedAmount)
+         FROM montrer_budget_requests r
+         LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
+         LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+         WHERE e.status = 1 AND r.idArea = :idArea AND r.status = 5 AND r.active = 0 AND b.idPartida = :idPartida), 0
+    ) AS compActive,
+    (SELECT b.AuthorizedAmount
+     FROM montrer_budgets b
+     LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+     WHERE e.status = 1 AND b.idArea = :idArea
+     LIMIT 1
+    ) AS total
+FROM montrer_area 
+WHERE idArea = :idArea
+LIMIT 0, 25;
+";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		$stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		$stmt->closeCursor();
@@ -550,7 +559,7 @@ class FormsModels
 	{
 		$pdo = Conexion::conectar();
 		if ($idExercise  != 'all') {
-			$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
+			$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise, b.idPartida
 					FROM montrer_budgets b
 					LEFT JOIN montrer_area a ON a.idArea = b.idArea
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
@@ -559,10 +568,11 @@ class FormsModels
 			$stmt = $pdo->prepare($sql);
 			$stmt->bindParam(':idExercise', $idExercise, PDO::PARAM_INT);
 		} else {
-			$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
+			$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise, b.idPartida, p.Partida
 					FROM montrer_budgets b
 					LEFT JOIN montrer_area a ON a.idArea = b.idArea
 					LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+					LEFT JOIN montrer_partidas p ON p.idPartida = b.idPartida
 					Order By exerciseName;";
 			$stmt = $pdo->prepare($sql);
 		}
@@ -576,7 +586,7 @@ class FormsModels
 	static public function mdlGetBudget($idBudget)
 	{
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise
+		$sql = "SELECT b.idBudget, b.AuthorizedAmount, a.nameArea, a.idArea, e.exerciseName, e.budget, b.status, e.idExercise, b.idPartida
 				FROM montrer_budgets b
 				LEFT JOIN montrer_area a ON a.idArea = b.idArea
 				LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
@@ -622,14 +632,16 @@ class FormsModels
 	static public function mdlAddBudgets($data)
 	{
 		$pdo = Conexion::conectar();
-		$sql = "INSERT INTO montrer_budgets(idArea, AuthorizedAmount, idExercise) VALUES (:area, :AuthorizedAmount, :exercise);";
+		$sql = "INSERT INTO montrer_budgets(idArea, AuthorizedAmount, idExercise, idPartida) VALUES (:area, :AuthorizedAmount, :exercise, :idPartida);";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':area', $data['area'], PDO::PARAM_INT);
 		$stmt->bindParam(':AuthorizedAmount', $data['AuthorizedAmount'], PDO::PARAM_STR);
 		$stmt->bindParam(':exercise', $data['exercise'], PDO::PARAM_INT);
+		$stmt->bindParam(':idPartida', $data['partida'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
-			$idBudget = $pdo->lastInsertId();
-			$result = $idBudget;
+			$result = 'ok';
+			// $idBudget = $pdo->lastInsertId();
+			// $result = $idBudget;
 		} else {
 			$result = 'Error';
 			print_r($pdo->errorInfo());
@@ -639,24 +651,24 @@ class FormsModels
 		return $result;
 	}
 
-	static public function mdlAddBudgetsMonths($month, $data)
-	{
-		$pdo = Conexion::conectar();
-		$sql = "INSERT INTO montrer_month_budget(month, budget_month, idBudget) VALUES (:month, :budget_month, :idBudget)";
-		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':month', $month, PDO::PARAM_INT);
-		$stmt->bindParam(':budget_month', $data['budget_month'], PDO::PARAM_STR);
-		$stmt->bindParam(':idBudget', $data['idBudget'], PDO::PARAM_INT);
-		if ($stmt->execute()) {
-			$result = 'ok';
-		} else {
-			$result = 'Error';
-			print_r($pdo->errorInfo());
-		}
-		$stmt->closeCursor();
-		$stmt = null;
-		return $result;
-	}
+	// static public function mdlAddBudgetsMonths($month, $data)
+	// {
+	// 	$pdo = Conexion::conectar();
+	// 	$sql = "INSERT INTO montrer_month_budget(month, budget_month, idBudget) VALUES (:month, :budget_month, :idBudget)";
+	// 	$stmt = $pdo->prepare($sql);
+	// 	$stmt->bindParam(':month', $month, PDO::PARAM_INT);
+	// 	$stmt->bindParam(':budget_month', $data['budget_month'], PDO::PARAM_STR);
+	// 	$stmt->bindParam(':idBudget', $data['idBudget'], PDO::PARAM_INT);
+	// 	if ($stmt->execute()) {
+	// 		$result = 'ok';
+	// 	} else {
+	// 		$result = 'Error';
+	// 		print_r($pdo->errorInfo());
+	// 	}
+	// 	$stmt->closeCursor();
+	// 	$stmt = null;
+	// 	return $result;
+	// }
 
 	static public function mdlGetUser($register)
 	{
@@ -1369,7 +1381,9 @@ class FormsModels
 		$sql = "SELECT DISTINCT 
 					a.idArea, 
 					a.nameArea, 
-					b.AuthorizedAmount 
+					b.AuthorizedAmount,
+					b.idPartida,
+					p.Partida
 				FROM 
 					montrer_exercise e
 				LEFT JOIN 
@@ -1378,6 +1392,8 @@ class FormsModels
 					montrer_area a ON a.idArea = b.idArea
 				LEFT JOIN 
 					montrer_users_to_areas ua ON a.idArea = ua.idArea
+				LEFT JOIN 
+					montrer_partidas p ON p.idPartida = b.idPartida
 				WHERE 
 					b.status = 1 
 					AND e.status = 1 
@@ -1394,10 +1410,10 @@ class FormsModels
 	static public function mdlGetAuthorizedAmount($idArea)
 	{
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.idBudget, a.idArea, m.month, m.budget_month, m.budget_used, m.total_used, m.idMensualBudget FROM montrer_budgets b
-					RIGHT JOIN montrer_month_budget m ON m.idBudget = b.idBudget
+		$sql = "SELECT b.idBudget, a.idArea, b.idPartida FROM montrer_budgets b
 					RIGHT JOIN montrer_area a ON a.idArea = b.idArea
 					RIGHT JOIN montrer_exercise e ON e.idExercise = b.idExercise
+					RIGHT JOIN montrer_partidas p ON p.idPartida = b.idPartida
 				WHERE a.idArea = :idArea AND e.status = 1;";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
@@ -2187,6 +2203,23 @@ class FormsModels
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;
+	}
+
+	static public function mdlGetPartidasToArea($idArea) {
+		$pdo = Conexion::conectar();
+        $sql = "SELECT * FROM montrer_partidas p
+                    LEFT JOIN montrer_cuentas c ON c.idCuenta = p.idCuenta
+                    LEFT JOIN montrer_area a ON c.idArea = a.idArea
+                WHERE p.status = 1 AND c.idArea = :idArea";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+
+        $stmt->closeCursor();
+        $stmt = null;
+        return $result;
 	}
 
 	static public function mdlDeleteAccount($idCuenta)

@@ -1,34 +1,30 @@
 $(document).ready(function () {
+    // Inicializa el select de áreas y vincula el evento de cambio
     getAreas();
+    $('#area').on('change', function () {
+        getPartidas($(this).val());
+    });
 });
 
 function getAreas() {
-    // Realiza la solicitud AJAX para obtener las áreas
     $.ajax({
         type: 'GET',
         url: 'controller/ajax/getAreas.php',
-        dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
+        dataType: 'json',
         success: function (response) {
+            var $areaSelect = $('#area');
+            $areaSelect.empty().append($('<option>', {
+                value: '',
+                text: 'Selecciona un area'
+            }));
 
-            // Verifica que la respuesta sea válida y tenga datos
-            if (response && Array.isArray(response) && response.length > 0) {
-                // Obtén el elemento select por su ID
-                var areaSelect = document.getElementById('area');
-
-                // Limpia cualquier opción existente en el select
-                areaSelect.innerHTML = '';
-
-                var option = document.createElement('option');
-                option.value = '';
-                option.text = 'Selecciona un area'; // Ajusta esto según tu estructura de datos
-                areaSelect.add(option);
-                // Recorre la lista de áreas y agrega cada una como una opción al select
-                response.forEach(function (area) {
+            if (Array.isArray(response) && response.length > 0) {
+                $.each(response, function (i, area) {
                     if (area.status == 1) {
-                        var option = document.createElement('option');
-                        option.value = area.idArea; // Ajusta esto según tu estructura de datos
-                        option.text = area.nameArea; // Ajusta esto según tu estructura de datos
-                        areaSelect.add(option);
+                        $areaSelect.append($('<option>', {
+                            value: area.idArea,
+                            text: area.nameArea
+                        }));
                     }
                 });
             } else {
@@ -37,6 +33,47 @@ function getAreas() {
         },
         error: function (error) {
             console.log('Error en la solicitud AJAX:', error);
+        }
+    });
+}
+
+function getPartidas(idArea) {
+    var $partidaSelect = $('#partida');
+    if (!idArea) {
+        $partidaSelect.empty().append($('<option>', {
+            value: '',
+            text: 'Selecciona un area primero'
+        })).prop('disabled', true);
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getPartidasToArea.php',
+        data: { idArea: idArea },
+        dataType: 'json',
+        success: function (response) {
+            $partidaSelect.empty();
+            if (Array.isArray(response) && response.length > 0) {
+                $partidaSelect.append($('<option>', {
+                    value: '',
+                    text: 'Selecciona una partida'
+                })).prop('disabled', false);
+                $.each(response, function (i, partida) {
+                    if (partida.status == 1) {
+                        $partidaSelect.append($('<option>', {
+                            value: partida.idPartida,
+                            text: partida.Partida
+                        }));
+                    }
+                });
+            } else {
+                $partidaSelect.append($('<option>', {
+                    value: '',
+                    text: 'Selecciona un area primero'
+                })).prop('disabled', true);
+                showAlertBootstrap('¡Atención!', 'El departamento seleccionado no cuenta con partidas registradas');
+            }
         }
     });
 }
