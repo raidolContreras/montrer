@@ -27,7 +27,6 @@ $(document).ready(function () {
                 }
             },
 			{ data: 'nameArea' },
-			{ data: 'Partida' },
 			{
 				data: 'AuthorizedAmount',
 				render: function (data, type, row) {
@@ -42,21 +41,21 @@ $(document).ready(function () {
 					return data;
 				}
 			},
-			// { data: null,
-			// 	render: function () {
-			// 		return '0';
-			// 	}
-			// },
-			// { data: null,
-			// 	render: function () {
-			// 		return '0';
-			// 	}
-			// },
-			// { data: null,
-			// 	render: function () {
-			// 		return '0';
-			// 	}
-			// },
+			{ data: null,
+				render: function () {
+					return '0';
+				}
+			},
+			{ data: null,
+				render: function () {
+					return '0';
+				}
+			},
+			{ data: null,
+				render: function () {
+					return '0';
+				}
+			},
 			{ data: 'exerciseName' },
 			{
 				data: null,

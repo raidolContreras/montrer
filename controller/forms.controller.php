@@ -40,9 +40,9 @@ class FormsController
 		return FormsModels::mdlCountArea($idUser);
 	}
 
-	static public function ctrCountAreaId($idArea, $idPartida)
+	static public function ctrCountAreaId($idArea)
 	{
-		return FormsModels::mdlCountAreaId($idArea, $idPartida);
+		return FormsModels::mdlCountAreaId($idArea);
 	}
 	// Fin de Contadores
 
@@ -284,15 +284,39 @@ class FormsController
 		$getBudgets = FormsModels::mdlGetBudgets('all');
 		$value = true;
 		foreach ($getBudgets as $budgets) {
-			if ($budgets['idArea'] == $data['area'] && $budgets['idExercise'] == $data['exercise'] && $budgets['idPartida'] == $data['partida']) {
+			if ($budgets['idArea'] == $data['area'] && $budgets['idExercise'] == $data['exercise']) {
 				$value = false;
 			}
 		}
 		if ($value) {
 			$Budget = FormsModels::mdlAddBudgets($data);
+			$exercise = FormsController::ctrGetExercises($data['exercise']);
 
-			if ($Budget == 'ok') {
-				return $Budget;
+			// Convertir las fechas a objetos DateTime para facilitar el cálculo
+			$initialDate = new DateTime($exercise['initialDate']);
+			$finalDate = new DateTime($exercise['finalDate']);
+
+			$initialMonth = (int)$initialDate->format('n');
+			$finalMonth = (int)$finalDate->format('n');
+			$months = 0;
+			for ($i = $initialMonth; $i <= $finalMonth; $i++) {
+				$months++;
+			}
+
+			$budget_month = $data['AuthorizedAmount'] / $months;
+
+			$budget_month_formatted = sprintf("%.2f", $budget_month);
+
+			for ($i = $initialMonth; $i <= $finalMonth; $i++) {
+				$datos = array(
+					'budget_month' => $budget_month_formatted,
+					'idBudget' => $Budget,
+				);
+				$addBudgetMonth = FormsModels::mdlAddBudgetsMonths($i, $datos);
+			}
+
+			if ($addBudgetMonth == 'ok') {
+				return $addBudgetMonth;
 			} else {
 				$result = 'Error: Presupuesto ya asignado';
 			}
@@ -1325,11 +1349,6 @@ class FormsController
 	{
 		$result = FormsModels::mdlGetPartidas($idPartida);
 		return $result;
-	}
-
-	static public function ctrGetPartidasToArea($idArea) {
-		$result = FormsModels::mdlGetPartidasToArea($idArea);
-        return $result;
 	}
 
 	static public function ctrDeleteAccount($idCuenta)

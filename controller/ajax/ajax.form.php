@@ -431,13 +431,12 @@ if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POS
 	echo $addExercise;
 }
 
-if (isset($_POST['area']) && isset($_POST['AuthorizedAmount']) && isset($_POST['exercise']) && isset($_POST['partida'])) {
+if (isset($_POST['area']) && isset($_POST['AuthorizedAmount']) && isset($_POST['exercise'])) {
 
 	$data = array(
 		'area' =>  $_POST['area'],
 		'AuthorizedAmount' =>  $_POST['AuthorizedAmount'],
-		'exercise' =>  $_POST['exercise'],
-		'partida' =>  $_POST['partida']
+		'exercise' =>  $_POST['exercise']
 	);
 	$addBudgets = AjaxForm::AddBudgets($data);
 	echo $addBudgets;

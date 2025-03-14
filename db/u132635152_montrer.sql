@@ -861,6 +861,99 @@ INSERT INTO `montrer_logs` (`idLog`, `idUser`, `timestamp`, `actionType`, `ipAdd
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `montrer_month_budget`
+--
+
+CREATE TABLE `montrer_month_budget` (
+  `idMensualBudget` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `budget_month` double NOT NULL,
+  `budget_used` double NOT NULL DEFAULT 0,
+  `total_used` tinyint(1) DEFAULT NULL,
+  `idBudget` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `montrer_month_budget`
+--
+
+INSERT INTO `montrer_month_budget` (`idMensualBudget`, `month`, `budget_month`, `budget_used`, `total_used`, `idBudget`) VALUES
+(132, 1, 16666.67, 0, NULL, 37),
+(133, 2, 16666.67, 0, NULL, 37),
+(134, 3, 16666.67, 0, NULL, 37),
+(135, 4, 16666.67, 0, NULL, 37),
+(136, 5, 16666.67, 0, NULL, 37),
+(137, 6, 16666.67, 0, NULL, 37),
+(138, 7, 16666.67, 0, NULL, 37),
+(139, 8, 16666.67, 0, NULL, 37),
+(140, 9, 16666.67, 0, NULL, 37),
+(141, 10, 16666.67, 0, NULL, 37),
+(142, 11, 16666.67, 0, NULL, 37),
+(143, 12, 16666.67, 0, NULL, 37),
+(144, 1, 125000, 0, NULL, 38),
+(145, 2, 125000, 0, NULL, 38),
+(146, 3, 125000, 0, NULL, 38),
+(147, 4, 125000, 0, NULL, 38),
+(148, 5, 125000, 0, NULL, 38),
+(149, 6, 125000, 0, NULL, 38),
+(150, 7, 125000, 0, NULL, 38),
+(151, 8, 125000, 0, NULL, 38),
+(152, 9, 125000, 0, NULL, 38),
+(153, 10, 125000, 0, NULL, 38),
+(154, 11, 125000, 0, NULL, 38),
+(155, 12, 125000, 0, NULL, 38),
+(156, 1, 41666.67, 0, NULL, 39),
+(157, 2, 41666.67, 0, NULL, 39),
+(158, 3, 41666.67, 0, NULL, 39),
+(159, 4, 41666.67, 0, NULL, 39),
+(160, 5, 41666.67, 0, NULL, 39),
+(161, 6, 41666.67, 0, NULL, 39),
+(162, 7, 41666.67, 0, NULL, 39),
+(163, 8, 41666.67, 0, NULL, 39),
+(164, 9, 41666.67, 0, NULL, 39),
+(165, 10, 41666.67, 0, NULL, 39),
+(166, 11, 41666.67, 0, NULL, 39),
+(167, 12, 41666.67, 0, NULL, 39),
+(168, 1, 83333.33, 0, NULL, 40),
+(169, 2, 83333.33, 0, NULL, 40),
+(170, 3, 83333.33, 0, NULL, 40),
+(171, 4, 83333.33, 0, NULL, 40),
+(172, 5, 83333.33, 0, NULL, 40),
+(173, 6, 83333.33, 0, NULL, 40),
+(174, 7, 83333.33, 0, NULL, 40),
+(175, 8, 83333.33, 0, NULL, 40),
+(176, 9, 83333.33, 0, NULL, 40),
+(177, 10, 83333.33, 0, NULL, 40),
+(178, 11, 83333.33, 0, NULL, 40),
+(179, 12, 83333.33, 0, NULL, 40),
+(180, 1, 41666.67, 0, NULL, 41),
+(181, 2, 41666.67, 0, NULL, 41),
+(182, 3, 41666.67, 0, NULL, 41),
+(183, 4, 41666.67, 0, NULL, 41),
+(184, 5, 41666.67, 0, NULL, 41),
+(185, 6, 41666.67, 0, NULL, 41),
+(186, 7, 41666.67, 0, NULL, 41),
+(187, 8, 41666.67, 0, NULL, 41),
+(188, 9, 41666.67, 0, NULL, 41),
+(189, 10, 41666.67, 0, NULL, 41),
+(190, 11, 41666.67, 0, NULL, 41),
+(191, 12, 41666.67, 0, NULL, 41),
+(192, 1, 83333.33, 0, NULL, 42),
+(193, 2, 83333.33, 0, NULL, 42),
+(194, 3, 83333.33, 0, NULL, 42),
+(195, 4, 83333.33, 0, NULL, 42),
+(196, 5, 83333.33, 0, NULL, 42),
+(197, 6, 83333.33, 0, NULL, 42),
+(198, 7, 83333.33, 0, NULL, 42),
+(199, 8, 83333.33, 0, NULL, 42),
+(200, 9, 83333.33, 0, NULL, 42),
+(201, 10, 83333.33, 0, NULL, 42),
+(202, 11, 83333.33, 0, NULL, 42),
+(203, 12, 83333.33, 0, NULL, 42);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `montrer_partidas`
 --
 
@@ -1472,6 +1565,13 @@ ALTER TABLE `montrer_logs`
   ADD KEY `idUser` (`idUser`);
 
 --
+-- Indices de la tabla `montrer_month_budget`
+--
+ALTER TABLE `montrer_month_budget`
+  ADD PRIMARY KEY (`idMensualBudget`),
+  ADD KEY `idBudget` (`idBudget`);
+
+--
 -- Indices de la tabla `montrer_partidas`
 --
 ALTER TABLE `montrer_partidas`
@@ -1578,6 +1678,12 @@ ALTER TABLE `montrer_logs`
   MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=456;
 
 --
+-- AUTO_INCREMENT de la tabla `montrer_month_budget`
+--
+ALTER TABLE `montrer_month_budget`
+  MODIFY `idMensualBudget` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+
+--
 -- AUTO_INCREMENT de la tabla `montrer_partidas`
 --
 ALTER TABLE `montrer_partidas`
@@ -1643,6 +1749,12 @@ ALTER TABLE `montrer_cuentas`
 --
 ALTER TABLE `montrer_logs`
   ADD CONSTRAINT `idUser_Log` FOREIGN KEY (`idUser`) REFERENCES `montrer_users` (`idUsers`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `montrer_month_budget`
+--
+ALTER TABLE `montrer_month_budget`
+  ADD CONSTRAINT `montrer_budget_idBudget` FOREIGN KEY (`idBudget`) REFERENCES `montrer_budgets` (`idBudget`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `montrer_partidas`

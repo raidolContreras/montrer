@@ -312,7 +312,7 @@ function updateMaxRequestedAmount(datos) {
         $.ajax({
             type: 'POST',
             url: 'controller/ajax/countAreaId.php',
-            data: { idArea: datos[0].idArea, idPartida: datos[1].idPartida},
+            data: { idArea: datos[0].idArea },
             dataType: 'json', // Asegúrate de indicar que esperas un objeto JSON
             success: function (response) {
                 let totalBudget = 0;
