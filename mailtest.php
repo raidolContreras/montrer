@@ -30,12 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar_correo'])) {
         try {
             // Configuración SMTP
             $mail->isSMTP();
-            $mail->Host = getenv('HOST_MAIL');
+            $mail->Host = $_ENV['HOST_MAIL'];
             $mail->SMTPAuth = true;
-            $mail->Username = getenv('USER_MAIL');
-            $mail->Password = getenv('PASS_MAIL');
+            $mail->Username = $_ENV['USER_MAIL'];
+            $mail->Password = $_ENV['PASS_MAIL'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port = getenv('PORT_MAIL');
+            $mail->Port = $_ENV['PORT_MAIL'];
 
             // Configuración del correo
             $mail->setFrom($mail->Username, 'Montrer Devosco');
