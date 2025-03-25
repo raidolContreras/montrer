@@ -73,12 +73,6 @@ class FormsController
 		return $getAreas;
 	}
 
-	static public function ctrGetCompanies()
-	{
-		$getCompanies = FormsModels::mdlGetCompanies();
-		return $getCompanies;
-	}
-
 	static public function ctrGetExercise()
 	{
 		$getExercise = FormsModels::mdlGetExercise();
@@ -95,12 +89,6 @@ class FormsController
 	{
 		$getBudgets = FormsModels::mdlGetBudgets($idExercise);
 		return $getBudgets;
-	}
-
-	static public function ctrAddCompany($data)
-	{
-		$addCompany = FormsModels::mdlAddCompany($data);
-		return $addCompany;
 	}
 
 	static public function ctrAddExercise($data)
@@ -1045,12 +1033,6 @@ class FormsController
 		return $response;
 	}
 
-	static public function ctrGetBusiness($idUser)
-	{
-		$business = FormsModels::mdlGetBusiness($idUser);
-		return $business;
-	}
-
 	static public function ctrCompleteRequest($data)
 	{
 		$response = FormsModels::mdlCompleteRequest($data);
@@ -1414,6 +1396,16 @@ class FormsController
 	static public function ctrSelectPartidas($idCuenta)
 	{
 		$result = FormsModels::mdlSelectPartidas($idCuenta);
+		return $result;
+	}
+
+	static public function ctrAddSubpartida($subpartida, $idArea) {
+		$result = FormsModels::mdlAddSubpartida($subpartida, $idArea);
+		return $result;
+	}
+
+	static public function ctrGetSubpartidas() {
+		$result = FormsModels::mdlGetSubpartidas();
 		return $result;
 	}
 }

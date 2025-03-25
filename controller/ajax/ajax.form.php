@@ -56,17 +56,6 @@ class AjaxForm
 		return $addArea;
 	}
 
-	static function AddCompany($data)
-	{
-		$addCompany = FormsController::ctrAddCompany($data);
-		if ($addCompany == 'ok') {
-			session_start();
-			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Add company', $ip);
-		}
-		return $addCompany;
-	}
-
 	static public function AddExercise($data)
 	{
 		$addExercise = FormsController::ctrAddExercise($data);
@@ -215,7 +204,7 @@ class AjaxForm
 					break;
 				}
 			}
-        } else {
+		} else {
 			$status = 'ok';
 		}
 		if ($status == 'ok') {
@@ -377,45 +366,36 @@ if (isset($_POST['updateActualPassword']) && isset($_POST['updateNewPassword']) 
 }
 
 if (isset($_POST['areaName']) && isset($_POST['areaDescription'])) {
-    // Verifica si el área ya existe
-    $require = FormsController::ctrGetAreaByName($_POST['areaName']);
-    if ($require == false) {
-        // Preparar datos para registrar el área
-        $data = array(
-            'nameArea' => $_POST['areaName'],
-            'areaDescription' => $_POST['areaDescription'],
+	// Verifica si el área ya existe
+	$require = FormsController::ctrGetAreaByName($_POST['areaName']);
+	if ($require == false) {
+		// Preparar datos para registrar el área
+		$data = array(
+			'nameArea' => $_POST['areaName'],
+			'areaDescription' => $_POST['areaDescription'],
 			'areaCode' => $_POST['areaCode']
-        );
+		);
 
-        // Registrar el área
-        $addArea = AjaxForm::AddArea($data);
+		// Registrar el área
+		$addArea = AjaxForm::AddArea($data);
 
-        if ($addArea != 'Error') {
-            // Asociar colaboradores al área
-            foreach ($_POST['users'] as $userId) {
+		if ($addArea != 'Error') {
+			// Asociar colaboradores al área
+			foreach ($_POST['users'] as $userId) {
 				$idArea = $addArea;
-                $assignUser = FormsModels::mdlUpdateAreaUser($userId, $idArea);
-                if ($assignUser != 'ok') {
-                    echo 'Error: No se pudo asignar el usuario con ID ' . $userId . ' al área.';
-                    exit;
-                }
-            }
-            echo 'ok';
-        } else {
-            echo 'Error: No se pudo registrar el área.';
-        }
-    } else {
-        echo 'Error: El departamento ya existe';
-    }
-}
-
-if (isset($_POST['companyName']) && isset($_POST['companyDescription'])) {
-	$data = array(
-		'companyName' => $_POST['companyName'],
-		'companyDescription' => $_POST['companyDescription'],
-	);
-	$addCompany = AjaxForm::AddCompany($data);
-	echo $addCompany;
+				$assignUser = FormsModels::mdlUpdateAreaUser($userId, $idArea);
+				if ($assignUser != 'ok') {
+					echo 'Error: No se pudo asignar el usuario con ID ' . $userId . ' al área.';
+					exit;
+				}
+			}
+			echo 'ok';
+		} else {
+			echo 'Error: No se pudo registrar el área.';
+		}
+	} else {
+		echo 'Error: El departamento ya existe';
+	}
 }
 
 if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POST['finalDate']) && isset($_POST['user']) && isset($_POST['budget'])) {
@@ -609,8 +589,8 @@ if (
 	} else {
 		$extrangero = 0;
 		$swiftCode = '';
-        $beneficiaryAddress = '';
-        $currencyType = 'MXN';
+		$beneficiaryAddress = '';
+		$currencyType = 'MXN';
 	}
 
 	$data = array(
@@ -633,20 +613,20 @@ if (
 		'idUser' => $_POST['idUser'],
 		'description' => $_POST['description'],
 		'swiftCode' => $swiftCode,
-        'beneficiaryAddress' => $beneficiaryAddress,
-        'currencyType' => $currencyType,
-        'extrangero' => $extrangero
+		'beneficiaryAddress' => $beneficiaryAddress,
+		'currencyType' => $currencyType,
+		'extrangero' => $extrangero
 	);
 	$response = FormsController::ctrGetProviderByName($_POST['rfc'], $_POST['idUser']);
 	if ($response == false) {
 		$registerProvider = FormsController::ctrRegisterProvider($data);
-		
-		if ($registerProvider == 'ok'){
+
+		if ($registerProvider == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Register provider: '.$_POST['providerKey'], $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Register provider: ' . $_POST['providerKey'], $ip);
 		}
-	
+
 		echo $registerProvider;
 	} else {
 		echo 'Error: RFC ya registrado';
@@ -690,18 +670,18 @@ if (
 		'accountNumber' => $_POST['updateaccountNumber'],
 		'clabe' => $_POST['updateclabe'],
 		'swiftCode' => ($_POST['updateswiftCode'] != '') ? $_POST['updateswiftCode'] : null,
-		'beneficiaryAddress' => ($_POST['updatebeneficiaryAddress']!= '') ? $_POST['updatebeneficiaryAddress'] : null,
-        'currencyType' => ($_POST['updatecurrencyType']!= '') ? $_POST['updatecurrencyType'] : null
+		'beneficiaryAddress' => ($_POST['updatebeneficiaryAddress'] != '') ? $_POST['updatebeneficiaryAddress'] : null,
+		'currencyType' => ($_POST['updatecurrencyType'] != '') ? $_POST['updatecurrencyType'] : null
 	);
 
 	$response = FormsController::ctrGetProviderByName($_POST['updaterfc'], $_POST['idUser']);
 	if ($response == false || $response['provider_key'] == $_POST['providerKey']) {
 		$registerProvider = FormsController::ctrUpdateProvider($data);
-		
-		if ($registerProvider == 'ok'){
+
+		if ($registerProvider == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Update provider: '.$_POST['providerKey'], $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update provider: ' . $_POST['providerKey'], $ip);
 		}
 
 		echo $registerProvider;
@@ -712,33 +692,33 @@ if (
 
 if (isset($_POST['disableProvider'])) {
 	$disableProvider = FormsController::ctrDisableProvider($_POST['disableProvider']);
-	
-	if ($disableProvider == 'ok'){
+
+	if ($disableProvider == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Disable provider: '.$_POST['disableProvider'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Disable provider: ' . $_POST['disableProvider'], $ip);
 	}
 
 	echo $disableProvider;
 }
 if (isset($_POST['enableProvider'])) {
 	$enableProvider = FormsController::ctrEnableProvider($_POST['enableProvider']);
-	
-	if ($enableProvider == 'ok'){
+
+	if ($enableProvider == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Enable provider: '.$_POST['enableProvider'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Enable provider: ' . $_POST['enableProvider'], $ip);
 	}
 
 	echo $enableProvider;
 }
 if (isset($_POST['deleteProvider'])) {
 	$deleteProvider = FormsController::ctrDeleteProvider($_POST['deleteProvider']);
-	
-	if ($deleteProvider == 'ok'){
+
+	if ($deleteProvider == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Delete provider: '.$_POST['deleteProvider'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Delete provider: ' . $_POST['deleteProvider'], $ip);
 	}
 
 	echo $deleteProvider;
@@ -746,11 +726,11 @@ if (isset($_POST['deleteProvider'])) {
 
 if (isset($_POST['deleteRequest'])) {
 	$deleteRequest = FormsController::ctrDeleteRequest($_POST['deleteRequest']);
-	
-	if ($deleteRequest == 'ok'){
+
+	if ($deleteRequest == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Delete request: '.$_POST['deleteRequest'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Delete request: ' . $_POST['deleteRequest'], $ip);
 	}
 
 	echo $deleteRequest;
@@ -770,10 +750,10 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 		'budget' => $_POST['budget']
 	);
 	$response = FormsController::ctrRequestBudget($data);
-	
-	if ($response != 'Error'){
+
+	if ($response != 'Error') {
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Create request: '.$_POST['requestedAmount'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Create request: ' . $_POST['requestedAmount'], $ip);
 	}
 
 	echo $response;
@@ -781,11 +761,11 @@ if (isset($_POST['area']) && isset($_POST['requestedAmount']) && isset($_POST['d
 
 if (isset($_POST['denegateRequest'])) {
 	$denegateRequest = FormsController::ctrDenegateRequest($_POST['denegateRequest'], $_POST['idAdmin'], $_POST['comentRechazo']);
-	
-	if ($denegateRequest == 'ok'){
+
+	if ($denegateRequest == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Denegate request: '.$_POST['denegateRequest'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Denegate request: ' . $_POST['denegateRequest'], $ip);
 	}
 
 	echo $denegateRequest;
@@ -798,7 +778,7 @@ if (isset($_POST['enableRequest'])) {
 
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Enable request: '.$_POST['enableRequest'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Enable request: ' . $_POST['enableRequest'], $ip);
 	}
 	echo $response;
 }
@@ -834,85 +814,85 @@ if (
 		'idUser' => $_POST['idUser'],
 	);
 	$response = FormsController::ctrSendComprobation($data);
-		session_start();
-		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Send comprobation: '.$_POST['idRequest'], $ip);
-		
-		$request = FormsController::ctrGetRequest($_POST['idRequest']);
-		$user = FormsController::ctrGetUser($_POST['idUser']);
-		// if ($response == 'ok') {
-		// 	// Mensaje del correo electrónico
-		// 	$message = array(
-		// 		0 => 'Estimados colaboradores:',
-		// 		1 => 'El sistema ha recibido la comprobación del presupuesto',
-		// 		2 => 'Folio com´probado: '.$request['folio'],
-		// 		3 => 'Monto comprobado: $'.$request['approvedAmount']
-		// 	);
-	
-		// 	// Dirección de correo electrónico del destinatario
-		// 	$email = $user['email'];
-	
-		// 	// Asunto del correo electrónico
-		// 	$subject = 'Actualización del estado del presupuesto';
-	
-		// 	// Título del correo electrónico
-		// 	$title = 'Actualización del estado del presupuesto';
-	
-		// 	// Subtítulo del correo electrónico
-		// 	$subtitle = 'Detalles del presupuesto actualizado';
-	
-		// 	// Envío del correo electrónico
-		// 	FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
-		// }
+	session_start();
+	$ip = $_SERVER['REMOTE_ADDR'];
+	FormsModels::mdlLog($_SESSION['idUser'], 'Send comprobation: ' . $_POST['idRequest'], $ip);
+
+	$request = FormsController::ctrGetRequest($_POST['idRequest']);
+	$user = FormsController::ctrGetUser($_POST['idUser']);
+	// if ($response == 'ok') {
+	// 	// Mensaje del correo electrónico
+	// 	$message = array(
+	// 		0 => 'Estimados colaboradores:',
+	// 		1 => 'El sistema ha recibido la comprobación del presupuesto',
+	// 		2 => 'Folio com´probado: '.$request['folio'],
+	// 		3 => 'Monto comprobado: $'.$request['approvedAmount']
+	// 	);
+
+	// 	// Dirección de correo electrónico del destinatario
+	// 	$email = $user['email'];
+
+	// 	// Asunto del correo electrónico
+	// 	$subject = 'Actualización del estado del presupuesto';
+
+	// 	// Título del correo electrónico
+	// 	$title = 'Actualización del estado del presupuesto';
+
+	// 	// Subtítulo del correo electrónico
+	// 	$subtitle = 'Detalles del presupuesto actualizado';
+
+	// 	// Envío del correo electrónico
+	// 	FormsModels::mdlSendEmail($email, $message, $subject, $title, $subtitle);
+	// }
 
 	echo $response;
 }
 
 if (isset($_POST['idPaymentRequest'])) {
-    $data = array(
-        'idPaymentRequest' => $_POST['idPaymentRequest'],
-        'file' => $_FILES['file']['name']
-    );
-    $targetDir = "../../view/documents/requestTemp/" . $_POST['idRequest'] . "/";
-    $fileName = basename($_FILES["file"]["name"]);
-    $targetFilePath = $targetDir . $fileName;
-    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+	$data = array(
+		'idPaymentRequest' => $_POST['idPaymentRequest'],
+		'file' => $_FILES['file']['name']
+	);
+	$targetDir = "../../view/documents/requestTemp/" . $_POST['idRequest'] . "/";
+	$fileName = basename($_FILES["file"]["name"]);
+	$targetFilePath = $targetDir . $fileName;
+	$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
-    if (!file_exists($targetDir)) {
-        mkdir($targetDir, 0777, true);
-    }
+	if (!file_exists($targetDir)) {
+		mkdir($targetDir, 0777, true);
+	}
 
-    $allowTypes = array('xml', 'pdf');
-    if (in_array($fileType, $allowTypes)) {
-        // Mover los nuevos archivos
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
-            session_start();
-            $ip = $_SERVER['REMOTE_ADDR'];
-            FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: '.$fileName, $ip);
-            
-            // Obtener la ruta de la carpeta de archivos temporales existente
-            $tempDir = "../../view/documents/requestTemp/" . $_POST['idRequest'] . "/";
-            // Obtener la ruta de destino para los archivos existentes
-            $newTargetDir = $targetDir;
-            // Mover los archivos existentes a la nueva ubicación
-            if (file_exists($tempDir)) {
-                $files = glob($tempDir . "*");
-                foreach ($files as $file) {
-                    $newFilePath = $newTargetDir . basename($file);
-                    rename($file, $newFilePath);
-                }
-                // Eliminar la carpeta de archivos temporales
-                rmdir($tempDir);
-            }
-            
-            echo 'ok';
-        } else {
-            echo 'Error';
-        }
-    } else {
-        echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, xml).'));
-    }
-    $idRequest = $_POST['idRequest'];
+	$allowTypes = array('xml', 'pdf');
+	if (in_array($fileType, $allowTypes)) {
+		// Mover los nuevos archivos
+		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+			session_start();
+			$ip = $_SERVER['REMOTE_ADDR'];
+			FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: ' . $fileName, $ip);
+
+			// Obtener la ruta de la carpeta de archivos temporales existente
+			$tempDir = "../../view/documents/requestTemp/" . $_POST['idRequest'] . "/";
+			// Obtener la ruta de destino para los archivos existentes
+			$newTargetDir = $targetDir;
+			// Mover los archivos existentes a la nueva ubicación
+			if (file_exists($tempDir)) {
+				$files = glob($tempDir . "*");
+				foreach ($files as $file) {
+					$newFilePath = $newTargetDir . basename($file);
+					rename($file, $newFilePath);
+				}
+				// Eliminar la carpeta de archivos temporales
+				rmdir($tempDir);
+			}
+
+			echo 'ok';
+		} else {
+			echo 'Error';
+		}
+	} else {
+		echo json_encode(array('status' => 'error', 'message' => 'Solo se permiten archivos de imagen (.pdf, xml).'));
+	}
+	$idRequest = $_POST['idRequest'];
 }
 
 if (isset($_POST['idPaymentRequestTemp'])) {
@@ -935,8 +915,8 @@ if (isset($_POST['idPaymentRequestTemp'])) {
 
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: '.$fileName, $ip);
-			
+			FormsModels::mdlLog($_SESSION['idUser'], 'Send files comprobation: ' . $fileName, $ip);
+
 			echo 'ok';
 		} else {
 			echo 'Error';
@@ -947,40 +927,40 @@ if (isset($_POST['idPaymentRequestTemp'])) {
 }
 
 if (isset($_POST['newProvider'])) {
-    // Configurar el directorio
-    $targetDir = "../../view/providers/" . $_POST['newProvider'] . "/";
-    
-    // Verificar y crear el directorio solo si no existe
-    if (!is_dir($targetDir)) {
-        try {
-            if (!mkdir($targetDir, 0777, true)) {
-                throw new Exception("Error al crear el directorio");
-            }
-        } catch (Exception $e) {
-            // Si hay un error al crear el directorio, verificar si ya existe
-            if (!is_dir($targetDir)) {
-                die("No se pudo crear el directorio y no existe: " . $e->getMessage());
-            }
-            // Si el directorio existe, continuamos silenciosamente
-        }
-    }
-    
-    // Configurar el nombre del archivo y la ruta
-    $fileName = basename($_POST['document'] . '.pdf');
-    $targetFilePath = $targetDir . $fileName;
-    
-    // Verificar que el archivo sea un PDF
-    $fileType = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
-    if ($fileType == "pdf") {
-        // Intentar subir el archivo
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
-            echo "El archivo " . $fileName . " se ha subido correctamente.";
-        } else {
-            echo "Lo siento, hubo un error al subir tu archivo.";
-        }
-    } else {
-        echo "Solo se permiten archivos PDF.";
-    }
+	// Configurar el directorio
+	$targetDir = "../../view/providers/" . $_POST['newProvider'] . "/";
+
+	// Verificar y crear el directorio solo si no existe
+	if (!is_dir($targetDir)) {
+		try {
+			if (!mkdir($targetDir, 0777, true)) {
+				throw new Exception("Error al crear el directorio");
+			}
+		} catch (Exception $e) {
+			// Si hay un error al crear el directorio, verificar si ya existe
+			if (!is_dir($targetDir)) {
+				die("No se pudo crear el directorio y no existe: " . $e->getMessage());
+			}
+			// Si el directorio existe, continuamos silenciosamente
+		}
+	}
+
+	// Configurar el nombre del archivo y la ruta
+	$fileName = basename($_POST['document'] . '.pdf');
+	$targetFilePath = $targetDir . $fileName;
+
+	// Verificar que el archivo sea un PDF
+	$fileType = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
+	if ($fileType == "pdf") {
+		// Intentar subir el archivo
+		if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+			echo "El archivo " . $fileName . " se ha subido correctamente.";
+		} else {
+			echo "Lo siento, hubo un error al subir tu archivo.";
+		}
+	} else {
+		echo "Solo se permiten archivos PDF.";
+	}
 }
 
 if (isset($_POST['searchComprobante'])) {
@@ -1031,11 +1011,11 @@ if (isset($_POST['getDocumentsTemp'])) {
 
 if (isset($_POST['denegateComprobante'])) {
 	$response = FormsController::ctrResponceRequest($_POST['denegateComprobante'], 4, $_POST['comentario']);
-	
-	if ($response == 'ok'){
+
+	if ($response == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Denegate comprobation: '.$_POST['denegateComprobante'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Denegate comprobation: ' . $_POST['denegateComprobante'], $ip);
 	}
 
 	echo $response;
@@ -1043,22 +1023,22 @@ if (isset($_POST['denegateComprobante'])) {
 
 if (isset($_POST['aceptComprobante'])) {
 	$response = FormsController::ctrResponceRequest($_POST['aceptComprobante'], 5, $_POST['comentario']);
-	
-	if ($response == 'ok'){
+
+	if ($response == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Acept comprobation: '.$_POST['aceptComprobante'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Acept comprobation: ' . $_POST['aceptComprobante'], $ip);
 	}
 	echo $response;
 }
 
 if (isset($_POST['comments'])) {
 	$response = FormsController::ctrCommentsRequest($_POST['comments']);
-	
-	if ($response == 'ok'){
+
+	if ($response == 'ok') {
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];
-		FormsModels::mdlLog($_SESSION['idUser'], 'Comment comprobation: '.$_POST['comments'], $ip);
+		FormsModels::mdlLog($_SESSION['idUser'], 'Comment comprobation: ' . $_POST['comments'], $ip);
 	}
 	echo $response;
 }
@@ -1082,27 +1062,26 @@ if (isset($_POST['areaEdit']) && isset($_POST['requestedAmountEdit']) && isset($
 
 	$datos = array(
 		'area' => $_POST['areaEdit'],
-        'requestedAmount' => $_POST['requestedAmountEdit'],
-        'description' => $_POST['descriptionEdit'],
-        'event' => $_POST['eventEdit'],
-        'eventDate' => $_POST['eventDateEdit'],
-        'budget' => $_POST['budgetEdit'],
-        'provider' => $_POST['providerEdit'],
+		'requestedAmount' => $_POST['requestedAmountEdit'],
+		'description' => $_POST['descriptionEdit'],
+		'event' => $_POST['eventEdit'],
+		'eventDate' => $_POST['eventDateEdit'],
+		'budget' => $_POST['budgetEdit'],
+		'provider' => $_POST['providerEdit'],
 		'idRequest' => $_POST['requestEdit']
 	);
 
-    $response = FormsController::ctrUpdateRequest($datos);
-    echo $response;
-
+	$response = FormsController::ctrUpdateRequest($datos);
+	echo $response;
 }
 
 if (isset($_POST['verRespuesta'])) {
-    echo json_encode(FormsController::ctrGetRequest($_POST['verRespuesta']));
+	echo json_encode(FormsController::ctrGetRequest($_POST['verRespuesta']));
 }
 
 if (isset($_POST['changePaymentDate']) && isset($_POST['paymentDate'])) {
 	$response = FormsController::ctrChangePaymentDate($_POST['changePaymentDate'], $_POST['paymentDate']);
-    echo $response;
+	echo $response;
 }
 
 if (
@@ -1146,8 +1125,8 @@ if (
 		'concepto_pago' => $_POST['conceptoPago'],
 		'cuentaAfectada' => $_POST['cuentaAfectada'],
 		'partidaAfectada' => $_POST['partidaAfectada'],
-		
-		
+
+
 		'idUser' => $_POST['idUser'],
 		'idArea' => $_POST['area'],
 		'idBudget' => $_POST['budget'],
@@ -1158,7 +1137,7 @@ if (
 		'idCuentaAfectada' => ($_POST['idCuentaAfectada'] == '') ? null : $_POST['idCuentaAfectada'],
 		'idPartidaAfectada' => ($_POST['idPartidaAfectada'] == '') ? null : $_POST['idPartidaAfectada'],
 		'idConcepto' => ($_POST['idConcepto'] == '') ? null : $_POST['idConcepto'],
-		
+
 		'swift_code' => ($_POST['swiftCode'] == '') ? null : $_POST['swiftCode'],
 		'beneficiario_direccion' => ($_POST['beneficiaryAddress'] == '') ? null : $_POST['beneficiaryAddress'],
 		'tipo_divisa' => ($_POST['currencyType'] == '') ? null : $_POST['currencyType'],
@@ -1168,42 +1147,52 @@ if (
 	echo $response;
 }
 
-if (isset($_POST['cuenta']) && isset($_POST['numeroCuenta']) && isset($_POST['area'])){
+if (isset($_POST['cuenta']) && isset($_POST['numeroCuenta']) && isset($_POST['area'])) {
 	$response = FormsController::ctrCreateAccount($_POST['cuenta'], $_POST['numeroCuenta'], $_POST['area']);
 	echo $response;
 }
 
-if ( isset($_POST['partida']) && isset($_POST['codigoPartida']) && isset($_POST['cuenta']) ) {
+if (isset($_POST['partida']) && isset($_POST['codigoPartida']) && isset($_POST['cuenta'])) {
 	$response = FormsController::ctrCreatePartida($_POST['partida'], $_POST['codigoPartida'], $_POST['cuenta']);
 	echo $response;
 }
 
-if (isset($_POST['deleteCuenta']) ) {
+if (isset($_POST['deleteCuenta'])) {
 	$response = FormsController::ctrDeleteAccount($_POST['deleteCuenta']);
-    echo $response;
+	echo $response;
 }
 
-if (isset($_POST['deletePartida']) ) {
-    $response = FormsController::ctrDeletePartida($_POST['deletePartida']);
-    echo $response;
+if (isset($_POST['deletePartida'])) {
+	$response = FormsController::ctrDeletePartida($_POST['deletePartida']);
+	echo $response;
 }
 
-if (isset($_POST['editAccountId']) ) {
+if (isset($_POST['editAccountId'])) {
 	$response = FormsController::ctrEditAccount($_POST['editAccountId'], $_POST['editCuenta'], $_POST['editNumeroCuenta'], $_POST['editArea']);
-    echo $response;
+	echo $response;
 }
 
-if (isset($_POST['editPartidaId']) ) {
+if (isset($_POST['editPartidaId'])) {
 	$response = FormsController::ctrEditPartida($_POST['editPartidaId'], $_POST['editPartida'], $_POST['editCodigoPartida'], $_POST['editCuenta']);
-    echo $response;
+	echo $response;
 }
 
 if (isset($_POST['partidas'])) {
 	$response = FormsController::ctrGetPartidas($_POST['partidas']);
-    echo json_encode($response);
+	echo json_encode($response);
 }
 
 if (isset($_POST['concepto'])) {
 	$response = FormsController::ctrGetConcepto($_POST['concepto']);
-    echo json_encode($response);
+	echo json_encode($response);
+}
+
+if (isset($_POST['action'])) {
+	if ($_POST['action'] == 'addSubpartida') {
+		$response = FormsController::ctrAddSubpartida($_POST['subpartida'], $_POST['idArea']);
+		echo json_encode($response);
+	} else if ($_POST['action'] == 'listSubpartidas') {
+		$response = FormsController::ctrGetSubpartidas();
+		echo json_encode($response);
+	}
 }

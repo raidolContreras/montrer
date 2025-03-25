@@ -462,44 +462,6 @@ class FormsModels
 		return $result;
 	}
 
-	static public function mdlGetCompanies()
-	{
-		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_business";
-		$stmt = $pdo->prepare($sql);
-		if ($stmt->execute()) {
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		} else {
-			print_r($pdo->errorInfo());
-		}
-		// Asegúrate de cerrar la conexión en el bloque finally
-		$stmt->closeCursor();
-		$stmt = null;
-		return $result;
-	}
-
-	static public function mdlAddCompany($data)
-	{
-		$pdo = Conexion::conectar();
-		$sql = "INSERT INTO montrer_business(name, description) VALUES (:name, :description)";
-		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':name', $data['companyName'], PDO::PARAM_STR);
-		$stmt->bindParam(':description', $data['companyDescription'], PDO::PARAM_STR);
-		if ($stmt->execute()) {
-			if (($pdo->lastInsertId() != 0)) {
-				$idCompany = $pdo->lastInsertId();
-				$result = $idCompany;
-			} else {
-				$result = 'Error';
-			}
-		} else {
-			print_r($pdo->errorInfo());
-		}
-		$stmt->closeCursor();
-		$stmt = null;
-		return $result;
-	}
-
 	static public function mdlGetExercise()
 	{
 		$pdo = Conexion::conectar();
@@ -1935,23 +1897,6 @@ class FormsModels
 		return $result;
 	}
 
-	static public function mdlGetBusiness($idUser)
-	{
-		$pdo = Conexion::conectar();
-		$sql = "SELECT * FROM montrer_business b
-				LEFT JOIN montrer_users_to_business ub ON ub.idBusiness = b.idBusiness
-				WHERE ub.idUser = :idUser";
-		$stmt = $pdo->prepare($sql);
-		$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
-		$stmt->execute();
-
-		$result = $stmt->fetchAll();
-
-		$stmt->closeCursor();
-		$stmt = null;
-		return $result;
-	}
-
 	static public function mdlCompleteRequest($data)
 	{
 		try {
@@ -2389,5 +2334,28 @@ class FormsModels
 		$stmt->closeCursor();
 		$stmt = null;
 		return $result;
+	}
+
+	static public function mdlAddSubpartida($nombre, $idArea) {
+		$pdo = Conexion::conectar();
+		$sql = 'INSERT INTO montrer_subpartidas (nombre, idArea) VALUES (:nombre, :idArea)';
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			$result = ["success" => "ok"];
+		} else {
+			$result = ["error" => "Error al eliminar concepto"];
+		}
+
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlGetSubpartidas() {
+		$pdo = Conexion::conectar();
+		$sql = "";
 	}
 }
