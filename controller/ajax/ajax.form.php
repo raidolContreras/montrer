@@ -1194,5 +1194,13 @@ if (isset($_POST['action'])) {
 	} else if ($_POST['action'] == 'listSubpartidas') {
 		$response = FormsController::ctrGetSubpartidas();
 		echo json_encode($response);
+	} else if ($_POST['action'] == 'getSubpartida') {
+		$response = FormsController::ctrGetSubpartidas($_POST['idSubpartida']);
+        echo json_encode($response);
+	} else if ($_POST['action'] == 'editSubpartida') {
+		$response = FormsController::ctrEditSubpartida($_POST['idSubpartida'], $_POST['nombre'], $_POST['idArea']);
+        echo json_encode($response);
+	} else if ($_POST['action'] == 'deleteSubpartida') {
+		$response = FormsController::ctrDeleteSubpartida($_POST['idSubpartida']);
 	}
 }

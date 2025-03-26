@@ -59,6 +59,15 @@
             </li>
 
             <?php
+                $activeSubpartida = (isset($_GET['pagina'])) && ($_GET['pagina'] == 'subpartidas') ? 'active' : '';
+            ?>
+            <li class="list-group-item main-grid <?php echo $activeSubpartida; ?>">
+                <a href="subpartidas" class="icon sidenav" data-bs-toggle="tooltip" data-bs-placement="right" title="Subpartidas" onclick="confirmExit(event, 'subpartidas')">
+                    <img src="assets/img/svg/partidas.svg" width='25px' alt="subpartidas">
+                </a>
+            </li>
+
+            <?php
                 $activeExercise = (isset($_GET['pagina']) && ($_GET['pagina'] == 'exercise' || $_GET['pagina'] == 'registerExercise' || $_GET['pagina'] == 'editExercise')) ? 'active' : '';
             ?>
             <li class="list-group-item main-grid <?php echo $activeExercise; ?>">

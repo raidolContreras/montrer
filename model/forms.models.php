@@ -2336,13 +2336,14 @@ class FormsModels
 		return $result;
 	}
 
-	static public function mdlAddSubpartida($nombre, $idArea) {
+	static public function mdlAddSubpartida($nombre, $idArea)
+	{
 		$pdo = Conexion::conectar();
 		$sql = 'INSERT INTO montrer_subpartidas (nombre, idArea) VALUES (:nombre, :idArea)';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
-        $stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
-		
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+		$stmt->bindParam(':idArea', $idArea, PDO::PARAM_INT);
+
 		if ($stmt->execute()) {
 			$result = ["success" => "ok"];
 		} else {
@@ -2354,8 +2355,62 @@ class FormsModels
 		return $result;
 	}
 
-	static public function mdlGetSubpartidas() {
+	static public function mdlGetSubpartidas($idSubpartida = null)
+	{
 		$pdo = Conexion::conectar();
-		$sql = "";
+		if ($idSubpartida == null) {
+
+			$sql = "SELECT * FROM montrer_subpartidas s LEFT JOIN montrer_area a ON s.idArea = a.idArea WHERE a.status = 1 AND a.active = 1";
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute();
+			$result = $stmt->fetchAll();
+		} else {
+			$sql = "SELECT * FROM montrer_subpartidas WHERE idSubpartida = :idSubpartida";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(":idSubpartida", $idSubpartida, PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetch();
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlEditSubpartida($idSubpartida, $nombre, $idArea)
+	{
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE montrer_subpartidas SET nombre = :nombre, idArea = :idArea WHERE idSubpartida = :idSubpartida";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idSubpartida", $idSubpartida, PDO::PARAM_INT);
+		$stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+		$stmt->bindParam(":idArea", $idArea, PDO::PARAM_INT);
+		$stmt->execute();
+
+		if ($stmt->execute()) {
+			$result = ["success" => "ok"];
+		} else {
+			$result = ["error" => "Error al eliminar concepto"];
+		}
+
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
+
+	static public function mdlDeleteSubpartida($idSubpartida)
+	{
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM montrer_subpartidas WHERE idSubpartida = :idSubpartida";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idSubpartida", $idSubpartida, PDO::PARAM_INT);
+		$stmt->execute();
+		if ($stmt->execute()) {
+			$result = ["success" => "ok"];
+		} else {
+			$result = ["error" => "Error al eliminar concepto"];
+		}
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
 	}
 }

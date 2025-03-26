@@ -60,6 +60,62 @@ if ($level  == 0 || $level == 1):
         </div>
     </div>
 
+    <!-- Modal to edit subpartida -->
+    <div class="modal fade" id="editSubPartidaModal" tabindex="-1" aria-labelledby="editSubPartidaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSubPartidaModalLabel">Nueva subpartida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editSubPartidaForm">
+                        <div class="form-group mb-3">
+                            <label for="editNombreSubpartida">Nombre de la subpartida</label>
+                            <input type="text" class="form-control" id="editNombreSubpartida" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="idSubpartida">
+                            <label for="editDepartamento">Departamento</label>
+                            <select class="form-select" id="editDepartamento" required>
+                                <option value="">Seleccione un departamento</option>
+                                <?php foreach ($departamentos as $departamento): ?>
+                                    <option value="<?php echo $departamento['idArea']; ?>"><?php echo $departamento['nameArea']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Aceptar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal eliminar subpartida -->
+     
+
+    <!-- Delete Partida Modal -->
+    <div class="modal fade" id="deleteSubPartidaModal" tabindex="-1" aria-labelledby="deleteSubPartidaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSubPartidaModalLabel">Eliminar subpartida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea eliminar la subpartida <strong id="deleteSubPartidaName"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmDeleteSubPartida">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/js/ajax-js/subpartidas.js"></script>
 
 <?php else: ?>

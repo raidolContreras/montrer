@@ -1404,8 +1404,18 @@ class FormsController
 		return $result;
 	}
 
-	static public function ctrGetSubpartidas() {
-		$result = FormsModels::mdlGetSubpartidas();
+	static public function ctrGetSubpartidas($idSubpartida = null) {
+		$result = FormsModels::mdlGetSubpartidas($idSubpartida);
+		return $result;
+	}
+
+	static public function ctrEditSubpartida($idSubpartida, $nombre, $idArea) {
+		$result = FormsModels::mdlEditSubpartida($idSubpartida, $nombre, $idArea);
+		return $result;
+	}
+
+	static public function ctrDeleteSubpartida($idSubpartida) {
+		$result = FormsModels::mdlDeleteSubpartida($idSubpartida);
 		return $result;
 	}
 }

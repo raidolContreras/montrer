@@ -8,31 +8,49 @@ $(document).ready(function () {
             dataSrc: '' // Suponemos que el JSON devuelto es un array
         },
         columns: [
-            { data: 'id' },
-            { data: 'nombre' },
-            { data: 'departamento' },
-            { 
+            {
+                data: null,
+                title: '#',
+                render: function (data, type, row, meta) {
+                    // Utilizando el contador proporcionado por DataTables
+                    return meta.row + 1;
+                }
+            },
+            {
+                data: 'nombre',
+                title: 'Subpartida'
+            },
+            {
+                data: 'nameArea',
+                title: 'Departamento'
+            },
+            {
                 data: null,
                 orderable: false,
                 searchable: false,
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     return `
-                        <button class="btn btn-sm btn-primary editSubpartida" data-id="${row.id}" data-bs-toggle="tooltip" title="Editar">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger deleteSubpartida" data-id="${row.id}" data-bs-toggle="tooltip" title="Eliminar">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                    <div class="container">
+                        <div class="row btn-group" role="group" style="justify-content: center;">
+                            <button type="button" class="btn btn-primary edit-button col-2" data-subpartida="${row.nombre}" data-id="${data.idSubpartida}" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Editar" data-bs-original-title="Editar">
+                                <i class="ri-pencil-line"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger delete-button col-2" data-subpartida="${row.nombre}" data-id="${data.idSubpartida}" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Eliminar" data-bs-original-title="Eliminar">
+                                <i class="ri-delete-bin-6-line"></i>
+                            </button>
+                        </div>
+                    </div>
                     `;
-                }
+                },
+                title: 'Acciones'
             }
         ],
         // Inicialización de tooltips luego de cargar la data
-        initComplete: function(settings, json) {
+        initComplete: function (settings, json) {
             $('[data-bs-toggle="tooltip"]').tooltip();
         },
         // Reinicialización de tooltips al redibujar la tabla (paginación, búsqueda, etc.)
-        drawCallback: function(settings) {
+        drawCallback: function (settings) {
             $('[data-bs-toggle="tooltip"]').tooltip();
         }
     });
@@ -76,15 +94,100 @@ $(document).ready(function () {
     });
 
     // Eventos para los botones de editar y eliminar en la DataTable
-    $('#subpartidasTable tbody').on('click', '.editSubpartida', function () {
+    $('#subpartidas tbody').on('click', '.edit-button', function () {
         var id = $(this).data('id');
-        // Aquí implementas la lógica para editar (por ejemplo, abrir un modal con el formulario de edición)
-        console.log('Editar subpartida con ID: ' + id);
+        $.ajax({
+            url: 'controller/ajax/ajax.form.php',
+            method: 'POST',
+            data: {
+                action: 'getSubpartida',
+                idSubpartida: id
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response.error) {
+                    showAlertBootstrap('Error', response.error);
+                } else {
+                    // abrir modal y editar la subpartida
+                    $('#idSubpartida').val(response.idSubpartida);
+                    $('#editNombreSubpartida').val(response.nombre);
+                    $('#editDepartamento').val(response.idArea);
+
+                    // Mostrar el modal de edición de subpartida
+                    $('#editSubPartidaModal').modal('show');
+                    // Manejar el submit del formulario para editar la subpartida
+                    $('#editSubPartidaForm').on('submit', function (e) {
+                        e.preventDefault();
+                        var nombreSubpartida = $('#editNombreSubpartida').val().trim();
+                        var departamento = $('#editDepartamento').val().trim();
+                        var idSubpartida = $('#idSubpartida').val().trim();
+                        if (nombreSubpartida === '' || departamento === '') {
+                            showAlertBootstrap('¡Atención!', 'Por favor, rellena todos los campos.');
+                            return;
+                        } else {
+                            $.ajax({
+                                url: "controller/ajax/ajax.form.php",
+                                method: 'POST',
+                                data: {
+                                    action: 'editSubpartida',
+                                    idSubpartida: idSubpartida,
+                                    nombre: nombreSubpartida,
+                                    idArea: departamento
+                                },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.error) {
+                                        showAlertBootstrap('Error', response.error);
+                                    } else {
+                                        showAlertBootstrap('Éxito', 'Subpartida editada correctamente.');
+                                        // Cerrar el modal de edición
+                                        $('#editSubPartidaModal').modal('hide');
+                                        // Recargar la DataTable sin resetear la paginación
+                                        table.ajax.reload(null, false);
+                                    }
+                                },
+                            });
+                        }
+
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                showAlertBootstrap('Error', 'Ha ocurrido un error al editar la subpartida.');
+            }
+        });
     });
 
-    $('#subpartidasTable tbody').on('click', '.deleteSubpartida', function () {
+    $('#subpartidas tbody').on('click', '.delete-button', function () {
         var id = $(this).data('id');
-        // Aquí implementas la lógica para eliminar (mostrar confirmación y enviar el AJAX correspondiente)
-        console.log('Eliminar subpartida con ID: ' + id);
+        var partidaName = $(this).data('subpartida');
+        // pregunta primero abriendo el modal deleteSubPartidaModal
+
+        $('#deleteSubPartidaName').text(partidaName);
+        $('#deleteSubPartidaModal').modal('show');
+
+
+        $('#confirmDeleteSubPartida').off('click').on('click', function () {
+            $.ajax({
+                url: 'controller/ajax/ajax.form.php',
+                method: 'POST',
+                data: {
+                    action: 'deleteSubpartida',
+                    idSubpartida: id
+                },
+                success: function (response) {
+                    if (response.error) {
+                        showAlertBootstrap('Error', response.error);
+                    } else {
+                        showAlertBootstrap('Éxito', 'Subpartida eliminada correctamente.');
+                        // Recargar la DataTable sin resetear la paginación
+                        table.ajax.reload(null, false);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    showAlertBootstrap('Error', 'Ha ocurrido un error al eliminar la subpartida.');
+                }
+            });
+        });
     });
 });
