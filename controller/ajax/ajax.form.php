@@ -1202,5 +1202,8 @@ if (isset($_POST['action'])) {
         echo json_encode($response);
 	} else if ($_POST['action'] == 'deleteSubpartida') {
 		$response = FormsController::ctrDeleteSubpartida($_POST['idSubpartida']);
+	} else if ($_POST['action'] == 'getPartidas') {
+		$response = FormsController::ctrGetPartidasToAreas($_POST['idAreaToPartidas']);
+        echo json_encode($response);
 	}
 }

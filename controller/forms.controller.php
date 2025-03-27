@@ -1418,4 +1418,9 @@ class FormsController
 		$result = FormsModels::mdlDeleteSubpartida($idSubpartida);
 		return $result;
 	}
+
+	static public function ctrGetPartidasToAreas($idPartida) {
+		$result = FormsModels::mdlGetPartidasToAreas($idPartida);
+		return $result;
+	}
 }

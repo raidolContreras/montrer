@@ -2413,4 +2413,16 @@ class FormsModels
 		$stmt = null;
 		return $result;
 	}
+
+	static public function mdlGetPartidasToAreas($idPartida) {
+		$pdo = Conexion::conectar();
+		$sql = "SELECT p.* FROM montrer_partidas p LEFT JOIN montrer_cuentas c ON c.idCuenta = p.idCuenta LEFT JOIN montrer_area a ON c.idArea = a.idArea WHERE p.idPartida = :idPartida AND p.status = 1";
+		$stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':idPartida', $idPartida, PDO::PARAM_INT);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		$stmt->closeCursor();
+		$stmt = null;
+		return $result;
+	}
 }

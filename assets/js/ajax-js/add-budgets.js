@@ -77,3 +77,29 @@ function confirmExit(event, destination) {
 		showAlertBootstrap2('¿Está seguro?', 'Si sale del formulario, perderá los cambios no guardados.', destination);
 	}
 }
+
+// al cambiar el area que se carguen sus departamentos
+
+$("#area").change(function () {
+    var area = $(this).val();
+    $.ajax({
+        type: "POST",
+        url: "controller/ajax/ajax.form.php",
+        data: {
+            action: 'getPartidas',
+            idAreaToPartidas: area
+        },
+        dataType: "json",
+        success: function (response) {
+            //rellenar select de #partidas
+            $("#partidas").empty();
+            $.each(response, function (index, value) {
+                $("#partidas").append('<option value="' + value.idPartida + '">' + value.Partida + '</option>');
+            });
+            $("#partidas").prop('disabled', false);
+        },
+        error: function (error) {
+            console.log("Error en la solicitud Ajax:", error);
+        }
+    });
+});
