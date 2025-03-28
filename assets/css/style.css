@@ -5984,7 +5984,8 @@ Template Sidebar CSS
 .complete-button,
 .check-budget-button,
 .disable-button,
-.denegate-button,
+.btn-default,
+.delete-button-partida,
 .delete-button{
   /* font-size: 12px !important; */
   /* width: 100%; */

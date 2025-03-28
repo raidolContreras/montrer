@@ -270,7 +270,7 @@ class AjaxForm
 		if ($updateBudget == 'ok') {
 			session_start();
 			$ip = $_SERVER['REMOTE_ADDR'];
-			FormsModels::mdlLog($_SESSION['idUser'], 'Update budget: ' . $data['idBudget'], $ip);
+			FormsModels::mdlLog($_SESSION['idUser'], 'Update budget: ' . $data['idPartida_budget'], $ip);
 		}
 		return $updateBudget;
 	}
@@ -411,10 +411,11 @@ if (isset($_POST['exerciseName']) && isset($_POST['initialDate']) && isset($_POS
 	echo $addExercise;
 }
 
-if (isset($_POST['area']) && isset($_POST['AuthorizedAmount']) && isset($_POST['exercise'])) {
+if (isset($_POST['area']) && isset($_POST['AuthorizedAmount']) && isset($_POST['exercise']) && isset($_POST['partidaToArea'])) {
 
 	$data = array(
 		'area' =>  $_POST['area'],
+		'partida'=> $_POST['partidaToArea'],
 		'AuthorizedAmount' =>  $_POST['AuthorizedAmount'],
 		'exercise' =>  $_POST['exercise']
 	);
@@ -535,14 +536,17 @@ if (isset($_POST['disableBudget'])) {
 if (
 	isset($_POST['updateAuthorizedAmount']) &&
 	isset($_POST['updateArea']) &&
+	isset($_POST['updatePartidas']) &&
 	isset($_POST['updateExercise']) &&
 	isset($_POST['updateBudget'])
 ) {
 	$data = array(
 		'AuthorizedAmount' => $_POST['updateAuthorizedAmount'],
-		'idArea' => $_POST['updateArea'],
+		'ActualAmount' => $_POST['ActualAmount'],
+		'area' => $_POST['updateArea'],
+		'idPartida' => $_POST['updatePartidas'],
 		'idExercise' => $_POST['updateExercise'],
-		'idBudget' => $_POST['updateBudget']
+		'idPartida_budget' => $_POST['updateBudget']
 	);
 	$updateExercise = AjaxForm::UpdateBudget($data);
 	echo $updateExercise;
@@ -1205,5 +1209,8 @@ if (isset($_POST['action'])) {
 	} else if ($_POST['action'] == 'getPartidas') {
 		$response = FormsController::ctrGetPartidasToAreas($_POST['idAreaToPartidas']);
         echo json_encode($response);
+	} else if ($_POST['action'] == 'deletePartidaBudget') {
+		$response = FormsController::ctrDeletePartidaBudget($_POST['deletePartidaBudget'], $_POST['authorizedAmount'], $_POST['idArea']);
+		echo $response;
 	}
 }

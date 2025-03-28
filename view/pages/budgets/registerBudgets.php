@@ -17,12 +17,13 @@
 
             <form class="account-wrap" id="companyForm">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="area" class="form-label">Departamentos registrados<span class="required"></span></label>
                         <select name="area" id="area" class="form-select form-control">
                         </select>
                     </div>
-                    <div class="col-md-6">
+                    
+                    <div class="col-md-3">
                         <!-- Partidas -->
                         <label for="partidas" class="form-label">Partida<span class="required"></span></label>
                         <select name="partidas" id="partidas" class="form-select form-control" disabled>

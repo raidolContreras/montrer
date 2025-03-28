@@ -12,7 +12,9 @@ $(document).ready(function () {
 
 		// Recoge los valores del formulario
 		var AuthorizedAmount = $("input[name='AuthorizedAmount']").val();
+		var Amount = $('#Amount').val();
 		var area = $("select[name='area']").val();
+		var partidas = $("select[name='partidas']").val();
 		var exercise = $("select[name='exercise']").val();
 		var budget = $('#register-value').data('register');
 
@@ -25,7 +27,9 @@ $(document).ready(function () {
 				url: "controller/ajax/ajax.form.php",
 				data: {
 					updateAuthorizedAmount: AuthorizedAmount,
+					ActualAmount: Amount,
 					updateArea: area,
+					updatePartidas: partidas,
 					updateExercise: exercise,
 					updateBudget: budget
 				},

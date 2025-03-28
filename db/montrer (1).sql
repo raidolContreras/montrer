@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2025 a las 05:37:52
+-- Tiempo de generación: 28-03-2025 a las 07:58:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -85,6 +85,13 @@ CREATE TABLE `montrer_budgets` (
   `idExercise` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `montrer_budgets`
+--
+
+INSERT INTO `montrer_budgets` (`idBudget`, `idArea`, `AuthorizedAmount`, `idExercise`, `status`) VALUES
+(45, 3, 32000, 17, 1);
 
 -- --------------------------------------------------------
 
@@ -678,20 +685,17 @@ CREATE TABLE `montrer_logs` (
   `ipAddress` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `montrer_month_budget`
+-- Volcado de datos para la tabla `montrer_logs`
 --
 
-CREATE TABLE `montrer_month_budget` (
-  `idMensualBudget` int(11) NOT NULL,
-  `month` int(11) NOT NULL,
-  `budget_month` double NOT NULL,
-  `budget_used` double NOT NULL DEFAULT 0,
-  `total_used` tinyint(1) DEFAULT NULL,
-  `idBudget` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `montrer_logs` (`idLog`, `idUser`, `timestamp`, `actionType`, `ipAddress`) VALUES
+(456, 3, '2025-03-26 02:34:42', 'Disable departament: 3', '127.0.0.1'),
+(457, 3, '2025-03-26 02:34:54', 'Enable departament: 3', '127.0.0.1'),
+(458, 3, '2025-03-28 05:17:01', 'Add budget', '127.0.0.1'),
+(459, 3, '2025-03-28 05:19:16', 'Add budget', '127.0.0.1'),
+(460, 3, '2025-03-28 05:57:08', 'Add budget', '127.0.0.1'),
+(461, 3, '2025-03-28 05:59:14', 'Add budget', '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -894,6 +898,28 @@ INSERT INTO `montrer_partidas` (`idPartida`, `Partida`, `numeroPartida`, `idCuen
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `montrer_partidas_budgets`
+--
+
+CREATE TABLE `montrer_partidas_budgets` (
+  `idPartida_budget` int(11) NOT NULL,
+  `idPartida` int(11) NOT NULL,
+  `idBudget` int(11) NOT NULL,
+  `AuthorizedAmount` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `montrer_partidas_budgets`
+--
+
+INSERT INTO `montrer_partidas_budgets` (`idPartida_budget`, `idPartida`, `idBudget`, `AuthorizedAmount`) VALUES
+(1, 166, 45, 10000),
+(2, 167, 45, 10000),
+(3, 168, 45, 12000);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `montrer_payment_requests`
 --
 
@@ -1027,6 +1053,26 @@ INSERT INTO `montrer_settings` (`idUser`, `level`, `status`, `root`) VALUES
 (101, 2, 1, 0),
 (102, 2, 1, 0),
 (104, 2, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `montrer_subpartidas`
+--
+
+CREATE TABLE `montrer_subpartidas` (
+  `idSubpartida` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `idArea` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `montrer_subpartidas`
+--
+
+INSERT INTO `montrer_subpartidas` (`idSubpartida`, `nombre`, `idArea`) VALUES
+(3, 'Subpartida A', 3),
+(4, 'Subpartida B', 19);
 
 -- --------------------------------------------------------
 
@@ -1277,18 +1323,19 @@ ALTER TABLE `montrer_logs`
   ADD KEY `idUser` (`idUser`);
 
 --
--- Indices de la tabla `montrer_month_budget`
---
-ALTER TABLE `montrer_month_budget`
-  ADD PRIMARY KEY (`idMensualBudget`),
-  ADD KEY `idBudget` (`idBudget`);
-
---
 -- Indices de la tabla `montrer_partidas`
 --
 ALTER TABLE `montrer_partidas`
   ADD PRIMARY KEY (`idPartida`),
   ADD KEY `idCuenta` (`idCuenta`);
+
+--
+-- Indices de la tabla `montrer_partidas_budgets`
+--
+ALTER TABLE `montrer_partidas_budgets`
+  ADD PRIMARY KEY (`idPartida_budget`),
+  ADD KEY `idPartida` (`idPartida`),
+  ADD KEY `idBudget` (`idBudget`);
 
 --
 -- Indices de la tabla `montrer_payment_requests`
@@ -1308,6 +1355,13 @@ ALTER TABLE `montrer_providers`
 --
 ALTER TABLE `montrer_settings`
   ADD KEY `idUser` (`idUser`);
+
+--
+-- Indices de la tabla `montrer_subpartidas`
+--
+ALTER TABLE `montrer_subpartidas`
+  ADD PRIMARY KEY (`idSubpartida`),
+  ADD KEY `idArea` (`idArea`);
 
 --
 -- Indices de la tabla `montrer_temporal_password`
@@ -1343,7 +1397,7 @@ ALTER TABLE `montrer_area`
 -- AUTO_INCREMENT de la tabla `montrer_budgets`
 --
 ALTER TABLE `montrer_budgets`
-  MODIFY `idBudget` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `idBudget` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `montrer_budget_requests`
@@ -1379,19 +1433,19 @@ ALTER TABLE `montrer_exercise`
 -- AUTO_INCREMENT de la tabla `montrer_logs`
 --
 ALTER TABLE `montrer_logs`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=456;
-
---
--- AUTO_INCREMENT de la tabla `montrer_month_budget`
---
-ALTER TABLE `montrer_month_budget`
-  MODIFY `idMensualBudget` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=462;
 
 --
 -- AUTO_INCREMENT de la tabla `montrer_partidas`
 --
 ALTER TABLE `montrer_partidas`
   MODIFY `idPartida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+
+--
+-- AUTO_INCREMENT de la tabla `montrer_partidas_budgets`
+--
+ALTER TABLE `montrer_partidas_budgets`
+  MODIFY `idPartida_budget` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `montrer_payment_requests`
@@ -1404,6 +1458,12 @@ ALTER TABLE `montrer_payment_requests`
 --
 ALTER TABLE `montrer_providers`
   MODIFY `idProvider` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `montrer_subpartidas`
+--
+ALTER TABLE `montrer_subpartidas`
+  MODIFY `idSubpartida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `montrer_users`
@@ -1455,16 +1515,17 @@ ALTER TABLE `montrer_logs`
   ADD CONSTRAINT `idUser_Log` FOREIGN KEY (`idUser`) REFERENCES `montrer_users` (`idUsers`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `montrer_month_budget`
---
-ALTER TABLE `montrer_month_budget`
-  ADD CONSTRAINT `montrer_budget_idBudget` FOREIGN KEY (`idBudget`) REFERENCES `montrer_budgets` (`idBudget`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Filtros para la tabla `montrer_partidas`
 --
 ALTER TABLE `montrer_partidas`
   ADD CONSTRAINT `partida_idCuenta` FOREIGN KEY (`idCuenta`) REFERENCES `montrer_cuentas` (`idCuenta`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `montrer_partidas_budgets`
+--
+ALTER TABLE `montrer_partidas_budgets`
+  ADD CONSTRAINT `fk_idBudget_budget` FOREIGN KEY (`idBudget`) REFERENCES `montrer_budgets` (`idBudget`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_idPartida_budget` FOREIGN KEY (`idPartida`) REFERENCES `montrer_partidas` (`idPartida`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `montrer_providers`
@@ -1477,6 +1538,12 @@ ALTER TABLE `montrer_providers`
 --
 ALTER TABLE `montrer_settings`
   ADD CONSTRAINT `montrer_settings_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `montrer_users` (`idUsers`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `montrer_subpartidas`
+--
+ALTER TABLE `montrer_subpartidas`
+  ADD CONSTRAINT `montrer_subpartidas_ibfk_1` FOREIGN KEY (`idArea`) REFERENCES `montrer_area` (`idArea`);
 
 --
 -- Filtros para la tabla `montrer_temporal_password`
