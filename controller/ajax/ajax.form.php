@@ -778,7 +778,7 @@ if (isset($_POST['denegateRequest'])) {
 if (isset($_POST['enableRequest'])) {
 	$response = FormsController::ctrEnableRequest($_POST['enableRequest'], $_POST['idAdmin'], $_POST['approvedAmount']);
 	if ($response == 'ok') {
-		FormsController::ctrMonthBudget($_POST['idArea'], $_POST['idBudget'], $_POST['approvedAmount']);
+		// FormsController::ctrMonthBudget($_POST['idArea'], $_POST['idBudget'], $_POST['approvedAmount']);
 
 		session_start();
 		$ip = $_SERVER['REMOTE_ADDR'];

@@ -1426,8 +1426,7 @@ class FormsModels
 	static public function mdlGetAuthorizedAmount($idArea)
 	{
 		$pdo = Conexion::conectar();
-		$sql = "SELECT b.idBudget, a.idArea, m.budget_used, m.total_used, m.idMensualBudget FROM montrer_budgets b
-					RIGHT JOIN montrer_month_budget m ON m.idBudget = b.idBudget
+		$sql = "SELECT b.idBudget, a.idArea, b.AuthorizedAmount, b.budget_used, b.total_used FROM montrer_budgets b
 					RIGHT JOIN montrer_area a ON a.idArea = b.idArea
 					RIGHT JOIN montrer_exercise e ON e.idExercise = b.idExercise
 				WHERE a.idArea = :idArea AND e.status = 1;";
@@ -1468,7 +1467,7 @@ class FormsModels
 							LEFT JOIN montrer_users u ON u.idUsers = r.idUser
 							LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-						WHERE a.status = 1 AND u.deleted = 0;";
+						WHERE a.status = 1";
 			$stmt = $pdo->prepare($sql);
 		} else {
 			$sql = "SELECT a.idArea, r.idRequest, r.idBudget, r.importe_solicitado AS requestedAmount, r.approvedAmount,
@@ -1480,7 +1479,7 @@ class FormsModels
 							LEFT JOIN montrer_users u ON u.idUsers = ua.idUser
 							LEFT JOIN montrer_budgets b ON b.idBudget = r.idBudget
 							LEFT JOIN montrer_exercise e ON e.idExercise = b.idExercise
-						WHERE a.status = 1 AND u.idUsers = :idUser AND u.deleted = 0;";
+						WHERE a.status = 1 AND u.idUsers = :idUser";
 			$stmt = $pdo->prepare($sql);
 			$stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
 		}

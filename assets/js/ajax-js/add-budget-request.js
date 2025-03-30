@@ -301,8 +301,6 @@ $('#provider').on('change', function () {
 });
 
 function updateMaxRequestedAmount(datos) {
-    const fecha = new Date();
-    const mesActual = fecha.getMonth();
     if (!datos) {
         // Si authorizedAmount es falso (undefined, null, 0, '', false), deshabilita el campo de entrada y reinicia los valores
         $('#requestedAmount').prop('disabled', true);
@@ -325,13 +323,9 @@ function updateMaxRequestedAmount(datos) {
                     data: { areaId: datos[0].idArea },
                     dataType: 'json',
                     success: function (result) {
-                        for (let i = 0; i < mesActual; i++) {
-                            totalBudgetUsed += datos[i].budget_used;
-                            totalBudget += datos[i].budget_month;
-                        }
 
                         // Calcula el presupuesto total restante
-                        totalBudget = (totalBudget - totalBudgetUsed) - response.comp;
+                        totalBudget = (datos[0].AuthorizedAmount - datos[0].budget_used) - response.comp;
 
                         // Declara correctamente formattedSum
                         const formattedSum = totalBudget.toLocaleString('es-MX', {
@@ -616,7 +610,9 @@ function numeroALetra(numero, status, currency) {
                 plural = 'pesos';
                 break;
             default:
-                throw new Error('Moneda no soportada. Las monedas válidas son USD, CAD, EUR, GBP y MXN.');
+                singular = 'peso';
+                plural = 'pesos';
+                break;
         }
         texto += ` ${Math.abs(Math.floor(numero)) === 1 ? singular : plural}`;
     }
