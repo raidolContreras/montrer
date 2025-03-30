@@ -20,6 +20,7 @@
                                     <th>Presupuesto solicitado</th>
                                     <th>Presupuesto comprobado</th>
                                     <th>Presupuesto sin comprobar</th>
+                                    <th>Partidas</th>
                                     <th>Ejercicio</th>
                                     <th width="15%"></th>
                                 </tr>
@@ -31,6 +32,8 @@
             </main>
             <!-- End Main Content Budget -->
         </div>
+
+
         <!-- Disable Budget Modal -->
         <div class="modal fade" id="disableBudgetModal" tabindex="-1" aria-labelledby="disableBudgetModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -83,6 +86,25 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmDeleteBudget">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Budget Modal -->
+        <div class="modal fade" id="deletePartidaBudgetModal" tabindex="-1" aria-labelledby="deletePartidaBudgetModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deletePartidaBudgetModalLabel">Eliminar departamento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está seguro de que desea eliminar la partida <strong id="deletePartidaBudgetName"></strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirmDeletePartidaBudget">Aceptar</button>
                     </div>
                 </div>
             </div>

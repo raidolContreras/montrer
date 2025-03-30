@@ -73,12 +73,6 @@ class FormsController
 		return $getAreas;
 	}
 
-	static public function ctrGetCompanies()
-	{
-		$getCompanies = FormsModels::mdlGetCompanies();
-		return $getCompanies;
-	}
-
 	static public function ctrGetExercise()
 	{
 		$getExercise = FormsModels::mdlGetExercise();
@@ -94,13 +88,11 @@ class FormsController
 	static public function ctrGetBudgets($idExercise)
 	{
 		$getBudgets = FormsModels::mdlGetBudgets($idExercise);
+		//agregar Partidas a cada budget
+		foreach ($getBudgets as $key => $value) {
+            $getBudgets[$key]['partidas'] = FormsModels::mdlGetBudgetPartidas($value['idArea']);
+        }
 		return $getBudgets;
-	}
-
-	static public function ctrAddCompany($data)
-	{
-		$addCompany = FormsModels::mdlAddCompany($data);
-		return $addCompany;
 	}
 
 	static public function ctrAddExercise($data)
@@ -281,47 +273,34 @@ class FormsController
 
 	static public function ctrAddBudgets($data)
 	{
-		$getBudgets = FormsModels::mdlGetBudgets('all');
-		$value = true;
-		foreach ($getBudgets as $budgets) {
-			if ($budgets['idArea'] == $data['area'] && $budgets['idExercise'] == $data['exercise']) {
-				$value = false;
-			}
-		}
-		if ($value) {
-			$Budget = FormsModels::mdlAddBudgets($data);
-			$exercise = FormsController::ctrGetExercises($data['exercise']);
+		$budget = FormsModels::mdlSearchBudgets($data);
+		if (empty($budget)) {
+            $AddBudget = FormsModels::mdlAddBudgets($data);
+			$result = FormsModels::ctrAddPartidaBudgets($data, $AddBudget);
+        } else {
+			$partida = FormsModels::ctrSearchPartidaBudgets($data);
+			if (empty($partida)) {
+                $AddPartidaBudget = FormsModels::ctrAddPartidaBudgets($data, $budget['idBudget']);
+				if ($AddPartidaBudget == 'ok') {
+					$AuthorizedAmount = $budget['AuthorizedAmount'] + $data['AuthorizedAmount'];
+					$result = FormsModels::mdlUpdateBudgetsWhitPartidas($data, $AuthorizedAmount);
+				} else {
+					$result = 'Error al registrar el presupuesto';
+				}
+            } else {
+				$result = 'Ya existe un presupuesto en esta partida';
+            }
+        }
+		return $result;
+	}
 
-			// Convertir las fechas a objetos DateTime para facilitar el cálculo
-			$initialDate = new DateTime($exercise['initialDate']);
-			$finalDate = new DateTime($exercise['finalDate']);
-
-			$initialMonth = (int)$initialDate->format('n');
-			$finalMonth = (int)$finalDate->format('n');
-			$months = 0;
-			for ($i = $initialMonth; $i <= $finalMonth; $i++) {
-				$months++;
-			}
-
-			$budget_month = $data['AuthorizedAmount'] / $months;
-
-			$budget_month_formatted = sprintf("%.2f", $budget_month);
-
-			for ($i = $initialMonth; $i <= $finalMonth; $i++) {
-				$datos = array(
-					'budget_month' => $budget_month_formatted,
-					'idBudget' => $Budget,
-				);
-				$addBudgetMonth = FormsModels::mdlAddBudgetsMonths($i, $datos);
-			}
-
-			if ($addBudgetMonth == 'ok') {
-				return $addBudgetMonth;
-			} else {
-				$result = 'Error: Presupuesto ya asignado';
-			}
-		} else {
-			$result = 'Error: Presupuesto ya asignado';
+	static public function ctrDeletePartidaBudget($idPartida_budget, $AuthorizedAmount, $idArea) {
+		$result = FormsModels::mdlDeletePartidaBudget($idPartida_budget);
+		if ($result == 'ok') {
+			$data = array('area' => $idArea);
+			$budget = FormsModels::mdlSearchBudgets($data);
+			$AuthorizedAmount = $budget['AuthorizedAmount'] - $AuthorizedAmount;
+			$result = FormsModels::mdlUpdateBudgetsWhitPartidas($data, $AuthorizedAmount);
 		}
 		return $result;
 	}
@@ -534,8 +513,11 @@ class FormsController
 
 	static public function ctrUpdateBudget($data)
 	{
-		$updateBudget = FormsModels::mdlUpdateBudget($data);
-		return $updateBudget;
+		FormsModels::mdlUpdatePartidaBudgets($data);
+		$budget = FormsModels::mdlSearchBudgets($data);
+		$AuthorizedAmount = $budget['AuthorizedAmount'] - $data['ActualAmount'] + $data['AuthorizedAmount'];
+		$result = FormsModels::mdlUpdateBudgetsWhitPartidas($data, $AuthorizedAmount);
+		return $result;
 	}
 
 	static public function ctrDisableProvider($idProvider)
@@ -735,39 +717,6 @@ class FormsController
 			// Manejo de errores
 			error_log("Error al enviar el correo: {$mail->ErrorInfo}");
 			return false;
-		}
-	}
-
-	static public function ctrMonthBudget($idArea, $idBudget, $approvedAmount)
-	{
-		// Obtén el mes actual
-		$currentMonth = date('n'); // n devuelve el número del mes sin ceros iniciales
-
-		// Obtiene los datos de la base de datos
-		$month_budgets = FormsModels::mdlGetMonthBudget($idBudget);
-
-		// Inicializa la suma de los presupuestos hasta el mes actual
-		$sumaBudgetMonth = 0;
-
-		// Recorre los datos para calcular la suma de los presupuestos hasta el mes actual
-		foreach ($month_budgets as $month_budget) {
-			if ($month_budget['month'] <= $currentMonth) {
-				$budgetMonth = floatval($month_budget['budget_month']);
-				$budgetUsed = floatval($month_budget['budget_used']);
-
-				$sumaBudgetMonth = ($budgetMonth - $budgetUsed);
-				if ($approvedAmount >= $sumaBudgetMonth) {
-					$budget = FormsModels::mdlFillBudgetMouth($month_budget['idMensualBudget'], $month_budget['budget_month']);
-					if ($budget == 'ok') {
-						$approvedAmount = $approvedAmount - $sumaBudgetMonth;
-					}
-				} elseif ($approvedAmount < $sumaBudgetMonth) {
-					$budget = FormsModels::mdlFillBudgetMouth($month_budget['idMensualBudget'], $approvedAmount);
-					if ($budget == 'ok') {
-						$approvedAmount = 0;
-					}
-				}
-			}
 		}
 	}
 
@@ -1043,12 +992,6 @@ class FormsController
 	{
 		$response = FormsModels::mdlChangePaymentDate($idRequest, $paymentDate);
 		return $response;
-	}
-
-	static public function ctrGetBusiness($idUser)
-	{
-		$business = FormsModels::mdlGetBusiness($idUser);
-		return $business;
 	}
 
 	static public function ctrCompleteRequest($data)
@@ -1414,6 +1357,36 @@ class FormsController
 	static public function ctrSelectPartidas($idCuenta)
 	{
 		$result = FormsModels::mdlSelectPartidas($idCuenta);
+		return $result;
+	}
+
+	static public function ctrAddSubpartida($subpartida, $idArea)
+	{
+		$result = FormsModels::mdlAddSubpartida($subpartida, $idArea);
+		return $result;
+	}
+
+	static public function ctrGetSubpartidas($idSubpartida = null)
+	{
+		$result = FormsModels::mdlGetSubpartidas($idSubpartida);
+		return $result;
+	}
+
+	static public function ctrEditSubpartida($idSubpartida, $nombre, $idArea)
+	{
+		$result = FormsModels::mdlEditSubpartida($idSubpartida, $nombre, $idArea);
+		return $result;
+	}
+
+	static public function ctrDeleteSubpartida($idSubpartida)
+	{
+		$result = FormsModels::mdlDeleteSubpartida($idSubpartida);
+		return $result;
+	}
+
+	static public function ctrGetPartidasToAreas($idPartida)
+	{
+		$result = FormsModels::mdlGetPartidasToAreas($idPartida);
 		return $result;
 	}
 }

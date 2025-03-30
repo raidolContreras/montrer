@@ -78,7 +78,7 @@
 			
 			function showAlertBootstrap2(title, message, adress) {
 				$('#modalLabel').text(title);
-				$('.modal-body-extra').text(message);
+				$('.modal-body-extra').html(message);
 				$('.modal-footer-extra').html('<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button><button type="button" class="btn btn-success" onclick="window.location.href=\''+ adress +'\'">Aceptar</button>');
 				$('#alertModal').modal('show');
 			}

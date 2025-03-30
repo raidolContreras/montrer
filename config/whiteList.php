@@ -33,6 +33,7 @@
 		'registerPartida',
 		'editPartida',
 		'partidas',
+		'subpartidas',
 	];
 
 
@@ -66,6 +67,8 @@
 			include "view/pages/request_budget/$pagina.php";
 		} elseif ($pagina == 'logs') {
 			include "view/pages/logs/$pagina.php";
+		} elseif ($pagina == 'subpartidas') {
+			include "view/pages/subpartidas/$pagina.php";
 		} else {
 			include "view/pages/404.php";
 		}
